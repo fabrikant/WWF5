@@ -25,6 +25,7 @@ class WWF5View extends WatchUi.WatchFace {
 
     function createLayers(){
         
+        //Время
         var clock_layer_max_lenght = 4.25;
         var options = pattern.calculateLayerCoordinates(
             [pattern.reference_points[:x][8], pattern.reference_points[:y][2]],
@@ -34,6 +35,7 @@ class WWF5View extends WatchUi.WatchFace {
         var clock_layer = new SimpleField(options);
         self.addLayer(clock_layer);
 
+        //Секунды
         var temp_h = pattern.calculateLayerHeight(
             pattern.reference_points[:y][2], 
             pattern.reference_points[:y][3]);
@@ -52,12 +54,18 @@ class WWF5View extends WatchUi.WatchFace {
         var seconds_layer = new SimpleField(options);
         self.addLayer(seconds_layer);
         every_second_layers = [seconds_layer];
+
+        //Дата
+        options = pattern.calculateLayerCoordinates(
+            [pattern.reference_points[:x][10], pattern.reference_points[:y][5]],
+            [pattern.reference_points[:x][11], System.getDeviceSettings().screenHeight]);
+        options[:identifier] = :date;
+        self.addLayer(new BottomField(options));
     }
 
     
     // Load your resources here
     function onLayout(dc as Dc) as Void {
-        //setLayout(Rez.Layouts.WatchFace(dc));
         createLayers();
     }
 

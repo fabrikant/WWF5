@@ -146,7 +146,7 @@ class Pattern {
     }
 
     function calculateLayerHeight(y1, y2){
-        return Global.mod(y1 - y2) - reference_points[:pen_width] - 2;
+        return Global.mod(y1 - y2) - reference_points[:pen_width] - 3;
     }
 
     function calculateLayerWidth(x1, x2){

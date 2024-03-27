@@ -3,13 +3,18 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Math;
+import Toybox.Time;
 
 class SimpleField extends WatchUi.Layer{
 
     var font;
 
     function initialize(options){
+        initializeFont(options);
+        Layer.initialize(options);
+    }
 
+    function initializeFont(options){
         var font_w = Math.floor(options[:width] / options[:max_lenght]);
         var line_w = Math.floor(font_w / 4.5);
 
@@ -19,8 +24,6 @@ class SimpleField extends WatchUi.Layer{
             :line_width => line_w,
             :line_offset => 2,
         });
-
-        Layer.initialize(options);
     }
 
     function draw(colors){
@@ -69,5 +72,10 @@ class SimpleField extends WatchUi.Layer{
     
     function seconds(){
 		return System.getClockTime().sec.format("%02d");
+    }
+
+    function date(){
+        var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
+		return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
     }
 }
