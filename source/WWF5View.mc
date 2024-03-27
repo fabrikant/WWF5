@@ -6,7 +6,7 @@ import Toybox.Math;
 
 class WWF5View extends WatchUi.WatchFace {
 
-    var pattern, colors;
+    var pattern, colors, fields;
 
     function initialize() {
         WatchFace.initialize();
@@ -20,6 +20,20 @@ class WWF5View extends WatchUi.WatchFace {
             :font_empty_segments => Graphics.COLOR_DK_GREEN,
         };
         pattern = new Pattern(colors);
+    }
+
+    function createLayers(){
+
+        // self.addLayer(new SimpleField({
+        //     :locX => 0,
+        //     :locY => ,
+        //     :width => ,
+        //     :height => ,
+        //     :colorDepth => ,
+        //     :visibility  => ,
+        //     :identifier =>
+        // }));
+
     }
 
     // Load your resources here

@@ -49,12 +49,15 @@ class Pattern {
         var x2 = x1 - Math.round(dc.getWidth() / 10);
         var y1 = center[1] - r * Math.sin(Math.toRadians(arc_angle_offset + arc_angle));
         var y2 = center[1] - r * Math.sin(Math.toRadians(arc_angle_offset));
+        var interseption = calculateHorizontalIntersection(dc, y2);
+        var x5 = interseption[0];
+        var x6 = interseption[1];
         
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
             dc.setPenWidth(pen_widths[i]);
             //Верхняя перекладина
-            dc.drawLine(0, y2, dc.getWidth(), y2);
+            dc.drawLine(x5, y2, x6, y2);
             //Верхняя косая черта
             dc.drawLine(x1, y1, x2, y2);
         }
@@ -75,17 +78,28 @@ class Pattern {
         var y4 = center[1] + r * Math.sin(Math.toRadians(90 - arc_angle_bottom - arc_angle_offset_bottom));
         var y5 = center[1] + r * Math.sin(Math.toRadians(90 - arc_angle_offset_bottom));
 
+        interseption = calculateHorizontalIntersection(dc, y4);
+        var x8 = interseption[0];
+        var x9 = interseption[1];
+
+        interseption = calculateHorizontalIntersection(dc, y5);
+        var x10 = interseption[0];
+        var x11 = interseption[1];
+
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
             dc.setPenWidth(pen_widths[i]);
             //Перекладина нижних дуг верхняя
-            dc.drawLine(0, y4, dc.getWidth(), y4);
+            dc.drawLine(x8, y4, x9, y4);
             //Перекладина нижних дуг нижняя
-            dc.drawLine(0, y5, dc.getWidth(), y5);
+            dc.drawLine(x10, y5, x11, y5);
         }
 
         //Дполнительное поле справа снизу под циферблатом
         var y3 = y4 - Math.round(dc.getHeight() / 10);
+        interseption = calculateHorizontalIntersection(dc, y3);
+        var x7 = interseption[1];
+
         var c = Math.sqrt(Math.pow(y1-y2, 2)+Math.pow(x1-x2, 2));
         
         var x4 = x2 + Math.round((x1 - x2) / 2);
@@ -93,9 +107,29 @@ class Pattern {
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
             dc.setPenWidth(pen_widths[i]);
+            //Косая черта
             dc.drawLine(x3, y3, x4, y4);
-            dc.drawLine(x3, y3, dc.getWidth(), y3);
+            //Горизонтальная черта
+            dc.drawLine(x3, y3, x7, y3);
         }
-        return {:x => [x1, x2, x3, x4], :y => [y1, y2, y3, y4, y5], :pen_width => pen_widths[0]};
+
+        return {:x => [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11], 
+                :y => [y1, y2, y3, y4, y5], 
+                :pen_width => pen_widths[0]};
     }
+
+    function calculateHorizontalIntersection(dc, y_level){
+        var r = dc.getWidth() / 2;
+        var center = [dc.getWidth() / 2 - 1, dc.getHeight() / 2 - 1];
+        var h = Global.mod(center[1] - y_level);
+        var center_offset = Math.round(Math.sqrt(r*r - h*h));
+        var res = [center[0] - center_offset, center[0] + center_offset];
+
+        // dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_RED);
+        // dc.fillCircle(res[0], y_level, 5);
+        // dc.fillCircle(res[1], y_level, 5);
+
+        return res;
+    }
+    
 }
