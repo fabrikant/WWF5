@@ -20,25 +20,24 @@ class WWF5View extends WatchUi.WatchFace {
             :font_empty_segments => Graphics.COLOR_DK_GREEN,
         };
         pattern = new Pattern(colors);
+        
     }
 
     function createLayers(){
 
-        // self.addLayer(new SimpleField({
-        //     :locX => 0,
-        //     :locY => ,
-        //     :width => ,
-        //     :height => ,
-        //     :colorDepth => ,
-        //     :visibility  => ,
-        //     :identifier =>
-        // }));
-
+        var options = pattern.calculateLayerCoordinates(
+            [pattern.reference_points[:x][7],pattern.reference_points[:y][1]],
+            [pattern.reference_points[:x][3],pattern.reference_points[:y][3]]);
+        options[:identifier] = :hours;
+        options[:max_lenght] = 2;
+        self.addLayer(new SimpleField(options));
     }
 
+    
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         //setLayout(Rez.Layouts.WatchFace(dc));
+        createLayers();
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -54,6 +53,12 @@ class WWF5View extends WatchUi.WatchFace {
         dc.setColor(colors[:background], colors[:background]);
         dc.clear();
         dc.drawBitmap(0, 0, pattern.background_image);
+
+        var layers = getLayers();
+        for (var i = 0; i < layers.size(); i++){
+            layers[i].draw(colors);
+        }
+
         //var pattern_points = drawBackgoundPattern(dc, colors);
 
         // Call the parent onUpdate function to redraw the layout

@@ -255,20 +255,20 @@ class FontLessFont {
 
     private function drawLCDSymbol(dc, x, y, symb_segments, indexes, color_settings){
 
-        if (simple_style == false && color_settings.hasKey(:empty_segments_color)){
-            dc.setColor(color_settings[:empty_segments_color], color_settings[:empty_segments_color]);
+        if (simple_style == false && color_settings.hasKey(:font_empty_segments)){
+            dc.setColor(color_settings[:font_empty_segments], color_settings[:font_empty_segments]);
             for (var i = 0; i < symb_segments.size(); i++){
                 dc.fillPolygon(movePoligon(symb_segments[i], x, y));
             }
         }
 
-        dc.setColor(color_settings[:color], color_settings[:color]);
+        dc.setColor(color_settings[:font], color_settings[:font]);
         for (var i = 0; i < indexes.size(); i++){
             dc.fillPolygon(movePoligon(symb_segments[indexes[i]], x, y));
         }
         
-        if (simple_style == false && color_settings.hasKey(:border_color)){
-            dc.setColor(color_settings[:border_color], color_settings[:border_color]);
+        if (simple_style == false && color_settings.hasKey(:font_border)){
+            dc.setColor(color_settings[:font_border], color_settings[:font_border]);
             for (var i = 0; i < symb_segments.size(); i++){
                 drawSegmentBorder(movePoligon(symb_segments[i], x, y), dc);
             }
@@ -297,7 +297,7 @@ class FontLessFont {
         var radius = Global.max((line_width * 1.3).toNumber(), 3);
         var symbol_width = 2 * radius + 2 * line_offset;
         if (dc != null){
-            dc.setColor(color_settings[:color], color_settings[:background_color]);
+            dc.setColor(color_settings[:font], color_settings[:background]);
             dc.setPenWidth(Global.max((line_width).toNumber(), 1));
             dc.drawCircle(x + line_offset + radius , y + line_offset + radius, radius);
         }

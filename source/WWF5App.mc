@@ -20,7 +20,6 @@ class WWF5App extends Application.AppBase {
     function getInitialView() as Array<Views or InputDelegates>? {
         return [ new WWF5View() ] as Array<Views or InputDelegates>;
     }
-
 }
 
 function getApp() as WWF5App {
