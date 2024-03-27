@@ -28,7 +28,7 @@ class Pattern {
 
         var dc = background_image.getDc();
         var colors = [all_colors[:pattern], all_colors[:pattern_decorate]];
-        var pen_widths = [Math.round(dc.getWidth() / 50), 1];
+        var pen_widths = [Math.floor(dc.getWidth() / 50), 1];
 
         var r = dc.getWidth() / 2;
         var center = [dc.getWidth() / 2 - 1, dc.getHeight() / 2 - 1];
@@ -46,7 +46,7 @@ class Pattern {
 
         //Вычисление координат относительно верхней дуги
         var x1 = center[0] + r * Math.cos(Math.toRadians(arc_angle_offset + arc_angle));
-        var x2 = x1 - Math.round(dc.getWidth() / 10);
+        var x2 = x1 - Math.floor(dc.getWidth() / 10);
         var y1 = center[1] - r * Math.sin(Math.toRadians(arc_angle_offset + arc_angle));
         var y2 = center[1] - r * Math.sin(Math.toRadians(arc_angle_offset));
         var interseption = calculateHorizontalIntersection(dc, y2);
@@ -96,14 +96,14 @@ class Pattern {
         }
 
         //Дполнительное поле справа снизу под циферблатом
-        var y3 = y4 - Math.round(dc.getHeight() / 10);
+        var y3 = y4 - Math.floor(Global.mod(y2-y4)*0.55);
         interseption = calculateHorizontalIntersection(dc, y3);
         var x7 = interseption[1];
 
         var c = Math.sqrt(Math.pow(y1-y2, 2)+Math.pow(x1-x2, 2));
         
-        var x4 = x2 + Math.round((x1 - x2) / 2);
-        var x3 = x4 + Math.round((y4 - y3) * (x1 - x2) / c);
+        var x4 = Math.floor(0.70 * dc.getWidth());
+        var x3 = x4 + Math.floor((y4 - y3) * (x1 - x2) / c);
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
             dc.setPenWidth(pen_widths[i]);
@@ -116,14 +116,14 @@ class Pattern {
         return {:x => [0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11], 
                 :y => [0, y1, y2, y3, y4, y5], 
                 :pen_width => pen_widths[0],
-                :half_pen_width => Math.round(pen_widths[0])};
+                :half_pen_width => Math.floor(pen_widths[0])};
     }
 
     function calculateHorizontalIntersection(dc, y_level){
         var r = dc.getWidth() / 2;
         var center = [dc.getWidth() / 2 - 1, dc.getHeight() / 2 - 1];
         var h = Global.mod(center[1] - y_level);
-        var center_offset = Math.round(Math.sqrt(r*r - h*h));
+        var center_offset = Math.floor(Math.sqrt(r*r - h*h));
         var res = [center[0] - center_offset, center[0] + center_offset];
 
         // dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_RED);

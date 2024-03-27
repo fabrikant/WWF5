@@ -24,29 +24,34 @@ class WWF5View extends WatchUi.WatchFace {
     }
 
     function createLayers(){
-
+        
+        var clock_layer_max_lenght = 4.25;
         var options = pattern.calculateLayerCoordinates(
             [pattern.reference_points[:x][8], pattern.reference_points[:y][2]],
             [pattern.reference_points[:x][4], pattern.reference_points[:y][4]]);
-        options[:identifier] = :hours;
-        options[:max_lenght] = 2;
-        var hours_layer = new SimpleField(options);
-        self.addLayer(hours_layer);
+        options[:identifier] = :hours_minutes;
+        options[:max_lenght] = clock_layer_max_lenght;
+        var clock_layer = new SimpleField(options);
+        self.addLayer(clock_layer);
 
         var temp_h = pattern.calculateLayerHeight(
             pattern.reference_points[:y][2], 
             pattern.reference_points[:y][3]);
         var temp_w = Math.floor(temp_h * 
-            hours_layer.getDc().getWidth() / hours_layer.getDc().getHeight());
+            clock_layer.getDc().getWidth() / clock_layer.getDc().getHeight());
+        temp_w = Math.floor(temp_w / clock_layer_max_lenght * 2);
+
         options = {
-            :locX => pattern.reference_points[:x][4], 
+            :locX => pattern.reference_points[:x][3], 
             :locY => pattern.calculateLayerUp(pattern.reference_points[:y][2]), 
             :width => temp_w, 
             :height => temp_h,
-            :identifier => :minutes,
+            :identifier => :seconds,
             :max_lenght => 2,
         };
-        self.addLayer(new SimpleField(options));
+        var seconds_layer = new SimpleField(options);
+        self.addLayer(seconds_layer);
+        every_second_layers = [seconds_layer];
     }
 
     
@@ -65,8 +70,8 @@ class WWF5View extends WatchUi.WatchFace {
     // Update the view
     function onUpdate(dc as Dc) as Void {
 
-
         dc.setColor(colors[:background], colors[:background]);
+        dc.setClip(0, 0, dc.getWidth(), dc.getHeight());
         dc.clear();
         dc.drawBitmap(0, 0, pattern.background_image);
 
@@ -74,11 +79,17 @@ class WWF5View extends WatchUi.WatchFace {
         for (var i = 0; i < layers.size(); i++){
             layers[i].draw(colors);
         }
+    }
 
-        //var pattern_points = drawBackgoundPattern(dc, colors);
-
-        // Call the parent onUpdate function to redraw the layout
-        // View.onUpdate(dc);
+    function onPartialUpdate(dc){
+        
+        for (var i = 0; i < every_second_layers.size(); i++){
+            var layer = every_second_layers[i];
+            dc.setClip(layer.getX(), layer.getY(), 
+                layer.getDc().getWidth(),
+                layer.getDc().getHeight());
+            layer.draw(colors);
+        }
     }
 
     // Called when this View is removed from the screen. Save the
