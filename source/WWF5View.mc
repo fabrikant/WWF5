@@ -6,7 +6,7 @@ import Toybox.Math;
 
 class WWF5View extends WatchUi.WatchFace {
 
-    var pattern, colors, fields;
+    var pattern, colors, every_second_layers;
 
     function initialize() {
         WatchFace.initialize();
@@ -16,8 +16,8 @@ class WWF5View extends WatchUi.WatchFace {
             :pattern_decorate => Graphics.COLOR_LT_GRAY,
             :background => Graphics.COLOR_BLACK,
             :font => Graphics.COLOR_WHITE,
-            :font_border => Graphics.COLOR_BLUE,
-            :font_empty_segments => Graphics.COLOR_DK_GREEN,
+            //:font_border => Graphics.COLOR_LT_GRAY,
+            //:font_empty_segments => Graphics.COLOR_DK_GRAY,
         };
         pattern = new Pattern(colors);
         
@@ -26,10 +26,26 @@ class WWF5View extends WatchUi.WatchFace {
     function createLayers(){
 
         var options = pattern.calculateLayerCoordinates(
-            [pattern.reference_points[:x][7],pattern.reference_points[:y][1]],
-            [pattern.reference_points[:x][3],pattern.reference_points[:y][3]]);
+            [pattern.reference_points[:x][8], pattern.reference_points[:y][2]],
+            [pattern.reference_points[:x][4], pattern.reference_points[:y][4]]);
         options[:identifier] = :hours;
         options[:max_lenght] = 2;
+        var hours_layer = new SimpleField(options);
+        self.addLayer(hours_layer);
+
+        var temp_h = pattern.calculateLayerHeight(
+            pattern.reference_points[:y][2], 
+            pattern.reference_points[:y][3]);
+        var temp_w = Math.floor(temp_h * 
+            hours_layer.getDc().getWidth() / hours_layer.getDc().getHeight());
+        options = {
+            :locX => pattern.reference_points[:x][4], 
+            :locY => pattern.calculateLayerUp(pattern.reference_points[:y][2]), 
+            :width => temp_w, 
+            :height => temp_h,
+            :identifier => :minutes,
+            :max_lenght => 2,
+        };
         self.addLayer(new SimpleField(options));
     }
 

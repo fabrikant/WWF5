@@ -57,7 +57,7 @@ class FontLessFont {
         if (just > 0){
             if (just == Graphics.TEXT_JUSTIFY_CENTER){
                 next_x -= str_width / 2;
-            }else{
+            }else if (just == Graphics.TEXT_JUSTIFY_RIGHT){
                 next_x -= str_width;
             }
         }

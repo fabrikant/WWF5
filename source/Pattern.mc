@@ -113,8 +113,8 @@ class Pattern {
             dc.drawLine(x3, y3, x7, y3);
         }
 
-        return {:x => [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11], 
-                :y => [y1, y2, y3, y4, y5], 
+        return {:x => [0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11], 
+                :y => [0, y1, y2, y3, y4, y5], 
                 :pen_width => pen_widths[0],
                 :half_pen_width => Math.round(pen_widths[0])};
     }
@@ -134,10 +134,10 @@ class Pattern {
     }
     
     function calculateLayerCoordinates(left_up, right_bottom){
-        var x = left_up[0] + 1;
-        var y = left_up[1] + reference_points[:half_pen_width] + 1;
-        var w = right_bottom[0] - x - 1; 
-        var h = right_bottom[1] - reference_points[:half_pen_width] - y; 
+        var x = calculateLayerLeft(left_up[0]);
+        var y = calculateLayerUp(left_up[1]);
+        var w = calculateLayerWidth(left_up[0], right_bottom[0]); 
+        var h = calculateLayerHeight(left_up[1], right_bottom[1]); 
 
         return {:locX => x.toNumber(), 
                 :locY => y.toNumber(), 
@@ -145,4 +145,19 @@ class Pattern {
                 :height => h.toNumber()};
     }
 
+    function calculateLayerHeight(y1, y2){
+        return Global.mod(y1 - y2) - reference_points[:pen_width] - 2;
+    }
+
+    function calculateLayerWidth(x1, x2){
+        return Global.mod(x1-x2) - 2;
+    }
+
+    function calculateLayerUp(y){
+        return y + reference_points[:half_pen_width] + 1;
+    }
+
+    function calculateLayerLeft(x){
+        return x + 1;
+    }
 }
