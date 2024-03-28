@@ -1,3 +1,10 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+
+    <bitmap id="sunEvent" filename="./svg-resources/sun-event.svg" scaleX="9%" scaleY="9%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+		     <color>555555</color>
+		</palette>
+	</bitmap>
+
 </drawables>

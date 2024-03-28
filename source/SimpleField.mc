@@ -40,13 +40,16 @@ class SimpleField extends WatchUi.Layer{
     }
 
     function drawBorder(dc){
-        //return;
+        return;
         dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_GREEN);
         dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
     }
 
-    function hours_minutes(){
-        var clock = System.getClockTime();
+    function hoursMinutesNow(){
+        return hours_minutes(System.getClockTime());
+    }
+
+    function hours_minutes(clock){
         var hours = clock.hour;
         if (!System.getDeviceSettings().is24Hour) {
         	if (hours > 12) {
@@ -78,4 +81,26 @@ class SimpleField extends WatchUi.Layer{
         var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
 		return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
     }
+
+    function createImage(resource, colors){
+		var _bitmap = Application.loadResource(resource);
+		if ( Graphics has :createBufferedBitmap){
+			var _bufferedBitmapRef = Graphics.createBufferedBitmap({
+				:bitmapResource => _bitmap,
+				:width => _bitmap.getWidth(),
+				:height => _bitmap.getHeight()
+			});
+			var _bufferedBitmap = _bufferedBitmapRef.get(); 
+			_bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
+			return _bufferedBitmap;
+		}else{
+			var _bufferedBitmap = new Graphics.BufferedBitmap({
+				:bitmapResource => _bitmap,
+				:width => _bitmap.getWidth(),
+				:height => _bitmap.getHeight()
+			});
+			_bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
+			return _bufferedBitmap;
+		}
+	}
 }

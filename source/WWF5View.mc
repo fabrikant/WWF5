@@ -31,7 +31,7 @@ class WWF5View extends WatchUi.WatchFace {
         var options = pattern.calculateLayerCoordinates(
             [pattern.reference_points[:x][8], pattern.reference_points[:y][2]],
             [pattern.reference_points[:x][4], pattern.reference_points[:y][4]]);
-        options[:identifier] = :hours_minutes;
+        options[:identifier] = :hoursMinutesNow;
         options[:max_lenght] = clock_layer_max_lenght;
         var clock_layer = new SimpleField(options);
         self.addLayer(clock_layer);
@@ -98,12 +98,11 @@ class WWF5View extends WatchUi.WatchFace {
         dc.setColor(colors[:background], colors[:background]);
         dc.setClip(0, 0, dc.getWidth(), dc.getHeight());
         dc.clear();
-        dc.drawBitmap(0, 0, pattern.background_image);
-
         var layers = getLayers();
         for (var i = 0; i < layers.size(); i++){
             layers[i].draw(colors);
         }
+        dc.drawBitmap(0, 0, pattern.background_image);
     }
 
     function onPartialUpdate(dc){

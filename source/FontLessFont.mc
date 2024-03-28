@@ -54,13 +54,12 @@ class FontLessFont {
             current_y -= height / 2;
             just -= Graphics.TEXT_JUSTIFY_VCENTER;
         }
-        if (just > 0){
-            if (just == Graphics.TEXT_JUSTIFY_CENTER){
-                next_x -= str_width / 2;
-            }else if (just == Graphics.TEXT_JUSTIFY_RIGHT){
-                next_x -= str_width;
-            }
+        if (just == Graphics.TEXT_JUSTIFY_CENTER){
+            next_x -= str_width / 2;
+        }else if (just == Graphics.TEXT_JUSTIFY_RIGHT){
+            next_x -= str_width;
         }
+        
 
         for (var i = 0; i < str.length(); i++){
             next_x += writeSymbol(dc, next_x, current_y, str.substring(i, i+1), color_settings);
