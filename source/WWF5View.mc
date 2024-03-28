@@ -62,6 +62,19 @@ class WWF5View extends WatchUi.WatchFace {
             [pattern.reference_points[:x][11], System.getDeviceSettings().screenHeight]);
         options[:identifier] = :date;
         self.addLayer(new BottomField(options));
+
+        //Рассвет-Закат
+        var temp_y = pattern.reference_points[:y][2] 
+            - Math.floor(pattern.reference_points[:y][2]/3);
+
+        var temp_x = Math.floor(Global.mod((pattern.reference_points[:x][1]-pattern.reference_points[:x][2])/2));
+        options = pattern.calculateLayerCoordinates(
+            [pattern.reference_points[:x][2] + temp_x, temp_y],
+            [pattern.reference_points[:x][6] - temp_x, pattern.reference_points[:y][2]]);
+        options[:identifier] = :sun_events;
+        options[:max_lenght] = 12;
+
+        self.addLayer(new SunEventsField(options));
     }
 
     
