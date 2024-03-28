@@ -1,3 +1,4 @@
+import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
@@ -10,17 +11,17 @@ class WWF5View extends WatchUi.WatchFace {
 
     function initialize() {
         WatchFace.initialize();
+    }
 
+    function readSettings(){
         colors = {
-            :pattern => Graphics.COLOR_DK_GRAY,
-            :pattern_decorate => Graphics.COLOR_LT_GRAY,
-            :background => Graphics.COLOR_BLACK,
-            :font => Graphics.COLOR_WHITE,
-            //:font_border => Graphics.COLOR_LT_GRAY,
-            //:font_empty_segments => Graphics.COLOR_DK_GRAY,
+            :pattern => Application.Properties.getValue("color_pattern"),
+            :pattern_decorate => Application.Properties.getValue("color_pattern_decorate"),
+            :background => Application.Properties.getValue("color_background"),
+            :font => Application.Properties.getValue("color_font"),
+            :font_border => Application.Properties.getValue("color_font_border"),
+            :font_empty_segments => Application.Properties.getValue("color_font_empty_segments"),
         };
-        pattern = new Pattern(colors);
-        
     }
 
     function createLayers(){
@@ -44,7 +45,7 @@ class WWF5View extends WatchUi.WatchFace {
         temp_w = Math.floor(temp_w / clock_layer_max_lenght * 2);
 
         options = {
-            :locX => pattern.reference_points[:x][3], 
+            :locX => pattern.calculateLayerLeft(pattern.reference_points[:x][4]), 
             :locY => pattern.calculateLayerUp(pattern.reference_points[:y][2]), 
             :width => temp_w, 
             :height => temp_h,
@@ -66,14 +67,17 @@ class WWF5View extends WatchUi.WatchFace {
     
     // Load your resources here
     function onLayout(dc as Dc) as Void {
-        createLayers();
+        
     }
 
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-    }
+        readSettings();
+        pattern = new Pattern(colors);
+        createLayers();
+   }
 
     // Update the view
     function onUpdate(dc as Dc) as Void {

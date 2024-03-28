@@ -255,7 +255,8 @@ class FontLessFont {
 
     private function drawLCDSymbol(dc, x, y, symb_segments, indexes, color_settings){
 
-        if (simple_style == false && color_settings.hasKey(:font_empty_segments)){
+        if (simple_style == false && color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){
+            
             dc.setColor(color_settings[:font_empty_segments], color_settings[:font_empty_segments]);
             for (var i = 0; i < symb_segments.size(); i++){
                 dc.fillPolygon(movePoligon(symb_segments[i], x, y));
@@ -267,7 +268,7 @@ class FontLessFont {
             dc.fillPolygon(movePoligon(symb_segments[indexes[i]], x, y));
         }
         
-        if (simple_style == false && color_settings.hasKey(:font_border)){
+        if (simple_style == false && color_settings[:font_border] != Graphics.COLOR_TRANSPARENT){
             dc.setColor(color_settings[:font_border], color_settings[:font_border]);
             for (var i = 0; i < symb_segments.size(); i++){
                 drawSegmentBorder(movePoligon(symb_segments[i], x, y), dc);

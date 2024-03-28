@@ -1,3 +1,14 @@
 <strings>
     <string id="AppName">WWF5</string>
+    <!-- Menu -->
+ 	<string id="MenuHeader" scope="foreground">Settings</string>
+    <string id="SubmenuColors" scope="foreground">Colors</string>
+
+    <string id="color_pattern" scope="foreground">Pattern</string>
+    <string id="color_pattern_decorate" scope="foreground">Pattern accent</string>
+    <string id="color_background" scope="foreground">Background</string>
+    <string id="color_font" scope="foreground">Font</string>
+    <string id="color_font_border" scope="foreground">Font border</string>
+    <string id="color_font_empty_segments" scope="foreground">Font empty segments</string>
+
 </strings>

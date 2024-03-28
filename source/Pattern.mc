@@ -35,8 +35,8 @@ class Pattern {
         dc.setAntiAlias(true);
 
         //Верхняя дуга
-        var arc_angle = 80;
-        var arc_angle_offset = 15;
+        var arc_angle = 75;
+        var arc_angle_offset = 20;
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
             dc.setPenWidth(pen_widths[i]);
@@ -63,8 +63,8 @@ class Pattern {
         }
 
         //Нижние дуги
-        var arc_angle_bottom = 30;
-        var arc_angle_offset_bottom = 35;
+        var arc_angle_bottom = 33;
+        var arc_angle_offset_bottom = 37;
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
             dc.setPenWidth(pen_widths[i]);
@@ -96,7 +96,7 @@ class Pattern {
         }
 
         //Дполнительное поле справа снизу под циферблатом
-        var y3 = y4 - Math.floor(Global.mod(y2-y4)*0.55);
+        var y3 = y4 - Math.floor(Global.mod(y5-y4)*0.7);
         interseption = calculateHorizontalIntersection(dc, y3);
         var x7 = interseption[1];
 

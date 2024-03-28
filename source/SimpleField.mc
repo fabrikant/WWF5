@@ -16,7 +16,7 @@ class SimpleField extends WatchUi.Layer{
 
     function initializeFont(options){
         var font_w = Math.floor(options[:width] / options[:max_lenght]);
-        var line_w = Math.floor(font_w / 4.5);
+        var line_w = Math.floor(font_w / 4.2);
 
         font = new FontLessFont({
             :width => font_w,

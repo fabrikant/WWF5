@@ -11,7 +11,6 @@ class BottomField extends SimpleField{
     }
 
     function initializeFont(options){
-        System.println("initializeFont");
         font = Graphics.getVectorFont({
             :face => "RobotoCondensedRegular",
             :size => Math.floor(options[:height] * 1.2)
