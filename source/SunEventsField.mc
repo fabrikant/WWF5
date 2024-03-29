@@ -34,7 +34,6 @@ class SunEventsField extends SimpleField{
         var sunrise = getSunEventTime(getApp().system_complications[Complications.COMPLICATION_TYPE_SUNRISE]);
         var sunset = getSunEventTime(getApp().system_complications[Complications.COMPLICATION_TYPE_SUNSET]);
         var image = createImage(Rez.Drawables.sunEvent, colors);
-
         var image_x = Math.floor((dc.getWidth() - image.getWidth()) / 2);
 
         dc.drawBitmap(image_x, 0 -  Math.round(dc.getHeight() / 5), image);
