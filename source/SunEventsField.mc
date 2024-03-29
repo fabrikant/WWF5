@@ -12,9 +12,7 @@ class SunEventsField extends SimpleField{
     }
 
     function initializeFont(options){
-        var font_w = Math.floor(options[:width] / options[:max_lenght])+2;
-        //var line_w = Math.floor(font_w / 4.2);
-        //var font_w = 10;
+        var font_w = Math.floor(options[:width] / options[:max_lenght]);
         var line_w = 2;
 
         font = new FontLessFont({

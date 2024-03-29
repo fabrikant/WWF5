@@ -40,7 +40,7 @@ class SimpleField extends WatchUi.Layer{
     }
 
     function drawBorder(dc){
-        //return;
+        return;
         dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_GREEN);
         dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
     }
