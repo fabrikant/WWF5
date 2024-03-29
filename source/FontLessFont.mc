@@ -1,6 +1,7 @@
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Math;
+import Toybox.System;
 
 class FontLessFont {
 
@@ -193,7 +194,15 @@ class FontLessFont {
 
 
         invert_digits_patterns = {};
-        var keys = digits_patterns.getKeys(); 
+        var keys = digits_patterns.keys();
+        for(var i=0; i<keys.size(); i++){
+            invert_digits_patterns[keys[i]] = [];
+            for(var j=0; j < 7; j++){
+                if (digits_patterns[keys[i]].indexOf(j) < 0){
+                    invert_digits_patterns[keys[i]].add(j);
+                }
+            }
+        } 
 
     }
 
@@ -244,10 +253,13 @@ class FontLessFont {
         var res = 0;
 
         if (digits_patterns.hasKey(symb)){
-            drawLCDSymbol(dc, x, y, seven_segments_poligons, digits_patterns[symb], color_settings);
+            System.println(symb);
+            System.println(digits_patterns[symb]);
+            System.println(invert_digits_patterns[symb]);
+            drawLCDSymbol(dc, x, y, seven_segments_poligons, digits_patterns[symb],invert_digits_patterns[symb], color_settings);
             res = width;
         }else if (punctuations_patterns.hasKey(symb)){
-            drawLCDSymbol(dc, x, y, punctuation_segments_poligons, punctuations_patterns[symb], color_settings);
+            drawLCDSymbol(dc, x, y, punctuation_segments_poligons, punctuations_patterns[symb],[], color_settings);
             res = punctuation_width;
         }else if (other_patterns.hasKey(symb)){
             res = other_patterns[symb].invoke(dc, x, y, color_settings);
@@ -257,28 +269,28 @@ class FontLessFont {
         return res;
     }
 
-    private function drawLCDSymbol(dc, x, y, symb_segments, indexes, color_settings){
+    private function drawLCDSymbol(dc, x, y, segment_poligons, symbol_pattern, invert_symbol_pattern,color_settings){
 
         //Закраска пустых сегментов
         //if (simple_style == false && color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){
         if (color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){    
             dc.setColor(color_settings[:font_empty_segments], color_settings[:font_empty_segments]);
-            for (var i = 0; i < symb_segments.size(); i++){
-                dc.fillPolygon(movePoligon(symb_segments[i], x, y));
+            for (var i = 0; i < invert_symbol_pattern.size(); i++){
+                dc.fillPolygon(movePoligon(segment_poligons[invert_symbol_pattern[i]], x, y));
             }
         }
 
         //Отрисовка символа
         dc.setColor(color_settings[:font], color_settings[:font]);
-        for (var i = 0; i < indexes.size(); i++){
-            dc.fillPolygon(movePoligon(symb_segments[indexes[i]], x, y));
+        for (var i = 0; i < symbol_pattern.size(); i++){
+            dc.fillPolygon(movePoligon(segment_poligons[symbol_pattern[i]], x, y));
         }
         
         //Контуры вокруг сегментов
         if (simple_style == false && color_settings[:font_border] != Graphics.COLOR_TRANSPARENT){
             dc.setColor(color_settings[:font_border], color_settings[:font_border]);
-            for (var i = 0; i < symb_segments.size(); i++){
-                drawSegmentBorder(movePoligon(symb_segments[i], x, y), dc);
+            for (var i = 0; i < segment_poligons.size(); i++){
+                drawSegmentBorder(movePoligon(segment_poligons[i], x, y), dc);
             }
         }
     }
