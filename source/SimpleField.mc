@@ -34,13 +34,14 @@ class SimpleField extends WatchUi.Layer{
         dc.setAntiAlias(true);
 
         var value = self.method(getId()).invoke();
+        System.println(value);
         font.writeString(dc, 0, 0, value, colors, Graphics.TEXT_JUSTIFY_LEFT);
 
         drawBorder(dc);
     }
 
     function drawBorder(dc){
-        //return;
+        return;
         dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_GREEN);
         dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
     }

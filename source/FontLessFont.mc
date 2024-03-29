@@ -13,8 +13,13 @@ class FontLessFont {
     private var digits_patterns, punctuations_patterns, other_patterns;
     private var invert_digits_patterns;
 
+    protected var accelerator4, accelerator6;
+
     function initialize(params) {
         
+        accelerator4 = [[0,0],[0,0],[0,0],[0,0]];
+        accelerator6 = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+
         self.height = params[:height];
         self.width = params[:width];
         self.line_width = params[:line_width];
@@ -27,6 +32,7 @@ class FontLessFont {
         initSevenSegmentsPoligons();
         initPunctuationSegments();
         initOtherSymbols();
+
     }
 
     function getStringWidth(str){
@@ -240,12 +246,27 @@ class FontLessFont {
         
     }
 
-    private function movePoligon(poligon, offset_x, offset_y){
-        var res = [];
+    function quikMovePoligon(accelerator, poligon, offset_x, offset_y){
         for (var i = 0; i < poligon.size(); i++){
-            res.add([poligon[i][0] + offset_x,  poligon[i][1] + offset_y]);
+            accelerator[i][0] = poligon[i][0] + offset_x;
+            accelerator[i][1] = poligon[i][1] + offset_y;
         }
-        return res;
+    }
+
+    private function movePoligon(poligon, offset_x, offset_y){
+        System.println(poligon);
+        var size = poligon.size();
+        if (size == 4){
+            return quikMovePoligon(accelerator4, poligon, offset_x, offset_y);
+        }else if (size == 6){
+            return quikMovePoligon(accelerator6, poligon, offset_x, offset_y);
+        }else{
+            var res = [];
+            for (var i = 0; i < poligon.size(); i++){
+                res.add([poligon[i][0] + offset_x,  poligon[i][1] + offset_y]);
+            }
+            return res;
+        }
     }
 
     private function writeSymbol(dc, x, y, symb, color_settings){
@@ -253,6 +274,7 @@ class FontLessFont {
         var res = 0;
 
         if (digits_patterns.hasKey(symb)){
+            System.println(symb);
             drawLCDSymbol(dc, x, y, seven_segments_poligons, digits_patterns[symb],invert_digits_patterns[symb], color_settings);
             res = width;
         }else if (punctuations_patterns.hasKey(symb)){
