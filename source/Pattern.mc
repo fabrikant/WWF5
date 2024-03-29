@@ -35,7 +35,7 @@ class Pattern {
         dc.setAntiAlias(true);
 
         //Верхняя дуга
-        var arc_angle = 75;
+        var arc_angle = 95;
         var arc_angle_offset = 20;
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
@@ -46,7 +46,8 @@ class Pattern {
 
         //Вычисление координат относительно верхней дуги
         var x1 = center[0] + r * Math.cos(Math.toRadians(arc_angle_offset + arc_angle));
-        var x2 = x1 - Math.floor(dc.getWidth() / 10);
+        //var x2 = x1 - Math.floor(dc.getWidth() / 10);
+        var x2 = Math.floor(dc.getWidth() * 0.35);
         var y1 = center[1] - r * Math.sin(Math.toRadians(arc_angle_offset + arc_angle));
         var y2 = center[1] - r * Math.sin(Math.toRadians(arc_angle_offset));
         var interseption = calculateHorizontalIntersection(dc, y2);
@@ -103,7 +104,8 @@ class Pattern {
         var c = Math.sqrt(Math.pow(y1-y2, 2)+Math.pow(x1-x2, 2));
         
         var x4 = Math.floor(0.70 * dc.getWidth());
-        var x3 = x4 + Math.floor((y4 - y3) * (x1 - x2) / c);
+        //var x3 = x4 + Math.floor((y4 - y3) * (x1 - x2) / c);
+        var x3 = x4;
         for (var i = 0; i < colors.size(); i++){
             dc.setColor(colors[i], colors[i]);
             dc.setPenWidth(pen_widths[i]);
