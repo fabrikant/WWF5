@@ -6,7 +6,6 @@ import Toybox.System;
 class FontLessFont {
 
     protected var glifs;
-    protected var punctuation_width;
     protected var height;
 
     function initialize(options) {
@@ -16,7 +15,6 @@ class FontLessFont {
         }
         glifs = {};
         height = options[:height];
-        punctuation_width = 2 * options[:line_offset] + options[:line_width];
         initSevenSegmentsPoligons(options);
         initPunctuationSegments(options);
         initOtherSymbols(options);
@@ -231,7 +229,7 @@ class FontLessFont {
             //"," => [1],
         };
 
-        options[:width] = punctuation_width;
+        options[:width] = 2 * options[:line_offset] + options[:line_width];
         var keys = punctuations_patterns.keys();
         for (var i = 0; i < keys.size(); i++){
             glifs[keys[i]] = createGlifBitmap(options, 
