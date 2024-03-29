@@ -12,7 +12,7 @@ class SunEventsField extends SimpleField{
     }
 
     function initializeFont(options){
-        var font_w = Math.floor(options[:width] / options[:max_lenght]);
+        var font_w = Math.floor(options[:width] / options[:max_lenght])+2;
         //var line_w = Math.floor(font_w / 4.2);
         //var font_w = 10;
         var line_w = 2;
@@ -38,23 +38,15 @@ class SunEventsField extends SimpleField{
         var image = createImage(Rez.Drawables.sunEvent, colors);
 
         var image_x = Math.floor((dc.getWidth() - image.getWidth()) / 2);
-        //var image_y = Math.floor((dc.getHeight() - image.getHeight()) / 2);
 
-        dc.drawBitmap(image_x, 0, image);
+        dc.drawBitmap(image_x, 0 -  Math.round(dc.getHeight() / 5), image);
 
-        font.writeString(dc, image_x - 1, dc.getHeight()/2, sunrise, colors, 
+        font.writeString(dc, image_x - 1, dc.getHeight() / 2, sunrise, colors, 
              Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        font.writeString(dc, image_x + image.getWidth() + 1, dc.getHeight()/2, sunset, colors, 
+        font.writeString(dc, image_x + image.getWidth() + 1, dc.getHeight() / 2, sunset, colors, 
              Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);     
         
-        
-        System.println("image_x "+image_x);
-        System.println(image.getWidth());
-        //var value = sunrise+"::"+sunset;
-        // font.writeString(dc, dc.getWidth()/2, dc.getHeight()/2, value, colors, 
-        //     Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-
         drawBorder(dc);
     }
 
