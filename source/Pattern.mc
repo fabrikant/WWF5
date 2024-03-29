@@ -99,9 +99,6 @@ class Pattern {
         var y3 = y4 - Math.floor(Global.mod(y5-y4)*0.7);
         interseption = calculateHorizontalIntersection(dc, y3);
         var x7 = interseption[1];
-
-        var c = Math.sqrt(Math.pow(y1-y2, 2) + Math.pow(x1-x2, 2));
-        
         var x4 = Math.floor(0.70 * dc.getWidth());
         var x3 = x4;
         for (var i = 0; i < colors.size(); i++){
