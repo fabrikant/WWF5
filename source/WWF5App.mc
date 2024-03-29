@@ -5,6 +5,7 @@ import Toybox.WatchUi;
 class WWF5App extends Application.AppBase {
 
     var system_complications;
+    var watch_view;
 
     function initialize() {
         AppBase.initialize();
@@ -21,7 +22,8 @@ class WWF5App extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as Array<Views or InputDelegates>? {
-        return [ new WWF5View(), new WWF5Delegate() ] as Array<Views or InputDelegates>;
+        watch_view = new WWF5View();
+        return [watch_view, new WWF5Delegate()] as Array<Views or InputDelegates>;
     }
 
     function getSettingsView(){

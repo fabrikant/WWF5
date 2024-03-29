@@ -5,28 +5,25 @@ import Toybox.System;
 
 class FontLessFont {
 
-    protected var height, width, line_width, line_offset;
-    protected var simple_style;
+    protected var glifs;
     protected var punctuation_width;
+    protected var height;
 
     private var seven_segments_poligons, punctuation_segments_poligons;
     private var digits_patterns, punctuations_patterns, other_patterns;
     private var invert_digits_patterns;
 
-    function initialize(params) {
+    function initialize(options) {
         
-        self.height = params[:height];
-        self.width = params[:width];
-        self.line_width = params[:line_width];
-        self.line_offset = params[:line_offset];
-        simple_style = false;
-        if (params.hasKey(:simple_style)){
-            simple_style = params[:simple_style];
+        if (! options.hasKey(:simple_style)){
+            options[:simple_style] = false;
         }
-
-        initSevenSegmentsPoligons();
-        initPunctuationSegments();
-        initOtherSymbols();
+        glifs = {};
+        height = options[:height];
+        punctuation_width = 2 * options[:line_offset] + options[:line_width];
+        initSevenSegmentsPoligons(options);
+        initPunctuationSegments(options);
+        //initOtherSymbols(options);
 
     }
 
@@ -34,10 +31,8 @@ class FontLessFont {
         var res = 0;
         for (var i = 0; i < str.length(); i++){
             var sub_str = str.substring(i, i+1);
-            if (digits_patterns.hasKey(sub_str)){
-                res += width;
-            }else if (punctuations_patterns.hasKey(sub_str)){
-                res += punctuation_width;
+            if (glifs.hasKey(sub_str)){
+                res += glifs[sub_str].getWidth();
             }else if (other_patterns.hasKey(sub_str)){
                 res += other_patterns[sub_str].invoke(null, null, null, null);
             }
@@ -54,121 +49,126 @@ class FontLessFont {
 
         var just = justify;
         if (just >= Graphics.TEXT_JUSTIFY_VCENTER){
-            current_y -= height / 2;
+            current_y -= Math.floor(height / 2);
             just -= Graphics.TEXT_JUSTIFY_VCENTER;
         }
         if (just == Graphics.TEXT_JUSTIFY_CENTER){
-            next_x -= str_width / 2;
+            next_x -= Math.floor(str_width / 2);
         }else if (just == Graphics.TEXT_JUSTIFY_RIGHT){
             next_x -= str_width;
         }
         
 
         for (var i = 0; i < str.length(); i++){
-            next_x += writeSymbol(dc, next_x, current_y, str.substring(i, i+1), color_settings);
+            var sub_str = str.substring(i, i+1);
+            if (glifs.hasKey(sub_str)){
+                var bitmap = glifs[sub_str].get();
+                dc.drawBitmap(next_x, current_y, bitmap);
+                next_x += bitmap.getDc().getWidth();    
+            }
         }
     }
 
-    private function initSevenSegmentsPoligons(){
-        seven_segments_poligons = [];
+    private function initSevenSegmentsPoligons(options){
+        var seven_segments_poligons = [];
 
-        if (simple_style){
+        if (options[:simple_style]){
             
-            var horizontal_size = width - 2 * line_offset;
-            var vertical_size = Math.round((height - 2 * line_offset) / 2);
+            var horizontal_size = options[:width] - 2 * options[:line_offset];
+            var vertical_size = Math.round((options[:height] - 2 * options[:line_offset]) / 2);
 
             var poligon_horizontal = [
                 [0,0],
                 [horizontal_size,0], 
-                [horizontal_size,line_width],
-                [0, line_width]
+                [horizontal_size,options[:line_width]],
+                [0, options[:line_width]]
             ];
 
             var poligon_vertical = [
                 [0, 0],
-                [line_width, 0],
-                [line_width, vertical_size],
+                [options[:line_width], 0],
+                [options[:line_width], vertical_size],
                 [0, vertical_size]
             ];
          
-            var x_right = width - line_width - line_offset;
-            var y_vertical = line_offset + vertical_size;
+            var x_right = options[:width] - options[:line_width] - options[:line_offset];
+            var y_vertical = options[:line_offset] + vertical_size;
    
-            seven_segments_poligons.add(movePoligon(poligon_horizontal, line_offset, line_offset));
-            seven_segments_poligons.add(movePoligon(poligon_vertical, x_right, line_offset));
+            seven_segments_poligons.add(movePoligon(poligon_horizontal, options[:line_offset], options[:line_offset]));
+            seven_segments_poligons.add(movePoligon(poligon_vertical, x_right, options[:line_offset]));
             seven_segments_poligons.add(movePoligon(poligon_vertical, x_right, y_vertical));
-            seven_segments_poligons.add(movePoligon(poligon_horizontal, line_offset, height - line_offset - line_width));
-            seven_segments_poligons.add(movePoligon(poligon_vertical, line_offset, y_vertical));
-            seven_segments_poligons.add(movePoligon(poligon_vertical, line_offset, line_offset));
-            seven_segments_poligons.add(movePoligon(poligon_horizontal, line_offset, (height - line_width)/ 2));
+            seven_segments_poligons.add(movePoligon(poligon_horizontal, options[:line_offset], options[:height] - options[:line_offset] - options[:line_width]));
+            seven_segments_poligons.add(movePoligon(poligon_vertical, options[:line_offset], y_vertical));
+            seven_segments_poligons.add(movePoligon(poligon_vertical, options[:line_offset], options[:line_offset]));
+            seven_segments_poligons.add(movePoligon(poligon_horizontal, options[:line_offset], (options[:height] - options[:line_width])/ 2));
         
         }else{
 
-            var horizontal_size = width - 2 * line_offset - 5;
-            var vertical_size = Math.round((height - 2 * line_offset) / 2) - 2;
+            var horizontal_size = options[:width] - 2 * options[:line_offset] - 5;
+            var vertical_size = Math.round((options[:height] - 2 * options[:line_offset]) / 2) - 2;
 
             var poligon_up = [
                 [0,0],
                 [horizontal_size,0],
-                [horizontal_size - line_width, line_width],
-                [line_width, line_width]
+                [horizontal_size - options[:line_width], options[:line_width]],
+                [options[:line_width], options[:line_width]]
             ];
 
             var poligon_right_up = [
-                [0, line_width],
-                [line_width, 0],
-                [line_width, vertical_size],
-                [0, vertical_size - line_width / 2]
+                [0, options[:line_width]],
+                [options[:line_width], 0],
+                [options[:line_width], vertical_size],
+                [0, vertical_size - options[:line_width] / 2]
             ];
 
             var poligon_right_bottom = [
-                [0, line_width / 2],
-                [line_width, 0],
-                [line_width, vertical_size],
-                [0, vertical_size - line_width]
+                [0, options[:line_width] / 2],
+                [options[:line_width], 0],
+                [options[:line_width], vertical_size],
+                [0, vertical_size - options[:line_width]]
             ];
 
             var poligon_left_up = [
                 [0,0],
-                [line_width, line_width / 2],
-                [line_width, vertical_size - line_width],
+                [options[:line_width], options[:line_width] / 2],
+                [options[:line_width], vertical_size - options[:line_width]],
                 [0, vertical_size]
             ];
 
             var poligon_left_bottom = [
                 [0,0],
-                [line_width, line_width],
-                [line_width, vertical_size - line_width / 2],
+                [options[:line_width], options[:line_width]],
+                [options[:line_width], vertical_size - options[:line_width] / 2],
                 [0, vertical_size]
             ];
 
             var poligon_bottom = [
-                [line_width, 0],
-                [horizontal_size - line_width, 0],
-                [horizontal_size, line_width],
-                [0, line_width]
+                [options[:line_width], 0],
+                [horizontal_size - options[:line_width], 0],
+                [horizontal_size, options[:line_width]],
+                [0, options[:line_width]]
             ];
             
             var poligon_center = [
-                [0,line_width / 2],
-                [line_width, 0],
-                [horizontal_size - line_width,0],
-                [horizontal_size, line_width / 2],
-                [horizontal_size - line_width, line_width],
-                [line_width, line_width]
+                [0,options[:line_width] / 2],
+                [options[:line_width], 0],
+                [horizontal_size - options[:line_width],0],
+                [horizontal_size, options[:line_width] / 2],
+                [horizontal_size - options[:line_width], options[:line_width]],
+                [options[:line_width], options[:line_width]]
             ];
         
-            var x_up_bottom = line_offset + 2;
-            var x_right = width - line_width - line_offset - 1;
-            var y_vertical = line_offset + vertical_size + 2;
+            var x_up_bottom = options[:line_offset] + 2;
+            var x_right = options[:width] - options[:line_width] - options[:line_offset] - 1;
+            var y_vertical = options[:line_offset] + vertical_size + 2;
 
-            seven_segments_poligons.add(movePoligon(poligon_up, x_up_bottom, line_offset));
-            seven_segments_poligons.add(movePoligon(poligon_right_up, x_right, line_offset+1));
+            seven_segments_poligons.add(movePoligon(poligon_up, x_up_bottom, options[:line_offset]));
+            seven_segments_poligons.add(movePoligon(poligon_right_up, x_right, options[:line_offset]+1));
             seven_segments_poligons.add(movePoligon(poligon_right_bottom, x_right, y_vertical+1));
-            seven_segments_poligons.add(movePoligon(poligon_bottom, x_up_bottom, height - line_offset - line_width));
-            seven_segments_poligons.add(movePoligon(poligon_left_up, line_offset, y_vertical+1));
-            seven_segments_poligons.add(movePoligon(poligon_left_bottom, line_offset, line_offset+1));
-            seven_segments_poligons.add(movePoligon(poligon_center, x_up_bottom, (height - line_width)/ 2));
+            seven_segments_poligons.add(movePoligon(poligon_bottom, x_up_bottom, options[:height] - options[:line_offset] - options[:line_width]));
+            seven_segments_poligons.add(movePoligon(poligon_left_up, options[:line_offset], y_vertical+1));
+            seven_segments_poligons.add(movePoligon(poligon_left_bottom, options[:line_offset], options[:line_offset]+1));
+            seven_segments_poligons.add(movePoligon(poligon_center, x_up_bottom, (options[:height] - options[:line_width])/ 2));
         }
 
         //           0
@@ -189,8 +189,8 @@ class FontLessFont {
             "8" =>[0, 1, 2, 3, 4, 5, 6],
             "9" =>[0, 1, 2, 3, 5, 6],
             "-" => [6],
-            "C" => [0, 5, 4, 3],
-            "F" => [0, 5, 6, 4],
+            // "C" => [0, 5, 4, 3],
+            // "F" => [0, 5, 6, 4],
         };   
 
 
@@ -203,24 +203,32 @@ class FontLessFont {
                     invert_digits_patterns[keys[i]].add(j);
                 }
             }
-        } 
+        }
+
+        var colors = getApp().watch_view.colors;
+        for (var i = 0; i < keys.size(); i++){
+            glifs[keys[i]] = createGlifBitmap(options, 
+                seven_segments_poligons, 
+                digits_patterns[keys[i]], 
+                invert_digits_patterns[keys[i]],
+                colors);
+        }
 
     }
 
-    private function initPunctuationSegments(){
-        punctuation_segments_poligons = [];
-        punctuation_width = 2 * line_offset + line_width;
+    private function initPunctuationSegments(options){
+        var punctuation_segments_poligons = [];
         var dot_poligon = [
             [0, 0],
-            [line_width, 0],
-            [line_width, line_width],
-            [0, line_width]
+            [options[:line_width], 0],
+            [options[:line_width], options[:line_width]],
+            [0, options[:line_width]]
         ];
 
-        punctuation_segments_poligons.add(movePoligon(dot_poligon, line_offset, 
-            (height-line_width) / 2));
-        punctuation_segments_poligons.add(movePoligon(dot_poligon, line_offset, 
-            height - line_offset - line_width));
+        punctuation_segments_poligons.add(movePoligon(dot_poligon, options[:line_offset], 
+            (options[:height]-options[:line_width]) / 2));
+        punctuation_segments_poligons.add(movePoligon(dot_poligon, options[:line_offset], 
+            options[:height] - options[:line_offset] - options[:line_width]));
         
         // 0
         // 1
@@ -228,12 +236,52 @@ class FontLessFont {
         punctuations_patterns = {
             "." => [1],
             ":" => [0, 1],
-            "," => [1],
+            //"," => [1],
         };
+
+        var colors = getApp().watch_view.colors;
+        options[:width] = punctuation_width;
+        var keys = punctuations_patterns.keys();
+        for (var i = 0; i < keys.size(); i++){
+            glifs[keys[i]] = createGlifBitmap(options, 
+                punctuation_segments_poligons, 
+                punctuations_patterns[keys[i]], 
+                [], colors);
+        }
 
     }
 
-    function initOtherSymbols(){
+    function createGlifBitmap(options, segment_poligons, symbol_pattern, invert_symbol_pattern,color_settings){
+        var _bufferedBitmapRef = Graphics.createBufferedBitmap({
+                :palette => [color_settings[:font], color_settings[:font_empty_segments], color_settings[:background]],
+				:width => options[:width],
+				:height => options[:height],
+			});
+        var buf_bitmap = _bufferedBitmapRef.get();
+        //buf_bitmap.setPalette([color_settings[:font], color_settings[:color_font_empty_segments], color_settings[:background]]);
+        var dc = buf_bitmap.getDc(); 
+        dc.setColor(color_settings[:background], color_settings[:background]);
+        dc.clear();
+
+        //Закраска пустых сегментов
+        if (color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){    
+            dc.setColor(color_settings[:font_empty_segments], color_settings[:font_empty_segments]);
+            for (var i = 0; i < invert_symbol_pattern.size(); i++){
+                dc.fillPolygon(segment_poligons[invert_symbol_pattern[i]]);
+            }
+        }
+
+        //Отрисовка символа
+        dc.setColor(color_settings[:font], color_settings[:font]);
+        for (var i = 0; i < symbol_pattern.size(); i++){
+            dc.fillPolygon(segment_poligons[symbol_pattern[i]]);
+        }
+        
+        return _bufferedBitmapRef;
+    }
+
+
+    function initOtherSymbols(options){
 
         other_patterns = {
             "°" => self.method(:drawDegree),
@@ -249,69 +297,18 @@ class FontLessFont {
         return res;
     }
 
-    private function writeSymbol(dc, x, y, symb, color_settings){
-        
-        var res = 0;
-
-        if (digits_patterns.hasKey(symb)){
-            drawLCDSymbol(dc, x, y, seven_segments_poligons, digits_patterns[symb],invert_digits_patterns[symb], color_settings);
-            res = width;
-        }else if (punctuations_patterns.hasKey(symb)){
-            drawLCDSymbol(dc, x, y, punctuation_segments_poligons, punctuations_patterns[symb],[], color_settings);
-            res = punctuation_width;
-        }else if (other_patterns.hasKey(symb)){
-            res = other_patterns[symb].invoke(dc, x, y, color_settings);
-        }
-
-        drawBorder(dc, x, y, res);         
-        return res;
-    }
-
-    private function drawLCDSymbol(dc, x, y, segment_poligons, symbol_pattern, invert_symbol_pattern,color_settings){
-
-        //Закраска пустых сегментов
-        //if (simple_style == false && color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){
-        if (color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){    
-            dc.setColor(color_settings[:font_empty_segments], color_settings[:font_empty_segments]);
-            for (var i = 0; i < invert_symbol_pattern.size(); i++){
-                dc.fillPolygon(movePoligon(segment_poligons[invert_symbol_pattern[i]], x, y));
-            }
-        }
-
-        //Отрисовка символа
-        dc.setColor(color_settings[:font], color_settings[:font]);
-        for (var i = 0; i < symbol_pattern.size(); i++){
-            dc.fillPolygon(movePoligon(segment_poligons[symbol_pattern[i]], x, y));
-        }
-
-    }
-
-    private function drawSegmentBorder(poligon, dc){
-        for (var i = 0; i < poligon.size(); i++){
-            dc.drawLine(poligon[i][0], poligon[i][1], 
-                poligon[(i + 1) % poligon.size()][0], poligon[(i + 1) % poligon.size()][1]);
-        }
-    }
-
-    private function drawBorder(dc, x, y, symb_width){
-        return;
-        dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_DK_GREEN);
-        dc.drawRectangle(x, y, symb_width,  self.height);
-    }
-
-
     /////////////////////////////////////////////////////////////////
     //OTHER SYMBOLS
 
-    function drawDegree(dc, x, y, color_settings){
+    // function drawDegree(dc, x, y, color_settings){
         
-        var radius = Global.max((line_width * 1.3).toNumber(), 3);
-        var symbol_width = 2 * radius + 2 * line_offset;
-        if (dc != null){
-            dc.setColor(color_settings[:font], color_settings[:background]);
-            dc.setPenWidth(Global.max((line_width).toNumber(), 1));
-            dc.drawCircle(x + line_offset + radius , y + line_offset + radius, radius);
-        }
-        return symbol_width;
-    }
+    //     var radius = Global.max((options[:line_width] * 1.3).toNumber(), 3);
+    //     var symbol_width = 2 * radius + 2 * options[:line_offset];
+    //     if (dc != null){
+    //         dc.setColor(color_settings[:font], color_settings[:background]);
+    //         dc.setPenWidth(Global.max((options[:line_width]).toNumber(), 1));
+    //         dc.drawCircle(x + options[:line_offset] + radius , y + options[:line_offset] + radius, radius);
+    //     }
+    //     return symbol_width;
+    // }
 }
