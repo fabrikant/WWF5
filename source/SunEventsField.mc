@@ -39,10 +39,10 @@ class SunEventsField extends SimpleField{
 
         dc.drawBitmap(image_x, 0 -  Math.round(dc.getHeight() / 5), image);
 
-        font.writeString(dc, image_x - 1, dc.getHeight() / 2, sunrise, colors, 
+        font.writeString(dc, image_x - 1, dc.getHeight() / 2, sunrise, 
              Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        font.writeString(dc, image_x + image.getWidth() + 1, dc.getHeight() / 2, sunset, colors, 
+        font.writeString(dc, image_x + image.getWidth() + 1, dc.getHeight() / 2, sunset, 
              Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);     
         
         drawBorder(dc);

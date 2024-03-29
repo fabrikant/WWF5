@@ -9,10 +9,6 @@ class FontLessFont {
     protected var punctuation_width;
     protected var height;
 
-    private var seven_segments_poligons, punctuation_segments_poligons;
-    private var digits_patterns, punctuations_patterns, other_patterns;
-    private var invert_digits_patterns;
-
     function initialize(options) {
         
         if (! options.hasKey(:simple_style)){
@@ -23,7 +19,7 @@ class FontLessFont {
         punctuation_width = 2 * options[:line_offset] + options[:line_width];
         initSevenSegmentsPoligons(options);
         initPunctuationSegments(options);
-        //initOtherSymbols(options);
+        initOtherSymbols(options);
 
     }
 
@@ -33,14 +29,12 @@ class FontLessFont {
             var sub_str = str.substring(i, i+1);
             if (glifs.hasKey(sub_str)){
                 res += glifs[sub_str].getWidth();
-            }else if (other_patterns.hasKey(sub_str)){
-                res += other_patterns[sub_str].invoke(null, null, null, null);
             }
         }
         return res;
     }
     
-    function writeString(dc, x, y, str, color_settings, justify){
+    function writeString(dc, x, y, str, justify){
 
         var next_x = x;
         var current_y = y;
@@ -177,7 +171,7 @@ class FontLessFont {
         //          4 2
         //           3
 
-        digits_patterns = {
+        var digits_patterns = {
             "0" =>[0, 1, 2, 3, 4, 5],
             "1" =>[1, 2],
             "2" =>[0, 1, 6, 4, 3],
@@ -194,7 +188,7 @@ class FontLessFont {
         };   
 
 
-        invert_digits_patterns = {};
+        var invert_digits_patterns = {};
         var keys = digits_patterns.keys();
         for(var i=0; i<keys.size(); i++){
             invert_digits_patterns[keys[i]] = [];
@@ -205,13 +199,11 @@ class FontLessFont {
             }
         }
 
-        var colors = getApp().watch_view.colors;
         for (var i = 0; i < keys.size(); i++){
             glifs[keys[i]] = createGlifBitmap(options, 
                 seven_segments_poligons, 
                 digits_patterns[keys[i]], 
-                invert_digits_patterns[keys[i]],
-                colors);
+                invert_digits_patterns[keys[i]]);
         }
 
     }
@@ -233,59 +225,55 @@ class FontLessFont {
         // 0
         // 1
         
-        punctuations_patterns = {
+        var punctuations_patterns = {
             "." => [1],
             ":" => [0, 1],
             //"," => [1],
         };
 
-        var colors = getApp().watch_view.colors;
         options[:width] = punctuation_width;
         var keys = punctuations_patterns.keys();
         for (var i = 0; i < keys.size(); i++){
             glifs[keys[i]] = createGlifBitmap(options, 
                 punctuation_segments_poligons, 
-                punctuations_patterns[keys[i]], 
-                [], colors);
+                punctuations_patterns[keys[i]], []);
         }
 
     }
 
-    function createGlifBitmap(options, segment_poligons, symbol_pattern, invert_symbol_pattern,color_settings){
-        var _bufferedBitmapRef = Graphics.createBufferedBitmap({
-                :palette => [color_settings[:font], color_settings[:font_empty_segments], color_settings[:background]],
+    function createGlifBitmap(options, segment_poligons, symbol_pattern, invert_symbol_pattern){
+        var colors = getApp().watch_view.colors;
+        var _buf_bitmap_ref = Graphics.createBufferedBitmap({
 				:width => options[:width],
 				:height => options[:height],
 			});
-        var buf_bitmap = _bufferedBitmapRef.get();
-        //buf_bitmap.setPalette([color_settings[:font], color_settings[:color_font_empty_segments], color_settings[:background]]);
+        var buf_bitmap = _buf_bitmap_ref.get();
         var dc = buf_bitmap.getDc(); 
-        dc.setColor(color_settings[:background], color_settings[:background]);
+        dc.setColor(colors[:background], colors[:background]);
+        dc.setAntiAlias(true);
         dc.clear();
 
         //Закраска пустых сегментов
-        if (color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){    
-            dc.setColor(color_settings[:font_empty_segments], color_settings[:font_empty_segments]);
+        if (colors[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){    
+            dc.setColor(colors[:font_empty_segments], colors[:font_empty_segments]);
             for (var i = 0; i < invert_symbol_pattern.size(); i++){
                 dc.fillPolygon(segment_poligons[invert_symbol_pattern[i]]);
             }
         }
 
         //Отрисовка символа
-        dc.setColor(color_settings[:font], color_settings[:font]);
+        dc.setColor(colors[:font], colors[:font]);
         for (var i = 0; i < symbol_pattern.size(); i++){
             dc.fillPolygon(segment_poligons[symbol_pattern[i]]);
         }
         
-        return _bufferedBitmapRef;
+        return _buf_bitmap_ref;
     }
 
 
     function initOtherSymbols(options){
 
-        other_patterns = {
-            "°" => self.method(:drawDegree),
-        };
+        glifs["°"] = drawDegree(options);
         
     }
 
@@ -300,15 +288,26 @@ class FontLessFont {
     /////////////////////////////////////////////////////////////////
     //OTHER SYMBOLS
 
-    // function drawDegree(dc, x, y, color_settings){
+    function drawDegree(options){
         
-    //     var radius = Global.max((options[:line_width] * 1.3).toNumber(), 3);
-    //     var symbol_width = 2 * radius + 2 * options[:line_offset];
-    //     if (dc != null){
-    //         dc.setColor(color_settings[:font], color_settings[:background]);
-    //         dc.setPenWidth(Global.max((options[:line_width]).toNumber(), 1));
-    //         dc.drawCircle(x + options[:line_offset] + radius , y + options[:line_offset] + radius, radius);
-    //     }
-    //     return symbol_width;
-    // }
+        var colors = getApp().watch_view.colors;
+
+        var radius = Global.max((options[:line_width] * 1.3).toNumber(), 3);
+        var symbol_width = 2 * radius + 2 * options[:line_offset];
+
+        var _buf_bitmap_ref = Graphics.createBufferedBitmap({
+				:width => symbol_width,
+				:height => options[:height],
+			});
+        var buf_bitmap = _buf_bitmap_ref.get();
+        var dc = buf_bitmap.getDc(); 
+        dc.setColor(colors[:background], colors[:background]);
+        dc.setAntiAlias(true);
+        dc.clear();
+
+        dc.setColor(colors[:font], colors[:background]);
+        dc.setPenWidth(Global.max((options[:line_width]).toNumber(), 1));
+        dc.drawCircle(options[:line_offset] + radius, options[:line_offset] + radius, radius);
+        return _buf_bitmap_ref;
+    }
 }

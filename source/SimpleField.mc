@@ -34,7 +34,7 @@ class SimpleField extends WatchUi.Layer{
         dc.setAntiAlias(true);
 
         var value = self.method(getId()).invoke();
-        font.writeString(dc, 0, 0, value, colors, Graphics.TEXT_JUSTIFY_LEFT);
+        font.writeString(dc, 0, 0, value, Graphics.TEXT_JUSTIFY_LEFT);
 
         drawBorder(dc);
     }
