@@ -21,7 +21,7 @@ class WWF5App extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as Array<Views or InputDelegates>? {
-        return [ new WWF5View() ] as Array<Views or InputDelegates>;
+        return [ new WWF5View(), new WWF5Delegate() ] as Array<Views or InputDelegates>;
     }
 
     function getSettingsView(){

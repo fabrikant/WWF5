@@ -1,6 +1,22 @@
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
+import Toybox.WatchUi;
+
+class PatternField extends WatchUi.Layer{
+
+    var pattern;
+
+    function initialize(options){
+        self.pattern = options[:pattern];
+        Layer.initialize(options);
+    }
+
+    function draw(colors){
+        var dc = getDc();
+        dc.drawBitmap(0, 0, pattern.background_image);
+    }
+}
 
 class Pattern {
 

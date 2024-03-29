@@ -73,8 +73,30 @@ class WWF5View extends WatchUi.WatchFace {
             [pattern.reference_points[:x][6] - temp_x, pattern.reference_points[:y][2]]);
         options[:identifier] = :sun_events;
         options[:max_lenght] = 11;
+        var sun_event_field = new SunEventsField(options);
+        self.addLayer(sun_event_field);
 
-        self.addLayer(new SunEventsField(options));
+        //Погода
+        options = {
+            :locX => pattern.reference_points[:x][1], 
+            :locY => 0, 
+            :width => pattern.reference_points[:x][6] - pattern.reference_points[:x][1], 
+            :height => sun_event_field.getY() - 1,
+            :identifier => :weather,
+        };
+        self.addLayer(new WeatherWidget(options));
+
+        //Подложка
+        options = {
+            :locX => 0, 
+            :locY => 0, 
+            :width => System.getDeviceSettings().screenWidth, 
+            :height => System.getDeviceSettings().screenHeight,
+            :identifier => :pattern,
+            :pattern => self.pattern,
+        };
+        self.addLayer(new PatternField(options));
+
     }
 
     
@@ -88,7 +110,7 @@ class WWF5View extends WatchUi.WatchFace {
     // loading resources into memory.
     function onShow() as Void {
         readSettings();
-        pattern = new Pattern(colors);
+        self.pattern = new Pattern(colors);
         createLayers();
    }
 
@@ -102,7 +124,6 @@ class WWF5View extends WatchUi.WatchFace {
         for (var i = 0; i < layers.size(); i++){
             layers[i].draw(colors);
         }
-        dc.drawBitmap(0, 0, pattern.background_image);
     }
 
     function onPartialUpdate(dc){
