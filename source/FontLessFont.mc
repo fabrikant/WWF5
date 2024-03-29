@@ -8,8 +8,9 @@ class FontLessFont {
     protected var simple_style;
     protected var punctuation_width;
 
-    private var segments, punctuation_segments;
-    private var digits_dict, punctuation_dict, other_dict;
+    private var seven_segments_poligons, punctuation_segments_poligons;
+    private var digits_patterns, punctuations_patterns, other_patterns;
+    private var invert_digits_patterns;
 
     function initialize(params) {
         
@@ -31,12 +32,12 @@ class FontLessFont {
         var res = 0;
         for (var i = 0; i < str.length(); i++){
             var sub_str = str.substring(i, i+1);
-            if (digits_dict.hasKey(sub_str)){
+            if (digits_patterns.hasKey(sub_str)){
                 res += width;
-            }else if (punctuation_dict.hasKey(sub_str)){
+            }else if (punctuations_patterns.hasKey(sub_str)){
                 res += punctuation_width;
-            }else if (other_dict.hasKey(sub_str)){
-                res += other_dict[sub_str].invoke(null, null, null, null);
+            }else if (other_patterns.hasKey(sub_str)){
+                res += other_patterns[sub_str].invoke(null, null, null, null);
             }
         }
         return res;
@@ -67,7 +68,7 @@ class FontLessFont {
     }
 
     private function initSevenSegmentsPoligons(){
-        segments = [];
+        seven_segments_poligons = [];
 
         if (simple_style){
             
@@ -91,13 +92,13 @@ class FontLessFont {
             var x_right = width - line_width - line_offset;
             var y_vertical = line_offset + vertical_size;
    
-            segments.add(movePoligon(poligon_horizontal, line_offset, line_offset));
-            segments.add(movePoligon(poligon_vertical, x_right, line_offset));
-            segments.add(movePoligon(poligon_vertical, x_right, y_vertical));
-            segments.add(movePoligon(poligon_horizontal, line_offset, height - line_offset - line_width));
-            segments.add(movePoligon(poligon_vertical, line_offset, y_vertical));
-            segments.add(movePoligon(poligon_vertical, line_offset, line_offset));
-            segments.add(movePoligon(poligon_horizontal, line_offset, (height - line_width)/ 2));
+            seven_segments_poligons.add(movePoligon(poligon_horizontal, line_offset, line_offset));
+            seven_segments_poligons.add(movePoligon(poligon_vertical, x_right, line_offset));
+            seven_segments_poligons.add(movePoligon(poligon_vertical, x_right, y_vertical));
+            seven_segments_poligons.add(movePoligon(poligon_horizontal, line_offset, height - line_offset - line_width));
+            seven_segments_poligons.add(movePoligon(poligon_vertical, line_offset, y_vertical));
+            seven_segments_poligons.add(movePoligon(poligon_vertical, line_offset, line_offset));
+            seven_segments_poligons.add(movePoligon(poligon_horizontal, line_offset, (height - line_width)/ 2));
         
         }else{
 
@@ -159,13 +160,13 @@ class FontLessFont {
             var x_right = width - line_width - line_offset - 1;
             var y_vertical = line_offset + vertical_size + 2;
 
-            segments.add(movePoligon(poligon_up, x_up_bottom, line_offset));
-            segments.add(movePoligon(poligon_right_up, x_right, line_offset+1));
-            segments.add(movePoligon(poligon_right_bottom, x_right, y_vertical+1));
-            segments.add(movePoligon(poligon_bottom, x_up_bottom, height - line_offset - line_width));
-            segments.add(movePoligon(poligon_left_up, line_offset, y_vertical+1));
-            segments.add(movePoligon(poligon_left_bottom, line_offset, line_offset+1));
-            segments.add(movePoligon(poligon_center, x_up_bottom, (height - line_width)/ 2));
+            seven_segments_poligons.add(movePoligon(poligon_up, x_up_bottom, line_offset));
+            seven_segments_poligons.add(movePoligon(poligon_right_up, x_right, line_offset+1));
+            seven_segments_poligons.add(movePoligon(poligon_right_bottom, x_right, y_vertical+1));
+            seven_segments_poligons.add(movePoligon(poligon_bottom, x_up_bottom, height - line_offset - line_width));
+            seven_segments_poligons.add(movePoligon(poligon_left_up, line_offset, y_vertical+1));
+            seven_segments_poligons.add(movePoligon(poligon_left_bottom, line_offset, line_offset+1));
+            seven_segments_poligons.add(movePoligon(poligon_center, x_up_bottom, (height - line_width)/ 2));
         }
 
         //           0
@@ -174,7 +175,7 @@ class FontLessFont {
         //          4 2
         //           3
 
-        digits_dict = {
+        digits_patterns = {
             "0" =>[0, 1, 2, 3, 4, 5],
             "1" =>[1, 2],
             "2" =>[0, 1, 6, 4, 3],
@@ -188,12 +189,16 @@ class FontLessFont {
             "-" => [6],
             "C" => [0, 5, 4, 3],
             "F" => [0, 5, 6, 4],
-        };    
+        };   
+
+
+        invert_digits_patterns = {};
+        var keys = digits_patterns.getKeys(); 
 
     }
 
     private function initPunctuationSegments(){
-        punctuation_segments = [];
+        punctuation_segments_poligons = [];
         punctuation_width = 2 * line_offset + line_width;
         var dot_poligon = [
             [0, 0],
@@ -202,15 +207,15 @@ class FontLessFont {
             [0, line_width]
         ];
 
-        punctuation_segments.add(movePoligon(dot_poligon, line_offset, 
+        punctuation_segments_poligons.add(movePoligon(dot_poligon, line_offset, 
             (height-line_width) / 2));
-        punctuation_segments.add(movePoligon(dot_poligon, line_offset, 
+        punctuation_segments_poligons.add(movePoligon(dot_poligon, line_offset, 
             height - line_offset - line_width));
         
         // 0
         // 1
         
-        punctuation_dict = {
+        punctuations_patterns = {
             "." => [1],
             ":" => [0, 1],
             "," => [1],
@@ -220,7 +225,7 @@ class FontLessFont {
 
     function initOtherSymbols(){
 
-        other_dict = {
+        other_patterns = {
             "°" => self.method(:drawDegree),
         };
         
@@ -238,14 +243,14 @@ class FontLessFont {
         
         var res = 0;
 
-        if (digits_dict.hasKey(symb)){
-            drawLCDSymbol(dc, x, y, segments, digits_dict[symb], color_settings);
+        if (digits_patterns.hasKey(symb)){
+            drawLCDSymbol(dc, x, y, seven_segments_poligons, digits_patterns[symb], color_settings);
             res = width;
-        }else if (punctuation_dict.hasKey(symb)){
-            drawLCDSymbol(dc, x, y, punctuation_segments, punctuation_dict[symb], color_settings);
+        }else if (punctuations_patterns.hasKey(symb)){
+            drawLCDSymbol(dc, x, y, punctuation_segments_poligons, punctuations_patterns[symb], color_settings);
             res = punctuation_width;
-        }else if (other_dict.hasKey(symb)){
-            res = other_dict[symb].invoke(dc, x, y, color_settings);
+        }else if (other_patterns.hasKey(symb)){
+            res = other_patterns[symb].invoke(dc, x, y, color_settings);
         }
 
         drawBorder(dc, x, y, res);         
