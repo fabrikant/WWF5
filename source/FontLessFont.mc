@@ -253,9 +253,6 @@ class FontLessFont {
         var res = 0;
 
         if (digits_patterns.hasKey(symb)){
-            System.println(symb);
-            System.println(digits_patterns[symb]);
-            System.println(invert_digits_patterns[symb]);
             drawLCDSymbol(dc, x, y, seven_segments_poligons, digits_patterns[symb],invert_digits_patterns[symb], color_settings);
             res = width;
         }else if (punctuations_patterns.hasKey(symb)){
@@ -285,14 +282,7 @@ class FontLessFont {
         for (var i = 0; i < symbol_pattern.size(); i++){
             dc.fillPolygon(movePoligon(segment_poligons[symbol_pattern[i]], x, y));
         }
-        
-        //Контуры вокруг сегментов
-        if (simple_style == false && color_settings[:font_border] != Graphics.COLOR_TRANSPARENT){
-            dc.setColor(color_settings[:font_border], color_settings[:font_border]);
-            for (var i = 0; i < segment_poligons.size(); i++){
-                drawSegmentBorder(movePoligon(segment_poligons[i], x, y), dc);
-            }
-        }
+
     }
 
     private function drawSegmentBorder(poligon, dc){

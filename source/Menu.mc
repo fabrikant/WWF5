@@ -41,12 +41,6 @@ module Menu {
 		});
 		items_props.add({
 			:item_class => :ColorPropertyItem,
-			:rez_label => Rez.Strings.color_font_border,
-			:identifier => "color_font_border",
-			:method => :ColorSelectMenu,
-		});
-		items_props.add({
-			:item_class => :ColorPropertyItem,
 			:rez_label => Rez.Strings.color_font_empty_segments,
 			:identifier => "color_font_empty_segments",
 			:method => :ColorSelectMenu,

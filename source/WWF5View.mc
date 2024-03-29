@@ -19,7 +19,6 @@ class WWF5View extends WatchUi.WatchFace {
             :pattern_decorate => Application.Properties.getValue("color_pattern_decorate"),
             :background => Application.Properties.getValue("color_background"),
             :font => Application.Properties.getValue("color_font"),
-            :font_border => Application.Properties.getValue("color_font_border"),
             :font_empty_segments => Application.Properties.getValue("color_font_empty_segments"),
         };
     }

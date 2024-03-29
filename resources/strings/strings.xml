@@ -8,7 +8,6 @@
     <string id="color_pattern_decorate" scope="foreground">Pattern accent</string>
     <string id="color_background" scope="foreground">Background</string>
     <string id="color_font" scope="foreground">Font</string>
-    <string id="color_font_border" scope="foreground">Font border</string>
     <string id="color_font_empty_segments" scope="foreground">Font empty segments</string>
 
 </strings>

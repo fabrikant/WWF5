@@ -9,7 +9,6 @@
 	<property id="color_pattern_decorate" type="number">0xAAAAAA</property>
 	<property id="color_background" type="number">0x000000</property>
 	<property id="color_font" type="number">0xFFFFFF</property>
-	<property id="color_font_border" type="number">-1</property>
 	<property id="color_font_empty_segments" type="number">0x550000</property>
 	
 
