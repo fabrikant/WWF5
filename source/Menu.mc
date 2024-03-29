@@ -124,16 +124,26 @@ class SubMenuItem extends WatchUi.MenuItem{
 //*****************************************************************************
 class ColorPropertyItem extends WatchUi.IconMenuItem{
 
-	var method_symbol;
+	var method_symbol, color;
 
 	function initialize(options) {
 		self.method_symbol = options[:method];
 		var label = Application.loadResource(options[:rez_label]);
-		var color = Application.Properties.getValue(options[:identifier]);
+		color = Application.Properties.getValue(options[:identifier]);
 		var icon = createIcon(color);
-		IconMenuItem.initialize(label, color.toString(), options[:identifier], icon, {});
+		IconMenuItem.initialize(label, colorToString(color), options[:identifier], icon, {});
 	}
 	
+	function colorToString(color){
+		var res;
+		if (color == Graphics.COLOR_TRANSPARENT){
+			res = color.toString();
+		}else{
+			res = "0x" + color.format("%06X");
+		}
+		return res;
+	}
+
 	function borderIcon(icon, color, color_border){
 		var dc = icon.get().getDc();
 		dc.setColor(color, color);
@@ -178,9 +188,9 @@ class ColorPropertyItem extends WatchUi.IconMenuItem{
 	}
 
 	function onSelectSubmenuItem(newValue){
-		var color = newValue.toNumber();
+		color = newValue.toNumber();
 		Application.Properties.setValue(getId(),color);
-		setSubLabel(newValue.toString());
+		setSubLabel(colorToString(color));
 		setIcon(createIcon(color));
 	}
 }
@@ -191,7 +201,7 @@ class ColorSelectItem extends ColorPropertyItem{
 	var paren_item_week;
 
 	function initialize(options) {
-		var label = options[:identifier].toString();
+		var label = colorToString(options[:color]);
 		var icon = createIcon(options[:color]);
 		self.paren_item_week = options[:paren_item_week];
 		IconMenuItem.initialize(label, null, options[:identifier], icon, {});
@@ -201,7 +211,7 @@ class ColorSelectItem extends ColorPropertyItem{
 		if (paren_item_week.stillAlive()){
 			var obj = paren_item_week.get();
 			if (obj != null){
-				obj.onSelectSubmenuItem(getId());
+				obj.onSelectSubmenuItem(getId().toNumber());
 			}
 		}
 		WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);			

@@ -100,7 +100,7 @@ class Pattern {
         interseption = calculateHorizontalIntersection(dc, y3);
         var x7 = interseption[1];
 
-        var c = Math.sqrt(Math.pow(y1-y2, 2)+Math.pow(x1-x2, 2));
+        var c = Math.sqrt(Math.pow(y1-y2, 2) + Math.pow(x1-x2, 2));
         
         var x4 = Math.floor(0.70 * dc.getWidth());
         var x3 = x4;
@@ -160,4 +160,5 @@ class Pattern {
     function calculateLayerLeft(x){
         return x + 1;
     }
+
 }

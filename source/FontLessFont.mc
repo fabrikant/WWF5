@@ -254,19 +254,22 @@ class FontLessFont {
 
     private function drawLCDSymbol(dc, x, y, symb_segments, indexes, color_settings){
 
-        if (simple_style == false && color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){
-            
+        //Закраска пустых сегментов
+        //if (simple_style == false && color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){
+        if (color_settings[:font_empty_segments] != Graphics.COLOR_TRANSPARENT){    
             dc.setColor(color_settings[:font_empty_segments], color_settings[:font_empty_segments]);
             for (var i = 0; i < symb_segments.size(); i++){
                 dc.fillPolygon(movePoligon(symb_segments[i], x, y));
             }
         }
 
+        //Отрисовка символа
         dc.setColor(color_settings[:font], color_settings[:font]);
         for (var i = 0; i < indexes.size(); i++){
             dc.fillPolygon(movePoligon(symb_segments[indexes[i]], x, y));
         }
         
+        //Контуры вокруг сегментов
         if (simple_style == false && color_settings[:font_border] != Graphics.COLOR_TRANSPARENT){
             dc.setColor(color_settings[:font_border], color_settings[:font_border]);
             for (var i = 0; i < symb_segments.size(); i++){
