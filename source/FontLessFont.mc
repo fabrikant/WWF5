@@ -34,7 +34,6 @@ class FontLessFont {
         for (var i = 0; i < str.length(); i++){
             var sub_str = str.substring(i, i+1);
             if (glifs.hasKey(sub_str)){
-                System.println("symb: "+sub_str);
                 var bitmap = glifs[sub_str];
                 if (bitmap instanceof Graphics.BufferedBitmapReference){
                     res += bitmap.getWidth();

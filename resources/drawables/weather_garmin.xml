@@ -204,7 +204,7 @@
       <color>555555</color>
     </palette>
   </bitmap>
-  <bitmap id="CONDITION_HURRICANE" filename="./svg-resources/508-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+  <bitmap id="CONDITION_HURRICANE" filename="./svg-resources/1001.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
     <palette disableTransparency="false">
       <color>555555</color>
     </palette>
@@ -224,7 +224,7 @@
       <color>555555</color>
     </palette>
   </bitmap>
-  <bitmap id="CONDITION_CLOUDY_CHANCE_OF_RAIN" filename="./svg-resources/300-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+  <bitmap id="CONDITION_CLOUDY_CHANCE_OF_RAIN" filename="./svg-resources/2019.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
     <palette disableTransparency="false">
       <color>555555</color>
     </palette>
@@ -239,7 +239,7 @@
       <color>555555</color>
     </palette>
   </bitmap>
-  <bitmap id="CONDITION_FLURRIES" filename="./svg-resources/1023.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+  <bitmap id="CONDITION_FLURRIES" filename="./svg-resources/1040.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
     <palette disableTransparency="false">
       <color>555555</color>
     </palette>
@@ -264,7 +264,279 @@
       <color>555555</color>
     </palette>
   </bitmap>
-  <bitmap id="CONDITION_UNKNOWN" filename="./svg-resources/1045.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+  <bitmap id="CONDITION_UNKNOWN" filename="./svg-resources/999.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  
+  
+  <bitmap id="CONDITION_CLEAR_NIGHT" filename="./svg-resources/150-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_PARTLY_CLOUDY_NIGHT" filename="./svg-resources/151-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_MOSTLY_CLOUDY_NIGHT" filename="./svg-resources/104-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_RAIN_NIGHT" filename="./svg-resources/305-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SNOW_NIGHT" filename="./svg-resources/400-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_WINDY_NIGHT" filename="./svg-resources/2004.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_THUNDERSTORMS_NIGHT" filename="./svg-resources/2015.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_WINTRY_MIX_NIGHT" filename="./svg-resources/404-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_FOG_NIGHT" filename="./svg-resources/2003.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HAZY_NIGHT" filename="./svg-resources/1047.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HAIL_NIGHT" filename="./svg-resources/313-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SCATTERED_SHOWERS_NIGHT" filename="./svg-resources/301-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SCATTERED_THUNDERSTORMS_NIGHT" filename="./svg-resources/304-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_UNKNOWN_PRECIPITATION_NIGHT" filename="./svg-resources/399-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_LIGHT_RAIN_NIGHT" filename="./svg-resources/305-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HEAVY_RAIN_NIGHT" filename="./svg-resources/306-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_LIGHT_SNOW_NIGHT" filename="./svg-resources/400-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HEAVY_SNOW_NIGHT" filename="./svg-resources/401-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_LIGHT_RAIN_SNOW_NIGHT" filename="./svg-resources/456-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HEAVY_RAIN_SNOW_NIGHT" filename="./svg-resources/405-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CLOUDY_NIGHT" filename="./svg-resources/104-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_RAIN_SNOW_NIGHT" filename="./svg-resources/404-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_PARTLY_CLEAR_NIGHT" filename="./svg-resources/152-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_MOSTLY_CLEAR_NIGHT" filename="./svg-resources/153-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_LIGHT_SHOWERS_NIGHT" filename="./svg-resources/305-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SHOWERS_NIGHT" filename="./svg-resources/306-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HEAVY_SHOWERS_NIGHT" filename="./svg-resources/307-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CHANCE_OF_SHOWERS_NIGHT" filename="./svg-resources/350-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CHANCE_OF_THUNDERSTORMS_NIGHT" filename="./svg-resources/302-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_MIST_NIGHT" filename="./svg-resources/1053.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_DUST_NIGHT" filename="./svg-resources/1047.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_DRIZZLE_NIGHT" filename="./svg-resources/309-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_TORNADO_NIGHT" filename="./svg-resources/1002.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SMOKE_NIGHT" filename="./svg-resources/smoke.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_ICE_NIGHT" filename="./svg-resources/1057.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SAND_NIGHT" filename="./svg-resources/2010.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SQUALL_NIGHT" filename="./svg-resources/2011.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SANDSTORM_NIGHT" filename="./svg-resources/504-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_VOLCANIC_ASH_NIGHT" filename="./svg-resources/1047.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HAZE_NIGHT" filename="./svg-resources/1047.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_FAIR_NIGHT" filename="./svg-resources/150-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_HURRICANE_NIGHT" filename="./svg-resources/1001.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_TROPICAL_STORM_NIGHT" filename="./svg-resources/1064.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CHANCE_OF_SNOW_NIGHT" filename="./svg-resources/457-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CHANCE_OF_RAIN_SNOW_NIGHT" filename="./svg-resources/456-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CLOUDY_CHANCE_OF_RAIN_NIGHT" filename="./svg-resources/2019.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CLOUDY_CHANCE_OF_SNOW_NIGHT" filename="./svg-resources/457-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW_NIGHT" filename="./svg-resources/456-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_FLURRIES_NIGHT" filename="./svg-resources/1040.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_FREEZING_RAIN_NIGHT" filename="./svg-resources/313-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_SLEET_NIGHT" filename="./svg-resources/408-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_ICE_SNOW_NIGHT" filename="./svg-resources/2002.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_THIN_CLOUDS_NIGHT" filename="./svg-resources/153-fill.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
+    <palette disableTransparency="false">
+      <color>555555</color>
+    </palette>
+  </bitmap>
+  <bitmap id="CONDITION_UNKNOWN_NIGHT" filename="./svg-resources/999.svg" scaleX="12%" scaleY="12%" scaleRelativeTo="screen">
     <palette disableTransparency="false">
       <color>555555</color>
     </palette>
