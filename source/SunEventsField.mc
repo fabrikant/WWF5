@@ -7,8 +7,11 @@ import Toybox.Math;
 
 class SunEventsField extends SimpleField{
 
+    var font;
+    
     function initialize(options){
         SimpleField.initialize(options);
+        initializeFont(options);
     }
 
     function initializeFont(options){

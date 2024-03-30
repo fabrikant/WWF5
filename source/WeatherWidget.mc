@@ -3,15 +3,12 @@ import Toybox.System;
 import Toybox.Weather;
 import Toybox.Application;
 
-class WeatherWidget extends SimpleField{
+class WeatherWidget extends AbstractField{
 
     function initialize(options){
-        SimpleField.initialize(options);
+        AbstractField.initialize(options);
     }
     
-    function initializeFont(options){
-    }
-
     function draw(colors){
         
         var dc = getDc();

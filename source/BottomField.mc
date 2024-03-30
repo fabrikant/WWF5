@@ -4,10 +4,13 @@ import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Math;
 
-class BottomField extends SimpleField{
+class BottomField extends AbstractField{
+
+    var font;
 
     function initialize(options){
-        SimpleField.initialize(options);
+        initializeFont(options);
+        AbstractField.initialize(options);
     }
 
     function initializeFont(options){
@@ -18,11 +21,9 @@ class BottomField extends SimpleField{
     }
 
     function draw(colors){
+        AbstractField.draw(colors);
         var dc = getDc();
-        dc.setColor(colors[:background], colors[:background]);
-        dc.clear();
         dc.setColor(colors[:font], colors[:background]);
-        dc.setAntiAlias(true);
         var value = self.method(getId()).invoke();
         dc.drawText(dc.getWidth() / 2, -2, font, value, 
             Graphics.TEXT_JUSTIFY_CENTER );
