@@ -15,16 +15,21 @@ class SunEventsField extends SimpleField{
     }
 
     function initializeFont(options){
-        var font_w = Math.floor(options[:width] / options[:max_lenght]);
-        var line_w = 2;
+        if (options.hasKey(:font)){
+            font = options[:font];
+        }else{
+            var font_w = Math.floor(options[:width] / options[:max_lenght]);
+            var line_w = 2;
 
-        font = new FontLessFont({
-            :width => font_w,
-            :height => options[:height],
-            :line_width => line_w,
-            :line_offset => 2,
-            :simple_style => true,
-        });
+            font = new FontLessFont({
+                :width => font_w,
+                :height => options[:height],
+                :line_width => line_w,
+                :line_offset => 2,
+                :simple_style => true,
+            });
+        }
+        getApp().watch_view.fonts[options[:identifier]] = font;
     }
 
     function draw(colors){

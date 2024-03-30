@@ -2,27 +2,52 @@ import Toybox.Graphics;
 import Toybox.System;
 import Toybox.Weather;
 import Toybox.Application;
+import Toybox.Math;
 
 class WeatherWidget extends AbstractField{
 
+    var font_temp, font_wind;
+
     function initialize(options){
+        initializeFont(options);
         AbstractField.initialize(options);
     }
     
+    function initializeFont(options){
+        var fonts = getApp().watch_view.fonts;
+        var font_height = Math.floor(options[:height] * 0.45);
+        var ratio = fonts[:sun_events].getRatio();
+        font_temp = new FontLessFont({
+            :width => Math.floor(font_height * ratio),
+            :height => font_height,
+            :line_width => 3,
+            :line_offset => 1,
+            :simple_style => false,
+        });
+        font_wind = fonts[:sun_events];
+    }
+
     function draw(colors){
         AbstractField.draw(colors);
         var weather = Weather.getCurrentConditions();
         if (weather == null){
-            drawBorder(dc);
+            drawBorder(getDc());
             return;
         }
         var dc = getDc();
 
         //Иконка погоды        
         var bitmap = createImage(getGarminConditionRez(weather.condition), colors);
-        dc.drawBitmap(dc.getWidth() * 0.1, 
+        var temp_x = dc.getWidth() * 0.08;
+        dc.drawBitmap(temp_x, 
             (dc.getHeight() - bitmap.getHeight()) / 2, 
             bitmap);
+        
+        temp_x += bitmap.getWidth();
+        var temperature = convertValueTemperature(weather.temperature);
+        font_temp.writeString(dc, temp_x, Math.floor(dc.getHeight()/2),
+            temperature,
+            Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         
         drawBorder(dc);
         

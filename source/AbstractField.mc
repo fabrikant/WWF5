@@ -24,7 +24,7 @@ class AbstractField extends WatchUi.Layer{
         dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
     }
 
-    function hoursMinutesNow(){
+    function clock(){
         return hours_minutes(System.getClockTime());
     }
 
@@ -82,4 +82,18 @@ class AbstractField extends WatchUi.Layer{
 			return _bufferedBitmap;
 		}
 	}
+
+    function convertValueTemperature(сelsius){
+		var value;
+		if (сelsius != null){
+			if (System.getDeviceSettings().temperatureUnits == System.UNIT_STATUTE){ /*F*/
+				value = ((сelsius*9/5) + 32);
+			}else{
+				value = сelsius;
+			}
+		}else{
+			value = "";
+		}	
+		return value.format("%d")+"°";        
+    }
 }

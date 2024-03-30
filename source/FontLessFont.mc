@@ -8,6 +8,14 @@ class FontLessFont {
     protected var glifs;
     protected var height;
 
+    //options - dictonary
+    // {
+    //     :width => Number,
+    //     :height => Number,
+    //     :line_width => Number,
+    //     :line_offset => Number,
+    //     :simple_style => Boolean (optional, default - false),
+    // }
     function initialize(options) {
         
         if (! options.hasKey(:simple_style)){
@@ -59,6 +67,12 @@ class FontLessFont {
                 next_x += bitmap.getDc().getWidth();    
             }
         }
+    }
+
+    //width-height ratio
+    function getRatio(){
+        var width = getStringWidth("0");
+        return (width.toFloat() / height);
     }
 
     private function initSevenSegmentsPoligons(options){
@@ -304,7 +318,7 @@ class FontLessFont {
         dc.clear();
 
         dc.setColor(colors[:font], colors[:background]);
-        dc.setPenWidth(Global.max((options[:line_width]).toNumber(), 1));
+        dc.setPenWidth(Global.max(Math.floor(options[:line_width] * 0.6), 1));
         dc.drawCircle(options[:line_offset] + radius, options[:line_offset] + radius, radius);
         return _buf_bitmap_ref;
     }

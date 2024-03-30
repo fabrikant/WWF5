@@ -8,6 +8,7 @@ import Toybox.Math;
 class WWF5View extends WatchUi.WatchFace {
 
     var pattern, colors, every_second_layers;
+    var fonts;
 
     function initialize() {
         WatchFace.initialize();
@@ -30,7 +31,7 @@ class WWF5View extends WatchUi.WatchFace {
         var options = pattern.calculateLayerCoordinates(
             [pattern.reference_points[:x][8], pattern.reference_points[:y][2]],
             [pattern.reference_points[:x][4], pattern.reference_points[:y][4]]);
-        options[:identifier] = :hoursMinutesNow;
+        options[:identifier] = :clock;
         options[:max_lenght] = clock_layer_max_lenght;
         var clock_layer = new SimpleField(options);
         self.addLayer(clock_layer);
@@ -80,7 +81,7 @@ class WWF5View extends WatchUi.WatchFace {
             :locX => pattern.reference_points[:x][1], 
             :locY => 0, 
             :width => pattern.reference_points[:x][6] - pattern.reference_points[:x][1], 
-            :height => sun_event_field.getY() - 1,
+            :height => sun_event_field.getY(),
             :identifier => :weather,
         };
         self.addLayer(new WeatherWidget(options));
@@ -108,6 +109,7 @@ class WWF5View extends WatchUi.WatchFace {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
+        fonts = {};
         readSettings();
         self.pattern = new Pattern(colors);
         createLayers();
