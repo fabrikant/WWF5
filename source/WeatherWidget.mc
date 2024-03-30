@@ -10,18 +10,22 @@ class WeatherWidget extends AbstractField{
     }
     
     function draw(colors){
-        
-        var dc = getDc();
-        dc.setColor(colors[:background], colors[:background]);
-        dc.clear();
-        dc.setAntiAlias(true);
-
+        AbstractField.draw(colors);
         var weather = Weather.getCurrentConditions();
-        
-        var bitmap = createImage(getGarminConditionRez(weather.condition), colors);
+        if (weather == null){
+            drawBorder(dc);
+            return;
+        }
+        var dc = getDc();
 
-        dc.drawBitmap(dc.getWidth()/2, 10, bitmap);
+        //Иконка погоды        
+        var bitmap = createImage(getGarminConditionRez(weather.condition), colors);
+        dc.drawBitmap(dc.getWidth() * 0.1, 
+            (dc.getHeight() - bitmap.getHeight()) / 2, 
+            bitmap);
+        
         drawBorder(dc);
+        
     }
 
 
