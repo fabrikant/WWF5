@@ -6,7 +6,8 @@ import Toybox.Math;
 
 class WeatherWidget extends AbstractField{
 
-    var font_temp, font_wind;
+    var font_temp; 
+    var font_wind;
 
     function initialize(options){
         initializeFont(options);
@@ -24,7 +25,11 @@ class WeatherWidget extends AbstractField{
             :line_offset => 1,
             :simple_style => false,
         });
-        font_wind = fonts[:sun_events];
+        
+        font_wind = Graphics.getVectorFont({
+            :face => "RobotoCondensedRegular",
+            :size => Math.floor(fonts[:sun_events].getHeight()),
+        });
     }
 
     function draw(colors){
@@ -35,6 +40,7 @@ class WeatherWidget extends AbstractField{
             return;
         }
         var dc = getDc();
+        dc.setColor(colors[:font], colors[:font]);
 
         //Иконка погоды        
         var bitmap = createImage(getGarminConditionRez(weather.condition), colors);
@@ -43,14 +49,42 @@ class WeatherWidget extends AbstractField{
             (dc.getHeight() - bitmap.getHeight()) / 2, 
             bitmap);
         
+        //Температура
         temp_x += bitmap.getWidth();
         var temperature = convertValueTemperature(weather.temperature);
         font_temp.writeString(dc, temp_x, Math.floor(dc.getHeight()/2),
             temperature,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        temp_x += font_temp.getStringWidth(temperature);
+
+        //Ветер
+        var wind_speed = converValueWindSpeed(weather.windSpeed);
+        var system_radius = System.getDeviceSettings().screenHeight / 2;
+        var radius = Math.floor((
+            System.getDeviceSettings().screenHeight - Graphics.getFontHeight(font_wind)) / 2);
         
+        //Ветер скорость
+        var sin_angle = (system_radius - getY() - dc.getHeight()).toFloat() / system_radius;
+        var angle = Math.toDegrees(sin_angle) + 10;
+        dc.drawRadialText(
+            system_radius - getX(), 
+            dc.getHeight()+Global.mod(system_radius - (getY()+dc.getHeight())), 
+            font_wind, wind_speed, 
+            Graphics.TEXT_JUSTIFY_RIGHT|Graphics.TEXT_JUSTIFY_VCENTER, 
+            angle, 
+            radius, 
+            Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE);
+        
+        //Ветер направление
+
+        var wind_angle = weather.windBearing;
+        bitmap = createImage(Rez.Drawables.windArrow, colors);
+        var wind_arrow_options = {};
+        dc.drawBitmap2(temp_x, 
+            dc.getHeight() - bitmap.getHeight(), 
+            bitmap, wind_arrow_options);
+
         drawBorder(dc);
-        
     }
 
 

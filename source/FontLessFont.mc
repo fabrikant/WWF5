@@ -75,6 +75,10 @@ class FontLessFont {
         return (width.toFloat() / height);
     }
 
+    function getHeight(){
+        return height;
+    }
+
     private function initSevenSegmentsPoligons(options){
         var seven_segments_poligons = [];
 

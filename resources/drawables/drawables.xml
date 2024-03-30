@@ -6,5 +6,10 @@
 		     <color>555555</color>
 		</palette>
 	</bitmap>
-
+    
+	<bitmap id="windArrow" filename="./svg-resources/arrow.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+		     <color>555555</color>
+		</palette>
+	</bitmap>
 </drawables>

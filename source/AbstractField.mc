@@ -84,16 +84,20 @@ class AbstractField extends WatchUi.Layer{
 	}
 
     function convertValueTemperature(сelsius){
-		var value;
-		if (сelsius != null){
-			if (System.getDeviceSettings().temperatureUnits == System.UNIT_STATUTE){ /*F*/
-				value = ((сelsius*9/5) + 32);
-			}else{
-				value = сelsius;
-			}
-		}else{
-			value = "";
-		}	
-		return value.format("%d")+"°";        
+      var value;
+      if (сelsius != null){
+        if (System.getDeviceSettings().temperatureUnits == System.UNIT_STATUTE){ /*F*/
+          value = ((сelsius*9/5) + 32);
+        }else{
+          value = сelsius;
+        }
+      }else{
+        value = "";
+      }	
+      return value.format("%d")+"°";        
+    }
+
+    function converValueWindSpeed(wind_speed){
+      return Math.round(wind_speed).format("%d")+"m/s";
     }
 }
