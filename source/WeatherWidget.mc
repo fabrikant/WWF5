@@ -55,8 +55,7 @@ class WeatherWidget extends AbstractField{
         font_temp.writeString(dc, temp_x, Math.floor(dc.getHeight()/2),
             temperature,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-        temp_x += font_temp.getStringWidth(temperature);
-
+        
         //Ветер
         var wind_speed = converValueWindSpeed(weather.windSpeed);
         var system_radius = System.getDeviceSettings().screenHeight / 2;
@@ -76,17 +75,43 @@ class WeatherWidget extends AbstractField{
             Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE);
         
         //Ветер направление
-
+        temp_x += font_temp.getNormalGlifWidth() * 3.2;
         var wind_angle = weather.windBearing;
-        bitmap = createImage(Rez.Drawables.windArrow, colors);
-        var wind_arrow_options = {};
-        dc.drawBitmap2(temp_x, 
-            dc.getHeight() - bitmap.getHeight(), 
-            bitmap, wind_arrow_options);
+        var bitmap_size = Math.floor((dc.getHeight() - bitmap.getHeight()) * 0.75);
+        bitmap = getWindArrowBitmap(bitmap_size, colors);
+
+        var transform = new Graphics.AffineTransform();
+        transform.rotate(2 * Math.PI * wind_angle / 360f);
+        transform.translate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
+        dc.drawBitmap2(temp_x + bitmap.getWidth() / 2, 
+            dc.getHeight() - bitmap.getHeight() + bitmap.getHeight() / 2, bitmap, 
+            {:transform => transform, :filterMode => Graphics.FILTER_MODE_BILINEAR});
 
         drawBorder(dc);
     }
 
+    private function getWindArrowBitmap(size, colors){
+        	
+		var coords = [
+            [0,size/2],
+            [size/4, size/2],
+            [size/4, size],
+            [size/2, size],
+            [size/2, size/2],
+            [size*3/4, size/2],
+            [size*3/8, 0]
+		];
+
+        var buf_bitmap_ref = Graphics.createBufferedBitmap(
+            {:width => size * 3 / 4, :height => size});
+        var dc = buf_bitmap_ref.get().getDc();
+        dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_TRANSPARENT);
+        dc.clear();
+        dc.setColor(colors[:font], colors[:font]);
+        dc.fillPolygon(coords);
+        
+        return buf_bitmap_ref;
+    }
 
     function getGarminConditionRez(condition){
         if (condition == Weather.CONDITION_CLEAR){

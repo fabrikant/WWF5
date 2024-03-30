@@ -34,7 +34,14 @@ class FontLessFont {
         for (var i = 0; i < str.length(); i++){
             var sub_str = str.substring(i, i+1);
             if (glifs.hasKey(sub_str)){
-                res += glifs[sub_str].getWidth();
+                System.println("symb: "+sub_str);
+                var bitmap = glifs[sub_str];
+                if (bitmap instanceof Graphics.BufferedBitmapReference){
+                    res += bitmap.getWidth();
+                } else{
+                     System.println("wtf "+sub_str);
+                     System.println(bitmap);
+                }
             }
         }
         return res;
@@ -73,6 +80,10 @@ class FontLessFont {
     function getRatio(){
         var width = getStringWidth("0");
         return (width.toFloat() / height);
+    }
+
+    function getNormalGlifWidth(){
+        return getStringWidth("0");
     }
 
     function getHeight(){
