@@ -3,6 +3,7 @@ import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Math;
 import Toybox.Complications;
+import Toybox.Lang;
 
 class ScaleWidget extends AbstractField{
 
@@ -51,9 +52,31 @@ class ScaleWidget extends AbstractField{
             Graphics.ARC_CLOCKWISE, angle_min, angle_max);
 
         var angle_value = angle_min - compl.value * Global.mod(angle_min - angle_max) / 100;
-        dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_GREEN);    
+
+        var scale_color = Graphics.COLOR_GREEN;
+        if (compl.value <= 20){
+            scale_color = Graphics.COLOR_RED;
+        }
+
+        dc.setColor(scale_color, scale_color);    
         dc.drawArc(center_x, center_y, scale_radius, 
             Graphics.ARC_CLOCKWISE, angle_min, angle_value);
+
+        //Подпись
+        dc.setColor(colors[:font], colors[:font]);
+        var font_height = getApp().watch_view.fonts[:sun_events].getHeight();
+        var font = Graphics.getVectorFont({
+            :face => "RobotoCondensedRegular",
+            :size => font_height,
+        });
+        
+        var str = Lang.format("$1$$2$", [compl.value.format("%d"), compl.unit]);
+        var str_angle = angle_min - Global.mod(angle_min - angle_max) / 2;
+        dc.drawRadialText(center_x, center_y, font, str, 
+            Graphics.TEXT_JUSTIFY_CENTER, 
+            str_angle, 
+            system_radius - scale_width - font_height, 
+            Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE);
 
     }
 }

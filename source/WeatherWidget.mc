@@ -8,7 +8,6 @@ import Toybox.Time;
 class WeatherWidget extends AbstractField{
 
     var font_temp; 
-    var font_wind;
     var arrow_bitmap; 
 
     function initialize(options){
@@ -29,10 +28,6 @@ class WeatherWidget extends AbstractField{
             :simple_style => false,
         });
         
-        font_wind = Graphics.getVectorFont({
-            :face => "RobotoCondensedRegular",
-            :size => Math.floor(fonts[:sun_events].getHeight()),
-        });
     }
 
     function draw(colors){
@@ -62,6 +57,10 @@ class WeatherWidget extends AbstractField{
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         
         //Ветер
+        var font_wind = Graphics.getVectorFont({
+            :face => "RobotoCondensedRegular",
+            :size => getApp().watch_view.fonts[:sun_events].getHeight(),
+        });
         var wind_speed = converValueWindSpeed(weather.windSpeed);
         var system_radius = System.getDeviceSettings().screenHeight / 2;
         var radius = Math.floor((
