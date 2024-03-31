@@ -10,6 +10,7 @@
     <string id="color_font" scope="foreground">Font</string>
     <string id="color_font_empty_segments" scope="foreground">Font empty segments</string>
 
+    <string id="WindSpeedUnit">Wind speed unit</string>
     <string id="SpeedUnitMSec" scope="foreground">m/s</string>
 	<string id="SpeedUnitKmH" scope="foreground">km/h</string>
 	<string id="SpeedUnitMileH" scope="foreground">mph</string>

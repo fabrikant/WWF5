@@ -2,6 +2,7 @@ using Toybox.Application;
 using Toybox.WatchUi;
 using Toybox.System;
 using Toybox.Graphics;
+using Toybox.Lang;
 
 //GeneralMenu
 //	Colors  
@@ -11,26 +12,46 @@ using Toybox.Graphics;
 //		color_background
 //		color_pattern 
 //		color_pattern_decorate 
-// 
+//   Wind speed unit
 // 
 
 
 module Menu {
 
+	//Корневое меню
 	function GeneralMenu(){
 		var items_props = [];
 		items_props.add({
 			:item_class => :SubMenuItem,
 			:rez_label => Rez.Strings.SubmenuColors,
 			:identifier => :ColorsSubMenu,
-			:method => :ColorsSubMenu,
+			:method => :colorsSubMenu,
 		});
 
+		items_props.add({
+			:item_class => :Item,
+			:rez_label => Rez.Strings.WindSpeedUnit,
+			:identifier => "wind_speed_unit",
+			:method => :windSpeedUnitsSubmenu,
+		});
 		var options = {:title => Rez.Strings.MenuHeader, :items => items_props};
 		return new SubMenu(options);
 	}
 
-	function ColorsSubMenu(){
+	//Подменю выбора ед.изм. скорости ветра
+ 	function windSpeedUnitsSubmenu(){
+		return {
+			Global.UNIT_SPEED_MS => Rez.Strings.SpeedUnitMSec,
+			Global.UNIT_SPEED_KMH => Rez.Strings.SpeedUnitKmH,
+			Global.UNIT_SPEED_MLH => Rez.Strings.SpeedUnitMileH,
+			Global.UNIT_SPEED_FTS => Rez.Strings.SpeedUnitFtSec,
+			Global.UNIT_SPEED_BEAUF => Rez.Strings.SpeedUnitBeauf,
+			Global.UNIT_SPEED_KNOTS => Rez.Strings.SpeedUnitKnots,
+		};
+	}
+
+	//Подменю с настройками цветов
+	function colorsSubMenu(){
 
 		var items_props = [];
 		items_props.add({
@@ -69,6 +90,7 @@ module Menu {
 	
 	}
 
+	//Подменю непосредственного выбора цвета
 	function ColorSelectMenu(paren_item_week){
 
 		var items_props = [{
@@ -95,9 +117,93 @@ module Menu {
 			:items => items_props,};
 		return new SubMenu(options);
 	}
+
+	function getSublabel(method_symbol, value){
+		var method = new Lang.Method(Menu, method_symbol);
+		var pattern = method.invoke();
+		return pattern[value];
+	}
+}
+
+
+//*****************************************************************************
+//Пункт меню (ассоциированный со свойством приложения) 
+//при нажатии открывается подменю выбора конкретного значения
+class Item extends WatchUi.MenuItem{
+
+	var method_symbol;
+	
+	function initialize(options) {
+		self.method_symbol = options[:method];
+		var label = Application.loadResource(options[:rez_label]);
+		var value = Application.Properties.getValue(options[:identifier]);
+		var sublabel = Menu.getSublabel(method_symbol, value);
+		MenuItem.initialize(label, sublabel, options[:identifier], {});
+	}
+
+	function onSelectItem(){
+		var options = {
+			:title => getLabel(),
+			:method_symbol => method_symbol,
+			:prop_name => getId(),
+			:parent_item_week => self.weak(),
+		};
+		var submenu = new SelectMenu(options);
+		WatchUi.pushView(submenu, new SimpleMenuDelegate(), WatchUi.SLIDE_IMMEDIATE);
+	}	
+
+	function onSelectSubmenuItem(newValue){
+		Application.Properties.setValue(getId(),newValue);
+		setSubLabel(Menu.getSublabel(method_symbol, newValue));
+	}	
 }
 
 //*****************************************************************************
+//Подменю выбора конкретного значения
+class SelectMenu extends WatchUi.Menu2{
+
+	function initialize(options){
+		
+		Menu2.initialize({:title=> options[:title]});
+		var propValue = Application.Properties.getValue(options[:prop_name]);
+		var pattern = new Lang.Method(Menu, options[:method_symbol]).invoke();
+		var keys = pattern.keys();
+		for (var i=0; i<keys.size(); i++){
+			addItem(new SelectItem(keys[i], pattern[keys[i]], options[:parent_item_week]));
+			if (propValue == keys[i]){
+				setFocus(i);
+			}
+		}
+	}
+}
+
+//*****************************************************************************
+//Пункт меню с конкретным значением
+//при нажатии значение возвращается в родительский пункт меню
+class SelectItem extends WatchUi.MenuItem{
+	
+	var callbackWeak;
+	
+	function initialize(identifier, resLabel, callbackWeak) {
+		self.callbackWeak = callbackWeak; 
+		MenuItem.initialize(Application.loadResource(resLabel), null, identifier, {});
+	}
+
+	function onSelectItem(){
+		if (callbackWeak.stillAlive()){
+			var obj = callbackWeak.get();
+			if (obj != null){
+				obj.onSelectSubmenuItem(getId());
+			}
+		}
+		WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);	
+		
+	}
+}
+
+//*****************************************************************************
+//Пункт меню, при выборе которого откроется другое подменю
+//данный пункт не ассоциирован с каким-либо свойством приложения
 class SubMenuItem extends WatchUi.MenuItem{
 	
 	var method_symbol;
@@ -116,6 +222,9 @@ class SubMenuItem extends WatchUi.MenuItem{
 }
 
 //*****************************************************************************
+//Пункт меню (аналог класса Item). Но предназначен для указания цвета
+//ассоциирован со свойством приложения
+//при нажатии открыватеся подменю выбора цветов
 class ColorPropertyItem extends WatchUi.IconMenuItem{
 
 	var method_symbol, color;
@@ -190,6 +299,7 @@ class ColorPropertyItem extends WatchUi.IconMenuItem{
 }
 
 //*****************************************************************************
+//Пункт меню с конкретным цветом
 class ColorSelectItem extends ColorPropertyItem{
 
 	var paren_item_week;
@@ -213,6 +323,8 @@ class ColorSelectItem extends ColorPropertyItem{
 }
 
 //*****************************************************************************
+//Подменю общее. Может содержать пункты выбора конкретных значений и
+//пункты с подменю следющего уровня
 class SubMenu extends WatchUi.Menu2{
 	
 	function initialize(options) {
@@ -226,6 +338,8 @@ class SubMenu extends WatchUi.Menu2{
 				addItem(new ColorPropertyItem(item_prop));
 			}else if(item_prop[:item_class] == :ColorSelectItem){
 				addItem(new ColorSelectItem(item_prop));
+			}else if(item_prop[:item_class] == :Item){
+				addItem(new Item(item_prop));
 			}
 		}
 	}
@@ -236,7 +350,8 @@ class SubMenu extends WatchUi.Menu2{
 }
 
 //*****************************************************************************
-//DELEGATE
+//Делегат один для всех. 
+//Вся логика обработки непосредственно в пунктах меню
 class SimpleMenuDelegate extends WatchUi.Menu2InputDelegate{
 	
 	function initialize() {
