@@ -80,18 +80,18 @@ class WeatherWidget extends AbstractField{
             Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE);
         
         //Ветер направление
-        temp_x += max_temp_width;
         var wind_angle = weather.windBearing;
         if (arrow_bitmap == null){
-            var bitmap_size = Math.floor((dc.getHeight() - bitmap.getHeight()) * 0.75);
+            var bitmap_size = Math.floor(bitmap.getHeight() * 0.75);
             arrow_bitmap = getWindArrowBitmap(bitmap_size, colors);
         }
         
         var transform = new Graphics.AffineTransform();
         transform.rotate(2 * Math.PI * (wind_angle + 180) / 360f);
-        transform.translate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
-        dc.drawBitmap2(temp_x + bitmap.getWidth() / 2, 
-            dc.getHeight() - bitmap.getHeight() + bitmap.getHeight() / 2, arrow_bitmap, 
+        transform.translate(-arrow_bitmap.getWidth() / 2, -arrow_bitmap.getHeight() / 2);
+        temp_x += max_temp_width + arrow_bitmap.getWidth() / 2;
+        var temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
+        dc.drawBitmap2(temp_x, temp_y, arrow_bitmap, 
             {:transform => transform, :filterMode => Graphics.FILTER_MODE_BILINEAR});
 
         drawBorder(dc);
@@ -110,7 +110,7 @@ class WeatherWidget extends AbstractField{
 		];
 
         var buf_bitmap_ref = Graphics.createBufferedBitmap(
-            {:width => size * 3 / 4, :height => size});
+            {:width => size*3/4, :height => size});
         var dc = buf_bitmap_ref.get().getDc();
         dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_TRANSPARENT);
         dc.clear();
