@@ -3,15 +3,18 @@ import Toybox.System;
 import Toybox.Weather;
 import Toybox.Application;
 import Toybox.Math;
+import Toybox.Time;
 
 class WeatherWidget extends AbstractField{
 
     var font_temp; 
     var font_wind;
+    var arrow_bitmap; 
 
     function initialize(options){
         initializeFont(options);
         AbstractField.initialize(options);
+        arrow_bitmap = null;
     }
     
     function initializeFont(options){
@@ -51,10 +54,12 @@ class WeatherWidget extends AbstractField{
         
         //Температура
         temp_x += bitmap.getWidth();
+        var max_temp_width = font_temp.getNormalGlifWidth() * 3.2;
         var temperature = convertValueTemperature(weather.temperature);
-        font_temp.writeString(dc, temp_x, Math.floor(dc.getHeight()/2),
+        font_temp.writeString(dc, temp_x + max_temp_width / 2, 
+            Math.floor(dc.getHeight()/2),
             temperature,
-            Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         
         //Ветер
         var wind_speed = converValueWindSpeed(weather.windSpeed);
@@ -75,16 +80,18 @@ class WeatherWidget extends AbstractField{
             Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE);
         
         //Ветер направление
-        temp_x += font_temp.getNormalGlifWidth() * 3.2;
+        temp_x += max_temp_width;
         var wind_angle = weather.windBearing;
-        var bitmap_size = Math.floor((dc.getHeight() - bitmap.getHeight()) * 0.75);
-        bitmap = getWindArrowBitmap(bitmap_size, colors);
-
+        if (arrow_bitmap == null){
+            var bitmap_size = Math.floor((dc.getHeight() - bitmap.getHeight()) * 0.75);
+            arrow_bitmap = getWindArrowBitmap(bitmap_size, colors);
+        }
+        
         var transform = new Graphics.AffineTransform();
-        transform.rotate(2 * Math.PI * wind_angle / 360f);
+        transform.rotate(2 * Math.PI * (wind_angle + 180) / 360f);
         transform.translate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
         dc.drawBitmap2(temp_x + bitmap.getWidth() / 2, 
-            dc.getHeight() - bitmap.getHeight() + bitmap.getHeight() / 2, bitmap, 
+            dc.getHeight() - bitmap.getHeight() + bitmap.getHeight() / 2, arrow_bitmap, 
             {:transform => transform, :filterMode => Graphics.FILTER_MODE_BILINEAR});
 
         drawBorder(dc);
@@ -117,11 +124,13 @@ class WeatherWidget extends AbstractField{
 
         var condition = weather.condition;
         var isDay = true;
-        if (weather.observationLocationPosition != null && weather.observationTime != null){
-            var sunrise = Weather.getSunrise(weather.observationLocationPosition, weather.observationTime);
-            var sunset = Weather.getSunset(weather.observationLocationPosition, weather.observationTime);
+        var moment_now = Time.now();
+
+        if (weather.observationLocationPosition != null){
+            var sunrise = Weather.getSunrise(weather.observationLocationPosition, moment_now);
+            var sunset = Weather.getSunset(weather.observationLocationPosition, moment_now);
             if (sunrise != null && sunset != null){
-                if (weather.observationTime.lessThan(sunrise) || weather.observationTime.greaterThan(sunset)){
+                if (moment_now.lessThan(sunrise) || weather.observationTime.greaterThan(sunset)){
                     isDay = false;    
                 }  
             }
