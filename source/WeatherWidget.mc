@@ -69,7 +69,7 @@ class WeatherWidget extends AbstractField{
         
         //Ветер скорость
         var sin_angle = (system_radius - getY() - dc.getHeight()).toFloat() / system_radius;
-        var angle = Math.toDegrees(sin_angle) + 10;
+        var angle = Math.toDegrees(Math.asin(sin_angle)) + 10;
         dc.drawRadialText(
             system_radius - getX(), 
             dc.getHeight()+Global.mod(system_radius - (getY()+dc.getHeight())), 

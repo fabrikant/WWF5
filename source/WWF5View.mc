@@ -86,6 +86,14 @@ class WWF5View extends WatchUi.WatchFace {
         };
         self.addLayer(new WeatherWidget(options));
 
+        //Шкала
+        options = pattern.calculateLayerCoordinates(
+            [pattern.reference_points[:x][5], 0],
+            [pattern.reference_points[:x][2], pattern.reference_points[:y][2]]);
+        options[:identifier] = :scale;
+        options[:max_lenght] = 11;
+        self.addLayer(new ScaleWidget(options));
+
         //Подложка
         options = {
             :locX => 0, 
