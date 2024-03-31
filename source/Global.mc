@@ -1,6 +1,16 @@
 import Toybox.Complications; 
 
 module Global{
+    
+
+    enum {
+        UNIT_SPEED_MS = 0,
+        UNIT_SPEED_KMH,
+        UNIT_SPEED_MLH,
+        UNIT_SPEED_FTS,
+        UNIT_SPEED_BEAUF,
+        UNIT_SPEED_KNOTS,
+    }
 
     function min(a, b){
         if (a < b){

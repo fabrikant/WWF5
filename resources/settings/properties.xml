@@ -10,6 +10,7 @@
 	<property id="color_background" type="number">0x000000</property>
 	<property id="color_font" type="number">0xFFFFFF</property>
 	<property id="color_font_empty_segments" type="number">0x550000</property>
+	<property id="wind_speed_unit" type="number">0</property>
 	
 
 
