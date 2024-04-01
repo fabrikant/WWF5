@@ -11,8 +11,11 @@ using Toybox.Lang;
 //		color_font_empty_segments 
 //		color_background
 //		color_pattern 
-//		color_pattern_decorate 
-//   Wind speed unit
+//		color_pattern_decorate
+//	Data1
+//	Data2
+// 	Data3
+//  Wind speed unit
 // 
 
 
@@ -27,6 +30,25 @@ module Menu {
 			:identifier => :ColorsSubMenu,
 			:method => :colorsSubMenu,
 		});
+		
+		items_props.add({
+			:item_class => :Item,
+			:rez_label => Rez.Strings.Data1,
+			:identifier => "data_type_1",
+			:method => :complicationsSubMenu,
+		});
+		items_props.add({
+			:item_class => :Item,
+			:rez_label => Rez.Strings.Data2,
+			:identifier => "data_type_2",
+			:method => :complicationsSubMenu,
+		});
+		items_props.add({
+			:item_class => :Item,
+			:rez_label => Rez.Strings.Data3,
+			:identifier => "data_type_3",
+			:method => :complicationsSubMenu,
+		});
 
 		items_props.add({
 			:item_class => :Item,
@@ -36,6 +58,11 @@ module Menu {
 		});
 		var options = {:title => Rez.Strings.MenuHeader, :items => items_props};
 		return new SubMenu(options);
+	}
+
+	//Подменю выбора типа данных
+	function complicationsSubMenu(){
+		return {};
 	}
 
 	//Подменю выбора ед.изм. скорости ветра

@@ -37,7 +37,7 @@ class WWF5View extends WatchUi.WatchFace {
         self.addLayer(clock_layer);
 
         //Секунды
-        var temp_h = pattern.calculateLayerHight(
+        var temp_h = pattern.calculateLayerHeight
             pattern.reference_points[:y][2], 
             pattern.reference_points[:y][3]);
         var temp_w = Math.floor(temp_h * 
@@ -100,7 +100,7 @@ class WWF5View extends WatchUi.WatchFace {
         options = {:locX => pattern.calculateLayerLeft(pattern.reference_points[:x][8]), 
                 :locY => pattern.calculateLayerUp(pattern.reference_points[:y][4]), 
                 :width => field_widtch, 
-                :height => pattern.calculateLayerHight(pattern.reference_points[:y][4], pattern.reference_points[:y][5])};
+                :height => pattern.calculateLayerHeightpattern.reference_points[:y][4], pattern.reference_points[:y][5])};
 
         options[:identifier] = :data1;
         options[:property_name] = "data_type_1";
