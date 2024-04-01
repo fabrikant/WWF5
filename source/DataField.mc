@@ -7,8 +7,20 @@ import Toybox.Lang;
 
 class DataField extends AbstractField{
 
+    var label_x, label_y, label_radius, label_angle, font_label;
+
     function initialize(options){
         AbstractField.initialize(options);
+        var font_height = Math.round(System.getDeviceSettings().screenHeight * 0.07).toNumber();
+        font_label = Graphics.getVectorFont({
+                :face => vectorFontName(),
+                :size => font_height,
+            }); 
+        if (getId().equals("data_type_1")){
+            calculateLabelCoord1();
+        }if (getId().equals("data_type_3")){
+            calculateLabelCoord3();
+        }
     }
 
     function draw(colors){
@@ -17,60 +29,73 @@ class DataField extends AbstractField{
         var compl = getFieldComplication();
 
         if (compl != null){
-            
-            var font_height = Math.round(System.getDeviceSettings().screenHeight * 0.07).toNumber();
-            var font_label = Graphics.getVectorFont({
-                :face => vectorFontName(),
-                :size => font_height,
-            });            
             var font_value = getApp().watch_view.fonts[:sun_events];
-
             font_value.writeString(dc, dc.getWidth()/2, 0, compl.value.toString(), Graphics.TEXT_JUSTIFY_CENTER);
-
             var options = {
                 :compl => compl, :font_label => font_label, 
                 :font_value => font_value, :colors => colors};
-
             if (getId().equals("data_type_1")){
-                drawField1(options);
+                drawField(options, Graphics.TEXT_JUSTIFY_RIGHT);
             }if (getId().equals("data_type_2")){
                 drawField2(options);
             }if (getId().equals("data_type_3")){
-                drawField3(options);
+                drawField(options, Graphics.TEXT_JUSTIFY_LEFT);
             }
         }
         drawBorder(dc);
     }
 
-    function radialTextOffsets(font_label){
-        
-        var dc = getDc();
-        var diam = System.getDeviceSettings().screenHeight;
-        var system_radius = diam / 2;
-        var radius = Math.floor((diam - Graphics.getFontHeight(font_label)) / 2);
-        var pattern = getApp().watch_view.pattern;
-
-        var sin_angle = (radius - Global.mod(diam - pattern.reference_points[:y][5])) / radius;
-        var angle = Math.toDegrees(Math.asin(sin_angle));
-        var offset_x = (system_radius - getX() - dc.getWidth());
-        var offset_y = (radius - Global.mod(diam - getY()));
-
-        return {:x => offset_x, :y => offset_y, :angle => angle, :radius => radius};
+    function getComplLabel(compl){
+        var res = compl.shortLabel;
+        if (res == null){
+            if (compl.unit instanceof Lang.String){
+                res = compl.unit;
+            }
+        }
+        return res;
     }
 
-    function drawField1(options){
+    function calculateLabelCoord1(){
+        var dc = getDc();
+        var pattern = getApp().watch_view.pattern;
+        var diam = System.getDeviceSettings().screenHeight;
+        var system_radius = diam / 2;
+        label_radius = Math.floor((diam - Graphics.getFontHeight(font_label)) / 2 
+            - pattern.reference_points[:pen_width]);
+
+        var sin_angle = (system_radius - Global.mod(diam - pattern.reference_points[:y][5])) / system_radius;
+        label_angle = 175 + Math.toDegrees(Math.asin(sin_angle));
+        label_x = dc.getWidth() + (system_radius - getX() - dc.getWidth());
+        label_y = -(label_radius - Global.mod(diam - getY()));
+    }
+
+    function calculateLabelCoord3(){
+        var dc = getDc();
+        var pattern = getApp().watch_view.pattern;
+        var diam = System.getDeviceSettings().screenHeight;
+        var system_radius = diam / 2;
+        label_radius = Math.floor((diam - Graphics.getFontHeight(font_label)) / 2 
+            - pattern.reference_points[:pen_width]);
+
+        var sin_angle = (system_radius - Global.mod(diam - pattern.reference_points[:y][5])) / system_radius;
+        label_angle = 360 - Math.toDegrees(Math.asin(sin_angle));
+        label_x = -Global.mod(system_radius - getX());
+        label_y = -(system_radius - Global.mod(diam - getY()));
+    }
+
+    function drawField(options, just){
         var dc = getDc();
         dc.setColor(options[:colors][:font], options[:colors][:background]);
 
-        if (options[:compl].shortLabel != null){
-            var offsets = radialTextOffsets(options[:font_label]);
+        var label = getComplLabel(options[:compl]);
+        if (label != null){
             dc.drawRadialText(
-                dc.getWidth() + offsets[:x], 
-                0 - offsets[:y], 
-                options[:font_label], options[:compl].shortLabel, 
-                Graphics.TEXT_JUSTIFY_RIGHT, 
-                175 + offsets[:angle], 
-                offsets[:radius], 
+                label_x, 
+                label_y, 
+                font_label, label, 
+                just, 
+                label_angle, 
+                label_radius, 
                 Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE);
         }
 
@@ -80,7 +105,8 @@ class DataField extends AbstractField{
         var dc = getDc();
         dc.setColor(options[:colors][:font], options[:colors][:background]);
 
-        if (options[:compl].shortLabel != null){ 
+        var label = getComplLabel(options[:compl]);
+        if (label != null){
             dc.drawText(dc.getWidth() / 2, 
             dc.getHeight() - Graphics.getFontHeight(options[:font_label]), 
             options[:font_label], 
@@ -89,23 +115,6 @@ class DataField extends AbstractField{
         }
 
     }    
-    function drawField3(options){
-
-        var dc = getDc();
-        dc.setColor(options[:colors][:font], options[:colors][:background]);
-
-        if (options[:compl].shortLabel != null){
-            var offsets = radialTextOffsets(options[:font_label]);
-            dc.drawRadialText(
-                - offsets[:x], 
-                0 - offsets[:y], 
-                options[:font_label], options[:compl].shortLabel, 
-                Graphics.TEXT_JUSTIFY_LEFT, 
-                360 - offsets[:angle], 
-                offsets[:radius], 
-                Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE);
-        }
-    }
 
     function getFieldComplication(){
         var compl = null;
