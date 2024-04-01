@@ -26,6 +26,14 @@ class AbstractField extends WatchUi.Layer{
     dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
   }
 
+  function scaleWidth(){
+    return Math.round(System.getDeviceSettings().screenHeight * 0.04).toNumber();
+  }
+
+  function vectorFontName(){
+    return "RobotoCondensedRegular";
+  }
+
   function clock(){
     return hours_minutes(System.getClockTime());
   }

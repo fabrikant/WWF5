@@ -58,7 +58,7 @@ class WeatherWidget extends AbstractField{
         
         //Ветер
         var font_wind = Graphics.getVectorFont({
-            :face => "RobotoCondensedRegular",
+            :face => vectorFontName(),
             :size => getApp().watch_view.fonts[:sun_events].getHeight(),
         });
         var wind_speed = converValueWindSpeed(weather.windSpeed);

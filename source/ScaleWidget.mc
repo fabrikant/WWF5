@@ -18,7 +18,7 @@ class ScaleWidget extends AbstractField{
         var compl = Complications.getComplication(compl_type);
 
         if (compl != null){
-            drawScale(dc, colors, compl, 10);
+            drawScale(dc, colors, compl, scaleWidth());
         }
         drawBorder(dc);
     }
@@ -64,9 +64,10 @@ class ScaleWidget extends AbstractField{
 
         //Подпись
         dc.setColor(colors[:font], colors[:font]);
-        var font_height = getApp().watch_view.fonts[:sun_events].getHeight();
+        //var font_height = getApp().watch_view.fonts[:sun_events].getHeight();
+        var font_height = Math.round(System.getDeviceSettings().screenHeight * 0.105).toNumber();
         var font = Graphics.getVectorFont({
-            :face => "RobotoCondensedRegular",
+            :face => vectorFontName(),
             :size => font_height,
         });
         

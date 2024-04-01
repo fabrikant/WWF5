@@ -15,7 +15,7 @@ class BottomField extends AbstractField{
 
     function initializeFont(options){
         font = Graphics.getVectorFont({
-            :face => "RobotoCondensedRegular",
+            :face => vectorFontName(),
             :size => Math.floor(options[:height] * 1.2)
         });
     }
