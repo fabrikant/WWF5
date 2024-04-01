@@ -14,8 +14,7 @@ class ScaleWidget extends AbstractField{
     function draw(colors){
         AbstractField.draw(colors);
         var dc = getDc();
-        var compl_type = getApp().system_complications[Complications.COMPLICATION_TYPE_BATTERY];
-        var compl = Complications.getComplication(compl_type);
+        var compl = Complications.getComplication(new Id(Complications.COMPLICATION_TYPE_BATTERY));
 
         if (compl != null){
             drawScale(dc, colors, compl, scaleWidth());

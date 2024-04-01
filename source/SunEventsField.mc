@@ -39,8 +39,8 @@ class SunEventsField extends SimpleField{
         dc.clear();
         dc.setAntiAlias(true);
 
-        var sunrise = getSunEventTime(getApp().system_complications[Complications.COMPLICATION_TYPE_SUNRISE]);
-        var sunset = getSunEventTime(getApp().system_complications[Complications.COMPLICATION_TYPE_SUNSET]);
+        var sunrise = getSunEventTime(Complications.COMPLICATION_TYPE_SUNRISE);
+        var sunset = getSunEventTime(Complications.COMPLICATION_TYPE_SUNSET);
         var image = createImage(Rez.Drawables.sunEvent, colors);
         var image_x = Math.floor((dc.getWidth() - image.getWidth()) / 2);
 
@@ -55,9 +55,9 @@ class SunEventsField extends SimpleField{
         drawBorder(dc);
     }
 
-    function getSunEventTime(compl_type){
+    function getSunEventTime(compl_id){
         var res = "";
-        var compl = Complications.getComplication(compl_type);
+        var compl = Complications.getComplication(new Id(compl_id));
         if (compl.value != null){
             var moment = Time.today().add(new Time.Duration(compl.value));
             res = hours_minutes(Time.Gregorian.info(moment, Time.FORMAT_SHORT)); 

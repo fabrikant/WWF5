@@ -36,20 +36,4 @@ module Global{
         }
     }
 
-    function getSystemComplications(){
-        
-        var system_complications = {};
-        var iter = Complications.getComplications();
-        var compl = iter.next();
-
-        while (compl != null){
-            var type = compl.getType();
-            if (type != Complications.COMPLICATION_TYPE_INVALID){
-                system_complications[type] = compl.complicationId;
-            }
-            compl = iter.next();
-        }
-
-        return system_complications;
-    }
 }

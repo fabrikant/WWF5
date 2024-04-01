@@ -4,12 +4,10 @@ import Toybox.WatchUi;
 
 class WWF5App extends Application.AppBase {
 
-    var system_complications;
     var watch_view;
 
     function initialize() {
         AppBase.initialize();
-        system_complications = Global.getSystemComplications();
     }
 
     // onStart() is called on application start up
