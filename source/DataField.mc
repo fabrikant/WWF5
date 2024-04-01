@@ -91,6 +91,20 @@ class DataField extends AbstractField{
     }    
     function drawField3(options){
 
+        var dc = getDc();
+        dc.setColor(options[:colors][:font], options[:colors][:background]);
+
+        if (options[:compl].shortLabel != null){
+            var offsets = radialTextOffsets(options[:font_label]);
+            dc.drawRadialText(
+                - offsets[:x], 
+                0 - offsets[:y], 
+                options[:font_label], options[:compl].shortLabel, 
+                Graphics.TEXT_JUSTIFY_LEFT, 
+                360 - offsets[:angle], 
+                offsets[:radius], 
+                Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE);
+        }
     }
 
     function getFieldComplication(){
