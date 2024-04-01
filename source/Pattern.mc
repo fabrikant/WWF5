@@ -150,7 +150,7 @@ class Pattern {
         var x = calculateLayerLeft(left_up[0]);
         var y = calculateLayerUp(left_up[1]);
         var w = calculateLayerWidth(left_up[0], right_bottom[0]); 
-        var h = calculateLayerHeight(left_up[1], right_bottom[1]); 
+        var h = calculateLayerHight(left_up[1], right_bottom[1]); 
 
         return {:locX => x.toNumber(), 
                 :locY => y.toNumber(), 
@@ -158,7 +158,7 @@ class Pattern {
                 :height => h.toNumber()};
     }
 
-    function calculateLayerHeight(y1, y2){
+    function calculateLayerHight(y1, y2){
         return Global.mod(y1 - y2) - reference_points[:pen_width] - 3;
     }
 

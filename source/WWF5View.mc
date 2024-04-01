@@ -37,7 +37,7 @@ class WWF5View extends WatchUi.WatchFace {
         self.addLayer(clock_layer);
 
         //Секунды
-        var temp_h = pattern.calculateLayerHeight(
+        var temp_h = pattern.calculateLayerHight(
             pattern.reference_points[:y][2], 
             pattern.reference_points[:y][3]);
         var temp_w = Math.floor(temp_h * 
@@ -91,8 +91,30 @@ class WWF5View extends WatchUi.WatchFace {
             [pattern.reference_points[:x][5], 0],
             [pattern.reference_points[:x][2], pattern.reference_points[:y][2]]);
         options[:identifier] = :scale;
-        options[:max_lenght] = 11;
         self.addLayer(new ScaleWidget(options));
+
+        //Поля данных
+        var field_widtch = Math.floor(
+            Global.mod((pattern.reference_points[:x][9] - pattern.reference_points[:x][8])) / 3);
+
+        options = {:locX => pattern.calculateLayerLeft(pattern.reference_points[:x][8]), 
+                :locY => pattern.calculateLayerUp(pattern.reference_points[:y][4]), 
+                :width => field_widtch, 
+                :height => pattern.calculateLayerHight(pattern.reference_points[:y][4], pattern.reference_points[:y][5])};
+
+        options[:identifier] = :data1;
+        options[:property_name] = "data_type_1";
+        self.addLayer(new DataField(options));
+
+        options[:locX] = options[:locX] + options[:width];
+        options[:identifier] = :data2;
+        options[:property_name] = "data_type_3";
+        self.addLayer(new DataField(options));
+
+        options[:locX] = options[:locX] + options[:width];
+        options[:identifier] = :data3;
+        options[:property_name] = "data_type_3";
+        self.addLayer(new DataField(options));
 
         //Подложка
         options = {
