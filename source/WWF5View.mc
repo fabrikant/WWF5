@@ -102,18 +102,15 @@ class WWF5View extends WatchUi.WatchFace {
                 :width => field_widtch, 
                 :height => pattern.calculateLayerHeight(pattern.reference_points[:y][4], pattern.reference_points[:y][5])};
 
-        options[:identifier] = :data1;
-        options[:property_name] = "data_type_1";
+        options[:identifier] = "data_type_1";
         self.addLayer(new DataField(options));
 
         options[:locX] = options[:locX] + options[:width];
-        options[:identifier] = :data2;
-        options[:property_name] = "data_type_3";
+        options[:identifier] = "data_type_2";
         self.addLayer(new DataField(options));
 
         options[:locX] = options[:locX] + options[:width];
-        options[:identifier] = :data3;
-        options[:property_name] = "data_type_3";
+        options[:identifier] = "data_type_3";
         self.addLayer(new DataField(options));
 
         //Подложка

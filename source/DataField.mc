@@ -7,23 +7,35 @@ import Toybox.Lang;
 
 class DataField extends AbstractField{
 
-    var data_type_property_name;
-
     function initialize(options){
         AbstractField.initialize(options);
-        data_type_property_name = options[:property_name];
     }
 
     function draw(colors){
         AbstractField.draw(colors);
         var dc = getDc();
-        // var compl_type = getApp().system_complications[Complications.COMPLICATION_TYPE_BATTERY];
-        // var compl = Complications.getComplication(compl_type);
+        var compl = getFieldComplication();
 
-        // if (compl != null){
-        //     drawScale(dc, colors, compl, scaleWidth());
-        // }
+        if (compl != null){
+            var font = getApp().watch_view.fonts[:sun_events];
+            font.writeString(dc, dc.getWidth()/2, 0, compl.value.toString(), Graphics.TEXT_JUSTIFY_CENTER);
+        }
         drawBorder(dc);
+    }
+
+    function getFieldComplication(){
+        var compl = null;
+        var compl_id = Application.Storage.getValue(getId());
+		if (compl_id == null){
+			compl_id = new Complications.Id(Application.Properties.getValue(getId()));
+		}
+		try {
+			compl = Complications.getComplication(compl_id); 
+		} catch(ex){
+			System.println(compl_id);
+			System.println(ex.getErrorMessage());
+		}         
+        return compl;
     }
 
 }

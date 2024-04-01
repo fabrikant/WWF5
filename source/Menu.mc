@@ -3,6 +3,7 @@ using Toybox.WatchUi;
 using Toybox.System;
 using Toybox.Graphics;
 using Toybox.Lang;
+using Toybox.Complications;
 
 //GeneralMenu
 //	Colors  
@@ -32,19 +33,19 @@ module Menu {
 		});
 		
 		items_props.add({
-			:item_class => :Item,
+			:item_class => :ComplicationItem,
 			:rez_label => Rez.Strings.Data1,
 			:identifier => "data_type_1",
 			:method => :complicationsSubMenu,
 		});
 		items_props.add({
-			:item_class => :Item,
+			:item_class => :ComplicationItem,
 			:rez_label => Rez.Strings.Data2,
 			:identifier => "data_type_2",
 			:method => :complicationsSubMenu,
 		});
 		items_props.add({
-			:item_class => :Item,
+			:item_class => :ComplicationItem,
 			:rez_label => Rez.Strings.Data3,
 			:identifier => "data_type_3",
 			:method => :complicationsSubMenu,
@@ -62,7 +63,16 @@ module Menu {
 
 	//Подменю выбора типа данных
 	function complicationsSubMenu(){
-		return {};
+
+		var res = {};
+		var iter = Complications.getComplications();
+		var complication = iter.next();
+		while (complication != null) {
+			res[complication.complicationId] = complication.longLabel;
+			complication = iter.next();
+		}
+
+		return res;
 	}
 
 	//Подменю выбора ед.изм. скорости ветра
@@ -152,10 +162,54 @@ module Menu {
 	}
 }
 
-
 //*****************************************************************************
 //Пункт меню (ассоциированный со свойством приложения) 
-//при нажатии открывается подменю выбора конкретного значения
+//при нажатии открывается подменю выбора со списком усложнений
+class ComplicationItem extends WatchUi.MenuItem{
+
+	var method_symbol;
+	
+	function initialize(options) {
+		self.method_symbol = options[:method];
+		var label = Application.loadResource(options[:rez_label]);
+		var sublabel = null;
+		var compl_id = Application.Storage.getValue(options[:identifier]);
+		
+		if (compl_id == null){
+			compl_id = new Complications.Id(Application.Properties.getValue(options[:identifier]));
+		}
+
+		try {
+			var compl = Complications.getComplication(compl_id); 
+			sublabel = compl.longLabel;
+		} catch(ex){
+			System.println(compl_id);
+			System.println(ex.getErrorMessage());
+		} 
+
+		MenuItem.initialize(label, sublabel, options[:identifier], {});
+	}
+
+	function onSelectItem(){
+		var options = {
+			:title => getLabel(),
+			:method_symbol => method_symbol,
+			:prop_name => getId(),
+			:parent_item_week => self.weak(),
+		};
+		var submenu = new SelectMenu(options);
+		WatchUi.pushView(submenu, new SimpleMenuDelegate(), WatchUi.SLIDE_IMMEDIATE);
+	}	
+
+	function onSelectSubmenuItem(compl_id){
+		Application.Storage.setValue(getId(),compl_id);
+		var compl = Complications.getComplication(compl_id);
+		setSubLabel(compl.longLabel);
+	}	
+}
+//*****************************************************************************
+//Пункт меню (ассоциированный со свойством приложения) 
+//при нажатии открывается подменю выбора конкретного значения из вручную заданного списка
 class Item extends WatchUi.MenuItem{
 
 	var method_symbol;
@@ -212,8 +266,12 @@ class SelectItem extends WatchUi.MenuItem{
 	var callbackWeak;
 	
 	function initialize(identifier, resLabel, callbackWeak) {
-		self.callbackWeak = callbackWeak; 
-		MenuItem.initialize(Application.loadResource(resLabel), null, identifier, {});
+		self.callbackWeak = callbackWeak;
+		if (resLabel instanceof Lang.String){
+			MenuItem.initialize(resLabel, null, identifier, {});
+		} else{
+			MenuItem.initialize(Application.loadResource(resLabel), null, identifier, {});
+		}
 	}
 
 	function onSelectItem(){
@@ -367,6 +425,8 @@ class SubMenu extends WatchUi.Menu2{
 				addItem(new ColorSelectItem(item_prop));
 			}else if(item_prop[:item_class] == :Item){
 				addItem(new Item(item_prop));
+			}else if(item_prop[:item_class] == :ComplicationItem){
+				addItem(new ComplicationItem(item_prop));
 			}
 		}
 	}

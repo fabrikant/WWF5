@@ -27,7 +27,6 @@ class WeatherWidget extends AbstractField{
             :line_offset => 1,
             :simple_style => false,
         });
-        
     }
 
     function draw(colors){
