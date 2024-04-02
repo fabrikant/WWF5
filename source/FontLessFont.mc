@@ -300,6 +300,7 @@ class FontLessFont {
     function initOtherSymbols(options){
 
         glifs["°"] = drawDegree(options);
+        glifs["k"] = drawk(options);
         
     }
 
@@ -313,6 +314,40 @@ class FontLessFont {
 
     /////////////////////////////////////////////////////////////////
     //OTHER SYMBOLS
+
+    function drawk(options){
+        var colors = getApp().watch_view.colors;
+        var _buf_bitmap_ref = Graphics.createBufferedBitmap({
+			:width => getNormalGlifWidth(),
+			:height => options[:height],
+		});
+        
+        var dc = _buf_bitmap_ref.get().getDc(); 
+        dc.setColor(colors[:background], colors[:background]);
+        dc.setAntiAlias(true);
+        dc.clear();
+        dc.setColor(colors[:font], colors[:background]);
+        dc.setPenWidth(1);        
+
+        var temp_y1 = dc.getHeight() * 2 / 3;
+        var temp_y2 = dc.getHeight() * 0.4 ;
+
+        var p = [[options[:line_offset], options[:line_offset]]];
+        p.add([p[p.size()-1][0], dc.getHeight() - options[:line_offset]]);
+        p.add([p[p.size()-1][0] + options[:line_width], p[p.size()-1][1]]);
+        p.add([p[p.size()-1][0], temp_y1]);
+        p.add([dc.getWidth() - options[:line_offset] - options[:line_width],
+            dc.getHeight() - options[:line_width]]);
+        p.add([p[p.size()-1][0] + options[:line_width], p[p.size()-1][1]]);
+        p.add([p[3][0]+ options[:line_width], p[3][1]]); 
+        p.add([p[5][0], temp_y2]);    
+        p.add([p[p.size()-1][0] - options[:line_width], temp_y2]);
+        p.add([p[3][0],p[3][1]]);
+        p.add([p[0][0] + options[:line_width], p[0][1]]);
+
+       dc.fillPolygon(p);
+       return _buf_bitmap_ref;
+    }
 
     function drawDegree(options){
         

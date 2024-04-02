@@ -33,7 +33,7 @@ class DataField extends AbstractField{
             font_value.writeString(dc, 
                 dc.getWidth()/2, 
                 0, 
-                getComplicationValue(compl), 
+                getComplicationValueString(compl), 
                 Graphics.TEXT_JUSTIFY_CENTER);
             
             //draw label, decorate fields
@@ -49,11 +49,6 @@ class DataField extends AbstractField{
             }
         }
         drawBorder(dc);
-    }
-
-    function getComplicationValue(compl){
-        var res = compl.value.toString(); 
-        return res;
     }
 
     function calculateLabelCoord(angle_offset, direction){

@@ -4,6 +4,7 @@ import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Math;
 import Toybox.Time;
+import Toybox.Complications;
 
 class AbstractField extends WatchUi.Layer{
 
@@ -34,6 +35,55 @@ class AbstractField extends WatchUi.Layer{
     return "RobotoCondensedRegular";
   }
 
+  function getComplicationValueString(compl){
+    var value = compl.value; 
+    var res = "";
+
+    if (compl.unit == Complications.UNIT_DISTANCE){
+      res = distanceToString(value);
+    }else if (compl.unit == Complications.UNIT_ELEVATION ||
+      compl.unit == Complications.UNIT_HEIGHT){
+      res = elevationToString(value);
+    }else{
+      res = value.toString();
+    }
+     
+    return res+"k";
+  }
+
+
+  //******************************************************
+  //convertation values
+
+  function elevationToString(value){
+		if (System.getDeviceSettings().elevationUnits ==  System.UNIT_STATUTE){ /*foot*/
+			value = value * 3.281;
+		}
+		if (value > 9999){
+			value = (value / 1000).format("%.1f")+"k";
+		}else{
+			value = value.format("%d");
+		}
+		return value;
+	}
+
+  function distanceToString(value){
+
+    if (System.getDeviceSettings().distanceUnits == System.UNIT_METRIC){ /*km*/
+      value = value / 100000.0;
+    }else{ /*mile*/
+      value = value / 160934.4;
+    }
+    var fString = "%.2f";
+    if (value >= 10){
+      fString = "%.1f";
+    }if (value >= 100){
+      fString = "%d";
+    }
+    value.format(fString);
+  }
+
+
   function clock(){
     return hours_minutes(System.getClockTime());
   }
@@ -61,7 +111,7 @@ class AbstractField extends WatchUi.Layer{
   function minutes(){
     return System.getClockTime().min.format("%02d");
   }
-  
+
   function seconds(){
     return System.getClockTime().sec.format("%02d");
   }
@@ -91,7 +141,7 @@ class AbstractField extends WatchUi.Layer{
       _bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
       return _bufferedBitmap;
     }
-	}
+  }
 
   function convertValueTemperature(сelsius){
     var value;
@@ -133,33 +183,33 @@ class AbstractField extends WatchUi.Layer{
     return value.format("%d")+" "+unit_str;      
   }
 
-	function getBeaufort(wind_speed){
-		if(wind_speed >= 33){
-			return 12;
-		}else if(wind_speed >= 28.5){
-			return 11;
-		}else if(wind_speed >= 24.5){
-			return 10;
-		}else if(wind_speed >= 20.8){
-			return 9;
-		}else if(wind_speed >= 17.2){
-			return 8;
-		}else if(wind_speed >= 13.9){
-			return 7;
-		}else if(wind_speed >= 10.8){
-			return 6;
-		}else if(wind_speed >= 8){
-			return 5;
-		}else if(wind_speed >= 5.5){
-			return 4;
-		}else if(wind_speed >= 3.4){
-			return 3;
-		}else if(wind_speed >= 1.6){
-			return 2;
-		}else if(wind_speed >= 0.3){
-			return 1;
-		}else {
-			return 0;
-		}
-	}
+  function getBeaufort(wind_speed){
+    if(wind_speed >= 33){
+      return 12;
+    }else if(wind_speed >= 28.5){
+      return 11;
+    }else if(wind_speed >= 24.5){
+      return 10;
+    }else if(wind_speed >= 20.8){
+      return 9;
+    }else if(wind_speed >= 17.2){
+      return 8;
+    }else if(wind_speed >= 13.9){
+      return 7;
+    }else if(wind_speed >= 10.8){
+      return 6;
+    }else if(wind_speed >= 8){
+      return 5;
+    }else if(wind_speed >= 5.5){
+      return 4;
+    }else if(wind_speed >= 3.4){
+      return 3;
+    }else if(wind_speed >= 1.6){
+      return 2;
+    }else if(wind_speed >= 0.3){
+      return 1;
+    }else {
+      return 0;
+    }
+  }
 }
