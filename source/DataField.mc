@@ -30,28 +30,29 @@ class DataField extends AbstractField{
 
         if (compl != null){
             var font_value = getApp().watch_view.fonts[:sun_events];
-            font_value.writeString(dc, dc.getWidth()/2, 0, compl.value.toString(), Graphics.TEXT_JUSTIFY_CENTER);
+            font_value.writeString(dc, 
+                dc.getWidth()/2, 
+                0, 
+                getComplicationValue(compl), 
+                Graphics.TEXT_JUSTIFY_CENTER);
+            
+            //draw label, decorate fields
             var options = {
                 :compl => compl, :font_label => font_label, 
                 :font_value => font_value, :colors => colors};
             if (getId().equals("data_type_1")){
-                drawField(options, Graphics.TEXT_JUSTIFY_RIGHT);
+                drawFieldLabel(options, Graphics.TEXT_JUSTIFY_RIGHT);
             }if (getId().equals("data_type_2")){
-                drawField2(options);
+                drawField2Label(options);
             }if (getId().equals("data_type_3")){
-                drawField(options, Graphics.TEXT_JUSTIFY_LEFT);
+                drawFieldLabel(options, Graphics.TEXT_JUSTIFY_LEFT);
             }
         }
         drawBorder(dc);
     }
 
-    function getComplLabel(compl){
-        var res = compl.shortLabel;
-        if (res == null){
-            if (compl.unit instanceof Lang.String){
-                res = compl.unit;
-            }
-        }
+    function getComplicationValue(compl){
+        var res = compl.value.toString(); 
         return res;
     }
 
@@ -68,11 +69,11 @@ class DataField extends AbstractField{
         label_y = system_radius - getY();
     }
 
-    function drawField(options, just){
+    function drawFieldLabel(options, just){
 
         var dc = getDc();
         dc.setColor(options[:colors][:font], options[:colors][:background]);
-        var label = getComplLabel(options[:compl]);
+        var label = getComplicationLabel(options[:compl]);
 
         if (label != null){
             dc.drawRadialText(
@@ -84,14 +85,19 @@ class DataField extends AbstractField{
                 label_radius, 
                 Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE);
         }
-
     } 
 
-    function drawField2(options){
+    function drawField2Label(options){
         var dc = getDc();
-        dc.setColor(options[:colors][:font], options[:colors][:background]);
+        
+        //decorate field
+        dc.setColor(options[:colors][:pattern_decorate], options[:colors][:pattern_decorate]);
+        var offset = dc.getHeight() * 0.15 ;
+        dc.drawLine(0, offset, 0, dc.getHeight() - offset);
+        dc.drawLine(dc.getWidth() - 1, offset, dc.getWidth() - 1, dc.getHeight() - offset);
 
-        var label = getComplLabel(options[:compl]);
+        dc.setColor(options[:colors][:font], options[:colors][:background]);
+        var label = getComplicationLabel(options[:compl]);
         if (label != null){
             dc.drawText(dc.getWidth() / 2, 
             dc.getHeight() - Graphics.getFontHeight(options[:font_label]), 
@@ -99,7 +105,6 @@ class DataField extends AbstractField{
             options[:compl].shortLabel, 
             Graphics.TEXT_JUSTIFY_CENTER);
         }
-
     }    
 
     function getFieldComplication(){
@@ -115,6 +120,16 @@ class DataField extends AbstractField{
 			System.println(ex.getErrorMessage());
 		}         
         return compl;
+    }
+
+    function getComplicationLabel(compl){
+        var res = compl.shortLabel;
+        if (res == null){
+            if (compl.unit instanceof Lang.String){
+                res = compl.unit;
+            }
+        }
+        return res;
     }
 
 }
