@@ -44,11 +44,24 @@ class AbstractField extends WatchUi.Layer{
     }else if (compl.unit == Complications.UNIT_ELEVATION ||
       compl.unit == Complications.UNIT_HEIGHT){
       res = elevationToString(value);
+    
     }else{
-      res = value.toString();
+      if (compl.unit instanceof Lang.String){
+        if (compl.unit.equals("K")){
+          var fString = "%.2f";
+          if (value >= 10){
+            fString = "%.1f";
+          }if (value >= 100){
+            fString = "%d";
+          }
+          res = value.format(fString)+"k";
+        }
+      }else{
+        res = value.toString();
+      }
     }
      
-    return res+"k";
+    return res;
   }
 
 
