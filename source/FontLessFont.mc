@@ -360,7 +360,10 @@ class FontLessFont {
     dc.clear();
 
     //Закраска пустых сегментов
-    if (colors[:font_empty_segments] != Graphics.COLOR_TRANSPARENT) {
+    if (
+      colors[:font_empty_segments] != Graphics.COLOR_TRANSPARENT &&
+      colors[:font_empty_segments] != colors[:background]
+    ) {
       dc.setColor(colors[:font_empty_segments], colors[:font_empty_segments]);
       for (var i = 0; i < invert_symbol_pattern.size(); i++) {
         dc.fillPolygon(segment_poligons[invert_symbol_pattern[i]]);

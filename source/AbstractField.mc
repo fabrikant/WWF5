@@ -13,14 +13,13 @@ class AbstractField extends WatchUi.Layer {
 
   function draw(colors) {
     var dc = getDc();
-    //dc.setColor(colors[:background], colors[:background]);
     dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_TRANSPARENT);
     dc.clear();
     dc.setAntiAlias(true);
   }
 
   function drawBorder(dc) {
-    return;
+    //return;
     dc.setPenWidth(1);
     dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_GREEN);
     dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());

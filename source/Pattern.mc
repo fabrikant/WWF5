@@ -138,14 +138,14 @@ class Pattern {
     var x7 = interseption[1];
     var x4 = Math.floor(0.7 * dc.getWidth());
     var x3 = x4;
-    for (var i = 0; i < colors.size(); i++) {
-      dc.setColor(colors[i], colors[i]);
-      dc.setPenWidth(pen_widths[i]);
-      //Косая черта
-      dc.drawLine(x3, y3, x4, y4);
-      //Горизонтальная черта
-      dc.drawLine(x3, y3, x7, y3);
-    }
+    // for (var i = 0; i < colors.size(); i++) {
+    //   dc.setColor(colors[i], colors[i]);
+    //   dc.setPenWidth(pen_widths[i]);
+    //   //Косая черта
+    //   dc.drawLine(x3, y3, x4, y4);
+    //   //Горизонтальная черта
+    //   dc.drawLine(x3, y3, x7, y3);
+    // }
 
     return {
       :x => [0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11],

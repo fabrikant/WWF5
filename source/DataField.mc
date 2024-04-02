@@ -1,6 +1,5 @@
 import Toybox.Graphics;
 import Toybox.System;
-import Toybox.WatchUi;
 import Toybox.Math;
 import Toybox.Complications;
 import Toybox.Lang;

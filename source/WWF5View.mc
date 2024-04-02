@@ -142,6 +142,16 @@ class WWF5View extends WatchUi.WatchFace {
     options[:identifier] = "data_type_3";
     self.addLayer(new DataField(options));
 
+    //Статусы
+    options = {
+      :locX => seconds_layer.getX() + seconds_layer.getDc().getWidth(),
+      :locY => seconds_layer.getY(),
+      :identifier => :status,
+    };
+    options[:width] = pattern.reference_points[:x][6] - options[:locX];
+    options[:height] = seconds_layer.getDc().getHeight();
+    self.addLayer(new StatusField(options));
+
     //Подложка
     options = {
       :locX => 0,
