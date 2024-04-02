@@ -130,7 +130,7 @@ module Menu {
     var items_props = [
       {
         :item_class => :ColorSelectItem,
-        :identifier => Graphics.COLOR_TRANSPARENT.toString(),
+        :identifier => (Graphics.COLOR_TRANSPARENT).toString(),
         :color => Graphics.COLOR_TRANSPARENT,
         :paren_item_week => paren_item_week,
       },

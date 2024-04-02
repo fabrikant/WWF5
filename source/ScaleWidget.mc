@@ -14,7 +14,7 @@ class ScaleWidget extends AbstractField {
     AbstractField.draw(colors);
     var dc = getDc();
     var compl = Complications.getComplication(
-      new Id(Complications.COMPLICATION_TYPE_BATTERY)
+      new Complications.Id(Complications.COMPLICATION_TYPE_BATTERY)
     );
 
     if (compl != null) {

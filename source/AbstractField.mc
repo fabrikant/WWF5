@@ -47,6 +47,12 @@ class AbstractField extends WatchUi.Layer {
       compl.unit == Complications.UNIT_HEIGHT
     ) {
       res = elevationToString(value);
+    } else if (compl.unit == Complications.UNIT_SPEED) {
+      res = speedToString(value);
+    } else if (compl.unit == Complications.UNIT_TEMPERATURE) {
+      res = convertValueTemperature(value);
+    } else if (compl.unit == Complications.UNIT_WEIGHT) {
+      res = weightToString(value);
     } else {
       if (compl.unit instanceof Lang.String) {
         if (compl.unit.equals("K")) {
@@ -60,27 +66,40 @@ class AbstractField extends WatchUi.Layer {
           res = value.format(fString) + "k";
         }
       } else {
-        res = value.toString();
+        res = reduceLongValue(value);
       }
     }
-
     return res;
   }
 
   //******************************************************
   //convertation values
 
+  function weightToString(value) {
+    if (System.getDeviceSettings().weightUnits == System.UNIT_STATUTE) {
+      /*foot*/
+      value *= 0.00220462;
+    } else {
+      value /= 1000;
+    }
+    return reduceLongValue(value);
+  }
+
+  function speedToString(value) {
+    if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
+      /*foot*/
+      value *= 3.281;
+    }
+    return reduceLongValue(value);
+  }
+
   function elevationToString(value) {
     if (System.getDeviceSettings().elevationUnits == System.UNIT_STATUTE) {
       /*foot*/
-      value = value * 3.281;
+      value *= 3.281;
     }
-    if (value > 9999) {
-      value = (value / 1000).format("%.1f") + "k";
-    } else {
-      value = value.format("%d");
-    }
-    return value;
+
+    return reduceLongValue(value);
   }
 
   function distanceToString(value) {
@@ -176,6 +195,21 @@ class AbstractField extends WatchUi.Layer {
       value = "";
     }
     return value.format("%d") + "°";
+  }
+
+  function reduceLongValue(value) {
+    if (value > 9999) {
+      value = (value / 1000).format("%.1f") + "k";
+    } else {
+      value = value.toString();
+      if (value.substring(3, 4).equals(".")) {
+        value = value.substring(0, 3);
+      } else {
+        value = value.substring(0, 4);
+      }
+      //value = value.format("%d");
+    }
+    return value;
   }
 
   function converValueWindSpeed(wind_speed) {

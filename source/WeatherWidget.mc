@@ -97,8 +97,8 @@ class WeatherWidget extends AbstractField {
     var transform = new Graphics.AffineTransform();
     transform.rotate((2 * Math.PI * (wind_angle + 180)) / 360f);
     transform.translate(
-      -arrow_bitmap.getWidth() / 2,
-      -arrow_bitmap.getHeight() / 2
+      (-arrow_bitmap.getWidth() / 2).toNumber(),
+      (-arrow_bitmap.getHeight() / 2).toNumber()
     );
     temp_x += max_temp_width + arrow_bitmap.getWidth() / 2;
     var temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
