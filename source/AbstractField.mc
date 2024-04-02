@@ -38,36 +38,27 @@ class AbstractField extends WatchUi.Layer {
   function getComplicationValueString(compl) {
     var value = compl.value;
     var res = "";
-
-    if (compl.unit == Complications.UNIT_DISTANCE) {
-      res = distanceToString(value);
-    } else if (
-      compl.unit == Complications.UNIT_ELEVATION ||
-      compl.unit == Complications.UNIT_HEIGHT
-    ) {
-      res = elevationToString(value);
-    } else if (compl.unit == Complications.UNIT_SPEED) {
-      res = speedToString(value);
-    } else if (compl.unit == Complications.UNIT_TEMPERATURE) {
-      res = convertValueTemperature(value);
-    } else if (compl.unit == Complications.UNIT_WEIGHT) {
-      res = weightToString(value);
+    if (value == null) {
+      res = "---";
     } else {
-      if (compl.unit instanceof Lang.String) {
-        if (compl.unit.equals("K")) {
-          var fString = "%.2f";
-          if (value >= 10) {
-            fString = "%.1f";
-          }
-          if (value >= 100) {
-            fString = "%d";
-          }
-          res = value.format(fString) + "k";
-        }
+      if (compl.unit == Complications.UNIT_DISTANCE) {
+        res = distanceToString(value);
+      } else if (
+        compl.unit == Complications.UNIT_ELEVATION ||
+        compl.unit == Complications.UNIT_HEIGHT
+      ) {
+        res = elevationToString(value);
+      } else if (compl.unit == Complications.UNIT_SPEED) {
+        res = speedToString(value);
+      } else if (compl.unit == Complications.UNIT_TEMPERATURE) {
+        res = convertValueTemperature(value);
+      } else if (compl.unit == Complications.UNIT_WEIGHT) {
+        res = weightToString(value);
       } else {
         res = reduceLongValue(value);
       }
     }
+
     return res;
   }
 
@@ -197,16 +188,24 @@ class AbstractField extends WatchUi.Layer {
   }
 
   function reduceLongValue(value) {
-    if (value > 9999) {
-      value = (value / 1000).format("%.1f") + "k";
+    if (
+      value instanceof Lang.Number ||
+      value instanceof Lang.Float ||
+      value instanceof Lang.Double
+    ) {
+      if (value > 9999) {
+        value = (value / 1000).format("%.1f") + "k";
+      } else {
+        value = value.toString();
+        if (value.substring(3, 4).equals(".")) {
+          value = value.substring(0, 3);
+        } else {
+          value = value.substring(0, 4);
+        }
+        //value = value.format("%d");
+      }
     } else {
       value = value.toString();
-      if (value.substring(3, 4).equals(".")) {
-        value = value.substring(0, 3);
-      } else {
-        value = value.substring(0, 4);
-      }
-      //value = value.format("%d");
     }
     return value;
   }

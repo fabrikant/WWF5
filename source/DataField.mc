@@ -16,34 +16,52 @@ class DataField extends AbstractField {
       :face => vectorFontName(),
       :size => font_height,
     });
-    if (getId().equals("data_type_1")) {
-      calculateLabelCoord(177, 1);
-    }
-    if (getId().equals("data_type_3")) {
-      calculateLabelCoord(363, -1);
+    if (getId().equals("data_type_1") || getId().equals("data_type_3")) {
+      calculateLabelCoord();
     }
   }
 
   function draw(colors) {
     AbstractField.draw(colors);
     var dc = getDc();
+    dc.setColor(colors[:font], colors[:background]);
     var compl = getFieldComplication();
 
     if (compl != null) {
-      var font_value = getApp().watch_view.fonts[:sun_events];
-      font_value.writeString(
-        dc,
-        dc.getWidth() / 2,
-        0,
-        getComplicationValueString(compl),
-        Graphics.TEXT_JUSTIFY_CENTER
-      );
+      if (compl.value instanceof Lang.String) {
+        dc.drawText(
+          dc.getWidth() / 2,
+          0,
+          font_label,
+          compl.value,
+          Graphics.TEXT_JUSTIFY_CENTER
+        );
+      } else {
+        var font_value = getApp().watch_view.fonts[:sun_events];
+        var compl_str = getComplicationValueString(compl);
+        if (compl_str == null){
+          compl_str = "---";
+        }
+        var x = null;
+        var just = null;
 
+        if (getId().equals("data_type_2")) {
+          x = dc.getWidth() / 2;
+          just = Graphics.TEXT_JUSTIFY_CENTER;
+        } else {
+          x = font_value.getNormalGlifWidth();
+          just = Graphics.TEXT_JUSTIFY_LEFT;
+          if (getX() < System.getDeviceSettings().screenWidth / 2) {
+            x = dc.getWidth() - x;
+            just = Graphics.TEXT_JUSTIFY_RIGHT;
+          }
+        }
+        font_value.writeString(dc, x, 0, compl_str, just);
+      }
       //draw label, decorate fields
       var options = {
         :compl => compl,
         :font_label => font_label,
-        :font_value => font_value,
         :colors => colors,
       };
       if (getId().equals("data_type_1")) {
@@ -59,18 +77,20 @@ class DataField extends AbstractField {
     drawBorder(dc);
   }
 
-  function calculateLabelCoord(angle_offset, direction) {
+  function calculateLabelCoord() {
     var pattern = getApp().watch_view.pattern;
     var diam = System.getDeviceSettings().screenHeight;
+    var dc = getDc();
     var system_radius = diam / 2;
-    label_radius = system_radius - pattern.reference_points[:pen_width];
-    var leg = pattern.reference_points[:y][5] - system_radius;
-    var sin_angle = leg / system_radius;
-    label_angle =
-      angle_offset + direction * Math.toDegrees(Math.asin(sin_angle));
-
-    label_x = system_radius - getX();
-    label_y = system_radius - getY();
+    label_radius = dc.getHeight() * 1.93;
+    if (getX() < system_radius) {
+      label_angle = 267;
+      label_x = dc.getWidth();
+    } else {
+      label_angle = 273;
+      label_x = 0;
+    }
+    label_y = -dc.getHeight();
   }
 
   function drawFieldLabel(options, just) {
@@ -79,16 +99,30 @@ class DataField extends AbstractField {
     var label = getComplicationLabel(options[:compl]);
 
     if (label != null) {
-      dc.drawRadialText(
-        label_x,
-        label_y,
-        font_label,
-        label,
-        just,
-        label_angle,
-        label_radius,
-        Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE
-      );
+      if (label.length() > 4) {
+        dc.drawRadialText(
+          label_x,
+          label_y,
+          font_label,
+          label,
+          just,
+          label_angle,
+          label_radius,
+          Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE
+        );
+      } else {
+        var x = dc.getTextWidthInPixels("STEPS", font_label) / 2;
+        if (getX() < System.getDeviceSettings().screenWidth / 2) {
+          x = dc.getWidth() - x;
+        }
+        dc.drawText(
+          x,
+          dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
+          font_label,
+          label,
+          Graphics.TEXT_JUSTIFY_CENTER
+        );
+      }
     }
   }
 
