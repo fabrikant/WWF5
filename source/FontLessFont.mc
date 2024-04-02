@@ -15,6 +15,7 @@ class FontLessFont {
     //     :line_width => Number,
     //     :line_offset => Number,
     //     :simple_style => Boolean (optional, default - false),
+    //     :other_symbols => ["k", "°", ".", ":"]
     // }
     function initialize(options) {
         
@@ -235,6 +236,26 @@ class FontLessFont {
     }
 
     private function initPunctuationSegments(options){
+
+        if (! options.hasKey(:other_symbols)){
+            return;
+        }
+        // 0
+        // 1
+        var punctuations_patterns = {};
+        if (options[:other_symbols].indexOf(".") >= 0){
+            punctuations_patterns["."] = [1];
+        }
+        if (options[:other_symbols].indexOf(":") >= 0){
+            punctuations_patterns[":"] = [0, 1];
+        }
+        if (options[:other_symbols].indexOf(",") >= 0){
+            punctuations_patterns[","] = [1];
+        }
+        if (punctuations_patterns.keys().size() == 0){
+            return;
+        }
+
         var punctuation_segments_poligons = [];
         var dot_poligon = [
             [0, 0],
@@ -248,15 +269,6 @@ class FontLessFont {
         punctuation_segments_poligons.add(movePoligon(dot_poligon, options[:line_offset], 
             options[:height] - options[:line_offset] - options[:line_width]));
         
-        // 0
-        // 1
-        
-        var punctuations_patterns = {
-            "." => [1],
-            ":" => [0, 1],
-            //"," => [1],
-        };
-
         options[:width] = 2 * options[:line_offset] + options[:line_width];
         var keys = punctuations_patterns.keys();
         for (var i = 0; i < keys.size(); i++){
@@ -264,7 +276,6 @@ class FontLessFont {
                 punctuation_segments_poligons, 
                 punctuations_patterns[keys[i]], []);
         }
-
     }
 
     function createGlifBitmap(options, segment_poligons, symbol_pattern, invert_symbol_pattern){
@@ -296,14 +307,6 @@ class FontLessFont {
         return _buf_bitmap_ref;
     }
 
-
-    function initOtherSymbols(options){
-
-        glifs["°"] = drawDegree(options);
-        glifs["k"] = drawk(options);
-        
-    }
-
     private function movePoligon(poligon, offset_x, offset_y){
         var res = [];
         for (var i = 0; i < poligon.size(); i++){
@@ -311,6 +314,18 @@ class FontLessFont {
         }
         return res;
     }
+
+    function initOtherSymbols(options){
+        if (! options.hasKey(:other_symbols)){
+            return;
+        }
+        
+        var other = options[:other_symbols];
+        if (other.indexOf("°") >= 0){ glifs["°"] = drawDegree(options); }
+        
+        if (other.indexOf("k") >= 0){ glifs["k"] = drawk(options); }
+    }
+
 
     /////////////////////////////////////////////////////////////////
     //OTHER SYMBOLS

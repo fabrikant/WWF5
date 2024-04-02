@@ -20,12 +20,16 @@ class SimpleField extends AbstractField{
         }else{
             var font_w = Math.floor(options[:width] / options[:max_lenght]);
             var line_w = Math.floor(font_w / 4.2);
-            font = new FontLessFont({
+            var font_options = {
                 :width => font_w,
                 :height => options[:height],
                 :line_width => line_w,
                 :line_offset => 2,
-            });
+            };
+            if (options.hasKey(:other_symbols)){
+                font_options[:other_symbols] = options[:other_symbols];
+            }
+            font = new FontLessFont(font_options);
         }
         getApp().watch_view.fonts[options[:identifier]] = font;
     }

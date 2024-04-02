@@ -20,13 +20,17 @@ class WeatherWidget extends AbstractField{
         var fonts = getApp().watch_view.fonts;
         var font_height = Math.floor(options[:height] * 0.45);
         var ratio = fonts[:sun_events].getRatio();
-        font_temp = new FontLessFont({
+        var font_options = {
             :width => Math.floor(font_height * ratio),
             :height => font_height,
             :line_width => 3,
             :line_offset => 1,
             :simple_style => false,
-        });
+        };
+        if (options.hasKey(:other_symbols)){
+            font_options[:other_symbols] = options[:other_symbols];
+        }        
+        font_temp = new FontLessFont(font_options);
     }
 
     function draw(colors){

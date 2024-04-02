@@ -33,6 +33,7 @@ class WWF5View extends WatchUi.WatchFace {
             [pattern.reference_points[:x][4], pattern.reference_points[:y][4]]);
         options[:identifier] = :clock;
         options[:max_lenght] = clock_layer_max_lenght;
+        options[:other_symbols] = [":"];
         var clock_layer = new SimpleField(options);
         self.addLayer(clock_layer);
 
@@ -83,6 +84,7 @@ class WWF5View extends WatchUi.WatchFace {
             :width => pattern.reference_points[:x][6] - pattern.reference_points[:x][1], 
             :height => sun_event_field.getY(),
             :identifier => :weather,
+            :other_symbols => ["°"],
         };
         self.addLayer(new WeatherWidget(options));
 
