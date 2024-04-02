@@ -65,7 +65,16 @@ module Menu {
     var iter = Complications.getComplications();
     var complication = iter.next();
     while (complication != null) {
-      res[complication.complicationId] = complication.longLabel;
+      var type = complication.getType();
+      if (
+        type != Complications.COMPLICATION_TYPE_INVALID &&
+        type != Complications.COMPLICATION_TYPE_SUNRISE &&
+        type != Complications.COMPLICATION_TYPE_SUNSET &&
+        type != Complications.COMPLICATION_TYPE_NOTIFICATION_COUNT
+      ) {
+        res[complication.complicationId] = complication.longLabel;
+      }
+
       complication = iter.next();
     }
 
@@ -130,7 +139,7 @@ module Menu {
     var items_props = [
       {
         :item_class => :ColorSelectItem,
-        :identifier => (Graphics.COLOR_TRANSPARENT).toString(),
+        :identifier => Graphics.COLOR_TRANSPARENT.toString(),
         :color => Graphics.COLOR_TRANSPARENT,
         :paren_item_week => paren_item_week,
       },
@@ -254,15 +263,20 @@ class Item extends WatchUi.MenuItem {
 class SelectMenu extends WatchUi.Menu2 {
   function initialize(options) {
     Menu2.initialize({ :title => options[:title] });
-    var propValue = Application.Properties.getValue(options[:prop_name]);
+    var property_value = Application.Properties.getValue(options[:prop_name]);
+    var storage_value = Application.Storage.getValue(options[:prop_name]);
     var pattern = (new Lang.Method(Menu, options[:method_symbol])).invoke();
     var keys = pattern.keys();
     for (var i = 0; i < keys.size(); i++) {
       addItem(
         new SelectItem(keys[i], pattern[keys[i]], options[:parent_item_week])
       );
-      if (propValue == keys[i]) {
+      if (property_value == keys[i]) {
         setFocus(i);
+      } else if (storage_value != null) {
+        if (storage_value.equals(keys[i])) {
+          setFocus(i);
+        }
       }
     }
   }
