@@ -17,9 +17,9 @@ class DataField extends AbstractField{
                 :size => font_height,
             }); 
         if (getId().equals("data_type_1")){
-            calculateLabelCoord1();
+            calculateLabelCoord(177, 1);
         }if (getId().equals("data_type_3")){
-            calculateLabelCoord3();
+            calculateLabelCoord(363, -1);
         }
     }
 
@@ -55,39 +55,25 @@ class DataField extends AbstractField{
         return res;
     }
 
-    function calculateLabelCoord1(){
-        var dc = getDc();
+    function calculateLabelCoord(angle_offset, direction){
         var pattern = getApp().watch_view.pattern;
         var diam = System.getDeviceSettings().screenHeight;
         var system_radius = diam / 2;
-        label_radius = Math.floor((diam - Graphics.getFontHeight(font_label)) / 2 
-            - pattern.reference_points[:pen_width]);
+        label_radius = system_radius - pattern.reference_points[:pen_width];
+        var leg = pattern.reference_points[:y][5] - system_radius;
+        var sin_angle = leg / system_radius;
+        label_angle = angle_offset + direction * Math.toDegrees(Math.asin(sin_angle));
 
-        var sin_angle = (system_radius - Global.mod(diam - pattern.reference_points[:y][5])) / system_radius;
-        label_angle = 175 + Math.toDegrees(Math.asin(sin_angle));
-        label_x = dc.getWidth() + (system_radius - getX() - dc.getWidth());
-        label_y = -(label_radius - Global.mod(diam - getY()));
-    }
-
-    function calculateLabelCoord3(){
-        var dc = getDc();
-        var pattern = getApp().watch_view.pattern;
-        var diam = System.getDeviceSettings().screenHeight;
-        var system_radius = diam / 2;
-        label_radius = Math.floor((diam - Graphics.getFontHeight(font_label)) / 2 
-            - pattern.reference_points[:pen_width]);
-
-        var sin_angle = (system_radius - Global.mod(diam - pattern.reference_points[:y][5])) / system_radius;
-        label_angle = 360 - Math.toDegrees(Math.asin(sin_angle));
-        label_x = -Global.mod(system_radius - getX());
-        label_y = -(system_radius - Global.mod(diam - getY()));
+        label_x = system_radius - getX();
+        label_y = system_radius - getY();
     }
 
     function drawField(options, just){
+
         var dc = getDc();
         dc.setColor(options[:colors][:font], options[:colors][:background]);
-
         var label = getComplLabel(options[:compl]);
+
         if (label != null){
             dc.drawRadialText(
                 label_x, 
