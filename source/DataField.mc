@@ -53,22 +53,55 @@ class DataField extends AbstractField {
     data[:colors] = colors;
 
     if (getId().equals("data_type_1")) {
-      drawFieldLabel(data, Graphics.TEXT_JUSTIFY_RIGHT);
+      if (data[:image] != null) {
+        drawFieldImage(data);
+      } else {
+        drawFieldLabel(data, Graphics.TEXT_JUSTIFY_RIGHT);
+      }
     } else if (getId().equals("data_type_2")) {
       decorateField2(data);
-      drawField2Label(data);
+      if (data[:image] != null) {
+        drawFieldImage2(data);
+      } else {
+        drawField2Label(data);
+      }
     } else if (getId().equals("data_type_3")) {
-      drawFieldLabel(data, Graphics.TEXT_JUSTIFY_LEFT);
+      if (data[:image] != null) {
+        drawFieldImage(data);
+      } else {
+        drawFieldLabel(data, Graphics.TEXT_JUSTIFY_LEFT);
+      }
     }
 
     drawBorder(dc);
   }
 
   //************************************************************
+  //Draw image
+  function drawFieldImage(data) {
+    var dc = getDc();
+    dc.setColor(data[:colors][:font], data[:colors][:background]);
+    var bitmap = createImage(data[:image], data[:colors]);
+    var x =
+      (dc.getTextWidthInPixels("STEPS", font_label) - bitmap.getWidth()) / 2;
+    if (getX() < System.getDeviceSettings().screenWidth / 2) {
+      x = dc.getWidth() - x - bitmap.getWidth();
+    }
+    dc.drawBitmap(x, dc.getHeight() - bitmap.getHeight(), bitmap);
+  }
+
+  function drawFieldImage2(data) {
+    var dc = getDc();
+    dc.setColor(data[:colors][:font], data[:colors][:background]);
+    var bitmap = createImage(data[:image], data[:colors]);
+    var x = (dc.getWidth() - bitmap.getWidth()) / 2;
+    dc.drawBitmap(x, dc.getHeight() - bitmap.getHeight(), bitmap);
+  }
+
+  //************************************************************
   //Draw labels
 
   function calculateLabelCoord() {
-    var pattern = getApp().watch_view.pattern;
     var diam = System.getDeviceSettings().screenHeight;
     var dc = getDc();
     var system_radius = diam / 2;

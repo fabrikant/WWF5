@@ -106,7 +106,7 @@ module DataWrapper {
     if (value >= 100) {
       fString = "%d";
     }
-    value.format(fString);
+    return value.format(fString);
   }
 
   function reduceLongValue(value) {
@@ -124,7 +124,6 @@ module DataWrapper {
         } else {
           value = value.substring(0, 4);
         }
-        //value = value.format("%d");
       }
     }
     return value;
