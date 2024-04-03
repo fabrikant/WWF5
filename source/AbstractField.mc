@@ -62,53 +62,6 @@ class AbstractField extends WatchUi.Layer {
     return res;
   }
 
-  //******************************************************
-  //convertation values
-
-  function weightToString(value) {
-    if (System.getDeviceSettings().weightUnits == System.UNIT_STATUTE) {
-      /*foot*/
-      value *= 0.00220462;
-    } else {
-      value /= 1000;
-    }
-    return reduceLongValue(value);
-  }
-
-  function speedToString(value) {
-    if (System.getDeviceSettings().paceUnits == System.UNIT_STATUTE) {
-      /*foot*/
-      value *= 3.281;
-    }
-    return reduceLongValue(value);
-  }
-
-  function elevationToString(value) {
-    if (System.getDeviceSettings().elevationUnits == System.UNIT_STATUTE) {
-      /*foot*/
-      value *= 3.281;
-    }
-
-    return reduceLongValue(value);
-  }
-
-  function distanceToString(value) {
-    if (System.getDeviceSettings().distanceUnits == System.UNIT_METRIC) {
-      /*km*/
-      value = value / 100000.0;
-    } else {
-      /*mile*/
-      value = value / 160934.4;
-    }
-    var fString = "%.2f";
-    if (value >= 10) {
-      fString = "%.1f";
-    }
-    if (value >= 100) {
-      fString = "%d";
-    }
-    value.format(fString);
-  }
 
   function clock() {
     return hours_minutes(System.getClockTime());
@@ -185,29 +138,6 @@ class AbstractField extends WatchUi.Layer {
       value = "";
     }
     return value.format("%d") + "°";
-  }
-
-  function reduceLongValue(value) {
-    if (
-      value instanceof Lang.Number ||
-      value instanceof Lang.Float ||
-      value instanceof Lang.Double
-    ) {
-      if (value > 9999) {
-        value = (value / 1000).format("%.1f") + "k";
-      } else {
-        value = value.toString();
-        if (value.substring(3, 4).equals(".")) {
-          value = value.substring(0, 3);
-        } else {
-          value = value.substring(0, 4);
-        }
-        //value = value.format("%d");
-      }
-    } else {
-      value = value.toString();
-    }
-    return value;
   }
 
   function converValueWindSpeed(wind_speed) {

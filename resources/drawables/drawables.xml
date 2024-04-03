@@ -1,15 +1,34 @@
 <drawables>
-    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+	<bitmap id="LauncherIcon" filename="launcher_icon.png" />
 
-    <bitmap id="sunEvent" filename="./svg-resources/sun-event.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+	<bitmap id="sunEvent" filename="./svg-resources/sun-event.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
-		     <color>555555</color>
+			<color>555555</color>
 		</palette>
 	</bitmap>
-    
+
 	<bitmap id="message" filename="./svg-resources/message.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
-		     <color>555555</color>
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+
+	<bitmap id="Callory" filename="./svg-resources/1041.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Distance" filename="./svg-resources/location.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Steps" filename="./svg-resources/walk.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
 		</palette>
 	</bitmap>
 </drawables>

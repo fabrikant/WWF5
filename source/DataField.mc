@@ -25,57 +25,47 @@ class DataField extends AbstractField {
     AbstractField.draw(colors);
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
-    var compl = getFieldComplication();
+    var data = DataWrapper.getData(Application.Properties.getValue(getId()));
 
-    if (compl != null) {
-      if (compl.value instanceof Lang.String) {
-        dc.drawText(
-          dc.getWidth() / 2,
-          0,
-          font_label,
-          compl.value,
-          Graphics.TEXT_JUSTIFY_CENTER
-        );
-      } else {
-        var font_value = getApp().watch_view.fonts[:sun_events];
-        var compl_str = getComplicationValueString(compl);
-        if (compl_str == null){
-          compl_str = "---";
-        }
-        var x = null;
-        var just = null;
+    //Вывод значения
+    if (data[:value] != null) {
+      var font_value = getApp().watch_view.fonts[:sun_events];
 
-        if (getId().equals("data_type_2")) {
-          x = dc.getWidth() / 2;
-          just = Graphics.TEXT_JUSTIFY_CENTER;
-        } else {
-          x = font_value.getNormalGlifWidth();
-          just = Graphics.TEXT_JUSTIFY_LEFT;
-          if (getX() < System.getDeviceSettings().screenWidth / 2) {
-            x = dc.getWidth() - x;
-            just = Graphics.TEXT_JUSTIFY_RIGHT;
-          }
-        }
-        font_value.writeString(dc, x, 0, compl_str, just);
-      }
-      //draw label, decorate fields
-      var options = {
-        :compl => compl,
-        :font_label => font_label,
-        :colors => colors,
-      };
-      if (getId().equals("data_type_1")) {
-        drawFieldLabel(options, Graphics.TEXT_JUSTIFY_RIGHT);
-      }
+      var x = null;
+      var just = null;
+
       if (getId().equals("data_type_2")) {
-        drawField2Label(options);
+        x = dc.getWidth() / 2;
+        just = Graphics.TEXT_JUSTIFY_CENTER;
+      } else {
+        x = font_value.getNormalGlifWidth();
+        just = Graphics.TEXT_JUSTIFY_LEFT;
+        if (getX() < System.getDeviceSettings().screenWidth / 2) {
+          x = dc.getWidth() - x;
+          just = Graphics.TEXT_JUSTIFY_RIGHT;
+        }
       }
-      if (getId().equals("data_type_3")) {
-        drawFieldLabel(options, Graphics.TEXT_JUSTIFY_LEFT);
-      }
+      font_value.writeString(dc, x, 0, data[:value], just);
     }
+
+    //draw label, decorate fields
+    data[:font_label] = font_label;
+    data[:colors] = colors;
+
+    if (getId().equals("data_type_1")) {
+      drawFieldLabel(data, Graphics.TEXT_JUSTIFY_RIGHT);
+    } else if (getId().equals("data_type_2")) {
+      decorateField2(data);
+      drawField2Label(data);
+    } else if (getId().equals("data_type_3")) {
+      drawFieldLabel(data, Graphics.TEXT_JUSTIFY_LEFT);
+    }
+
     drawBorder(dc);
   }
+
+  //************************************************************
+  //Draw labels
 
   function calculateLabelCoord() {
     var pattern = getApp().watch_view.pattern;
@@ -94,41 +84,65 @@ class DataField extends AbstractField {
   }
 
   function drawFieldLabel(options, just) {
+    if (options[:label] == null) {
+      return;
+    }
+
     var dc = getDc();
     dc.setColor(options[:colors][:font], options[:colors][:background]);
-    var label = getComplicationLabel(options[:compl]);
+    var label = options[:label];
+    if (label instanceof Lang.Number) {
+      label = Application.loadResource(label);
+    }
 
-    if (label != null) {
-      if (label.length() > 4) {
-        dc.drawRadialText(
-          label_x,
-          label_y,
-          font_label,
-          label,
-          just,
-          label_angle,
-          label_radius,
-          Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE
-        );
-      } else {
-        var x = dc.getTextWidthInPixels("STEPS", font_label) / 2;
-        if (getX() < System.getDeviceSettings().screenWidth / 2) {
-          x = dc.getWidth() - x;
-        }
-        dc.drawText(
-          x,
-          dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
-          font_label,
-          label,
-          Graphics.TEXT_JUSTIFY_CENTER
-        );
+    if (label.length() > 4) {
+      dc.drawRadialText(
+        label_x,
+        label_y,
+        font_label,
+        label,
+        just,
+        label_angle,
+        label_radius,
+        Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE
+      );
+    } else {
+      var x = dc.getTextWidthInPixels("STEPS", font_label) / 2;
+      if (getX() < System.getDeviceSettings().screenWidth / 2) {
+        x = dc.getWidth() - x;
       }
+      dc.drawText(
+        x,
+        dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
+        font_label,
+        label,
+        Graphics.TEXT_JUSTIFY_CENTER
+      );
     }
   }
 
   function drawField2Label(options) {
+    if (options[:label] == null) {
+      return;
+    }
     var dc = getDc();
+    dc.setColor(options[:colors][:font], options[:colors][:background]);
+    var label = options[:label];
+    if (label instanceof Lang.Number) {
+      label = Application.loadResource(label);
+    }
 
+    dc.drawText(
+      dc.getWidth() / 2,
+      dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
+      options[:font_label],
+      label,
+      Graphics.TEXT_JUSTIFY_CENTER
+    );
+  }
+
+  function decorateField2(options) {
+    var dc = getDc();
     //decorate field
     dc.setColor(
       options[:colors][:pattern_decorate],
@@ -142,42 +156,5 @@ class DataField extends AbstractField {
       dc.getWidth() - 1,
       dc.getHeight() - offset
     );
-
-    dc.setColor(options[:colors][:font], options[:colors][:background]);
-    var label = getComplicationLabel(options[:compl]);
-    if (label != null) {
-      dc.drawText(
-        dc.getWidth() / 2,
-        dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
-        options[:font_label],
-        options[:compl].shortLabel,
-        Graphics.TEXT_JUSTIFY_CENTER
-      );
-    }
-  }
-
-  function getFieldComplication() {
-    var compl = null;
-    var compl_id = Application.Storage.getValue(getId());
-    if (compl_id == null) {
-      compl_id = new Complications.Id(Application.Properties.getValue(getId()));
-    }
-    try {
-      compl = Complications.getComplication(compl_id);
-    } catch (ex) {
-      System.println(compl_id);
-      System.println(ex.getErrorMessage());
-    }
-    return compl;
-  }
-
-  function getComplicationLabel(compl) {
-    var res = compl.shortLabel;
-    if (res == null) {
-      if (compl.unit instanceof Lang.String) {
-        res = compl.unit;
-      }
-    }
-    return res;
   }
 }

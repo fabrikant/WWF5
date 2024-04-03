@@ -31,22 +31,22 @@ module Menu {
     });
 
     items_props.add({
-      :item_class => :ComplicationItem,
+      :item_class => :Item,
       :rez_label => Rez.Strings.Data1,
       :identifier => "data_type_1",
-      :method => :complicationsSubMenu,
+      :method => :dataSubMenu,
     });
     items_props.add({
-      :item_class => :ComplicationItem,
+      :item_class => :Item,
       :rez_label => Rez.Strings.Data2,
       :identifier => "data_type_2",
-      :method => :complicationsSubMenu,
+      :method => :dataSubMenu,
     });
     items_props.add({
-      :item_class => :ComplicationItem,
+      :item_class => :Item,
       :rez_label => Rez.Strings.Data3,
       :identifier => "data_type_3",
-      :method => :complicationsSubMenu,
+      :method => :dataSubMenu,
     });
 
     items_props.add({
@@ -59,27 +59,37 @@ module Menu {
     return new SubMenu(options);
   }
 
-  //Подменю выбора типа данных
-  function complicationsSubMenu() {
-    var res = {};
-    var iter = Complications.getComplications();
-    var complication = iter.next();
-    while (complication != null) {
-      var type = complication.getType();
-      if (
-        type != Complications.COMPLICATION_TYPE_INVALID &&
-        type != Complications.COMPLICATION_TYPE_SUNRISE &&
-        type != Complications.COMPLICATION_TYPE_SUNSET &&
-        type != Complications.COMPLICATION_TYPE_NOTIFICATION_COUNT
-      ) {
-        res[complication.complicationId] = complication.longLabel;
-      }
-
-      complication = iter.next();
-    }
-
-    return res;
+  function dataSubMenu() {
+    var pattern = {
+      DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
+      DataWrapper.CALORIES => Rez.Strings.FIELD_TYPE_CALORIES,
+      DataWrapper.DISTANCE => Rez.Strings.FIELD_TYPE_DISTANCE,
+      DataWrapper.STEPS => Rez.Strings.FIELD_TYPE_STEPS,
+    };
+    return pattern;
   }
+
+  // //Подменю выбора типа данных
+  // function complicationsSubMenu() {
+  //   var res = {};
+  //   var iter = Complications.getComplications();
+  //   var complication = iter.next();
+  //   while (complication != null) {
+  //     var type = complication.getType();
+  //     if (
+  //       type != Complications.COMPLICATION_TYPE_INVALID &&
+  //       type != Complications.COMPLICATION_TYPE_SUNRISE &&
+  //       type != Complications.COMPLICATION_TYPE_SUNSET &&
+  //       type != Complications.COMPLICATION_TYPE_NOTIFICATION_COUNT
+  //     ) {
+  //       res[complication.complicationId] = complication.longLabel;
+  //     }
+
+  //     complication = iter.next();
+  //   }
+
+  //   return res;
+  // }
 
   //Подменю выбора ед.изм. скорости ветра
   function windSpeedUnitsSubmenu() {
@@ -174,55 +184,56 @@ module Menu {
   }
 }
 
-//*****************************************************************************
-//Пункт меню (ассоциированный со свойством приложения)
-//при нажатии открывается подменю выбора со списком усложнений
-class ComplicationItem extends WatchUi.MenuItem {
-  var method_symbol;
+// //*****************************************************************************
+// //Пункт меню (ассоциированный со свойством приложения)
+// //при нажатии открывается подменю выбора со списком усложнений
+// class ComplicationItem extends WatchUi.MenuItem {
+//   var method_symbol;
 
-  function initialize(options) {
-    self.method_symbol = options[:method];
-    var label = Application.loadResource(options[:rez_label]);
-    var sublabel = null;
-    var compl_id = Application.Storage.getValue(options[:identifier]);
+//   function initialize(options) {
+//     self.method_symbol = options[:method];
+//     var label = Application.loadResource(options[:rez_label]);
+//     var sublabel = null;
+//     var compl_id = Application.Storage.getValue(options[:identifier]);
 
-    if (compl_id == null) {
-      compl_id = new Complications.Id(
-        Application.Properties.getValue(options[:identifier])
-      );
-    }
+//     if (compl_id == null) {
+//       compl_id = new Complications.Id(
+//         Application.Properties.getValue(options[:identifier])
+//       );
+//     }
 
-    try {
-      var compl = Complications.getComplication(compl_id);
-      sublabel = compl.longLabel;
-    } catch (ex) {
-      System.println(compl_id);
-      System.println(ex.getErrorMessage());
-    }
-    MenuItem.initialize(label, sublabel, options[:identifier], {});
-  }
+//     try {
+//       var compl = Complications.getComplication(compl_id);
+//       sublabel = compl.longLabel;
+//     } catch (ex) {
+//       System.println(compl_id);
+//       System.println(ex.getErrorMessage());
+//     }
+//     MenuItem.initialize(label, sublabel, options[:identifier], {});
+//   }
 
-  function onSelectItem() {
-    var options = {
-      :title => getLabel(),
-      :method_symbol => method_symbol,
-      :prop_name => getId(),
-      :parent_item_week => self.weak(),
-    };
-    var submenu = new SelectMenu(options);
-    WatchUi.pushView(
-      submenu,
-      new SimpleMenuDelegate(),
-      WatchUi.SLIDE_IMMEDIATE
-    );
-  }
+//   function onSelectItem() {
+//     var options = {
+//       :title => getLabel(),
+//       :method_symbol => method_symbol,
+//       :prop_name => getId(),
+//       :parent_item_week => self.weak(),
+//     };
+//     var submenu = new SelectMenu(options);
+//     WatchUi.pushView(
+//       submenu,
+//       new SimpleMenuDelegate(),
+//       WatchUi.SLIDE_IMMEDIATE
+//     );
+//   }
 
-  function onSelectSubmenuItem(compl_id) {
-    Application.Storage.setValue(getId(), compl_id);
-    var compl = Complications.getComplication(compl_id);
-    setSubLabel(compl.longLabel);
-  }
-}
+//   function onSelectSubmenuItem(compl_id) {
+//     Application.Storage.setValue(getId(), compl_id);
+//     var compl = Complications.getComplication(compl_id);
+//     setSubLabel(compl.longLabel);
+//   }
+// }
+
 //*****************************************************************************
 //Пункт меню (ассоциированный со свойством приложения)
 //при нажатии открывается подменю выбора конкретного значения из вручную заданного списка
@@ -474,14 +485,12 @@ class SubMenu extends WatchUi.Menu2 {
         addItem(new ColorSelectItem(item_prop));
       } else if (item_prop[:item_class] == :Item) {
         addItem(new Item(item_prop));
-      } else if (item_prop[:item_class] == :ComplicationItem) {
-        addItem(new ComplicationItem(item_prop));
       }
     }
   }
 
   function onHide() {
-    getApp().onSettingsChanged();
+    //getApp().onSettingsChanged();
   }
 }
 
