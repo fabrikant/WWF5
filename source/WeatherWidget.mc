@@ -76,6 +76,7 @@ class WeatherWidget extends AbstractField {
     var sin_angle =
       (system_radius - getY() - dc.getHeight()).toFloat() / system_radius;
     var angle = Math.toDegrees(Math.asin(sin_angle)) + 10;
+    dc.setColor(colors[:font], colors[:background]);
     dc.drawRadialText(
       system_radius - getX(),
       dc.getHeight() + Global.mod(system_radius - (getY() + dc.getHeight())),

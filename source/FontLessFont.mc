@@ -6,6 +6,8 @@ import Toybox.System;
 class FontLessFont {
   protected var glifs;
   protected var height;
+  protected var weights;
+  protected var normalWeight;
 
   //options - dictonary
   // {
@@ -21,6 +23,8 @@ class FontLessFont {
       options[:simple_style] = false;
     }
     glifs = {};
+    weights = {};
+    normalWeight = options[:width];
     height = options[:height];
     initSevenSegmentsPoligons(options);
     initPunctuationSegments(options);
@@ -32,12 +36,10 @@ class FontLessFont {
     for (var i = 0; i < str.length(); i++) {
       var sub_str = str.substring(i, i + 1);
       if (glifs.hasKey(sub_str)) {
-        var bitmap = glifs[sub_str];
-        if (bitmap instanceof Graphics.BufferedBitmapReference) {
-          res = res + bitmap.getWidth();
+        if (weights.hasKey(sub_str)) {
+          res += weights[sub_str];
         } else {
-          System.println("wtf " + sub_str);
-          System.println(bitmap);
+          res += normalWeight;
         }
       }
     }
@@ -65,19 +67,22 @@ class FontLessFont {
       if (glifs.hasKey(sub_str)) {
         var bitmap = glifs[sub_str].get();
         dc.drawBitmap(next_x, current_y, bitmap);
-        next_x += bitmap.getDc().getWidth();
+        if (weights.hasKey(sub_str)) {
+          next_x += weights[sub_str];
+        } else {
+          next_x += normalWeight;
+        }
       }
     }
   }
 
   //width-height ratio
   function getRatio() {
-    var width = getStringWidth("0");
-    return width.toFloat() / height;
+    return normalWeight.toFloat() / height;
   }
 
   function getNormalGlifWidth() {
-    return getStringWidth("0");
+    return normalWeight;
   }
 
   function getHeight() {
@@ -293,15 +298,19 @@ class FontLessFont {
     }
     // 0
     // 1
+    options[:width] = 2 * options[:line_offset] + options[:line_width];
     var punctuations_patterns = {};
     if (options[:other_symbols].indexOf(".") >= 0) {
       punctuations_patterns["."] = [1];
+      weights["."] = options[:width];
     }
     if (options[:other_symbols].indexOf(":") >= 0) {
       punctuations_patterns[":"] = [0, 1];
+      weights[":"] = options[:width];
     }
     if (options[:other_symbols].indexOf(",") >= 0) {
       punctuations_patterns[","] = [1];
+      weights[","] = options[:width];
     }
     if (punctuations_patterns.keys().size() == 0) {
       return;
@@ -330,7 +339,6 @@ class FontLessFont {
       )
     );
 
-    options[:width] = 2 * options[:line_offset] + options[:line_width];
     var keys = punctuations_patterns.keys();
     for (var i = 0; i < keys.size(); i++) {
       glifs[keys[i]] = createGlifBitmap(
@@ -486,7 +494,7 @@ class FontLessFont {
 
     var radius = Global.max((options[:line_width] * 1.3).toNumber(), 3);
     var symbol_width = 2 * radius + 2 * options[:line_offset];
-
+    weights["°"] = symbol_width;
     var _buf_bitmap_ref = Graphics.createBufferedBitmap({
       :width => symbol_width,
       :height => options[:height],

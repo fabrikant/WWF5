@@ -130,7 +130,7 @@ class ScaleWidget extends AbstractField {
     );
 
     //Подпись
-    dc.setColor(colors[:font], colors[:font]);
+    dc.setColor(colors[:font], colors[:background]);
     var font_height = vectorFontHeight();
     var font = Graphics.getVectorFont({
       :face => vectorFontName(),
