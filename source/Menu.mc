@@ -32,6 +32,12 @@ module Menu {
 
     items_props.add({
       :item_class => :Item,
+      :rez_label => Rez.Strings.DataScale,
+      :identifier => "data_type_scale",
+      :method => :dataSubMenu,
+    });
+    items_props.add({
+      :item_class => :Item,
       :rez_label => Rez.Strings.Data1,
       :identifier => "data_type_1",
       :method => :dataSubMenu,

@@ -13,17 +13,58 @@ class ScaleWidget extends AbstractField {
   function draw(colors) {
     AbstractField.draw(colors);
     var dc = getDc();
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_BATTERY)
-    );
 
-    if (compl != null) {
-      drawScale(dc, colors, compl, scaleWidth());
+    var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+
+    if (data[:scale_value] != null) {
+      drawScale(dc, colors, data, scaleWidth());
+    } else {
+      drawData(dc, colors, data);
     }
     drawBorder(dc);
   }
 
-  function drawScale(dc, colors, compl, scale_width) {
+  //Рисуем поле с данными
+  function drawData(dc, colors, data) {
+    var font_value = getApp().watch_view.fonts[:sun_events];
+    var temp_y = dc.getHeight() - font_value.getHeight();
+    //Значение
+    if (data[:value] != null) {
+      font_value.writeString(
+        dc,
+        dc.getWidth() / 2,
+        temp_y,
+        data[:value],
+        Graphics.TEXT_JUSTIFY_CENTER
+      );
+    }
+
+    if (data[:image] != null) {
+      //Картинка
+      var bitmap = createImage(data[:image], colors);
+      temp_y -= bitmap.getHeight() * 1.2;
+      dc.drawBitmap(dc.getWidth() / 2, temp_y, bitmap);
+    } else if (data[:label] != null) {
+      //или текстовая метка
+      dc.setColor(colors[:font], colors[:background]);
+      var font_label = Graphics.getVectorFont({
+        :face => vectorFontName(),
+        :size => vectorFontHeight(),
+      });
+      temp_y -= Graphics.getFontHeight(font_label);
+      var label = labelCastToString(data[:label]);
+      dc.drawText(
+        dc.getWidth() * 0.75,
+        temp_y,
+        font_label,
+        label.substring(0, 4),
+        Graphics.TEXT_JUSTIFY_RIGHT
+      );
+    }
+  }
+
+  //Рисуем поле со шкалой
+  function drawScale(dc, colors, data, scale_width) {
     var system_radius = System.getDeviceSettings().screenHeight / 2;
     var scale_radius = system_radius - scale_width / 2;
     var pattern = getApp().watch_view.pattern;
@@ -69,10 +110,11 @@ class ScaleWidget extends AbstractField {
     );
 
     var angle_value =
-      angle_min - (compl.value * Global.mod(angle_min - angle_max)) / 100;
+      angle_min -
+      (data[:scale_value] * Global.mod(angle_min - angle_max)) / 100;
 
     var scale_color = Graphics.COLOR_GREEN;
-    if (compl.value <= 20) {
+    if (data[:scale_value] <= 20) {
       scale_color = Graphics.COLOR_RED;
     }
 
@@ -88,26 +130,28 @@ class ScaleWidget extends AbstractField {
 
     //Подпись
     dc.setColor(colors[:font], colors[:font]);
-    //var font_height = getApp().watch_view.fonts[:sun_events].getHeight();
-    var font_height = Math.round(
-      System.getDeviceSettings().screenHeight * 0.105
-    ).toNumber();
+    var font_height = vectorFontHeight();
     var font = Graphics.getVectorFont({
       :face => vectorFontName(),
       :size => font_height,
     });
 
-    var str = Lang.format("$1$$2$", [compl.value.format("%d"), compl.unit]);
     var str_angle = angle_min - Global.mod(angle_min - angle_max) / 2;
     dc.drawRadialText(
       center_x,
       center_y,
       font,
-      str,
+      data[:value],
       Graphics.TEXT_JUSTIFY_CENTER,
       str_angle,
       system_radius - scale_width - font_height,
       Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE
     );
+  }
+
+  function vectorFontHeight() {
+    return Math.round(
+      System.getDeviceSettings().screenHeight * 0.105
+    ).toNumber();
   }
 }

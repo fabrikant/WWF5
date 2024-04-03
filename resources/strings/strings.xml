@@ -18,6 +18,7 @@
 	<string id="SpeedUnitBeauf" scope="foreground">beaufort</string>
 	<string id="SpeedUnitKnots" scope="foreground">knots</string>
 
+    <string id="DataScale" scope="foreground">Scale field</string>
     <string id="Data1" scope="foreground">Data field 1</string>
     <string id="Data2" scope="foreground">Data field 2</string>
     <string id="Data3" scope="foreground">Data field 3</string>

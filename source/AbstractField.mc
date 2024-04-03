@@ -103,6 +103,14 @@ class AbstractField extends WatchUi.Layer {
     return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
   }
 
+  function labelCastToString(label){
+    if (label instanceof Lang.String){
+      return label;
+    }else if (label != null){
+      return Application.loadResource(label);
+    }
+  }
+
   function createImage(resource, colors) {
     var _bitmap = Application.loadResource(resource);
     if (Graphics has :createBufferedBitmap) {

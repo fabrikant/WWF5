@@ -111,7 +111,7 @@ class WWF5View extends WatchUi.WatchFace {
       [pattern.reference_points[:x][5], 0],
       [pattern.reference_points[:x][2], pattern.reference_points[:y][2]]
     );
-    options[:identifier] = :scale;
+    options[:identifier] = "data_type_scale";
     self.addLayer(new ScaleWidget(options));
 
     //Поля данных

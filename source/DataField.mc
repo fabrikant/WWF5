@@ -123,10 +123,7 @@ class DataField extends AbstractField {
 
     var dc = getDc();
     dc.setColor(options[:colors][:font], options[:colors][:background]);
-    var label = options[:label];
-    if (label instanceof Lang.Number) {
-      label = Application.loadResource(label);
-    }
+    var label = labelCastToString(options[:label]);
 
     if (label.length() > 4) {
       dc.drawRadialText(
@@ -160,10 +157,7 @@ class DataField extends AbstractField {
     }
     var dc = getDc();
     dc.setColor(options[:colors][:font], options[:colors][:background]);
-    var label = options[:label];
-    if (label instanceof Lang.Number) {
-      label = Application.loadResource(label);
-    }
+    var label = labelCastToString(options[:label]);
 
     dc.drawText(
       dc.getWidth() / 2,
