@@ -16,7 +16,7 @@ class DataField extends AbstractField {
       :face => vectorFontName(),
       :size => font_height,
     });
-    if (getId().equals("data_type_1") || getId().equals("data_type_3")) {
+    if (getId().equals("data_1") || getId().equals("data_3")) {
       calculateLabelCoord();
     }
   }
@@ -34,7 +34,7 @@ class DataField extends AbstractField {
       var x = null;
       var just = null;
 
-      if (getId().equals("data_type_2")) {
+      if (getId().equals("data_2")) {
         x = dc.getWidth() / 2;
         just = Graphics.TEXT_JUSTIFY_CENTER;
       } else {
@@ -52,20 +52,20 @@ class DataField extends AbstractField {
     data[:font_label] = font_label;
     data[:colors] = colors;
 
-    if (getId().equals("data_type_1")) {
+    if (getId().equals("data_1")) {
       if (data[:image] != null) {
         drawFieldImage(data);
       } else {
         drawFieldLabel(data, Graphics.TEXT_JUSTIFY_RIGHT);
       }
-    } else if (getId().equals("data_type_2")) {
+    } else if (getId().equals("data_2")) {
       decorateField2(data);
       if (data[:image] != null) {
         drawFieldImage2(data);
       } else {
         drawField2Label(data);
       }
-    } else if (getId().equals("data_type_3")) {
+    } else if (getId().equals("data_3")) {
       if (data[:image] != null) {
         drawFieldImage(data);
       } else {

@@ -111,7 +111,7 @@ class WWF5View extends WatchUi.WatchFace {
       [pattern.reference_points[:x][5], 0],
       [pattern.reference_points[:x][2], pattern.reference_points[:y][2]]
     );
-    options[:identifier] = "data_type_scale";
+    options[:identifier] = "data_scale";
     self.addLayer(new ScaleWidget(options));
 
     //Поля данных
@@ -131,15 +131,15 @@ class WWF5View extends WatchUi.WatchFace {
       ),
     };
 
-    options[:identifier] = "data_type_1";
+    options[:identifier] = "data_1";
     self.addLayer(new DataField(options));
 
     options[:locX] = options[:locX] + options[:width];
-    options[:identifier] = "data_type_2";
+    options[:identifier] = "data_2";
     self.addLayer(new DataField(options));
 
     options[:locX] = options[:locX] + options[:width];
-    options[:identifier] = "data_type_3";
+    options[:identifier] = "data_3";
     self.addLayer(new DataField(options));
 
     //Статусы
@@ -151,6 +151,19 @@ class WWF5View extends WatchUi.WatchFace {
     options[:width] = pattern.reference_points[:x][6] - options[:locX];
     options[:height] = seconds_layer.getDc().getHeight();
     self.addLayer(new StatusField(options));
+
+    //Small data field
+    options = {
+      :locX => seconds_layer.getX(),
+      :locY => seconds_layer.getY() + seconds_layer.getDc().getHeight(),
+      :identifier => "data_small",
+    };
+    options[:width] = pattern.reference_points[:x][6] - options[:locX];
+    options[:height] =
+      Global.mod(
+        options[:locY] - (clock_layer.getY() + clock_layer.getDc().getHeight())
+      ) + 1;
+    self.addLayer(new SmallField(options));
 
     //Подложка
     options = {

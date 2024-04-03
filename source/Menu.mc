@@ -33,25 +33,31 @@ module Menu {
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.DataScale,
-      :identifier => "data_type_scale",
+      :identifier => "data_scale",
+      :method => :dataSubMenu,
+    });
+    items_props.add({
+      :item_class => :Item,
+      :rez_label => Rez.Strings.SmallField,
+      :identifier => "data_small",
       :method => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.Data1,
-      :identifier => "data_type_1",
+      :identifier => "data_1",
       :method => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.Data2,
-      :identifier => "data_type_2",
+      :identifier => "data_2",
       :method => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.Data3,
-      :identifier => "data_type_3",
+      :identifier => "data_3",
       :method => :dataSubMenu,
     });
 
@@ -68,6 +74,7 @@ module Menu {
   function dataSubMenu() {
     var pattern = {
       DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
+      DataWrapper.HR => Rez.Strings.FIELD_TYPE_HR,
       DataWrapper.CALORIES => Rez.Strings.FIELD_TYPE_CALORIES,
       DataWrapper.DISTANCE => Rez.Strings.FIELD_TYPE_DISTANCE,
       DataWrapper.STEPS => Rez.Strings.FIELD_TYPE_STEPS,

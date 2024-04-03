@@ -3,6 +3,7 @@ import Toybox.Math;
 import Toybox.Complications;
 import Toybox.Lang;
 import Toybox.ActivityMonitor;
+import Toybox.Activity;
 
 module DataWrapper {
   enum {
@@ -11,6 +12,7 @@ module DataWrapper {
     DISTANCE,
     STEPS,
     BATTERY,
+    HR,
   }
 
   function getData(type) {
@@ -30,9 +32,13 @@ module DataWrapper {
       res[:label] = Rez.Strings.FIELD_TYPE_STEPS;
     } else if (type == BATTERY) {
       res[:scale_value] = getBattery();
-      res[:value] = res[:scale_value].toString()+"%";
+      res[:value] = res[:scale_value].toString() + "%";
       res[:image] = Rez.Drawables.Battery;
       res[:label] = Rez.Strings.FIELD_TYPE_BATTERY;
+    } else if (type == HR) {
+      res[:value] = getHR();
+      res[:image] = Rez.Drawables.HR;
+      res[:label] = Rez.Strings.FIELD_TYPE_HR;
     }
 
     return res;
@@ -43,6 +49,27 @@ module DataWrapper {
 
   function getBattery() {
     return Math.floor(System.getSystemStats().battery).toNumber();
+  }
+
+  function getHR() {
+    var value = null;
+    var info = Activity.getActivityInfo();
+    if (info != null) {
+      if (info has :currentHeartRate) {
+        value = info.currentHeartRate;
+      }
+    }
+    if (value == null) {
+      var compl = Complications.getComplication(
+        new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE)
+      );
+      if (compl != null) {
+        if (compl.value != null) {
+          value = compl.value;
+        }
+      }
+    }
+    return reduceLongValue(value);
   }
 
   function getSteps() {
