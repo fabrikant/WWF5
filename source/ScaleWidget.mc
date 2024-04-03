@@ -6,8 +6,26 @@ import Toybox.Complications;
 import Toybox.Lang;
 
 class ScaleWidget extends AbstractField {
+  var angle_min, angle_max, center_x, center_y;
+
   function initialize(options) {
     AbstractField.initialize(options);
+    var system_radius = System.getDeviceSettings().screenHeight / 2;
+    var pattern = getApp().watch_view.pattern;
+    var offset_fegree = 5;
+    var dc = getDc();
+    var sin_angle =
+      (system_radius - pattern.reference_points[:y][2]).toFloat() /
+      system_radius;
+    angle_min = 180f - Math.toDegrees(Math.asin(sin_angle)) - offset_fegree;
+    sin_angle =
+      (system_radius - pattern.reference_points[:y][1]).toFloat() /
+      system_radius;
+    angle_max = 180f - Math.toDegrees(Math.asin(sin_angle)) + offset_fegree;
+    center_x =
+      dc.getWidth() + Global.mod(getX() + dc.getWidth() - system_radius);
+    center_y =
+      dc.getHeight() + Global.mod(getY() + dc.getHeight() - system_radius);
   }
 
   function draw(colors) {
@@ -67,20 +85,7 @@ class ScaleWidget extends AbstractField {
   function drawScale(dc, colors, data, scale_width) {
     var system_radius = System.getDeviceSettings().screenHeight / 2;
     var scale_radius = system_radius - scale_width / 2;
-    var pattern = getApp().watch_view.pattern;
-    var offset_fegree = 5;
-    var sin_angle =
-      (system_radius - pattern.reference_points[:y][2]).toFloat() /
-      system_radius;
-    var angle_min = 180f - Math.toDegrees(Math.asin(sin_angle)) - offset_fegree;
-    sin_angle =
-      (system_radius - pattern.reference_points[:y][1]).toFloat() /
-      system_radius;
-    var angle_max = 180f - Math.toDegrees(Math.asin(sin_angle)) + offset_fegree;
-    var center_x =
-      dc.getWidth() + Global.mod(getX() + dc.getWidth() - system_radius);
-    var center_y =
-      dc.getHeight() + Global.mod(getY() + dc.getHeight() - system_radius);
+    
 
     dc.setPenWidth(scale_width);
     dc.setColor(colors[:font], colors[:font]);
@@ -94,19 +99,15 @@ class ScaleWidget extends AbstractField {
       angle_max
     );
 
-    scale_width -= 2;
-    angle_min -= 1;
-    angle_max += 1;
-
-    dc.setPenWidth(scale_width);
+    dc.setPenWidth(scale_width - 2);
     dc.setColor(colors[:background], colors[:background]);
     dc.drawArc(
       center_x,
       center_y,
       scale_radius,
       Graphics.ARC_CLOCKWISE,
-      angle_min,
-      angle_max
+      angle_min - 1,
+      angle_max + 1
     );
 
     var angle_value =

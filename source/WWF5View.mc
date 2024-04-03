@@ -61,7 +61,7 @@ class WWF5View extends WatchUi.WatchFace {
     };
     var seconds_layer = new SimpleField(options);
     self.addLayer(seconds_layer);
-    every_second_layers = [seconds_layer];
+    every_second_layers = [seconds_layer.weak()];
 
     //Дата
     options = pattern.calculateLayerCoordinates(
@@ -165,7 +165,7 @@ class WWF5View extends WatchUi.WatchFace {
       ) + 1;
     var small_field = new SmallField(options);
     self.addLayer(small_field);
-    every_second_layers.add(small_field);
+    every_second_layers.add(small_field.weak());
 
     //Подложка
     options = {
@@ -177,6 +177,8 @@ class WWF5View extends WatchUi.WatchFace {
       :pattern => self.pattern,
     };
     self.addLayer(new PatternField(options));
+
+    pattern.reference_points = null;
   }
 
   // Load your resources here
@@ -205,14 +207,16 @@ class WWF5View extends WatchUi.WatchFace {
 
   function onPartialUpdate(dc) {
     for (var i = 0; i < every_second_layers.size(); i++) {
-      var layer = every_second_layers[i];
-      dc.setClip(
-        layer.getX(),
-        layer.getY(),
-        layer.getDc().getWidth(),
-        layer.getDc().getHeight()
-      );
-      layer.draw(colors);
+      if (every_second_layers[i].stillAlive()) {
+        var layer = every_second_layers[i].get();
+        dc.setClip(
+          layer.getX(),
+          layer.getY(),
+          layer.getDc().getWidth(),
+          layer.getDc().getHeight()
+        );
+        layer.draw(colors);
+      }
     }
   }
 

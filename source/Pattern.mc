@@ -28,16 +28,14 @@ class Pattern {
     };
 
     if (Graphics has :createBufferedBitmap) {
-      background_image = Graphics.createBufferedBitmap(opt).get();
-    } else {
-      background_image = new Graphics.BufferedBitmap(opt);
+      background_image = Graphics.createBufferedBitmap(opt);
     }
 
     reference_points = drawBackgoundPattern(all_colors);
   }
 
   private function drawBackgoundPattern(all_colors) {
-    var dc = background_image.getDc();
+    var dc = background_image.get().getDc();
     var colors = [all_colors[:pattern], all_colors[:pattern_decorate]];
     var pen_widths = [Math.floor(dc.getWidth() / 50), 1];
 
