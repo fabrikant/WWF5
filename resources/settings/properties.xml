@@ -12,9 +12,10 @@
 	<property id="color_font_empty_segments" type="number">0x550000</property>
 	<property id="wind_speed_unit" type="number">0</property>
 
+	
 	<property id="data_type_1" type="number">1</property>
 	<property id="data_type_2" type="number">2</property>
 	<property id="data_type_3" type="number">3</property>
-
+	<property id="data_type_scale" type="number">4</property>
 
 </properties>

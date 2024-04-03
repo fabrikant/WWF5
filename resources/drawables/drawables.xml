@@ -31,4 +31,10 @@
 			<color>555555</color>
 		</palette>
 	</bitmap>
+
+	<bitmap id="Battery" filename="./svg-resources/battery.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
 </drawables>

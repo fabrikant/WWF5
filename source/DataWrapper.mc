@@ -10,6 +10,7 @@ module DataWrapper {
     CALORIES,
     DISTANCE,
     STEPS,
+    BATTERY,
   }
 
   function getData(type) {
@@ -27,6 +28,11 @@ module DataWrapper {
       res[:value] = getSteps();
       res[:image] = Rez.Drawables.Steps;
       res[:label] = Rez.Strings.FIELD_TYPE_STEPS;
+    } else if (type == BATTERY) {
+      res[:scale_value] = getBattery();
+      res[:value] = res[:scale_value].toString()+"%";
+      res[:image] = Rez.Drawables.Battery;
+      res[:label] = Rez.Strings.FIELD_TYPE_BATTERY;
     }
 
     return res;
@@ -34,6 +40,11 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+
+  function getBattery() {
+    return Math.floor(System.getSystemStats().battery).toNumber();
+  }
+
   function getSteps() {
     var value = null;
     var info = ActivityMonitor.getInfo();
