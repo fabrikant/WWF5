@@ -5,8 +5,12 @@ import Toybox.Complications;
 import Toybox.Lang;
 
 class SmallField extends AbstractField {
+
+  var bitmap;
+
   function initialize(options) {
     AbstractField.initialize(options);
+    bitmap = null;
   }
 
   function draw(colors) {
@@ -17,7 +21,7 @@ class SmallField extends AbstractField {
 
     var temp_x = 0;
     var bitmap_h = null;
-    //если значение для вывода больше 3 знаков, картинку не рисуем - не опместится
+    //если значение для вывода больше 3 знаков, картинку не рисуем - не поместится
     if (data[:value] != null) {
       if (data[:value].length() > 3) {
         data[:image] = null;
@@ -26,7 +30,9 @@ class SmallField extends AbstractField {
 
     if (data[:image] != null) {
       //Картинка
-      var bitmap = createImage(data[:image], colors);
+      if (bitmap == null){
+        bitmap = createImage(data[:image], colors);
+      }
       bitmap_h = bitmap.getHeight();
       dc.drawBitmap(0, dc.getHeight() - bitmap_h, bitmap);
       temp_x += bitmap.getWidth();

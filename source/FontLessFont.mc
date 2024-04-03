@@ -34,7 +34,7 @@ class FontLessFont {
       if (glifs.hasKey(sub_str)) {
         var bitmap = glifs[sub_str];
         if (bitmap instanceof Graphics.BufferedBitmapReference) {
-          res += bitmap.getWidth();
+          res = res + bitmap.getWidth();
         } else {
           System.println("wtf " + sub_str);
           System.println(bitmap);

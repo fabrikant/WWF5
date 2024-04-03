@@ -61,7 +61,7 @@ class WWF5View extends WatchUi.WatchFace {
     };
     var seconds_layer = new SimpleField(options);
     self.addLayer(seconds_layer);
-    every_second_layers = [seconds_layer.weak()];
+    every_second_layers = [seconds_layer];
 
     //Дата
     options = pattern.calculateLayerCoordinates(
@@ -142,6 +142,20 @@ class WWF5View extends WatchUi.WatchFace {
     options[:identifier] = "data_3";
     self.addLayer(new DataField(options));
 
+    //Small data field
+    options = {
+      :locX => seconds_layer.getX(),
+      :width => pattern.reference_points[:x][6] - options[:locX],
+      :height => Application.loadResource(Rez.Drawables.HR).getHeight(),
+      :identifier => "data_small",
+    };
+    
+    options[:locY] = (clock_layer.getY() + clock_layer.getDc().getHeight()) - options[:height];
+
+    var small_field = new SmallField(options);
+    self.addLayer(small_field);
+    every_second_layers.add(small_field);
+
     //Статусы
     options = {
       :locX => seconds_layer.getX() + seconds_layer.getDc().getWidth(),
@@ -149,23 +163,8 @@ class WWF5View extends WatchUi.WatchFace {
       :identifier => :status,
     };
     options[:width] = pattern.reference_points[:x][6] - options[:locX];
-    options[:height] = seconds_layer.getDc().getHeight();
+    options[:height] = small_field.getY() - options[:locY];
     self.addLayer(new StatusField(options));
-
-    //Small data field
-    options = {
-      :locX => seconds_layer.getX(),
-      :locY => seconds_layer.getY() + seconds_layer.getDc().getHeight(),
-      :identifier => "data_small",
-    };
-    options[:width] = pattern.reference_points[:x][6] - options[:locX];
-    options[:height] =
-      Global.mod(
-        options[:locY] - (clock_layer.getY() + clock_layer.getDc().getHeight())
-      ) + 1;
-    var small_field = new SmallField(options);
-    self.addLayer(small_field);
-    every_second_layers.add(small_field.weak());
 
     //Подложка
     options = {
@@ -207,16 +206,14 @@ class WWF5View extends WatchUi.WatchFace {
 
   function onPartialUpdate(dc) {
     for (var i = 0; i < every_second_layers.size(); i++) {
-      if (every_second_layers[i].stillAlive()) {
-        var layer = every_second_layers[i].get();
-        dc.setClip(
-          layer.getX(),
-          layer.getY(),
-          layer.getDc().getWidth(),
-          layer.getDc().getHeight()
-        );
-        layer.draw(colors);
-      }
+      var layer = every_second_layers[i];
+      dc.setClip(
+        layer.getX(),
+        layer.getY(),
+        layer.getDc().getWidth(),
+        layer.getDc().getHeight()
+      );
+      layer.draw(colors);
     }
   }
 
