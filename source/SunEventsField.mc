@@ -26,7 +26,7 @@ class SunEventsField extends SimpleField {
         :line_width => line_w,
         :line_offset => 2,
         :simple_style => true,
-        :other_symbols => ["k", "°", ".", ":"],
+        :other_symbols => ["k", "°", ".", ":", "%"],
       });
     }
     getApp().watch_view.fonts[options[:identifier]] = font;

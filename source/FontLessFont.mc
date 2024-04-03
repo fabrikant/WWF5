@@ -14,7 +14,7 @@ class FontLessFont {
   //     :line_width => Number,
   //     :line_offset => Number,
   //     :simple_style => Boolean (optional, default - false),
-  //     :other_symbols => ["k", "°", ".", ":"]
+  //     :other_symbols => ["k", "°", ".", ":", "%"]
   // }
   function initialize(options) {
     if (!options.hasKey(:simple_style)) {
@@ -400,10 +400,50 @@ class FontLessFont {
     if (other.indexOf("k") >= 0) {
       glifs["k"] = drawk(options);
     }
+
+    if (other.indexOf("%") >= 0) {
+      glifs["%"] = drawPercent(options);
+    }
   }
 
   /////////////////////////////////////////////////////////////////
   //OTHER SYMBOLS
+
+  function drawPercent(options) {
+    var colors = getApp().watch_view.colors;
+    var _buf_bitmap_ref = Graphics.createBufferedBitmap({
+      :width => getNormalGlifWidth(),
+      :height => options[:height],
+    });
+    var radius = Global.max((options[:line_width] * 1.3).toNumber(), 3);
+    var dc = _buf_bitmap_ref.get().getDc();
+    dc.setColor(colors[:background], colors[:background]);
+    dc.setAntiAlias(true);
+    dc.clear();
+    dc.setColor(colors[:font], colors[:background]);
+
+    dc.setPenWidth(Global.max(Math.floor(options[:line_width] * 0.6), 1));
+    dc.drawCircle(
+      options[:line_offset] + radius,
+      options[:line_offset] + radius,
+      radius
+    );
+
+    dc.drawCircle(
+      dc.getWidth() - options[:line_offset] - radius,
+      dc.getHeight() - options[:line_offset] - radius,
+      radius
+    );
+
+    dc.drawLine(
+      options[:line_offset],
+      0.6 * dc.getHeight(),
+      dc.getWidth() - options[:line_offset],
+      0.4 * dc.getHeight()
+    );
+
+    return _buf_bitmap_ref;
+  }
 
   function drawk(options) {
     var colors = getApp().watch_view.colors;
