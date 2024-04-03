@@ -163,7 +163,9 @@ class WWF5View extends WatchUi.WatchFace {
       Global.mod(
         options[:locY] - (clock_layer.getY() + clock_layer.getDc().getHeight())
       ) + 1;
-    self.addLayer(new SmallField(options));
+    var small_field = new SmallField(options);
+    self.addLayer(small_field);
+    every_second_layers.add(small_field);
 
     //Подложка
     options = {

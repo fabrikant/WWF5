@@ -4,6 +4,7 @@ import Toybox.Complications;
 import Toybox.Lang;
 import Toybox.ActivityMonitor;
 import Toybox.Activity;
+import Toybox.Application;
 
 module DataWrapper {
   enum {
@@ -125,7 +126,6 @@ module DataWrapper {
       /*foot*/
       value *= 3.281;
     }
-
     return reduceLongValue(value);
   }
 
@@ -145,6 +145,81 @@ module DataWrapper {
       fString = "%d";
     }
     return value.format(fString);
+  }
+
+  function convertValueTemperature(сelsius) {
+    var value;
+    if (сelsius != null) {
+      if (System.getDeviceSettings().temperatureUnits == System.UNIT_STATUTE) {
+        /*F*/
+        value = (сelsius * 9) / 5 + 32;
+      } else {
+        value = сelsius;
+      }
+    } else {
+      value = "";
+    }
+    return value.format("%d") + "°";
+  }
+
+  function converValueWindSpeed(wind_speed) {
+    var value = wind_speed; //meters/sec
+    var unit_str = "";
+    var unit = Application.Properties.getValue("wind_speed_unit");
+    if (unit == Global.UNIT_SPEED_MS) {
+      unit_str = Application.loadResource(Rez.Strings.SpeedUnitMSec);
+    } else if (unit == Global.UNIT_SPEED_KMH) {
+      /*km/h*/
+      value = wind_speed * 3.6;
+      unit_str = Application.loadResource(Rez.Strings.SpeedUnitKmH);
+    } else if (unit == Global.UNIT_SPEED_MLH) {
+      /*mile/h*/
+      value = wind_speed * 2.237;
+      unit_str = Application.loadResource(Rez.Strings.SpeedUnitMileH);
+    } else if (unit == Global.UNIT_SPEED_FTS) {
+      /*ft/s*/
+      value = wind_speed * 3.281;
+      unit_str = Application.loadResource(Rez.Strings.SpeedUnitFtSec);
+    } else if (unit == Global.UNIT_SPEED_BEAUF) {
+      /*Beaufort*/
+      value = getBeaufort(wind_speed);
+      unit_str = Application.loadResource(Rez.Strings.SpeedUnitBeauf);
+    } else if (unit == Global.UNIT_SPEED_KNOTS) {
+      /*knots*/
+      value = wind_speed * 1.94384;
+      unit_str = Application.loadResource(Rez.Strings.SpeedUnitKnots);
+    }
+    return value.format("%d") + " " + unit_str;
+  }
+
+  function getBeaufort(wind_speed) {
+    if (wind_speed >= 33) {
+      return 12;
+    } else if (wind_speed >= 28.5) {
+      return 11;
+    } else if (wind_speed >= 24.5) {
+      return 10;
+    } else if (wind_speed >= 20.8) {
+      return 9;
+    } else if (wind_speed >= 17.2) {
+      return 8;
+    } else if (wind_speed >= 13.9) {
+      return 7;
+    } else if (wind_speed >= 10.8) {
+      return 6;
+    } else if (wind_speed >= 8) {
+      return 5;
+    } else if (wind_speed >= 5.5) {
+      return 4;
+    } else if (wind_speed >= 3.4) {
+      return 3;
+    } else if (wind_speed >= 1.6) {
+      return 2;
+    } else if (wind_speed >= 0.3) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   function reduceLongValue(value) {

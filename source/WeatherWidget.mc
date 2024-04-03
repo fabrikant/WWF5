@@ -50,7 +50,7 @@ class WeatherWidget extends AbstractField {
     //Температура
     temp_x += bitmap.getWidth();
     var max_temp_width = font_temp.getNormalGlifWidth() * 3.2;
-    var temperature = convertValueTemperature(weather.temperature);
+    var temperature = DataWrapper.convertValueTemperature(weather.temperature);
     font_temp.writeString(
       dc,
       temp_x + max_temp_width / 2,
@@ -64,7 +64,7 @@ class WeatherWidget extends AbstractField {
       :face => vectorFontName(),
       :size => getApp().watch_view.fonts[:sun_events].getHeight(),
     });
-    var wind_speed = converValueWindSpeed(weather.windSpeed);
+    var wind_speed = DataWrapper.converValueWindSpeed(weather.windSpeed);
     var system_radius = System.getDeviceSettings().screenHeight / 2;
     var radius = Math.floor(
       (System.getDeviceSettings().screenHeight -
