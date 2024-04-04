@@ -155,11 +155,12 @@ class WWF5View extends WatchUi.WatchFace {
       :identifier => "data_small",
     };
 
-    options[:locY] = (clock_layer.getY() + clock_layer.getDc().getHeight()) - options[:height];
+    options[:locY] =
+      clock_layer.getY() + clock_layer.getDc().getHeight() - options[:height];
 
     var small_field = new SmallField(options);
     self.addLayer(small_field);
-    every_second_layers.add(small_field);
+    //every_second_layers.add(small_field);
 
     //Статусы
     options = {

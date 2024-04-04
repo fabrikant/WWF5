@@ -49,31 +49,6 @@ class SmallField extends AbstractField {
         data_value,
         Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
       );
-
-      // var font_height = Graphics.getFontHeight(font_value);
-      // var temp_y = dc.getHeight() - font_height;
-      // if (bitmap_h == null) {
-      //   drawText(
-      //     dc,
-      //     colors,
-      //     temp_x,
-      //     temp_y,
-      //     font_value,
-      //     data_value,
-      //     Graphics.TEXT_JUSTIFY_LEFT
-      //   );
-      // } else {
-      //   temp_y = dc.getHeight() - bitmap_h / 2;
-      //   drawText(
-      //     dc,
-      //     colors,
-      //     temp_x,
-      //     temp_y,
-      //     font_value,
-      //     data_value,
-      //     Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-      //   );
-      // }
     }
 
     drawBorder(dc);
