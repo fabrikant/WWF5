@@ -11,6 +11,7 @@ class WWF5View extends WatchUi.WatchFace {
 
   function initialize() {
     WatchFace.initialize();
+    every_second_layers = [];
   }
 
   function readSettings() {
@@ -61,7 +62,7 @@ class WWF5View extends WatchUi.WatchFace {
     };
     var seconds_layer = new SimpleField(options);
     self.addLayer(seconds_layer);
-    every_second_layers = [seconds_layer];
+    every_second_layers.add(seconds_layer);
 
     //Дата
     options = pattern.calculateLayerCoordinates(
@@ -154,7 +155,7 @@ class WWF5View extends WatchUi.WatchFace {
 
     var small_field = new SmallField(options);
     self.addLayer(small_field);
-    every_second_layers.add(small_field);
+    //every_second_layers.add(small_field);
 
     //Статусы
     options = {
