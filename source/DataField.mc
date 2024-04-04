@@ -151,7 +151,7 @@ class DataField extends AbstractField {
       }
       drawText(
         dc,
-        colors,
+        options[:colors],
         x,
         dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
         font_label,
@@ -171,7 +171,7 @@ class DataField extends AbstractField {
 
     drawText(
       dc,
-      colors,
+      options[:colors],
       dc.getWidth() / 2,
       dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
       options[:font_label],
