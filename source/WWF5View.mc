@@ -15,6 +15,7 @@ class WWF5View extends WatchUi.WatchFace {
     fontSeconds = Application.loadResource(Rez.Fonts.seconds);
     fontValues = Application.loadResource(Rez.Fonts.values);
     fontTemp = Application.loadResource(Rez.Fonts.temperature);
+    every_second_layers = [];
   }
 
   function readSettings() {
@@ -65,7 +66,7 @@ class WWF5View extends WatchUi.WatchFace {
     };
     var seconds_layer = new SimpleField(options);
     self.addLayer(seconds_layer);
-    every_second_layers = [seconds_layer];
+    every_second_layers.add(seconds_layer);
 
     //Дата
     options = pattern.calculateLayerCoordinates(
