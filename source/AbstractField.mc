@@ -12,7 +12,8 @@ class AbstractField extends WatchUi.Layer {
 
   function draw(colors) {
     var dc = getDc();
-    dc.setColor(colors[:background], colors[:background]);
+    //dc.setColor(colors[:background], colors[:background]);
+    dc.setColor(colors[:font], colors[:background]);
     dc.clear();
     dc.setAntiAlias(true);
   }

@@ -44,14 +44,14 @@ class ScaleWidget extends AbstractField {
 
   //Рисуем поле с данными
   function drawData(dc, colors, data) {
-    var font_value = getApp().watch_view.fonts[:sun_events];
-    var temp_y = dc.getHeight() - font_value.getHeight();
+    var font_value = getApp().watch_view.fontValues;
+    var temp_y = dc.getHeight() - Graphics.getFontHeight(font_value);
     //Значение
     if (data[:value] != null) {
-      font_value.writeString(
-        dc,
+      dc.drawText(
         dc.getWidth() / 2,
         temp_y,
+        font_value,
         data[:value],
         Graphics.TEXT_JUSTIFY_CENTER
       );
@@ -85,7 +85,6 @@ class ScaleWidget extends AbstractField {
   function drawScale(dc, colors, data, scale_width) {
     var system_radius = System.getDeviceSettings().screenHeight / 2;
     var scale_radius = system_radius - scale_width / 2;
-    
 
     dc.setPenWidth(scale_width);
     dc.setColor(colors[:font], colors[:font]);

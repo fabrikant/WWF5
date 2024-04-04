@@ -29,7 +29,7 @@ class DataField extends AbstractField {
 
     //Вывод значения
     if (data[:value] != null) {
-      var font_value = getApp().watch_view.fonts[:sun_events];
+      var font_value = getApp().watch_view.fontValues;
 
       var x = null;
       var just = null;
@@ -38,14 +38,14 @@ class DataField extends AbstractField {
         x = dc.getWidth() / 2;
         just = Graphics.TEXT_JUSTIFY_CENTER;
       } else {
-        x = font_value.getNormalGlifWidth();
+        x = dc.getTextWidthInPixels("8", font_value);
         just = Graphics.TEXT_JUSTIFY_LEFT;
         if (getX() < System.getDeviceSettings().screenWidth / 2) {
           x = dc.getWidth() - x;
           just = Graphics.TEXT_JUSTIFY_RIGHT;
         }
       }
-      font_value.writeString(dc, x, 0, data[:value], just);
+      dc.drawText(x, 0, font_value, data[:value], just);
     }
 
     //draw label, decorate fields

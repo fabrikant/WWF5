@@ -2,8 +2,6 @@ import Toybox.Graphics;
 import Toybox.System;
 
 class StatusField extends AbstractField {
-  var label_x, label_y, label_radius, label_angle, font_label;
-
   function initialize(options) {
     AbstractField.initialize(options);
   }
@@ -19,9 +17,9 @@ class StatusField extends AbstractField {
       var bitmap = createImage(Rez.Drawables.message, colors);
       dc.drawBitmap((dc.getWidth() - bitmap.getWidth()) / 2, 0, bitmap);
 
-      top += bitmap.getDc().getHeight();
+      top += bitmap.getHeight();
 
-      var fontSmall = Graphics.FONT_XTINY;
+      var fontSmall = getApp().watch_view.fontValues;
       dc.drawText(
         dc.getWidth() / 2,
         top,
@@ -29,7 +27,7 @@ class StatusField extends AbstractField {
         notifications,
         Graphics.TEXT_JUSTIFY_CENTER
       );
-      top += dc.getFontHeight(fontSmall);
+      // top += dc.getFontHeight(fontSmall);
     }
     drawBorder(dc);
   }

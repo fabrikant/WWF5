@@ -7,10 +7,14 @@ import Toybox.Math;
 
 class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
-  var fonts;
+  var fontClock, fontSeconds, fontValues, fontTemp;
 
   function initialize() {
     WatchFace.initialize();
+    fontClock = Application.loadResource(Rez.Fonts.clock);
+    fontSeconds = Application.loadResource(Rez.Fonts.seconds);
+    fontValues = Application.loadResource(Rez.Fonts.values);
+    fontTemp = Application.loadResource(Rez.Fonts.temperature);
   }
 
   function readSettings() {
@@ -35,8 +39,7 @@ class WWF5View extends WatchUi.WatchFace {
       [pattern.reference_points[:x][4], pattern.reference_points[:y][4]]
     );
     options[:identifier] = :clock;
-    options[:max_lenght] = clock_layer_max_lenght;
-    options[:other_symbols] = [":"];
+    options[:font] = fontClock;
     var clock_layer = new SimpleField(options);
     self.addLayer(clock_layer);
 
@@ -57,7 +60,8 @@ class WWF5View extends WatchUi.WatchFace {
       :width => temp_w,
       :height => temp_h,
       :identifier => :seconds,
-      :max_lenght => 2,
+
+      :font => fontSeconds,
     };
     var seconds_layer = new SimpleField(options);
     self.addLayer(seconds_layer);
@@ -90,7 +94,6 @@ class WWF5View extends WatchUi.WatchFace {
       ]
     );
     options[:identifier] = :sun_events;
-    options[:max_lenght] = 11;
     var sun_event_field = new SunEventsField(options);
     self.addLayer(sun_event_field);
 
@@ -102,7 +105,6 @@ class WWF5View extends WatchUi.WatchFace {
       pattern.reference_points[:x][1],
       :height => sun_event_field.getY(),
       :identifier => :weather,
-      :other_symbols => ["°"],
     };
     self.addLayer(new WeatherWidget(options));
 
@@ -149,7 +151,7 @@ class WWF5View extends WatchUi.WatchFace {
       :height => Application.loadResource(Rez.Drawables.HR).getHeight(),
       :identifier => "data_small",
     };
-    
+
     options[:locY] = (clock_layer.getY() + clock_layer.getDc().getHeight()) - options[:height];
 
     var small_field = new SmallField(options);
@@ -187,7 +189,6 @@ class WWF5View extends WatchUi.WatchFace {
   // the state of this View and prepare it to be shown. This includes
   // loading resources into memory.
   function onShow() as Void {
-    fonts = {};
     readSettings();
     self.pattern = new Pattern(colors);
     createLayers();

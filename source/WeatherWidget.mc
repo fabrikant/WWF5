@@ -6,30 +6,11 @@ import Toybox.Math;
 import Toybox.Time;
 
 class WeatherWidget extends AbstractField {
-  var font_temp;
   var arrow_bitmap;
 
   function initialize(options) {
-    initializeFont(options);
     AbstractField.initialize(options);
     arrow_bitmap = null;
-  }
-
-  function initializeFont(options) {
-    var fonts = getApp().watch_view.fonts;
-    var font_height = Math.floor(options[:height] * 0.45);
-    var ratio = fonts[:sun_events].getRatio();
-    var font_options = {
-      :width => Math.floor(font_height * ratio),
-      :height => font_height,
-      :line_width => 3,
-      :line_offset => 1,
-      :simple_style => false,
-    };
-    if (options.hasKey(:other_symbols)) {
-      font_options[:other_symbols] = options[:other_symbols];
-    }
-    font_temp = new FontLessFont(font_options);
   }
 
   function draw(colors) {
@@ -40,7 +21,6 @@ class WeatherWidget extends AbstractField {
       return;
     }
     var dc = getDc();
-    dc.setColor(colors[:font], colors[:font]);
 
     //Иконка погоды
     var bitmap = createImage(getGarminConditionRez(weather), colors);
@@ -48,21 +28,23 @@ class WeatherWidget extends AbstractField {
     dc.drawBitmap(temp_x, (dc.getHeight() - bitmap.getHeight()) / 2, bitmap);
 
     //Температура
+    var fontTemp = getApp().watch_view.fontTemp;
     temp_x += bitmap.getWidth();
-    var max_temp_width = font_temp.getNormalGlifWidth() * 3.2;
+    var max_temp_width = dc.getTextWidthInPixels("-40°", fontTemp);
     var temperature = DataWrapper.convertValueTemperature(weather.temperature);
-    font_temp.writeString(
-      dc,
+    dc.drawText(
       temp_x + max_temp_width / 2,
       Math.floor(dc.getHeight() / 2),
+      fontTemp,
       temperature,
       Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
     );
+    temp_x += max_temp_width;
 
     //Ветер
     var font_wind = Graphics.getVectorFont({
       :face => vectorFontName(),
-      :size => getApp().watch_view.fonts[:sun_events].getHeight(),
+      :size => 15,
     });
     var wind_speed = DataWrapper.converValueWindSpeed(weather.windSpeed);
     var system_radius = System.getDeviceSettings().screenHeight / 2;
@@ -101,7 +83,6 @@ class WeatherWidget extends AbstractField {
       (-arrow_bitmap.getWidth() / 2).toNumber(),
       (-arrow_bitmap.getHeight() / 2).toNumber()
     );
-    temp_x += max_temp_width + arrow_bitmap.getWidth() / 2;
     var temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
     dc.drawBitmap2(temp_x, temp_y, arrow_bitmap, {
       :transform => transform,
