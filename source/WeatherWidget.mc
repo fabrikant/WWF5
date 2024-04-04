@@ -52,7 +52,7 @@ class WeatherWidget extends AbstractField {
       dc.getTextWidthInPixels(temperature, fontTemp) / 2;
     var temp_y = temperature_y - temperature_font_height / 4;
     dc.setPenWidth(2);
-    dc.drawCircle(x_symbol + radius_symbol, temp_y, radius_symbol);
+    dc.drawCircle(x_symbol + 2 * radius_symbol, temp_y, radius_symbol);
 
     temp_x += max_temp_width * 1.25;
 

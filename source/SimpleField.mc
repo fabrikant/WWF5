@@ -14,7 +14,9 @@ class SimpleField extends AbstractField {
   }
 
   function draw(colors) {
-    AbstractField.draw(colors);
+    if (!getApp().watch_view.isPartialUpdate) {
+      AbstractField.draw(colors);
+    }
     var dc = getDc();
     var value = self.method(getId()).invoke();
     var y = dc.getHeight() / 2;

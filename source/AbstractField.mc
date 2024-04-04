@@ -12,10 +12,9 @@ class AbstractField extends WatchUi.Layer {
 
   function draw(colors) {
     var dc = getDc();
-    dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(colors[:font], colors[:background]);
     dc.clear();
     dc.setAntiAlias(true);
-    dc.setColor(colors[:font], colors[:background]);
   }
 
   function drawBorder(dc) {
@@ -107,34 +106,37 @@ class AbstractField extends WatchUi.Layer {
 
   function drawText(dc, colors, x, y, font, text, justification) {
     var color = colors[:font];
-    var color_empty = colors[:font_empty_segments];
-    var color_background = colors[:background];
-    if (color_empty != color && color_empty != Graphics.COLOR_TRANSPARENT) {
-      var chars = text.toCharArray();
-      var epty_text = "";
-      for (var i = 0; i < chars.size(); i++) {
-        if (
-          chars[i] == '0' ||
-          chars[i] == '1' ||
-          chars[i] == '2' ||
-          chars[i] == '3' ||
-          chars[i] == '4' ||
-          chars[i] == '5' ||
-          chars[i] == '6' ||
-          chars[i] == '7' ||
-          chars[i] == '9'
-        ) {
-          epty_text += "8";
-        }else{
-          epty_text += text.substring(i, i+1);
-        }
-      }
 
-      dc.setColor(color_empty, color_background);
-      dc.drawText(x, y, font, epty_text, justification);
+    if (!getApp().watch_view.isPartialUpdate) {
+      var color_empty = colors[:font_empty_segments];
+      if (color_empty != color && color_empty != Graphics.COLOR_TRANSPARENT) {
+        var chars = text.toCharArray();
+        var epty_text = "";
+        for (var i = 0; i < chars.size(); i++) {
+          if (
+            chars[i] == '0' ||
+            chars[i] == '1' ||
+            chars[i] == '2' ||
+            chars[i] == '3' ||
+            chars[i] == '4' ||
+            chars[i] == '5' ||
+            chars[i] == '6' ||
+            chars[i] == '7' ||
+            chars[i] == '9'
+          ) {
+            epty_text += "8";
+          } else {
+            epty_text += text.substring(i, i + 1);
+          }
+        }
+        dc.setColor(color_empty, colors[:background]);
+        dc.drawText(x, y, font, epty_text, justification);
+      }
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+    } else {
+      dc.setColor(color, colors[:background]);
     }
 
-    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
     dc.drawText(x, y, font, text, justification);
   }
 }

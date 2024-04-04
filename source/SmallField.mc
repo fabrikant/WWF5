@@ -13,13 +13,20 @@ class SmallField extends AbstractField {
   }
 
   function draw(colors) {
-    AbstractField.draw(colors);
     var dc = getDc();
-    //dc.setColor(colors[:font], colors[:background]);
+    AbstractField.draw(colors);
+
     var data = DataWrapper.getData(Application.Properties.getValue(getId()));
 
     var temp_x = 0;
     var bitmap_h = null;
+
+    var data_value = data[:value];
+    if (data_value != null) {
+      if (getApp().watch_view.isPartialUpdate || data_value.length() > 3) {
+        data[:image] = null;
+      }
+    }
 
     if (data[:image] != null) {
       //Картинка
@@ -27,36 +34,46 @@ class SmallField extends AbstractField {
         bitmap = createImage(data[:image], colors);
       }
       bitmap_h = bitmap.getHeight();
-      dc.drawBitmap(0, dc.getHeight() - bitmap_h, bitmap);
+      dc.drawBitmap(0, (dc.getHeight() - bitmap_h) / 2, bitmap);
       temp_x += bitmap.getWidth();
     }
 
-    if (data[:value] != null) {
+    if (data_value != null) {
       var font_value = getApp().watch_view.fontValues;
-      var font_height = Graphics.getFontHeight(font_value);
-      var temp_y = dc.getHeight() - font_height;
-      if (bitmap_h == null) {
-        drawText(
-          dc,
-          colors,
-          temp_x,
-          temp_y,
-          font_value,
-          data[:value],
-          Graphics.TEXT_JUSTIFY_LEFT
-        );
-      } else {
-        temp_y = dc.getHeight() - bitmap_h / 2;
-        drawText(
-          dc,
-          colors,
-          temp_x,
-          temp_y,
-          font_value,
-          data[:value],
-          Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-        );
-      }
+      drawText(
+        dc,
+        colors,
+        temp_x,
+        dc.getHeight() / 2,
+        font_value,
+        data_value,
+        Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+      );
+
+      // var font_height = Graphics.getFontHeight(font_value);
+      // var temp_y = dc.getHeight() - font_height;
+      // if (bitmap_h == null) {
+      //   drawText(
+      //     dc,
+      //     colors,
+      //     temp_x,
+      //     temp_y,
+      //     font_value,
+      //     data_value,
+      //     Graphics.TEXT_JUSTIFY_LEFT
+      //   );
+      // } else {
+      //   temp_y = dc.getHeight() - bitmap_h / 2;
+      //   drawText(
+      //     dc,
+      //     colors,
+      //     temp_x,
+      //     temp_y,
+      //     font_value,
+      //     data_value,
+      //     Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+      //   );
+      // }
     }
 
     drawBorder(dc);

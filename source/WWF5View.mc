@@ -8,6 +8,7 @@ import Toybox.Math;
 class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
   var fontClock, fontSeconds, fontValues, fontTemp;
+  var isPartialUpdate;
 
   function initialize() {
     WatchFace.initialize();
@@ -16,6 +17,7 @@ class WWF5View extends WatchUi.WatchFace {
     fontValues = Application.loadResource(Rez.Fonts.values);
     fontTemp = Application.loadResource(Rez.Fonts.temperature);
     every_second_layers = [];
+    isPartialUpdate = false;
   }
 
   function readSettings() {
@@ -157,7 +159,7 @@ class WWF5View extends WatchUi.WatchFace {
 
     var small_field = new SmallField(options);
     self.addLayer(small_field);
-    //every_second_layers.add(small_field);
+    every_second_layers.add(small_field);
 
     //Статусы
     options = {
@@ -197,6 +199,7 @@ class WWF5View extends WatchUi.WatchFace {
 
   // Update the view
   function onUpdate(dc as Dc) as Void {
+    isPartialUpdate = false;
     dc.setColor(colors[:background], colors[:background]);
     dc.setClip(0, 0, dc.getWidth(), dc.getHeight());
     dc.clear();
@@ -207,6 +210,7 @@ class WWF5View extends WatchUi.WatchFace {
   }
 
   function onPartialUpdate(dc) {
+    isPartialUpdate = true;
     for (var i = 0; i < every_second_layers.size(); i++) {
       var layer = every_second_layers[i];
       dc.setClip(
