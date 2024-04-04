@@ -26,7 +26,7 @@ class StatusField extends AbstractField {
         dc.getWidth() / 2,
         top,
         fontSmall,
-        notifications,
+        notifications.toString(),
         Graphics.TEXT_JUSTIFY_CENTER
       );
       // top += dc.getFontHeight(fontSmall);
