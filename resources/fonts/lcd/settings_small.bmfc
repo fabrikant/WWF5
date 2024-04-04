@@ -2,12 +2,12 @@
 fileVersion=1
 
 # font settings
-fontName=Segment7
+fontName=LCD
 fontFile=
 charSet=0
-fontSize=80
+fontSize=30
 aa=1
-scaleH=142
+scaleH=120
 useSmoothing=1
 isBold=0
 isItalic=0
@@ -54,8 +54,6 @@ invB=0
 outlineThickness=0
 
 # selected chars
-chars=0-0,29,32-126,160-255,305,710-711,713,728-733,894,8211-8212,8216-8218,8220-8222,8226,8230,8249-8250
-chars=8355-8356,8359,8364,8470,8482,8706,8710,8719,8721-8722,8729-8730,8734,8747,8776,8804-8805,61441
-chars=61442,64257-64258
+chars=32-126,8211-8212,8217,8220-8221,8226,8240
 
 # imported icon images

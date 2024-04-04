@@ -159,7 +159,8 @@ module DataWrapper {
     } else {
       value = "";
     }
-    return value.format("%d") + "°";
+    //return value.format("%d") + "°";
+    return value.format("%d");
   }
 
   function converValueWindSpeed(wind_speed) {

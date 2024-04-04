@@ -1,7 +1,7 @@
 <fonts>
-	<font id="clock" scope="foreground" filename="segment7/80.fnt" filter="0123456789:" antialias="true"/>
-	<font id="seconds" scope="foreground" filename="segment7/40.fnt" filter="0123456789" antialias="true"/>
-	<font id="values" scope="foreground" filename="segment7/20.fnt" antialias="true"/>
-	<font id="temperature" scope="foreground" filename="segment7/25.fnt" filter="0123456789CF°" antialias="true"/>
+	<font id="clock" scope="foreground" filename="lcd/75.fnt" filter="0123456789:" antialias="true"/>
+	<font id="seconds" scope="foreground" filename="lcd/38.fnt" filter="0123456789" antialias="true"/>
+	<font id="values" scope="foreground" filename="lcd/25.fnt" antialias="true"/>
+	<font id="temperature" scope="foreground" filename="lcd/30.fnt" filter="-0123456789°" antialias="true"/>
 
 </fonts>

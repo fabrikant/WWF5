@@ -18,8 +18,9 @@ class SunEventsField extends AbstractField {
     var sunset = getSunEventTime(Complications.COMPLICATION_TYPE_SUNSET);
     var image = createImage(Rez.Drawables.sunEvent, colors);
     var image_x = Math.floor((dc.getWidth() - image.getWidth()) / 2);
+    var image_y = Math.floor((dc.getHeight() - image.getHeight()) / 2);
 
-    dc.drawBitmap(image_x, 0 - Math.round(dc.getHeight() / 5), image);
+    dc.drawBitmap(image_x, image_y, image);
 
     var font = getApp().watch_view.fontValues;
     dc.drawText(

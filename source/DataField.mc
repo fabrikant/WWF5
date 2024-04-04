@@ -38,14 +38,20 @@ class DataField extends AbstractField {
         x = dc.getWidth() / 2;
         just = Graphics.TEXT_JUSTIFY_CENTER;
       } else {
-        x = dc.getTextWidthInPixels("8", font_value);
+        x = (dc.getTextWidthInPixels("8", font_value) * 3) / 4;
         just = Graphics.TEXT_JUSTIFY_LEFT;
         if (getX() < System.getDeviceSettings().screenWidth / 2) {
           x = dc.getWidth() - x;
           just = Graphics.TEXT_JUSTIFY_RIGHT;
         }
       }
-      dc.drawText(x, 0, font_value, data[:value], just);
+      dc.drawText(
+        x,
+        -Graphics.getFontHeight(font_value) / 5,
+        font_value,
+        data[:value],
+        just
+      );
     }
 
     //draw label, decorate fields

@@ -30,21 +30,34 @@ class WeatherWidget extends AbstractField {
     //Температура
     var fontTemp = getApp().watch_view.fontTemp;
     temp_x += bitmap.getWidth();
-    var max_temp_width = dc.getTextWidthInPixels("-40°", fontTemp);
+    var max_temp_width = dc.getTextWidthInPixels("0", fontTemp) * 3;
     var temperature = DataWrapper.convertValueTemperature(weather.temperature);
+    var temperature_y = Math.floor(dc.getHeight() / 2);
     dc.drawText(
       temp_x + max_temp_width / 2,
-      Math.floor(dc.getHeight() / 2),
+      temperature_y,
       fontTemp,
       temperature,
       Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
     );
-    temp_x += max_temp_width;
+    
+    //"°" symbol
+    var temperature_font_height = Graphics.getFontHeight(fontTemp);
+    var radius_symbol = temperature_font_height / 12;
+    var x_symbol =
+      temp_x +
+      max_temp_width / 2 +
+      dc.getTextWidthInPixels(temperature, fontTemp) / 2;
+    var temp_y = temperature_y - temperature_font_height / 4;
+    dc.setPenWidth(2);
+    dc.drawCircle(x_symbol + radius_symbol, temp_y, radius_symbol);
+
+    temp_x += max_temp_width * 1.25;
 
     //Ветер
     var font_wind = Graphics.getVectorFont({
       :face => vectorFontName(),
-      :size => 15,
+      :size => 0.75 * Graphics.getFontHeight(getApp().watch_view.fontValues),
     });
     var wind_speed = DataWrapper.converValueWindSpeed(weather.windSpeed);
     var system_radius = System.getDeviceSettings().screenHeight / 2;
@@ -73,7 +86,7 @@ class WeatherWidget extends AbstractField {
     //Ветер направление
     var wind_angle = weather.windBearing;
     if (arrow_bitmap == null) {
-      var bitmap_size = Math.floor(bitmap.getHeight() * 0.75);
+      var bitmap_size = Math.floor(bitmap.getHeight() * 0.65);
       arrow_bitmap = getWindArrowBitmap(bitmap_size, colors);
     }
 
@@ -83,7 +96,7 @@ class WeatherWidget extends AbstractField {
       (-arrow_bitmap.getWidth() / 2).toNumber(),
       (-arrow_bitmap.getHeight() / 2).toNumber()
     );
-    var temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
+    temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
     dc.drawBitmap2(temp_x, temp_y, arrow_bitmap, {
       :transform => transform,
       :filterMode => Graphics.FILTER_MODE_BILINEAR,

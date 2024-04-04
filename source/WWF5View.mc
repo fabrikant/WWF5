@@ -82,7 +82,7 @@ class WWF5View extends WatchUi.WatchFace {
     //Рассвет-Закат
     var temp_y =
       pattern.reference_points[:y][2] -
-      Math.floor(pattern.reference_points[:y][2] / 3);
+      Math.floor(pattern.reference_points[:y][2] * 0.4);
 
     var temp_x = Math.floor(
       Global.mod(temp_y - pattern.reference_points[:y][2]) / 2
