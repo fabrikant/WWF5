@@ -157,7 +157,7 @@ class WWF5View extends WatchUi.WatchFace {
 
     var small_field = new SmallField(options);
     self.addLayer(small_field);
-    every_second_layers.add(small_field);
+    //every_second_layers.add(small_field);
 
     //Статусы
     options = {
