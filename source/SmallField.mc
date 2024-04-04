@@ -20,12 +20,6 @@ class SmallField extends AbstractField {
 
     var temp_x = 0;
     var bitmap_h = null;
-    //если значение для вывода больше 3 знаков, картинку не рисуем - не поместится
-    if (data[:value] != null) {
-      // if (data[:value].length() > 3) {
-      //   data[:image] = null;
-      // }
-    }
 
     if (data[:image] != null) {
       //Картинка
@@ -42,7 +36,9 @@ class SmallField extends AbstractField {
       var font_height = Graphics.getFontHeight(font_value);
       var temp_y = dc.getHeight() - font_height;
       if (bitmap_h == null) {
-        dc.drawText(
+        drawText(
+          dc,
+          colors,
           temp_x,
           temp_y,
           font_value,
@@ -51,7 +47,9 @@ class SmallField extends AbstractField {
         );
       } else {
         temp_y = dc.getHeight() - bitmap_h / 2;
-        dc.drawText(
+        drawText(
+          dc,
+          colors,
           temp_x,
           temp_y,
           font_value,

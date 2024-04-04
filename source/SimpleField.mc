@@ -18,7 +18,9 @@ class SimpleField extends AbstractField {
     var dc = getDc();
     var value = self.method(getId()).invoke();
     var y = dc.getHeight() / 2;
-    dc.drawText(
+    drawText(
+      dc,
+      colors,
       0,
       y,
       font,

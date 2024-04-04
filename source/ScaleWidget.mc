@@ -48,7 +48,9 @@ class ScaleWidget extends AbstractField {
     var temp_y = dc.getHeight() - Graphics.getFontHeight(font_value);
     //Значение
     if (data[:value] != null) {
-      dc.drawText(
+      drawText(
+        dc,
+        colors,
         dc.getWidth() / 2,
         temp_y,
         font_value,

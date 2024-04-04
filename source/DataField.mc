@@ -45,7 +45,9 @@ class DataField extends AbstractField {
           just = Graphics.TEXT_JUSTIFY_RIGHT;
         }
       }
-      dc.drawText(
+      drawText(
+        dc,
+        colors,
         x,
         -Graphics.getFontHeight(font_value) / 5,
         font_value,
@@ -147,7 +149,9 @@ class DataField extends AbstractField {
       if (getX() < System.getDeviceSettings().screenWidth / 2) {
         x = dc.getWidth() - x;
       }
-      dc.drawText(
+      drawText(
+        dc,
+        colors,
         x,
         dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
         font_label,
@@ -165,7 +169,9 @@ class DataField extends AbstractField {
     dc.setColor(options[:colors][:font], options[:colors][:background]);
     var label = labelCastToString(options[:label]);
 
-    dc.drawText(
+    drawText(
+      dc,
+      colors,
       dc.getWidth() / 2,
       dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
       options[:font_label],

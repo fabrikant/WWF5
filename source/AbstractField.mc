@@ -75,10 +75,10 @@ class AbstractField extends WatchUi.Layer {
     return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
   }
 
-  function labelCastToString(label){
-    if (label instanceof Lang.String){
+  function labelCastToString(label) {
+    if (label instanceof Lang.String) {
       return label;
-    }else if (label != null){
+    } else if (label != null) {
       return Application.loadResource(label);
     }
   }
@@ -105,4 +105,36 @@ class AbstractField extends WatchUi.Layer {
     }
   }
 
+  function drawText(dc, colors, x, y, font, text, justification) {
+    var color = colors[:font];
+    var color_empty = colors[:font_empty_segments];
+    var color_background = colors[:background];
+    if (color_empty != color && color_empty != Graphics.COLOR_TRANSPARENT) {
+      var chars = text.toCharArray();
+      var epty_text = "";
+      for (var i = 0; i < chars.size(); i++) {
+        if (
+          chars[i] == '0' ||
+          chars[i] == '1' ||
+          chars[i] == '2' ||
+          chars[i] == '3' ||
+          chars[i] == '4' ||
+          chars[i] == '5' ||
+          chars[i] == '6' ||
+          chars[i] == '7' ||
+          chars[i] == '9'
+        ) {
+          epty_text += "8";
+        }else{
+          epty_text += text.substring(i, i+1);
+        }
+      }
+
+      dc.setColor(color_empty, color_background);
+      dc.drawText(x, y, font, epty_text, justification);
+    }
+
+    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(x, y, font, text, justification);
+  }
 }

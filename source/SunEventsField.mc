@@ -23,7 +23,9 @@ class SunEventsField extends AbstractField {
     dc.drawBitmap(image_x, image_y, image);
 
     var font = getApp().watch_view.fontValues;
-    dc.drawText(
+    drawText(
+      dc,
+      colors,
       image_x - 1,
       dc.getHeight() / 2,
       font,
@@ -31,7 +33,9 @@ class SunEventsField extends AbstractField {
       Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
     );
 
-    dc.drawText(
+    drawText(
+      dc,
+      colors,
       image_x + image.getWidth() + 1,
       dc.getHeight() / 2,
       font,

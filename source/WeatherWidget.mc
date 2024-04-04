@@ -33,14 +33,16 @@ class WeatherWidget extends AbstractField {
     var max_temp_width = dc.getTextWidthInPixels("0", fontTemp) * 3;
     var temperature = DataWrapper.convertValueTemperature(weather.temperature);
     var temperature_y = Math.floor(dc.getHeight() / 2);
-    dc.drawText(
+    drawText(
+      dc,
+      colors,
       temp_x + max_temp_width / 2,
       temperature_y,
       fontTemp,
       temperature,
       Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
     );
-    
+
     //"°" symbol
     var temperature_font_height = Graphics.getFontHeight(fontTemp);
     var radius_symbol = temperature_font_height / 12;

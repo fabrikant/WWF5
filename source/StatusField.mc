@@ -20,7 +20,9 @@ class StatusField extends AbstractField {
       top += bitmap.getHeight();
 
       var fontSmall = getApp().watch_view.fontValues;
-      dc.drawText(
+      drawText(
+        dc,
+        colors,
         dc.getWidth() / 2,
         top,
         fontSmall,
