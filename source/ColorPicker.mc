@@ -6,12 +6,21 @@ using Toybox.Lang;
 using Toybox.Math;
 
 class ColorPicker extends WatchUi.View {
+  var parent_weak;
   var color;
   var bitmap, boxes, zero_point;
 
-  function initialize(color) {
+  function initialize(parent_weak) {
     View.initialize();
-    self.color = color;
+    self.parent_weak = parent_weak;
+
+    if (parent_weak.stillAlive()) {
+      var obj = parent_weak.get();
+      if (obj != null) {
+        self.color = obj.color;
+      }
+    }
+
     createBitmap();
   }
 
@@ -145,9 +154,21 @@ class ColorPicker extends WatchUi.View {
     }
   }
 
-  function onKey(keyEvent){
-
+  function onKey(keyEvent) {
     var key = keyEvent.getKey();
+    if (key == WatchUi.KEY_ESC) {
+      WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+    } else if (key == WatchUi.KEY_ENTER) {
+      if (parent_weak.stillAlive()) {
+        var obj = parent_weak.get();
+        if (obj != null) {
+          obj.onSelectSubmenuItem(color);
+        }
+      }
+      WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+    } else if (key == WatchUi.KEY_UP) {
+    } else if (key == WatchUi.KEY_DOWN) {
+    }
     System.println(key);
   }
 }

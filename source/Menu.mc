@@ -404,7 +404,7 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   }
 
   function onSelectItem() {
-    var picker = new ColorPicker(color);
+    var picker = new ColorPicker(self.weak());
     WatchUi.pushView(
       picker,
       new ColorPickerDelegate(picker.weak()),
@@ -421,7 +421,11 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   }
 
   function onSelectSubmenuItem(newValue) {
-    color = newValue.toNumber();
+    if (newValue instanceof Lang.Number) {
+      color = newValue;
+    } else {
+      color = newValue.toNumber();
+    }
     Application.Properties.setValue(getId(), color);
     setSubLabel(colorToString(color));
     setIcon(new IconDrawable(color));
