@@ -35,7 +35,7 @@
     <!--FIELD TYPES -->
     <string id="FIELD_TYPE_EMPTY" scope="foreground">Empty</string>
     <string id="FIELD_TYPE_CALORIES" scope="foreground">Calories</string>
-    <string id="FIELD_TYPE_DISTANCE" scope="foreground">Distance</string>
+    <string id="FIELD_TYPE_DISTANCE" scope="foreground">Daily distance</string>
     <string id="FIELD_TYPE_STEPS" scope="foreground">Steps</string>
     <string id="FIELD_TYPE_BATTERY" scope="foreground">Battery</string>
     <string id="FIELD_TYPE_HR" scope="foreground">HR</string>
