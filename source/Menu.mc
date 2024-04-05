@@ -13,9 +13,13 @@ using Toybox.Complications;
 //		color_background
 //		color_pattern
 //		color_pattern_decorate
+//  data_scale
+//  data_small
 //	Data1
 //	Data2
 // 	Data3
+//  show_connection
+//  show_DND
 //  Wind speed unit
 //
 
