@@ -23,7 +23,7 @@ class SmallField extends AbstractField {
 
     var data_value = data[:value];
     if (data_value != null) {
-      if (getApp().watch_view.isPartialUpdate || data_value.length() > 3) {
+      if (data_value.length() > 3) {
         data[:image] = null;
       }
     }

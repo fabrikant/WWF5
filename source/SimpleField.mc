@@ -14,12 +14,14 @@ class SimpleField extends AbstractField {
   }
 
   function draw(colors) {
-    if (!getApp().watch_view.isPartialUpdate) {
-      AbstractField.draw(colors);
-    }
+    AbstractField.draw(colors);
     var dc = getDc();
     var value = self.method(getId()).invoke();
     var y = dc.getHeight() / 2;
+    var font_h = Graphics.getFontHeight(font);
+    if (font_h * 4 > System.getDeviceSettings().screenHeight) {
+      y -= Math.round(font_h / 32);
+    }
     drawText(
       dc,
       colors,
