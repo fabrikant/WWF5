@@ -3,7 +3,6 @@ using Toybox.WatchUi;
 using Toybox.System;
 using Toybox.Graphics;
 using Toybox.Lang;
-using Toybox.Complications;
 
 //GeneralMenu
 //	Colors
@@ -379,7 +378,7 @@ class IconDrawable extends WatchUi.Drawable {
 
 class ColorPropertyItem extends WatchUi.IconMenuItem {
   var method_symbol, color;
-  
+
   function initialize(options) {
     self.method_symbol = options[:method];
     var label = Application.loadResource(options[:rez_label]);
@@ -405,13 +404,20 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   }
 
   function onSelectItem() {
-    var method = new Lang.Method(Menu, method_symbol);
-    var submenu = method.invoke(self.weak());
+    var picker = new ColorPicker(color);
     WatchUi.pushView(
-      submenu,
-      new SimpleMenuDelegate(),
+      picker,
+      new ColorPickerDelegate(picker.weak()),
       WatchUi.SLIDE_IMMEDIATE
     );
+
+    // var method = new Lang.Method(Menu, method_symbol);
+    // var submenu = method.invoke(self.weak());
+    // WatchUi.pushView(
+    //   submenu,
+    //   new SimpleMenuDelegate(),
+    //   WatchUi.SLIDE_IMMEDIATE
+    // );
   }
 
   function onSelectSubmenuItem(newValue) {
