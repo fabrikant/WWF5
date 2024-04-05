@@ -210,7 +210,6 @@ module Menu {
 //*****************************************************************************
 //Пункт меню переключатель
 class TogleItem extends WatchUi.ToggleMenuItem {
-  
   function initialize(options) {
     var label = Application.loadResource(options[:rez_label]);
     var enabled = Application.Properties.getValue(options[:identifier]);
@@ -339,14 +338,53 @@ class SubMenuItem extends WatchUi.MenuItem {
 //Пункт меню (аналог класса Item). Но предназначен для указания цвета
 //ассоциирован со свойством приложения
 //при нажатии открыватеся подменю выбора цветов
+
+class IconDrawable extends WatchUi.Drawable {
+  var color;
+
+  function initialize(color) {
+    self.color = color;
+    var options = {
+      :identifier => color,
+      :locX => 0,
+      :locY => 0,
+      :width => 20,
+      :height => 40,
+      :visible => true,
+    };
+    Drawable.initialize(options);
+  }
+
+  function draw(dc) {
+    if (color == Graphics.COLOR_TRANSPARENT) {
+      dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_WHITE);
+      dc.clear();
+      dc.setPenWidth(5);
+      dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+      dc.drawLine(0, 0, dc.getWidth(), dc.getHeight());
+      dc.drawLine(0, dc.getHeight(), dc.getWidth(), 0);
+    } else {
+      if (color == Graphics.COLOR_BLACK) {
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+      } else if (color == Graphics.COLOR_WHITE) {
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
+      } else {
+        dc.setColor(Graphics.COLOR_WHITE, color);
+      }
+      dc.clear();
+      dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
+    }
+  }
+}
+
 class ColorPropertyItem extends WatchUi.IconMenuItem {
   var method_symbol, color;
-
+  
   function initialize(options) {
     self.method_symbol = options[:method];
     var label = Application.loadResource(options[:rez_label]);
     color = Application.Properties.getValue(options[:identifier]);
-    var icon = createIcon(color);
+    var icon = new IconDrawable(color);
     IconMenuItem.initialize(
       label,
       colorToString(color),
@@ -366,55 +404,6 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
     return res;
   }
 
-  function borderIcon(icon, color, color_border) {
-    var dc = icon.get().getDc();
-    dc.setColor(color, color);
-    dc.clear();
-    dc.setColor(color_border, color_border);
-    dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
-  }
-
-  function createIcon(color) {
-    var icon;
-    var w = 30;
-    var h = 30;
-    if (color == Graphics.COLOR_TRANSPARENT) {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [Graphics.COLOR_WHITE, Graphics.COLOR_BLACK],
-      });
-      var dc = icon.get().getDc();
-      dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_WHITE);
-      dc.clear();
-      dc.setPenWidth(5);
-      dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-      dc.drawLine(0, 0, dc.getWidth(), dc.getHeight());
-      dc.drawLine(0, dc.getHeight(), dc.getWidth(), 0);
-    } else if (color == Graphics.COLOR_BLACK) {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [color, Graphics.COLOR_WHITE],
-      });
-      borderIcon(icon, color, Graphics.COLOR_WHITE);
-    } else if (color == Graphics.COLOR_WHITE) {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [color, Graphics.COLOR_BLACK],
-      });
-      borderIcon(icon, color, Graphics.COLOR_BLACK);
-    } else {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [color],
-      });
-    }
-    return new WatchUi.Bitmap({ :bitmap => icon });
-  }
-
   function onSelectItem() {
     var method = new Lang.Method(Menu, method_symbol);
     var submenu = method.invoke(self.weak());
@@ -429,7 +418,7 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
     color = newValue.toNumber();
     Application.Properties.setValue(getId(), color);
     setSubLabel(colorToString(color));
-    setIcon(createIcon(color));
+    setIcon(new IconDrawable(color));
   }
 }
 
@@ -439,8 +428,9 @@ class ColorSelectItem extends ColorPropertyItem {
   var paren_item_week;
 
   function initialize(options) {
+    color = options[:color];
     var label = colorToString(options[:color]);
-    var icon = createIcon(options[:color]);
+    var icon = new IconDrawable(color);
     self.paren_item_week = options[:paren_item_week];
     IconMenuItem.initialize(label, null, options[:identifier], icon, {});
   }
