@@ -11,26 +11,35 @@ class StatusField extends AbstractField {
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
 
-    var notifications = System.getDeviceSettings().notificationCount;
+    var dev_set = System.getDeviceSettings();
+
+    var notifications = dev_set.notificationCount;
     var top = 0;
     if (notifications > 0) {
       var bitmap = createImage(Rez.Drawables.message, colors);
-      dc.drawBitmap((dc.getWidth() - bitmap.getWidth()) / 2, 0, bitmap);
-
+      dc.drawBitmap((dc.getWidth() - bitmap.getWidth()) / 2, top, bitmap);
       top += bitmap.getHeight();
-
-      var fontSmall = getApp().watch_view.fontValues;
-      drawText(
-        dc,
-        colors,
-        dc.getWidth() / 2,
-        top,
-        fontSmall,
-        notifications.toString(),
-        Graphics.TEXT_JUSTIFY_CENTER
-      );
-      // top += dc.getFontHeight(fontSmall);
     }
+
+    var show_connestion = Application.Properties.getValue("show_connection");
+    var connected = dev_set.connectionAvailable;
+    if (
+      (show_connestion == Global.BLUETOOTH_SHOW_IF_CONNECT && connected) ||
+      (show_connestion == Global.BLUETOOTH_SHOW_IF_DISCONNECT && !connected)
+    ) {
+      var bitmap = createImage(Rez.Drawables.Bluetooth, colors);
+      dc.drawBitmap((dc.getWidth() - bitmap.getWidth()) / 2, top, bitmap);
+      top += bitmap.getHeight();
+    }
+
+    if (dev_set.doNotDisturb) {
+      if (Application.Properties.getValue("show_DND")) {
+        var bitmap = createImage(Rez.Drawables.DND, colors);
+        dc.drawBitmap((dc.getWidth() - bitmap.getWidth()) / 2, top, bitmap);
+        top += bitmap.getHeight();
+      }
+    }
+
     drawBorder(dc);
   }
 }

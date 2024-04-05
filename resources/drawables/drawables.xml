@@ -13,6 +13,17 @@
 		</palette>
 	</bitmap>
 
+	<bitmap id="Bluetooth" filename="./svg-resources/bluetooth.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="DND" filename="./svg-resources/dnd.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
 
 	<bitmap id="Callory" filename="./svg-resources/1041.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
@@ -43,4 +54,6 @@
 			<color>555555</color>
 		</palette>
 	</bitmap>
+
+
 </drawables>

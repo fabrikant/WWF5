@@ -23,6 +23,7 @@ module Menu {
   //Корневое меню
   function GeneralMenu() {
     var items_props = [];
+    //Подменю выбора цветов
     items_props.add({
       :item_class => :SubMenuItem,
       :rez_label => Rez.Strings.SubmenuColors,
@@ -30,6 +31,7 @@ module Menu {
       :method => :colorsSubMenu,
     });
 
+    //Выбор показа типов данных по полям
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.DataScale,
@@ -61,6 +63,22 @@ module Menu {
       :method => :dataSubMenu,
     });
 
+    //Показ статуса подключения
+    items_props.add({
+      :item_class => :Item,
+      :rez_label => Rez.Strings.show_connection,
+      :identifier => "show_connection",
+      :method => :connectionSubMenu,
+    });
+
+    //Показ статуса DND
+    items_props.add({
+      :item_class => :TogleItem,
+      :rez_label => Rez.Strings.show_DND,
+      :identifier => "show_DND",
+    });
+
+    //Единицы измерения ветра
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.WindSpeedUnit,
@@ -92,6 +110,15 @@ module Menu {
       Global.UNIT_SPEED_FTS => Rez.Strings.SpeedUnitFtSec,
       Global.UNIT_SPEED_BEAUF => Rez.Strings.SpeedUnitBeauf,
       Global.UNIT_SPEED_KNOTS => Rez.Strings.SpeedUnitKnots,
+    };
+  }
+
+  //Подменю варианта показа значка подключений
+  function connectionSubMenu() {
+    return {
+      Global.BLUETOOTH_SHOW_IF_CONNECT => Rez.Strings.show_if_connect,
+      Global.BLUETOOTH_SHOW_IF_DISCONNECT => Rez.Strings.show_if_disconnect,
+      Global.BLUETOOTH_HIDE => Rez.Strings.hide,
     };
   }
 
@@ -173,6 +200,21 @@ module Menu {
     var method = new Lang.Method(Menu, method_symbol);
     var pattern = method.invoke();
     return pattern[value];
+  }
+}
+
+//*****************************************************************************
+//Пункт меню переключатель
+class TogleItem extends WatchUi.ToggleMenuItem {
+  
+  function initialize(options) {
+    var label = Application.loadResource(options[:rez_label]);
+    var enabled = Application.Properties.getValue(options[:identifier]);
+    ToggleMenuItem.initialize(label, null, options[:identifier], enabled, {});
+  }
+
+  function onSelectItem() {
+    Application.Properties.setValue(getId(), isEnabled());
   }
 }
 
@@ -427,6 +469,8 @@ class SubMenu extends WatchUi.Menu2 {
         addItem(new ColorSelectItem(item_prop));
       } else if (item_prop[:item_class] == :Item) {
         addItem(new Item(item_prop));
+      } else if (item_prop[:item_class] == :TogleItem) {
+        addItem(new TogleItem(item_prop));
       }
     }
   }

@@ -1,7 +1,7 @@
 <strings>
     <string id="AppName">WWF5</string>
     <!-- Menu -->
- 	<string id="MenuHeader" scope="foreground">Settings</string>
+    <string id="MenuHeader" scope="foreground">Settings</string>
     <string id="SubmenuColors" scope="foreground">Colors</string>
 
     <string id="color_pattern" scope="foreground">Pattern</string>
@@ -12,26 +12,32 @@
 
     <string id="WindSpeedUnit">Wind speed unit</string>
     <string id="SpeedUnitMSec" scope="foreground">m/s</string>
-	<string id="SpeedUnitKmH" scope="foreground">km/h</string>
-	<string id="SpeedUnitMileH" scope="foreground">mph</string>
-	<string id="SpeedUnitFtSec" scope="foreground">fps</string>
-	<string id="SpeedUnitBeauf" scope="foreground">beaufort</string>
-	<string id="SpeedUnitKnots" scope="foreground">knots</string>
+    <string id="SpeedUnitKmH" scope="foreground">km/h</string>
+    <string id="SpeedUnitMileH" scope="foreground">mph</string>
+    <string id="SpeedUnitFtSec" scope="foreground">fps</string>
+    <string id="SpeedUnitBeauf" scope="foreground">beaufort</string>
+    <string id="SpeedUnitKnots" scope="foreground">knots</string>
 
     <string id="DataScale" scope="foreground">Scale field</string>
     <string id="SmallField" scope="foreground">Small field</string>
     <string id="Data1" scope="foreground">Data field 1</string>
     <string id="Data2" scope="foreground">Data field 2</string>
     <string id="Data3" scope="foreground">Data field 3</string>
-    
-    
+
+    <string id="show_connection">Show bluetooth</string>
+    <string id="show_if_connect">if connected</string>
+    <string id="show_if_disconnect">if not connected</string>
+    <string id="hide">hide</string>
+
+    <string id="show_DND">Show DND</string>
+
 
     <!--FIELD TYPES -->
-	<string id="FIELD_TYPE_EMPTY" scope="foreground">Empty</string>
-	<string id="FIELD_TYPE_CALORIES" scope="foreground">Calories</string>
-	<string id="FIELD_TYPE_DISTANCE" scope="foreground">Distance</string>
+    <string id="FIELD_TYPE_EMPTY" scope="foreground">Empty</string>
+    <string id="FIELD_TYPE_CALORIES" scope="foreground">Calories</string>
+    <string id="FIELD_TYPE_DISTANCE" scope="foreground">Distance</string>
     <string id="FIELD_TYPE_STEPS" scope="foreground">Steps</string>
     <string id="FIELD_TYPE_BATTERY" scope="foreground">Battery</string>
     <string id="FIELD_TYPE_HR" scope="foreground">HR</string>
-	
+
 </strings>
