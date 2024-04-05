@@ -14,6 +14,7 @@ module DataWrapper {
     STEPS,
     BATTERY,
     HR,
+    BODY_BATTERY,
   }
 
   function getData(type) {
@@ -40,6 +41,11 @@ module DataWrapper {
       res[:value] = getHR();
       res[:image] = Rez.Drawables.HR;
       res[:label] = Rez.Strings.FIELD_TYPE_HR;
+    } else if (type == BODY_BATTERY) {
+      res[:scale_value] = getBodyBattery();
+      res[:value] = res[:scale_value].toString() + "%";
+      res[:image] = Rez.Drawables.BodyBattery;
+      res[:label] = Rez.Strings.FIELD_TYPE_BODY_BATTERY;
     }
 
     return res;
@@ -47,6 +53,20 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+
+  function getBodyBattery() {
+    var res = 0;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY)
+    );
+    if (compl != null){
+      if (compl.value != null){
+        res = compl.value;
+      }
+    }
+
+    return res;
+  }
 
   function getBattery() {
     return Math.floor(System.getSystemStats().battery).toNumber();

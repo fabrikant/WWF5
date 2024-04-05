@@ -39,5 +39,6 @@
     <string id="FIELD_TYPE_STEPS" scope="foreground">Steps</string>
     <string id="FIELD_TYPE_BATTERY" scope="foreground">Battery</string>
     <string id="FIELD_TYPE_HR" scope="foreground">HR</string>
+    <string id="FIELD_TYPE_BODY_BATTERY" scope="foreground">Body battery</string>
 
 </strings>

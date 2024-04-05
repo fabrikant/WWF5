@@ -100,6 +100,7 @@ module Menu {
       DataWrapper.DISTANCE => Rez.Strings.FIELD_TYPE_DISTANCE,
       DataWrapper.STEPS => Rez.Strings.FIELD_TYPE_STEPS,
       DataWrapper.BATTERY => Rez.Strings.FIELD_TYPE_BATTERY,
+      DataWrapper.BODY_BATTERY => Rez.Strings.FIELD_TYPE_BODY_BATTERY,
     };
     return pattern;
   }
