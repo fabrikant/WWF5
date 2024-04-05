@@ -40,5 +40,6 @@
     <string id="FIELD_TYPE_BATTERY" scope="foreground">Battery</string>
     <string id="FIELD_TYPE_HR" scope="foreground">HR</string>
     <string id="FIELD_TYPE_BODY_BATTERY" scope="foreground">Body battery</string>
+    <string id="FIELD_TYPE_RECOVERY_TIME" scope="foreground">Recovery time</string>
 
 </strings>

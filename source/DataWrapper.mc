@@ -15,6 +15,7 @@ module DataWrapper {
     BATTERY,
     HR,
     BODY_BATTERY,
+    RECOVERY_TIME,
   }
 
   function getData(type) {
@@ -46,6 +47,10 @@ module DataWrapper {
       res[:value] = res[:scale_value].toString() + "%";
       res[:image] = Rez.Drawables.BodyBattery;
       res[:label] = Rez.Strings.FIELD_TYPE_BODY_BATTERY;
+    } else if (type == RECOVERY_TIME) {
+      res[:value] = getRecoveryTime();
+      res[:image] = Rez.Drawables.RecoveryTime;
+      res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
     }
 
     return res;
@@ -54,13 +59,34 @@ module DataWrapper {
   ////////////////////////////////////////////////////////
   //DATA VALUES
 
+  function getRecoveryTime() {
+    var res = 0;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME)
+    );
+    if (compl != null) {
+      if (compl.value != null) {
+        res = compl.value;
+      }
+    }
+    
+    var h = (res / 60).toNumber();
+    var m = res % 60;
+    if (h > 99) {
+      res = Lang.format("$1$h", [h]);
+    } else {
+      res = Lang.format("$1$:$2$", [h.format("%02d"), m.format("%02d")]);
+    }
+    return res;
+  }
+
   function getBodyBattery() {
     var res = 0;
     var compl = Complications.getComplication(
       new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY)
     );
-    if (compl != null){
-      if (compl.value != null){
+    if (compl != null) {
+      if (compl.value != null) {
         res = compl.value;
       }
     }

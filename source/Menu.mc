@@ -101,6 +101,7 @@ module Menu {
       DataWrapper.STEPS => Rez.Strings.FIELD_TYPE_STEPS,
       DataWrapper.BATTERY => Rez.Strings.FIELD_TYPE_BATTERY,
       DataWrapper.BODY_BATTERY => Rez.Strings.FIELD_TYPE_BODY_BATTERY,
+      DataWrapper.RECOVERY_TIME => Rez.Strings.FIELD_TYPE_RECOVERY_TIME,
     };
     return pattern;
   }
