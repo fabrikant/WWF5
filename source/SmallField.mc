@@ -35,7 +35,7 @@ class SmallField extends AbstractField {
       }
       bitmap_h = bitmap.getHeight();
       dc.drawBitmap(0, (dc.getHeight() - bitmap_h) / 2, bitmap);
-      temp_x += bitmap.getWidth();
+      temp_x += bitmap.getWidth() + 4;
     }
 
     if (data_value != null) {

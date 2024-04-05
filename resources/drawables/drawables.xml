@@ -31,7 +31,7 @@
 		</palette>
 	</bitmap>
 
-	<bitmap id="Distance" filename="./svg-resources/location.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+	<bitmap id="Distance" filename="./svg-resources/distance.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>
@@ -43,7 +43,7 @@
 		</palette>
 	</bitmap>
 
-	<bitmap id="Battery" filename="./svg-resources/battery.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+	<bitmap id="Battery" filename="./svg-resources/battery2.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>
