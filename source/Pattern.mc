@@ -36,6 +36,8 @@ class Pattern {
 
   private function drawBackgoundPattern(all_colors) {
     var dc = background_image.get().getDc();
+    dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_TRANSPARENT);
+    dc.clear();
     var colors = [all_colors[:pattern], all_colors[:pattern_decorate]];
     var pen_widths = [Math.floor(dc.getWidth() / 50), 1];
 
