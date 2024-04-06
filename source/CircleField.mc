@@ -13,20 +13,23 @@ class CircleField extends AbstractField {
   function draw(colors) {
     AbstractField.draw(colors);
     var dc = getDc();
-    var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    var data = null;
+    var data_type = Application.Properties.getValue(getId());
+    if (data_type == DataWrapper.SECONDS) {
+      data = seconds();
+    } else {
+      data = DataWrapper.getData(data_type);
+    }
 
     //Вывод значения
     if (data[:value] != null) {
-      var center = [
-        (dc.getWidth() / 2).toNumber(),
-        (dc.getHeight() / 2).toNumber(),
-      ];
+      var center = [dc.getWidth() / 2, dc.getWidth() / 2];
 
       dc.setColor(colors[:font], colors[:background]);
+
       var font_value = getApp().watch_view.fontValues;
-      drawText(
-        dc,
-        colors,
+      //var font_value = Graphics.FONT_XTINY;
+      dc.drawText(
         center[0],
         center[1],
         font_value,
@@ -35,29 +38,21 @@ class CircleField extends AbstractField {
       );
     }
 
-    //drawSecondCircle(dc, colors, (dc.getWidth() * 0.11).toNumber());
-    drawCecondsRectangle(dc, colors, (dc.getWidth() * 0.11).toNumber());
+    //drawSecondCircle(dc, colors, (dc.getWidth() * 0.11));
+    drawCecondsRectangle(dc, colors, dc.getWidth() * 0.11);
     drawBorder(dc);
   }
 
   //Rectangle
   function drawCecondsRectangle(dc, colors, line_width) {
     var sec = System.getClockTime().sec;
-    var center = [
-      (dc.getWidth() / 2).toNumber(),
-      (dc.getHeight() / 2).toNumber(),
-    ];
+    var radius = dc.getWidth() / 2;
 
     var half_line = line_width / 2;
-
+    var right_bottom_big = dc.getWidth() - line_width;
     dc.setPenWidth(line_width);
     dc.setColor(colors[:font], colors[:font]);
-    dc.drawRectangle(
-      half_line,
-      half_line,
-      dc.getWidth() - line_width,
-      dc.getHeight() - line_width
-    );
+    dc.drawRectangle(half_line, half_line, right_bottom_big, right_bottom_big);
 
     if (sec == 0) {
       return;
@@ -69,110 +64,88 @@ class CircleField extends AbstractField {
       color = colors[:background];
     }
     dc.setColor(color, color);
-    dc.drawRectangle(
-      half_line,
-      half_line,
-      dc.getWidth() - line_width,
-      dc.getHeight() - line_width
-    );
+    dc.drawRectangle(half_line, half_line, right_bottom_big, right_bottom_big);
 
-    var step_lenght = (dc.getWidth() - line_width) / 30;
+    var step_lenght = right_bottom_big / 30f;
     var steps = sec * 2;
     dc.setColor(colors[:font], colors[:font]);
 
+    var right_bottom = dc.getWidth() - half_line;
+    var right_bottom_1 = right_bottom - 1;
+    var right_bottom_2 = right_bottom - 2;
+
     //Вправо
-    if (steps <= 15) {
+    var allowed_steps = Global.min(15, steps);
+    dc.drawLine(
+      radius,
+      half_line,
+      radius + allowed_steps * step_lenght,
+      half_line
+    );
+    steps -= allowed_steps;
+
+    //Вниз
+    if (steps > 0) {
+      allowed_steps = Global.min(30, steps);
       dc.drawLine(
-        dc.getWidth() / 2,
+        right_bottom_2,
         half_line,
-        dc.getWidth() / 2 + steps * step_lenght,
+        right_bottom_2,
+        half_line + allowed_steps * step_lenght - 1
+      );
+      steps -= allowed_steps;
+    }
+
+    //Влево
+    if (steps > 0) {
+      allowed_steps = Global.min(30, steps);
+      dc.drawLine(
+        right_bottom_2,
+        right_bottom_2,
+        right_bottom_2 - allowed_steps * step_lenght,
+        right_bottom_2
+      );
+      steps -= allowed_steps;
+    }
+
+    //Вверх
+    if (steps > 0) {
+      allowed_steps = Global.min(30, steps);
+      dc.drawLine(
+        half_line,
+        right_bottom_1,
+        half_line,
+        right_bottom_1 - allowed_steps * step_lenght
+      );
+      steps -= allowed_steps;
+    }
+
+    //Вправо
+    if (steps > 0) {
+      dc.drawLine(
+        half_line,
+        half_line,
+        half_line + steps * step_lenght,
         half_line
       );
-    } else {
-      dc.drawLine(
-        dc.getWidth() / 2,
-        half_line,
-        dc.getWidth() - half_line - 2,
-        half_line
-      );
-
-      //Вниз
-      steps -= 15;
-      if (steps <= 30) {
-        dc.drawLine(
-          dc.getWidth() - half_line - 2,
-          half_line,
-          dc.getWidth() - half_line - 2,
-          half_line + steps * step_lenght
-        );
-      } else {
-        dc.drawLine(
-          dc.getWidth() - half_line - 2,
-          half_line,
-          dc.getWidth() - half_line - 2,
-          dc.getHeight() - half_line - 2
-        );
-
-        //Влево
-        steps -= 30;
-        if (steps <= 30) {
-          dc.drawLine(
-            dc.getWidth() - half_line - 2,
-            dc.getHeight() - half_line - 2,
-            dc.getWidth() - half_line - 2 - steps * step_lenght,
-            dc.getHeight() - half_line - 2
-          );
-        } else {
-          dc.drawLine(
-            dc.getWidth() - half_line - 2,
-            dc.getHeight() - half_line - 2,
-            half_line - 1,
-            dc.getHeight() - half_line - 2
-          );
-
-          //Вверх
-          steps -= 30;
-          if (steps <= 30) {
-            dc.drawLine(
-              half_line,
-              dc.getHeight() - half_line - 2,
-              half_line,
-              dc.getHeight() - half_line - 2 - steps * step_lenght
-            );
-          } else {
-            dc.drawLine(
-              half_line,
-              dc.getHeight() - half_line - 2,
-              half_line,
-              step_lenght
-            );
-
-            //Вправо
-            steps -= 30;
-            dc.drawLine(
-              half_line,
-              half_line,
-              half_line + steps * step_lenght,
-              half_line
-            );
-          }
-        }
-      }
     }
   }
 
   //Circle
   function drawSecondCircle(dc, colors, line_width) {
-    var center = [
-      (dc.getWidth() / 2).toNumber(),
-      (dc.getHeight() / 2).toNumber(),
-    ];
+    var sec = System.getClockTime().sec;
+    var center = [dc.getWidth() / 2, dc.getWidth() / 2];
 
     var radius = center[0] - line_width / 2;
 
     dc.setPenWidth(line_width);
     dc.setColor(colors[:font], colors[:font]);
     dc.drawCircle(center[0], center[1], radius);
+
+    if (sec == 0) {
+      return;
+    }
+
     dc.setPenWidth(line_width - 2);
     var color = colors[:font_empty_segments];
     if (color == Graphics.COLOR_TRANSPARENT) {
@@ -182,7 +155,6 @@ class CircleField extends AbstractField {
     dc.setColor(color, color);
     dc.drawCircle(center[0], center[1], radius);
 
-    var sec = System.getClockTime().sec;
     var degreeEnd = 90 - 6 * sec;
     dc.setColor(colors[:font], colors[:font]);
     dc.drawArc(

@@ -65,6 +65,10 @@ class AbstractField extends WatchUi.Layer {
     return System.getClockTime().min.format("%02d");
   }
 
+  function seconds() {
+    return System.getClockTime().sec.format("%02d");
+  }
+
   function date() {
     var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
     return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
@@ -104,7 +108,11 @@ class AbstractField extends WatchUi.Layer {
     var color = colors[:font];
 
     var color_empty = colors[:font_empty_segments];
-    if (color_empty != color && color_empty != Graphics.COLOR_TRANSPARENT) {
+    if (
+      color_empty != color &&
+      color_empty != Graphics.COLOR_TRANSPARENT &&
+      color_empty != colors[:background]
+    ) {
       var chars = text.toCharArray();
       var epty_text = "";
       for (var i = 0; i < chars.size(); i++) {
@@ -128,7 +136,6 @@ class AbstractField extends WatchUi.Layer {
       dc.drawText(x, y, font, epty_text, justification);
     }
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-
     dc.drawText(x, y, font, text, justification);
   }
 }

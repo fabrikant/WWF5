@@ -45,7 +45,7 @@ module Menu {
       :item_class => :Item,
       :rez_label => Rez.Strings.SmallField,
       :identifier => "data_small",
-      :method => :dataSmall,
+      :method => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
@@ -90,15 +90,6 @@ module Menu {
     });
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
     return new SubMenu(options);
-  }
-
-  function dataSmall() {
-    var pattern = {
-      DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
-      DataWrapper.HR => Rez.Strings.FIELD_TYPE_HR,
-      DataWrapper.SECONDS => Rez.Strings.FIELD_TYPE_SECONDS,
-    };
-    return pattern;
   }
 
   function dataSubMenu() {

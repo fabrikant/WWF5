@@ -52,8 +52,6 @@ module DataWrapper {
       res[:value] = getRecoveryTime();
       res[:image] = Rez.Drawables.RecoveryTime;
       res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
-    } else if (type == SECONDS) {
-      res[:value] = getSeconds();
     }
 
     return res;
@@ -61,10 +59,6 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
-  
-  function getSeconds() {
-    return System.getClockTime().sec.format("%02d");
-  }
 
   function getRecoveryTime() {
     var res = 0;
@@ -97,7 +91,9 @@ module DataWrapper {
         res = compl.value;
       }
     }
-
+    if (res == null) {
+      res = getLasValueSensorHistory(:getBodyBatteryHistory);
+    }
     return res;
   }
 
@@ -107,19 +103,19 @@ module DataWrapper {
 
   function getHR() {
     var value = null;
-    var info = Activity.getActivityInfo();
-    if (info != null) {
-      if (info has :currentHeartRate) {
-        value = info.currentHeartRate;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE)
+    );
+    if (compl != null) {
+      if (compl.value != null) {
+        value = compl.value;
       }
     }
     if (value == null) {
-      var compl = Complications.getComplication(
-        new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE)
-      );
-      if (compl != null) {
-        if (compl.value != null) {
-          value = compl.value;
+      var info = Activity.getActivityInfo();
+      if (info != null) {
+        if (info has :currentHeartRate) {
+          value = info.currentHeartRate;
         }
       }
     }
@@ -153,6 +149,25 @@ module DataWrapper {
     return value;
   }
 
+  function getLasValueSensorHistory(methodSymbol) {
+    var value = null;
+    if (Toybox has :SensorHistory) {
+      if (Toybox.SensorHistory has methodSymbol) {
+        var iter = (new Lang.Method(Toybox.SensorHistory, methodSymbol)).invoke(
+          { :period => 1, :order => SensorHistory.ORDER_NEWEST_FIRST }
+        );
+        if (iter != null) {
+          var sample = iter.next();
+          if (sample != null) {
+            if (sample.data != null) {
+              value = sample.data;
+            }
+          }
+        }
+      }
+    }
+    return value;
+  }
   //******************************************************
   //convertation values
 

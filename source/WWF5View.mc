@@ -44,29 +44,29 @@ class WWF5View extends WatchUi.WatchFace {
     var clock_layer = new SimpleField(options);
     self.addLayer(clock_layer);
 
-    // //Секунды
-    // var temp_h = pattern.calculateLayerHeight(
-    //   pattern.reference_points[:y][2],
-    //   pattern.reference_points[:y][3]
-    // );
-    // var temp_w = Math.floor(
-    //   (temp_h * clock_layer.getDc().getWidth()) /
-    //     clock_layer.getDc().getHeight()
-    // );
-    // temp_w = Math.floor((temp_w / clock_layer_max_lenght) * 2);
+    //Секунды
+    var temp_h = pattern.calculateLayerHeight(
+      pattern.reference_points[:y][2],
+      pattern.reference_points[:y][3]
+    );
+    var temp_w = Math.floor(
+      (temp_h * clock_layer.getDc().getWidth()) /
+        clock_layer.getDc().getHeight()
+    );
+    temp_w = Math.floor((temp_w / clock_layer_max_lenght) * 2);
 
-    // options = {
-    //   :locX => pattern.calculateLayerLeft(pattern.reference_points[:x][4]),
-    //   :locY => pattern.calculateLayerUp(pattern.reference_points[:y][2]),
-    //   :width => temp_w,
-    //   :height => temp_h,
-    //   :identifier => :seconds,
+    options = {
+      :locX => pattern.calculateLayerLeft(pattern.reference_points[:x][4]),
+      :locY => pattern.calculateLayerUp(pattern.reference_points[:y][2]),
+      :width => temp_w,
+      :height => temp_h,
+      :identifier => :seconds,
 
-    //   :font => fontSeconds,
-    // };
-    // var seconds_layer = new SimpleField(options);
-    // self.addLayer(seconds_layer);
-    // every_second_layers.add(seconds_layer);
+      :font => fontSeconds,
+    };
+    var seconds_layer = new SimpleField(options);
+    self.addLayer(seconds_layer);
+    every_second_layers.add(seconds_layer);
 
     //Дата
     options = pattern.calculateLayerCoordinates(
@@ -146,19 +146,19 @@ class WWF5View extends WatchUi.WatchFace {
     self.addLayer(new DataField(options));
 
     //Small data field
-    // options = {
-    //   :locX => seconds_layer.getX(),
-    //   :width => pattern.reference_points[:x][6] - options[:locX],
-    //   :height => Application.loadResource(Rez.Drawables.HR).getHeight(),
-    //   :identifier => "data_small",
-    // };
+    options = {
+      :locX => seconds_layer.getX(),
+      :width => pattern.reference_points[:x][6] - options[:locX],
+      :height => Application.loadResource(Rez.Drawables.HR).getHeight(),
+      :identifier => "data_small",
+    };
 
-    // options[:locY] =
-    //   clock_layer.getY() + clock_layer.getDc().getHeight() - options[:height];
+    options[:locY] =
+      clock_layer.getY() + clock_layer.getDc().getHeight() - options[:height];
 
-    // var small_field = new SmallField(options);
-    // self.addLayer(small_field);
-    // //every_second_layers.add(small_field);
+    var small_field = new SmallField(options);
+    self.addLayer(small_field);
+    //every_second_layers.add(small_field);
 
     //Статусы
     var bitmap = Application.loadResource(Rez.Drawables.message);
@@ -169,19 +169,22 @@ class WWF5View extends WatchUi.WatchFace {
       ],
       [pattern.reference_points[:x][6], pattern.reference_points[:y][4]]
     );
+    options[:height] =  small_field.getY() - options[:locY];
     options[:identifier] = :status;
     var status_layer = new StatusField(options);
     self.addLayer(status_layer);
 
-    //Круг
-    options = {
-      :locX => clock_layer.getX() + clock_layer.getDc().getWidth(),
-      :locY => clock_layer.getY(),
-    };
-    options[:width] = status_layer.getX() - options[:locX];
-    options[:height] = options[:width];
-    options[:identifier] = "data_small";
-    self.addLayer(new CircleField(options));
+    // //Круг
+    // options = {
+    //   :locX => clock_layer.getX() + clock_layer.getDc().getWidth(),
+    //   :locY => clock_layer.getY(),
+    // };
+    // options[:width] = status_layer.getX() - options[:locX];
+    // options[:height] = options[:width];
+    // options[:identifier] = "data_small";
+    // var circle_field = new CircleField(options);
+    // self.addLayer(circle_field);
+    // every_second_layers.add(circle_field);
 
     //Подложка
     options = {
