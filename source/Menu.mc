@@ -45,7 +45,7 @@ module Menu {
       :item_class => :Item,
       :rez_label => Rez.Strings.SmallField,
       :identifier => "data_small",
-      :method => :dataSubMenu,
+      :method => :dataSmall,
     });
     items_props.add({
       :item_class => :Item,
@@ -90,6 +90,15 @@ module Menu {
     });
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
     return new SubMenu(options);
+  }
+
+  function dataSmall() {
+    var pattern = {
+      DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
+      DataWrapper.HR => Rez.Strings.FIELD_TYPE_HR,
+      DataWrapper.SECONDS => Rez.Strings.FIELD_TYPE_SECONDS,
+    };
+    return pattern;
   }
 
   function dataSubMenu() {
@@ -406,20 +415,20 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   }
 
   function onSelectItem() {
-    var picker = new ColorPicker(self.weak());
-    WatchUi.pushView(
-      picker,
-      new ColorPickerDelegate(picker.weak()),
-      WatchUi.SLIDE_IMMEDIATE
-    );
-
-    // var method = new Lang.Method(Menu, method_symbol);
-    // var submenu = method.invoke(self.weak());
+    // var picker = new ColorPicker(self.weak());
     // WatchUi.pushView(
-    //   submenu,
-    //   new SimpleMenuDelegate(),
+    //   picker,
+    //   new ColorPickerDelegate(picker.weak()),
     //   WatchUi.SLIDE_IMMEDIATE
     // );
+
+    var method = new Lang.Method(Menu, method_symbol);
+    var submenu = method.invoke(self.weak());
+    WatchUi.pushView(
+      submenu,
+      new SimpleMenuDelegate(),
+      WatchUi.SLIDE_IMMEDIATE
+    );
   }
 
   function onSelectSubmenuItem(newValue) {

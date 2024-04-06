@@ -65,10 +65,6 @@ class AbstractField extends WatchUi.Layer {
     return System.getClockTime().min.format("%02d");
   }
 
-  function seconds() {
-    return System.getClockTime().sec.format("%02d");
-  }
-
   function date() {
     var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
     return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);

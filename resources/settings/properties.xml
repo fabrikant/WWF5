@@ -15,7 +15,7 @@
 	<property id="data_2" type="number">2</property>
 	<property id="data_3" type="number">3</property>
 	<property id="data_scale" type="number">4</property>
-	<property id="data_small" type="number">5</property>
+	<property id="data_small" type="number">8</property>
 	<property id="show_connection" type="number">1</property>
 	<property id="show_DND" type="boolean">true</property>
 

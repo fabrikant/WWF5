@@ -16,6 +16,7 @@ module DataWrapper {
     HR,
     BODY_BATTERY,
     RECOVERY_TIME,
+    SECONDS,
   }
 
   function getData(type) {
@@ -51,6 +52,8 @@ module DataWrapper {
       res[:value] = getRecoveryTime();
       res[:image] = Rez.Drawables.RecoveryTime;
       res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
+    } else if (type == SECONDS) {
+      res[:value] = getSeconds();
     }
 
     return res;
@@ -58,6 +61,10 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+  
+  function getSeconds() {
+    return System.getClockTime().sec.format("%02d");
+  }
 
   function getRecoveryTime() {
     var res = 0;
@@ -69,7 +76,7 @@ module DataWrapper {
         res = compl.value;
       }
     }
-    
+
     var h = (res / 60).toNumber();
     var m = res % 60;
     if (h > 99) {
