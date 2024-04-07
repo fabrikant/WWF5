@@ -18,6 +18,14 @@
     <string id="SpeedUnitBeauf" scope="foreground">beaufort</string>
     <string id="SpeedUnitKnots" scope="foreground">knots</string>
 
+	<!--PRESSURE UNITS -->
+	<string id="PressUnit" scope="foreground">Pressure Unit</string>
+	<string id="PressUnitMmHg" scope="foreground">mmHg</string>
+	<string id="PressUnitPsi" scope="foreground">Psi</string>
+	<string id="PressUnitInchHg" scope="foreground">inchHg</string>
+	<string id="PressUnitBar" scope="foreground">milibar</string>
+	<string id="PressUnitKPa" scope="foreground">kPa</string>
+
     <string id="DataScale" scope="foreground">Scale field</string>
     <string id="SmallField" scope="foreground">Small field</string>
     <string id="Data1" scope="foreground">Data field 1</string>
@@ -47,6 +55,7 @@
     <string id="FIELD_TYPE_ELEVATION" scope="foreground">Elevation</string>
     <string id="FIELD_TYPE_STRESS" scope="foreground">Stress</string>
     <string id="FIELD_TYPE_MOON" scope="foreground">Moon phase</string>
+    <string id="FIELD_TYPE_PRESSURE" scope="foreground">Air pressure</string>
 
 
 </strings>

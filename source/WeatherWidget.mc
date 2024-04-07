@@ -33,7 +33,7 @@ class WeatherWidget extends AbstractField {
     var fontTemp = getApp().watch_view.fontTemp;
     temp_x += bitmap.getWidth();
     var max_temp_width = dc.getTextWidthInPixels("0", fontTemp) * 3;
-    var temperature = DataWrapper.convertValueTemperature(weather.temperature);
+    var temperature = DataWrapper.convertTemperature(weather.temperature);
     var temperature_y = Math.floor(dc.getHeight() / 2);
     drawText(
       dc,

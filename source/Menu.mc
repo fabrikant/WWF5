@@ -20,7 +20,7 @@ using Toybox.Lang;
 //  show_connection
 //  show_DND
 //  Wind speed unit
-//
+//  Pressure unit
 
 module Menu {
   //Корневое меню
@@ -88,6 +88,15 @@ module Menu {
       :identifier => "wind_speed_unit",
       :method => :windSpeedUnitsSubmenu,
     });
+
+    //Единицы измерения давления
+    items_props.add({
+      :item_class => :Item,
+      :rez_label => Rez.Strings.PressUnit,
+      :identifier => "pressure_unit",
+      :method => :pressureUnitsSubmenu,
+    });
+
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
     return new SubMenu(options);
   }
@@ -107,6 +116,7 @@ module Menu {
       DataWrapper.ELEVATION => Rez.Strings.FIELD_TYPE_ELEVATION,
       DataWrapper.STRESS => Rez.Strings.FIELD_TYPE_STRESS,
       DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
+      DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
     };
     return pattern;
   }
@@ -120,6 +130,17 @@ module Menu {
       Global.UNIT_SPEED_FTS => Rez.Strings.SpeedUnitFtSec,
       Global.UNIT_SPEED_BEAUF => Rez.Strings.SpeedUnitBeauf,
       Global.UNIT_SPEED_KNOTS => Rez.Strings.SpeedUnitKnots,
+    };
+  }
+
+  //Подменю выбора едениц измерения давления
+  function pressureUnitsSubmenu() {
+    return {
+      DataWrapper.UNIT_PRESSURE_MM_HG => Rez.Strings.PressUnitMmHg,
+      DataWrapper.UNIT_PRESSURE_PSI => Rez.Strings.PressUnitPsi,
+      DataWrapper.UNIT_PRESSURE_INCH_HG => Rez.Strings.PressUnitInchHg,
+      DataWrapper.UNIT_PRESSURE_BAR => Rez.Strings.PressUnitBar,
+      DataWrapper.UNIT_PRESSURE_KPA => Rez.Strings.PressUnitKPa,
     };
   }
 

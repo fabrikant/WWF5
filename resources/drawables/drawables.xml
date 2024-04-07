@@ -91,4 +91,10 @@
 		</palette>
 	</bitmap>
 
+	<bitmap id="Pressure" filename="./svg-resources/barometer.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
 </drawables>

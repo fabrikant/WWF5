@@ -24,6 +24,13 @@ module DataWrapper {
     ELEVATION,
     STRESS,
     MOON,
+    PRESSURE,
+
+    UNIT_PRESSURE_MM_HG = 0,
+    UNIT_PRESSURE_PSI,
+    UNIT_PRESSURE_INCH_HG,
+    UNIT_PRESSURE_BAR,
+    UNIT_PRESSURE_KPA,
   }
 
   function getData(type) {
@@ -112,6 +119,13 @@ module DataWrapper {
     } else if (type == MOON) {
       res = getApp().watch_view.moon_keeper.getActulalData(Time.now());
       res[:label] = Rez.Strings.FIELD_TYPE_MOON;
+    } else if (type == PRESSURE) {
+      res[:value] = getPressure();
+      res[:image] = Rez.Drawables.Pressure;
+      res[:label] = Rez.Strings.FIELD_TYPE_PRESSURE;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE
+      );
     }
 
     return res;
@@ -119,6 +133,25 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+  function getPressure() {
+    var value = null;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE)
+    );
+    if (compl != null) {
+      if (compl.value != null) {
+        value = compl.value;
+      }
+    }
+    if (value == null) {
+      value = getLasValueSensorHistory(:getPressureHistory);
+    }
+    if (value != null) {
+      value = convertPressure(value);
+    }
+    return value;
+  }
+
   function getStress() {
     var value = null;
     var compl = Complications.getComplication(
@@ -366,7 +399,29 @@ module DataWrapper {
     return value.format(fString);
   }
 
-  function convertValueTemperature(сelsius) {
+  function convertPressure(value) {
+    var rawData = value;
+    var unit = Application.Properties.getValue("pressure_unit");
+    if (unit == UNIT_PRESSURE_MM_HG) {
+      /*MmHg*/
+      value = Math.round(rawData / 133.322).format("%d");
+    } else if (unit == UNIT_PRESSURE_PSI) {
+      /*Psi*/
+      value = (rawData.toFloat() / 6894.757).format("%.2f");
+    } else if (unit == UNIT_PRESSURE_INCH_HG) {
+      /*InchHg*/
+      value = (rawData.toFloat() / 3386.389).format("%.2f");
+    } else if (unit == UNIT_PRESSURE_BAR) {
+      /*miliBar*/
+      value = (rawData / 100).format("%d");
+    } else if (unit == UNIT_PRESSURE_KPA) {
+      /*kPa*/
+      value = (rawData / 1000).format("%d");
+    }
+    return value;
+  }
+
+  function convertTemperature(сelsius) {
     var value;
     if (сelsius != null) {
       if (System.getDeviceSettings().temperatureUnits == System.UNIT_STATUTE) {

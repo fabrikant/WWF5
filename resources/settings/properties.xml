@@ -9,6 +9,7 @@
 	<property id="color_font" type="number">0xFFFFFF</property>
 	<property id="color_font_empty_segments" type="number">0x550000</property>
 	<property id="wind_speed_unit" type="number">0</property>
+	<property id="pressure_unit" type="number">0</property>
 
 
 	<property id="data_scale" type="number">13</property>
