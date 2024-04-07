@@ -42,5 +42,7 @@
     <string id="FIELD_TYPE_BODY_BATTERY" scope="foreground">Body battery</string>
     <string id="FIELD_TYPE_RECOVERY_TIME" scope="foreground">Recovery time</string>
     <string id="FIELD_TYPE_SECONDS" scope="foreground">Seconds</string>
+    <string id="FIELD_TYPE_FLOOR" scope="foreground">Floor</string>
+
 
 </strings>

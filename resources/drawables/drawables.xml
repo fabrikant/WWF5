@@ -59,8 +59,15 @@
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>
-	
-	</bitmap>	<bitmap id="RecoveryTime" filename="./svg-resources/recovery-time.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+
+	</bitmap>
+	<bitmap id="RecoveryTime" filename="./svg-resources/recovery-time.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Floor" filename="./svg-resources/stairs.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>

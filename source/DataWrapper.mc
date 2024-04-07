@@ -18,6 +18,7 @@ module DataWrapper {
     BODY_BATTERY,
     RECOVERY_TIME,
     SECONDS,
+    FLOOR,
   }
 
   function getData(type) {
@@ -60,6 +61,11 @@ module DataWrapper {
       res[:image] = Rez.Drawables.RecoveryTime;
       res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
       res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME);
+    } else if (type == FLOOR) {
+      res[:value] = getFloor();
+      res[:image] = Rez.Drawables.Floor;
+      res[:label] = Rez.Strings.FIELD_TYPE_FLOOR;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_FLOORS_CLIMBED);
     }
 
     return res;
@@ -67,6 +73,16 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+	
+  function getFloor(){
+		var value = null;
+		var info = ActivityMonitor.getInfo();
+		if (info has :floorsClimbed){
+			value = info.floorsClimbed.toString()
+				+"|"+info.floorsDescended.toString();
+		}
+		return value;
+	}
 
   function getRecoveryTime() {
     var res = 0;
