@@ -121,9 +121,10 @@ class ScaleWidget extends AbstractField {
       scale_color = Graphics.COLOR_RED;
     }
 
-    if (angle_value >= angle_min) {
+    if (angle_min - angle_value < 1) {
       angle_value -= 1;
     }
+    
     dc.setColor(scale_color, scale_color);
     dc.drawArc(
       center_x,
