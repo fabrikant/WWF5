@@ -5,6 +5,7 @@ import Toybox.Lang;
 import Toybox.ActivityMonitor;
 import Toybox.Activity;
 import Toybox.Application;
+import Toybox.SensorHistory;
 
 module DataWrapper {
   enum {
