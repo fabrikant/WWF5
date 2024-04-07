@@ -21,6 +21,7 @@ module DataWrapper {
     FLOOR,
     O2,
     ELEVATION,
+    STRESS,
   }
 
   function getData(type) {
@@ -99,6 +100,13 @@ module DataWrapper {
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_ALTITUDE
       );
+    } else if (type == STRESS) {
+      res[:value] = getStress();
+      res[:image] = Rez.Drawables.Stress;
+      res[:label] = Rez.Strings.FIELD_TYPE_STRESS;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_STRESS
+      );
     }
 
     return res;
@@ -106,6 +114,25 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+  function getStress(){
+    var value = null;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_STRESS)
+    );
+    if (compl != null) {
+      if (compl.value != null) {
+        value = compl.value;
+      }
+    }
+    if (value == null) {
+      value = getLasValueSensorHistory(:getStressHistory);
+    }
+    if (value != null){
+      value = reduceLongValue(value);
+    }
+    return value;
+  }
+
   function getElevation() {
     var value = null;
     var compl = Complications.getComplication(
