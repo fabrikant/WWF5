@@ -25,6 +25,7 @@ module DataWrapper {
     STRESS,
     MOON,
     PRESSURE,
+    TEMPERATURE,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -126,6 +127,13 @@ module DataWrapper {
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE
       );
+    } else if (type == TEMPERATURE) {
+      res[:value] = getTemperature();
+      res[:image] = Rez.Drawables.Temperature;
+      res[:label] = Rez.Strings.FIELD_TYPE_TEMPERATURE;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_CURRENT_TEMPERATURE
+      );
     }
 
     return res;
@@ -133,6 +141,25 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+  function getTemperature() {
+    var value = null;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_CURRENT_TEMPERATURE)
+    );
+    if (compl != null) {
+      if (compl.value != null) {
+        value = compl.value;
+      }
+    }
+    if (value == null) {
+      value = getLasValueSensorHistory(:getTemperatureHistory);
+    }
+    if (value != null) {
+      value = convertTemperature(value);
+    }
+    return value;
+  }
+
   function getPressure() {
     var value = null;
     var compl = Complications.getComplication(

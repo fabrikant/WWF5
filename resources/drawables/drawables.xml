@@ -97,4 +97,10 @@
 		</palette>
 	</bitmap>
 
+	<bitmap id="Temperature" filename="./svg-resources/termometer.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
 </drawables>

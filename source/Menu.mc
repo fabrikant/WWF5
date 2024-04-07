@@ -116,6 +116,7 @@ module Menu {
       DataWrapper.ELEVATION => Rez.Strings.FIELD_TYPE_ELEVATION,
       DataWrapper.STRESS => Rez.Strings.FIELD_TYPE_STRESS,
       DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
+      DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
     };
     return pattern;
