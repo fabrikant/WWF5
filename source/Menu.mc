@@ -104,6 +104,7 @@ module Menu {
       DataWrapper.RECOVERY_TIME => Rez.Strings.FIELD_TYPE_RECOVERY_TIME,
       DataWrapper.FLOOR => Rez.Strings.FIELD_TYPE_FLOOR,
       DataWrapper.O2 => Rez.Strings.FIELD_TYPE_O2,
+      DataWrapper.ELEVATION => Rez.Strings.FIELD_TYPE_ELEVATION,
     };
     return pattern;
   }

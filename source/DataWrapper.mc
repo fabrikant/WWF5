@@ -20,6 +20,7 @@ module DataWrapper {
     SECONDS,
     FLOOR,
     O2,
+    ELEVATION,
   }
 
   function getData(type) {
@@ -91,6 +92,13 @@ module DataWrapper {
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_PULSE_OX
       );
+    } else if (type == ELEVATION) {
+      res[:value] = getElevation();
+      res[:image] = Rez.Drawables.Elevation;
+      res[:label] = Rez.Strings.FIELD_TYPE_ELEVATION;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_ALTITUDE
+      );
     }
 
     return res;
@@ -98,11 +106,36 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+  function getElevation() {
+    var value = null;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_ALTITUDE)
+    );
+    if (compl != null) {
+      if (compl.value != null) {
+        value = compl.value;
+      }
+    }
+    if (value == null) {
+      var info = Activity.getActivityInfo();
+      if (info != null) {
+        if (info has :altitude) {
+          if (info.altitude != null) {
+            value = info.altitude;
+          }
+        }
+      }
+    }
+    if (value != null){
+      value = elevationToString(value);
+    }
+    return value;
+  }
 
   function getOxygenSaturation() {
     var value = null;
     var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY)
+      new Complications.Id(Complications.COMPLICATION_TYPE_PULSE_OX)
     );
     if (compl != null) {
       if (compl.value != null) {
