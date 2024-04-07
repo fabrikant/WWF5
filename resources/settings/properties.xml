@@ -1,6 +1,6 @@
 <properties>
 
-<!--
+	<!--
 	<property id="keyOW" type="string"></property>
 !-->
 	<property id="color_pattern" type="number">0x555555</property>
@@ -10,12 +10,12 @@
 	<property id="color_font_empty_segments" type="number">0x550000</property>
 	<property id="wind_speed_unit" type="number">0</property>
 
-	
+
 	<property id="data_1" type="number">1</property>
 	<property id="data_2" type="number">2</property>
 	<property id="data_3" type="number">3</property>
-	<property id="data_scale" type="number">4</property>
-	<property id="data_small" type="number">8</property>
+	<property id="data_scale" type="number">6</property>
+	<property id="data_small" type="number">4</property>
 	<property id="show_connection" type="number">1</property>
 	<property id="show_DND" type="boolean">true</property>
 
