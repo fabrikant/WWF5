@@ -139,31 +139,31 @@ module Menu {
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font,
       :identifier => "color_font",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font_empty_segments,
       :identifier => "color_font_empty_segments",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_background,
       :identifier => "color_background",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_pattern,
       :identifier => "color_pattern",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_pattern_decorate,
       :identifier => "color_pattern_decorate",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
 
     var options = {
@@ -174,13 +174,13 @@ module Menu {
   }
 
   //Подменю непосредственного выбора цвета
-  function ColorSelectMenu(paren_item_week) {
+  function createColorSelectMenu(parent_item_week) {
     var items_props = [
       {
         :item_class => :ColorSelectItem,
         :identifier => Graphics.COLOR_TRANSPARENT.toString(),
         :color => Graphics.COLOR_TRANSPARENT,
-        :paren_item_week => paren_item_week,
+        :parent_item_week => parent_item_week,
       },
     ];
 
@@ -190,10 +190,9 @@ module Menu {
         for (var k = 0; k < values.size(); k++) {
           var color = (values[i] << 16) + (values[j] << 8) + values[k];
           items_props.add({
-            :item_class => :ColorSelectItem,
             :identifier => color.toString(),
             :color => color,
-            :paren_item_week => paren_item_week,
+            :parent_item_week => parent_item_week,
           });
         }
       }
@@ -202,8 +201,9 @@ module Menu {
     var options = {
       :title => Rez.Strings.SubmenuColors,
       :items => items_props,
+      :parent_item_week => parent_item_week,
     };
-    return new SubMenu(options);
+    return new ColorSelectMenu(options);
   }
 
   function getSublabel(method_symbol, value) {
@@ -228,8 +228,64 @@ class TogleItem extends WatchUi.ToggleMenuItem {
 }
 
 //*****************************************************************************
+//Пункт меню выбора конкретного значения
+//при нажатии значение возвращается в родительский пункт меню
+class SelectItem extends WatchUi.MenuItem {
+  var callbackWeak;
+
+  function initialize(identifier, resLabel, callbackWeak) {
+    self.callbackWeak = callbackWeak;
+    if (resLabel instanceof Lang.String) {
+      MenuItem.initialize(resLabel, null, identifier, {});
+    } else {
+      MenuItem.initialize(
+        Application.loadResource(resLabel),
+        null,
+        identifier,
+        {}
+      );
+    }
+  }
+
+  function onSelectItem() {
+    if (callbackWeak.stillAlive()) {
+      var obj = callbackWeak.get();
+      if (obj != null) {
+        obj.onSelectSubmenuItem(getId());
+      }
+    }
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+}
+
+//*****************************************************************************
+//Пункт меню выбора конкретного цвета
+//при нажатии значение возвращается в родительский пункт меню
+class ColorSelectItem extends ColorPropertyItem {
+  var parent_item_week;
+
+  function initialize(options) {
+    color = options[:color];
+    var label = colorToString(options[:color]);
+    var icon = new IconDrawable(color);
+    self.parent_item_week = options[:parent_item_week];
+    IconMenuItem.initialize(label, null, options[:identifier], icon, {});
+  }
+
+  function onSelectItem() {
+    if (parent_item_week.stillAlive()) {
+      var obj = parent_item_week.get();
+      if (obj != null) {
+        obj.onSelectSubmenuItem(getId().toNumber());
+      }
+    }
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+}
+
+//*****************************************************************************
 //Пункт меню (ассоциированный со свойством приложения)
-//при нажатии открывается подменю выбора конкретного значения из вручную заданного списка
+//при нажатии открывается подменю класса SelectMenu с элементами класса SelectItem
 class Item extends WatchUi.MenuItem {
   var method_symbol;
 
@@ -263,57 +319,65 @@ class Item extends WatchUi.MenuItem {
 }
 
 //*****************************************************************************
-//Подменю выбора конкретного значения
-class SelectMenu extends WatchUi.Menu2 {
+//Пункт меню (аналог класса Item). Но предназначен для указания цвета
+//ассоциирован со свойством приложения
+//при нажатии открыватеся подменю выбора цветов
+class ColorPropertyItem extends WatchUi.IconMenuItem {
+  var method_symbol, color;
+
   function initialize(options) {
-    Menu2.initialize({ :title => options[:title] });
-    var property_value = Application.Properties.getValue(options[:prop_name]);
-    var storage_value = Application.Storage.getValue(options[:prop_name]);
-    var pattern = (new Lang.Method(Menu, options[:method_symbol])).invoke();
-    var keys = pattern.keys();
-    for (var i = 0; i < keys.size(); i++) {
-      addItem(
-        new SelectItem(keys[i], pattern[keys[i]], options[:parent_item_week])
-      );
-      if (property_value == keys[i]) {
-        setFocus(i);
-      } else if (storage_value != null) {
-        if (storage_value.equals(keys[i])) {
-          setFocus(i);
-        }
-      }
-    }
+    self.method_symbol = options[:method];
+    var label = Application.loadResource(options[:rez_label]);
+    color = Application.Properties.getValue(options[:identifier]);
+    var icon = new IconDrawable(color);
+    IconMenuItem.initialize(
+      label,
+      colorToString(color),
+      options[:identifier],
+      icon,
+      {}
+    );
   }
-}
 
-//*****************************************************************************
-//Пункт меню с конкретным значением
-//при нажатии значение возвращается в родительский пункт меню
-class SelectItem extends WatchUi.MenuItem {
-  var callbackWeak;
-
-  function initialize(identifier, resLabel, callbackWeak) {
-    self.callbackWeak = callbackWeak;
-    if (resLabel instanceof Lang.String) {
-      MenuItem.initialize(resLabel, null, identifier, {});
+  function colorToString(color) {
+    var res;
+    if (color == Graphics.COLOR_TRANSPARENT) {
+      res = color.toString();
     } else {
-      MenuItem.initialize(
-        Application.loadResource(resLabel),
-        null,
-        identifier,
-        {}
-      );
+      res = "0x" + color.format("%06X");
     }
+    return res;
   }
 
   function onSelectItem() {
-    if (callbackWeak.stillAlive()) {
-      var obj = callbackWeak.get();
-      if (obj != null) {
-        obj.onSelectSubmenuItem(getId());
-      }
+    //Вариант выбора цвета через диалог с палитрой
+
+    // var picker = new ColorPicker(self.weak());
+    // WatchUi.pushView(
+    //   picker,
+    //   new ColorPickerDelegate(picker.weak()),
+    //   WatchUi.SLIDE_IMMEDIATE
+    // );
+
+    //Вариант выбора цвета через подменю с цветами
+    var method = new Lang.Method(Menu, method_symbol);
+    var submenu = method.invoke(self.weak());
+    WatchUi.pushView(
+      submenu,
+      new SimpleMenuDelegate(),
+      WatchUi.SLIDE_IMMEDIATE
+    );
+  }
+
+  function onSelectSubmenuItem(newValue) {
+    if (newValue instanceof Lang.Number) {
+      color = newValue;
+    } else {
+      color = newValue.toNumber();
     }
-    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+    Application.Properties.setValue(getId(), color);
+    setSubLabel(colorToString(color));
+    setIcon(new IconDrawable(color));
   }
 }
 
@@ -341,10 +405,73 @@ class SubMenuItem extends WatchUi.MenuItem {
 }
 
 //*****************************************************************************
-//Пункт меню (аналог класса Item). Но предназначен для указания цвета
-//ассоциирован со свойством приложения
-//при нажатии открыватеся подменю выбора цветов
+//Подменю общее. Может содержать пункты выбора значений/цветов, переключатели, а
+//также вложенные подменю этого же класса
+class SubMenu extends WatchUi.Menu2 {
+  function initialize(options) {
+    Menu2.initialize({ :title => Application.loadResource(options[:title]) });
 
+    for (var i = 0; i < options[:items].size(); i++) {
+      var item_prop = options[:items][i];
+      if (item_prop[:item_class] == :SubMenuItem) {
+        addItem(new SubMenuItem(item_prop));
+      } else if (item_prop[:item_class] == :ColorPropertyItem) {
+        addItem(new ColorPropertyItem(item_prop));
+      } else if (item_prop[:item_class] == :Item) {
+        addItem(new Item(item_prop));
+      } else if (item_prop[:item_class] == :TogleItem) {
+        addItem(new TogleItem(item_prop));
+      }
+    }
+  }
+}
+
+//*****************************************************************************
+//Подменю выбора конкретного значения
+class SelectMenu extends WatchUi.Menu2 {
+  function initialize(options) {
+    Menu2.initialize({ :title => options[:title] });
+    var property_value = Application.Properties.getValue(options[:prop_name]);
+    var storage_value = Application.Storage.getValue(options[:prop_name]);
+    var pattern = (new Lang.Method(Menu, options[:method_symbol])).invoke();
+    var keys = pattern.keys();
+    for (var i = 0; i < keys.size(); i++) {
+      addItem(
+        new SelectItem(keys[i], pattern[keys[i]], options[:parent_item_week])
+      );
+      if (property_value == keys[i]) {
+        setFocus(i);
+      } else if (storage_value != null) {
+        if (storage_value.equals(keys[i])) {
+          setFocus(i);
+        }
+      }
+    }
+  }
+}
+
+//*****************************************************************************
+//Подменю выбора конкретного цвета
+class ColorSelectMenu extends WatchUi.Menu2 {
+  function initialize(options) {
+    Menu2.initialize({ :title => Application.loadResource(options[:title]) });
+    var current_color = null;
+    if (options[:parent_item_week].stillAlive()) {
+      current_color = options[:parent_item_week].get().color;
+    }
+    for (var i = 0; i < options[:items].size(); i++) {
+      var item_prop = options[:items][i];
+      addItem(new ColorSelectItem(item_prop));
+      if (item_prop[:color] == current_color) {
+        setFocus(i);
+      }
+    }
+  }
+}
+
+//*****************************************************************************
+//Вспомогательный объект. Формирет Drawable с цветом для размещения цвета на
+//пункте меню
 class IconDrawable extends WatchUi.Drawable {
   var color;
 
@@ -380,114 +507,6 @@ class IconDrawable extends WatchUi.Drawable {
       dc.clear();
       dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
     }
-  }
-}
-
-class ColorPropertyItem extends WatchUi.IconMenuItem {
-  var method_symbol, color;
-
-  function initialize(options) {
-    self.method_symbol = options[:method];
-    var label = Application.loadResource(options[:rez_label]);
-    color = Application.Properties.getValue(options[:identifier]);
-    var icon = new IconDrawable(color);
-    IconMenuItem.initialize(
-      label,
-      colorToString(color),
-      options[:identifier],
-      icon,
-      {}
-    );
-  }
-
-  function colorToString(color) {
-    var res;
-    if (color == Graphics.COLOR_TRANSPARENT) {
-      res = color.toString();
-    } else {
-      res = "0x" + color.format("%06X");
-    }
-    return res;
-  }
-
-  function onSelectItem() {
-    // var picker = new ColorPicker(self.weak());
-    // WatchUi.pushView(
-    //   picker,
-    //   new ColorPickerDelegate(picker.weak()),
-    //   WatchUi.SLIDE_IMMEDIATE
-    // );
-
-    var method = new Lang.Method(Menu, method_symbol);
-    var submenu = method.invoke(self.weak());
-    WatchUi.pushView(
-      submenu,
-      new SimpleMenuDelegate(),
-      WatchUi.SLIDE_IMMEDIATE
-    );
-  }
-
-  function onSelectSubmenuItem(newValue) {
-    if (newValue instanceof Lang.Number) {
-      color = newValue;
-    } else {
-      color = newValue.toNumber();
-    }
-    Application.Properties.setValue(getId(), color);
-    setSubLabel(colorToString(color));
-    setIcon(new IconDrawable(color));
-  }
-}
-
-//*****************************************************************************
-//Пункт меню с конкретным цветом
-class ColorSelectItem extends ColorPropertyItem {
-  var paren_item_week;
-
-  function initialize(options) {
-    color = options[:color];
-    var label = colorToString(options[:color]);
-    var icon = new IconDrawable(color);
-    self.paren_item_week = options[:paren_item_week];
-    IconMenuItem.initialize(label, null, options[:identifier], icon, {});
-  }
-
-  function onSelectItem() {
-    if (paren_item_week.stillAlive()) {
-      var obj = paren_item_week.get();
-      if (obj != null) {
-        obj.onSelectSubmenuItem(getId().toNumber());
-      }
-    }
-    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-  }
-}
-
-//*****************************************************************************
-//Подменю общее. Может содержать пункты выбора конкретных значений и
-//пункты с подменю следющего уровня
-class SubMenu extends WatchUi.Menu2 {
-  function initialize(options) {
-    Menu2.initialize({ :title => Application.loadResource(options[:title]) });
-
-    for (var i = 0; i < options[:items].size(); i++) {
-      var item_prop = options[:items][i];
-      if (item_prop[:item_class] == :SubMenuItem) {
-        addItem(new SubMenuItem(item_prop));
-      } else if (item_prop[:item_class] == :ColorPropertyItem) {
-        addItem(new ColorPropertyItem(item_prop));
-      } else if (item_prop[:item_class] == :ColorSelectItem) {
-        addItem(new ColorSelectItem(item_prop));
-      } else if (item_prop[:item_class] == :Item) {
-        addItem(new Item(item_prop));
-      } else if (item_prop[:item_class] == :TogleItem) {
-        addItem(new TogleItem(item_prop));
-      }
-    }
-  }
-
-  function onHide() {
-    //getApp().onSettingsChanged();
   }
 }
 
