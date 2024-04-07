@@ -229,6 +229,9 @@ module DataWrapper {
     if (res == null) {
       res = getLasValueSensorHistory(:getBodyBatteryHistory);
     }
+    if (res instanceof Toybox.Float){
+      res = res.toNumber();
+    }
     return res;
   }
 

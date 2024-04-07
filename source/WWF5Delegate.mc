@@ -21,6 +21,7 @@ class WWF5Delegate extends WatchUi.WatchFaceDelegate {
             return false;
           }
         }
+        return false;
       }
     }
   }

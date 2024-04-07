@@ -15,6 +15,9 @@ class PatternField extends WatchUi.Layer {
     var dc = getDc();
     dc.drawBitmap(0, 0, pattern.background_image);
   }
+  function checkOnPress(clickEvent) {
+    return false;
+  }
 }
 
 class Pattern {
