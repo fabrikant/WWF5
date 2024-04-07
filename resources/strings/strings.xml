@@ -46,6 +46,7 @@
     <string id="FIELD_TYPE_O2" scope="foreground">O2 saturation</string>
     <string id="FIELD_TYPE_ELEVATION" scope="foreground">Elevation</string>
     <string id="FIELD_TYPE_STRESS" scope="foreground">Stress</string>
+    <string id="FIELD_TYPE_MOON" scope="foreground">Moon phase</string>
 
 
 </strings>

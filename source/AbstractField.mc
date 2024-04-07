@@ -85,6 +85,11 @@ class AbstractField extends WatchUi.Layer {
   }
 
   function createImage(resource, colors) {
+
+    if (resource instanceof Graphics.BufferedBitmapReference){
+      return resource;
+    }
+
     var _bitmap = Application.loadResource(resource);
     if (Graphics has :createBufferedBitmap) {
       var _bufferedBitmapRef = Graphics.createBufferedBitmap({

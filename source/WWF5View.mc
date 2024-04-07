@@ -9,6 +9,7 @@ import Toybox.Complications;
 class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
   var fontClock, fontSeconds, fontValues, fontTemp;
+  var moon_keeper;
 
   function initialize() {
     WatchFace.initialize();
@@ -214,6 +215,10 @@ class WWF5View extends WatchUi.WatchFace {
   function onShow() as Void {
     readSettings();
     self.pattern = new Pattern(colors);
+    moon_keeper = new MoonKeeper(
+      Lang.Time.now(),
+      System.getDeviceSettings().screenWidth * 0.1
+    );
     createLayers();
   }
 

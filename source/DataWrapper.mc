@@ -6,6 +6,7 @@ import Toybox.ActivityMonitor;
 import Toybox.Activity;
 import Toybox.Application;
 import Toybox.SensorHistory;
+import Toybox.Time;
 
 module DataWrapper {
   enum {
@@ -22,6 +23,7 @@ module DataWrapper {
     O2,
     ELEVATION,
     STRESS,
+    MOON,
   }
 
   function getData(type) {
@@ -107,6 +109,9 @@ module DataWrapper {
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_STRESS
       );
+    } else if (type == MOON) {
+      res = getApp().watch_view.moon_keeper.getActulalData(Time.now());
+      res[:label] = Rez.Strings.FIELD_TYPE_MOON;
     }
 
     return res;
@@ -114,7 +119,7 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
-  function getStress(){
+  function getStress() {
     var value = null;
     var compl = Complications.getComplication(
       new Complications.Id(Complications.COMPLICATION_TYPE_STRESS)
@@ -127,7 +132,7 @@ module DataWrapper {
     if (value == null) {
       value = getLasValueSensorHistory(:getStressHistory);
     }
-    if (value != null){
+    if (value != null) {
       value = reduceLongValue(value);
     }
     return value;
@@ -153,7 +158,7 @@ module DataWrapper {
         }
       }
     }
-    if (value != null){
+    if (value != null) {
       value = elevationToString(value);
     }
     return value;
@@ -229,7 +234,7 @@ module DataWrapper {
     if (res == null) {
       res = getLasValueSensorHistory(:getBodyBatteryHistory);
     }
-    if (res instanceof Lang.Float){
+    if (res instanceof Lang.Float) {
       res = res.toNumber();
     }
     return res;
