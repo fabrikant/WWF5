@@ -73,4 +73,10 @@
 		</palette>
 	</bitmap>
 
+	<bitmap id="O2" filename="./svg-resources/o2.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
 </drawables>

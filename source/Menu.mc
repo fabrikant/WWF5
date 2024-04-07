@@ -103,6 +103,7 @@ module Menu {
       DataWrapper.BODY_BATTERY => Rez.Strings.FIELD_TYPE_BODY_BATTERY,
       DataWrapper.RECOVERY_TIME => Rez.Strings.FIELD_TYPE_RECOVERY_TIME,
       DataWrapper.FLOOR => Rez.Strings.FIELD_TYPE_FLOOR,
+      DataWrapper.O2 => Rez.Strings.FIELD_TYPE_O2,
     };
     return pattern;
   }

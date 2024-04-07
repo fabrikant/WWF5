@@ -19,6 +19,7 @@ module DataWrapper {
     RECOVERY_TIME,
     SECONDS,
     FLOOR,
+    O2,
   }
 
   function getData(type) {
@@ -28,44 +29,68 @@ module DataWrapper {
       res[:value] = getCalories();
       res[:image] = Rez.Drawables.Callory;
       res[:label] = Rez.Strings.FIELD_TYPE_CALORIES;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_CALORIES);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_CALORIES
+      );
     } else if (type == DISTANCE) {
       res[:value] = getDistance();
       res[:image] = Rez.Drawables.Distance;
       res[:label] = Rez.Strings.FIELD_TYPE_DISTANCE;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
+      );
     } else if (type == STEPS) {
       res[:value] = getSteps();
       res[:image] = Rez.Drawables.Steps;
       res[:label] = Rez.Strings.FIELD_TYPE_STEPS;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_STEPS);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_STEPS
+      );
     } else if (type == BATTERY) {
       res[:scale_value] = getBattery();
-      res[:value] = res[:scale_value].toString() + "%";
+      res[:value] = getScaleValueCaption(res[:scale_value]);
       res[:image] = Rez.Drawables.Battery;
       res[:label] = Rez.Strings.FIELD_TYPE_BATTERY;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_BATTERY);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_BATTERY
+      );
     } else if (type == HR) {
       res[:value] = getHR();
       res[:image] = Rez.Drawables.HR;
       res[:label] = Rez.Strings.FIELD_TYPE_HR;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_HEART_RATE
+      );
     } else if (type == BODY_BATTERY) {
       res[:scale_value] = getBodyBattery();
-      res[:value] = res[:scale_value].toString() + "%";
+      res[:value] = getScaleValueCaption(res[:scale_value]);
       res[:image] = Rez.Drawables.BodyBattery;
       res[:label] = Rez.Strings.FIELD_TYPE_BODY_BATTERY;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_BODY_BATTERY
+      );
     } else if (type == RECOVERY_TIME) {
       res[:value] = getRecoveryTime();
       res[:image] = Rez.Drawables.RecoveryTime;
       res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_RECOVERY_TIME
+      );
     } else if (type == FLOOR) {
       res[:value] = getFloor();
       res[:image] = Rez.Drawables.Floor;
       res[:label] = Rez.Strings.FIELD_TYPE_FLOOR;
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_FLOORS_CLIMBED);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_FLOORS_CLIMBED
+      );
+    } else if (type == O2) {
+      res[:scale_value] = getOxygenSaturation();
+      res[:value] = getScaleValueCaption(res[:scale_value]);
+      res[:image] = Rez.Drawables.O2;
+      res[:label] = Rez.Strings.FIELD_TYPE_O2;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_PULSE_OX
+      );
     }
 
     return res;
@@ -73,16 +98,42 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
-	
-  function getFloor(){
-		var value = null;
-		var info = ActivityMonitor.getInfo();
-		if (info has :floorsClimbed){
-			value = info.floorsClimbed.toString()
-				+"|"+info.floorsDescended.toString();
-		}
-		return value;
-	}
+
+  function getOxygenSaturation() {
+    var value = null;
+    var compl = Complications.getComplication(
+      new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY)
+    );
+    if (compl != null) {
+      if (compl.value != null) {
+        value = compl.value;
+      }
+    }
+    if (value == null) {
+      var info = Activity.getActivityInfo();
+      if (info != null) {
+        if (info has :currentOxygenSaturation) {
+          if (info.currentOxygenSaturation != null) {
+            value = info.currentOxygenSaturation;
+          }
+        }
+      }
+    }
+    if (value == null) {
+      value = getLasValueSensorHistory(:getOxygenSaturationHistory);
+    }
+    return value;
+  }
+
+  function getFloor() {
+    var value = null;
+    var info = ActivityMonitor.getInfo();
+    if (info has :floorsClimbed) {
+      value =
+        info.floorsClimbed.toString() + "|" + info.floorsDescended.toString();
+    }
+    return value;
+  }
 
   function getRecoveryTime() {
     var res = 0;
@@ -106,7 +157,7 @@ module DataWrapper {
   }
 
   function getBodyBattery() {
-    var res = 0;
+    var res = null;
     var compl = Complications.getComplication(
       new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY)
     );
@@ -191,6 +242,14 @@ module DataWrapper {
       }
     }
     return value;
+  }
+
+  function getScaleValueCaption(value) {
+    var res = null;
+    if (value != null) {
+      res = value.toString() + "%";
+    }
+    return res;
   }
   //******************************************************
   //convertation values

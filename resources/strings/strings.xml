@@ -43,6 +43,7 @@
     <string id="FIELD_TYPE_RECOVERY_TIME" scope="foreground">Recovery time</string>
     <string id="FIELD_TYPE_SECONDS" scope="foreground">Seconds</string>
     <string id="FIELD_TYPE_FLOOR" scope="foreground">Floor</string>
+    <string id="FIELD_TYPE_O2" scope="foreground">O2 saturation</string>
 
 
 </strings>
