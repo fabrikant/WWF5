@@ -26,32 +26,39 @@ module DataWrapper {
       res[:value] = getCalories();
       res[:image] = Rez.Drawables.Callory;
       res[:label] = Rez.Strings.FIELD_TYPE_CALORIES;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_CALORIES);
     } else if (type == DISTANCE) {
       res[:value] = getDistance();
       res[:image] = Rez.Drawables.Distance;
       res[:label] = Rez.Strings.FIELD_TYPE_DISTANCE;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE);
     } else if (type == STEPS) {
       res[:value] = getSteps();
       res[:image] = Rez.Drawables.Steps;
       res[:label] = Rez.Strings.FIELD_TYPE_STEPS;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_STEPS);
     } else if (type == BATTERY) {
       res[:scale_value] = getBattery();
       res[:value] = res[:scale_value].toString() + "%";
       res[:image] = Rez.Drawables.Battery;
       res[:label] = Rez.Strings.FIELD_TYPE_BATTERY;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_BATTERY);
     } else if (type == HR) {
       res[:value] = getHR();
       res[:image] = Rez.Drawables.HR;
       res[:label] = Rez.Strings.FIELD_TYPE_HR;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE);
     } else if (type == BODY_BATTERY) {
       res[:scale_value] = getBodyBattery();
       res[:value] = res[:scale_value].toString() + "%";
       res[:image] = Rez.Drawables.BodyBattery;
       res[:label] = Rez.Strings.FIELD_TYPE_BODY_BATTERY;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY);
     } else if (type == RECOVERY_TIME) {
       res[:value] = getRecoveryTime();
       res[:image] = Rez.Drawables.RecoveryTime;
       res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME);
     }
 
     return res;

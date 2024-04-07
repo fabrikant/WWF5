@@ -8,6 +8,7 @@ import Toybox.Math;
 class SunEventsField extends AbstractField {
   function initialize(options) {
     AbstractField.initialize(options);
+    compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_SUNRISE);
   }
 
   function draw(colors) {

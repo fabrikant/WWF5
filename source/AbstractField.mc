@@ -6,6 +6,8 @@ import Toybox.Math;
 import Toybox.Time;
 
 class AbstractField extends WatchUi.Layer {
+  var compl_id;
+
   function initialize(options) {
     Layer.initialize(options);
   }
@@ -101,6 +103,20 @@ class AbstractField extends WatchUi.Layer {
       });
       _bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
       return _bufferedBitmap;
+    }
+  }
+
+  function checkOnPress(clickEvent) {
+    var coords = clickEvent.getCoordinates();
+    if (
+      coords[0] >= getX() &&
+      coords[0] < getX() + getDc().getWidth() &&
+      coords[1] >= getY() &&
+      coords[1] < getY() + getDc().getHeight()
+    ) {
+      return true;
+    } else {
+      return false;
     }
   }
 

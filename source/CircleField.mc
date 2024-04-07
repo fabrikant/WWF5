@@ -17,8 +17,10 @@ class CircleField extends AbstractField {
     var data_type = Application.Properties.getValue(getId());
     if (data_type == DataWrapper.SECONDS) {
       data = seconds();
+      compl_id = null;
     } else {
       data = DataWrapper.getData(data_type);
+      compl_id = data[:compl_id];
     }
 
     //Вывод значения

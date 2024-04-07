@@ -33,6 +33,7 @@ class ScaleWidget extends AbstractField {
     var dc = getDc();
 
     var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    compl_id = data[:compl_id];
 
     if (data[:scale_value] != null) {
       drawScale(dc, colors, data, scaleWidth());

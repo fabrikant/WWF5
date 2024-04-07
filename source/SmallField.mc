@@ -17,6 +17,7 @@ class SmallField extends AbstractField {
     AbstractField.draw(colors);
 
     var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    compl_id = data[:compl_id];
 
     var temp_x = 0;
     var bitmap_h = null;

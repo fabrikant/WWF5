@@ -4,6 +4,7 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Math;
+import Toybox.Complications;
 
 class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
@@ -77,7 +78,11 @@ class WWF5View extends WatchUi.WatchFace {
       ]
     );
     options[:identifier] = :date;
-    self.addLayer(new BottomField(options));
+    var date_field = new BottomField(options);
+    date_field.compl_id = new Complications.Id(
+      Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
+    );
+    self.addLayer(date_field);
 
     //Рассвет-Закат
     var temp_y =
@@ -169,7 +174,7 @@ class WWF5View extends WatchUi.WatchFace {
       ],
       [pattern.reference_points[:x][6], pattern.reference_points[:y][4]]
     );
-    options[:height] =  small_field.getY() - options[:locY];
+    options[:height] = small_field.getY() - options[:locY];
     options[:identifier] = :status;
     var status_layer = new StatusField(options);
     self.addLayer(status_layer);

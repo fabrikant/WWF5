@@ -10,13 +10,18 @@ class WWF5Delegate extends WatchUi.WatchFaceDelegate {
   }
 
   function onPress(clickEvent) {
-    try {
-      Complications.exitTo(
-        new Complications.Id(Complications.COMPLICATION_TYPE_CURRENT_WEATHER)
-      );
-      return true;
-    } catch (ex) {
-      return false;
+    var layers = getApp().watch_view.getLayers();
+    for (var i = 0; i < layers.size(); i++) {
+      if (layers[i].checkOnPress(clickEvent)) {
+        if (layers[i].compl_id instanceof Complications.Id) {
+          try {
+            Complications.exitTo(layers[i].compl_id);
+            return true;
+          } catch (ex) {
+            return false;
+          }
+        }
+      }
     }
   }
 }

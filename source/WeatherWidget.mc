@@ -4,6 +4,7 @@ import Toybox.Weather;
 import Toybox.Application;
 import Toybox.Math;
 import Toybox.Time;
+import Toybox.Complications;
 
 class WeatherWidget extends AbstractField {
   var arrow_bitmap;
@@ -11,6 +12,7 @@ class WeatherWidget extends AbstractField {
   function initialize(options) {
     AbstractField.initialize(options);
     arrow_bitmap = null;
+    compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
   }
 
   function draw(colors) {
