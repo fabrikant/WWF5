@@ -482,7 +482,7 @@ class IconDrawable extends WatchUi.Drawable {
       :locX => 0,
       :locY => 0,
       :width => 20,
-      :height => 40,
+      :height => 20,
       :visible => true,
     };
     Drawable.initialize(options);

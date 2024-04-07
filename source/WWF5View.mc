@@ -63,10 +63,10 @@ class WWF5View extends WatchUi.WatchFace {
       :width => temp_w,
       :height => temp_h,
       :identifier => :seconds,
-
       :font => fontSeconds,
     };
     var seconds_layer = new SimpleField(options);
+    seconds_layer.compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE);
     self.addLayer(seconds_layer);
     every_second_layers.add(seconds_layer);
 
