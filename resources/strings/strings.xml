@@ -18,13 +18,13 @@
     <string id="SpeedUnitBeauf" scope="foreground">beaufort</string>
     <string id="SpeedUnitKnots" scope="foreground">knots</string>
 
-	<!--PRESSURE UNITS -->
-	<string id="PressUnit" scope="foreground">Pressure Unit</string>
-	<string id="PressUnitMmHg" scope="foreground">mmHg</string>
-	<string id="PressUnitPsi" scope="foreground">Psi</string>
-	<string id="PressUnitInchHg" scope="foreground">inchHg</string>
-	<string id="PressUnitBar" scope="foreground">milibar</string>
-	<string id="PressUnitKPa" scope="foreground">kPa</string>
+    <!--PRESSURE UNITS -->
+    <string id="PressUnit" scope="foreground">Pressure Unit</string>
+    <string id="PressUnitMmHg" scope="foreground">mmHg</string>
+    <string id="PressUnitPsi" scope="foreground">Psi</string>
+    <string id="PressUnitInchHg" scope="foreground">inchHg</string>
+    <string id="PressUnitBar" scope="foreground">milibar</string>
+    <string id="PressUnitKPa" scope="foreground">kPa</string>
 
     <string id="DataScale" scope="foreground">Scale field</string>
     <string id="SmallField" scope="foreground">Small field</string>
@@ -39,7 +39,9 @@
 
     <string id="show_DND">Show DND</string>
 
-
+    <!--SECOND TIME -->
+    <string id="T1TZ" scope="foreground">Time zone ±UTC (minutes)</string>
+    
     <!--FIELD TYPES -->
     <string id="FIELD_TYPE_EMPTY" scope="foreground">Empty</string>
     <string id="FIELD_TYPE_CALORIES" scope="foreground">Calories</string>
@@ -55,8 +57,9 @@
     <string id="FIELD_TYPE_ELEVATION" scope="foreground">Elevation</string>
     <string id="FIELD_TYPE_STRESS" scope="foreground">Stress</string>
     <string id="FIELD_TYPE_MOON" scope="foreground">Moon phase</string>
-    <string id="FIELD_TYPE_PRESSURE" scope="foreground">Air pressure</string>
-    <string id="FIELD_TYPE_TEMPERATURE" scope="foreground">Temperature</string>
+    <string id="FIELD_TYPE_PRESSURE" scope="foreground">Air pressure (sensor)</string>
+    <string id="FIELD_TYPE_TEMPERATURE" scope="foreground">Temperature (sensor)</string>
+    <string id="FIELD_TYPE_TIME1" scope="foreground">Second time</string>
 
 
 </strings>

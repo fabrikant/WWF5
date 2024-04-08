@@ -21,6 +21,7 @@ using Toybox.Lang;
 //  show_DND
 //  Wind speed unit
 //  Pressure unit
+//  TimeZoneOffset
 
 module Menu {
   //Корневое меню
@@ -97,6 +98,13 @@ module Menu {
       :method => :pressureUnitsSubmenu,
     });
 
+    //Сдвиг времени для другого часового пояса
+    items_props.add({
+      :item_class => :PickerItem,
+      :rez_label => Rez.Strings.T1TZ,
+      :identifier => "T1TZ",
+    });
+
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
     return new SubMenu(options);
   }
@@ -118,6 +126,7 @@ module Menu {
       DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
       DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
+      DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
     };
     return pattern;
   }
@@ -246,6 +255,38 @@ class TogleItem extends WatchUi.ToggleMenuItem {
 
   function onSelectItem() {
     Application.Properties.setValue(getId(), isEnabled());
+  }
+}
+
+//*****************************************************************************
+//Пункт меню ввода текста
+class PickerItem extends WatchUi.MenuItem {
+  function initialize(options) {
+    var label = Application.loadResource(options[:rez_label]);
+    var sublabel = Application.Properties.getValue(options[:identifier]);
+    MenuItem.initialize(label, sublabel.toString(), options[:identifier], {});
+  }
+
+  function onSelectItem() {
+    var charSet = "0123456789-";
+    if (getId().equals("keyOW")) {
+      charSet = "0123456789abcdef";
+    }
+    var picker = new StringPicker(self.weak(), charSet);
+    WatchUi.pushView(
+      picker,
+      new StringPickerDelegate(picker),
+      WatchUi.SLIDE_IMMEDIATE
+    );
+  }
+
+  function onSetText(value) {
+    setSubLabel(value);
+    if (getId().equals("keyOW")) {
+      Application.Properties.setValue(getId(), value);
+    } else {
+      Application.Properties.setValue(getId(), value.toNumber());
+    }
   }
 }
 
@@ -443,6 +484,8 @@ class SubMenu extends WatchUi.Menu2 {
         addItem(new Item(item_prop));
       } else if (item_prop[:item_class] == :TogleItem) {
         addItem(new TogleItem(item_prop));
+      } else if (item_prop[:item_class] == :PickerItem) {
+        addItem(new PickerItem(item_prop));
       }
     }
   }

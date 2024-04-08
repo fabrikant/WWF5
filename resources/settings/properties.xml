@@ -20,5 +20,6 @@
 
 	<property id="show_connection" type="number">1</property>
 	<property id="show_DND" type="boolean">true</property>
+	<property id="T1TZ" type="number">180</property>
 
 </properties>

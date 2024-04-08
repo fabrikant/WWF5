@@ -26,6 +26,7 @@ module DataWrapper {
     MOON,
     PRESSURE,
     TEMPERATURE,
+    TIME_ZONE,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -124,16 +125,14 @@ module DataWrapper {
       res[:value] = getPressure();
       res[:image] = Rez.Drawables.Pressure;
       res[:label] = Rez.Strings.FIELD_TYPE_PRESSURE;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE
-      );
     } else if (type == TEMPERATURE) {
       res[:value] = getTemperature();
       res[:image] = Rez.Drawables.Temperature;
       res[:label] = Rez.Strings.FIELD_TYPE_TEMPERATURE;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_CURRENT_TEMPERATURE
-      );
+    } else if (type == TIME_ZONE) {
+      res[:value] = getSecondTime();
+      res[:image] = Rez.Drawables.TimeZone;
+      res[:label] = Rez.Strings.FIELD_TYPE_TIME1;
     }
 
     return res;
@@ -141,19 +140,16 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+
+  function getSecondTime() {
+    var offset =
+      Application.Properties.getValue("T1TZ") * 60 -
+      System.getClockTime().timeZoneOffset;
+    return momentToString(Time.now().add(new Time.Duration(offset)));
+  }
+
   function getTemperature() {
-    var value = null;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_CURRENT_TEMPERATURE)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        value = compl.value;
-      }
-    }
-    if (value == null) {
-      value = getLasValueSensorHistory(:getTemperatureHistory);
-    }
+    var value = getLasValueSensorHistory(:getTemperatureHistory);
     if (value != null) {
       value = convertTemperature(value);
     }
@@ -161,18 +157,7 @@ module DataWrapper {
   }
 
   function getPressure() {
-    var value = null;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        value = compl.value;
-      }
-    }
-    if (value == null) {
-      value = getLasValueSensorHistory(:getPressureHistory);
-    }
+    var value = getLasValueSensorHistory(:getPressureHistory);
     if (value != null) {
       value = convertPressure(value);
     }
@@ -381,6 +366,21 @@ module DataWrapper {
   }
   //******************************************************
   //convertation values
+  function momentToString(moment) {
+    var greg = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
+    var hours = greg.hour;
+    var hourFormat = "%02d";
+    if (!System.getDeviceSettings().is24Hour) {
+      hourFormat = "%d";
+      if (hours > 12) {
+        hours = hours - 12;
+      }
+    }
+    return Lang.format("$1$:$2$", [
+      hours.format(hourFormat),
+      greg.min.format("%02d"),
+    ]);
+  }
 
   function weightToString(value) {
     if (System.getDeviceSettings().weightUnits == System.UNIT_STATUTE) {
