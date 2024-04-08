@@ -7,6 +7,7 @@ import Toybox.Lang;
 
 class ScaleWidget extends AbstractField {
   var angle_min, angle_max, center_x, center_y;
+  var clear_poligon;
 
   function initialize(options) {
     AbstractField.initialize(options);
@@ -26,11 +27,22 @@ class ScaleWidget extends AbstractField {
       dc.getWidth() + Global.mod(getX() + dc.getWidth() - system_radius);
     center_y =
       dc.getHeight() + Global.mod(getY() + dc.getHeight() - system_radius);
+
+    var ref_points = getApp().watch_view.pattern.reference_points;
+    clear_poligon = [
+      [0, 0],
+      [0, dc.getHeight()],
+      [dc.getWidth(), dc.getHeight()],
+      [dc.getWidth() - Global.mod(ref_points[:x][2] - ref_points[:x][1]), 0],
+    ];
   }
 
   function draw(colors) {
-    AbstractField.draw(colors);
+    //AbstractField.draw(colors);
     var dc = getDc();
+    dc.setColor(colors[:background], colors[:background]);
+    dc.fillPolygon(clear_poligon);
+    dc.setAntiAlias(true);
 
     var data = DataWrapper.getData(Application.Properties.getValue(getId()));
     compl_id = data[:compl_id];
@@ -124,7 +136,7 @@ class ScaleWidget extends AbstractField {
     if (angle_min - angle_value < 1) {
       angle_value -= 1;
     }
-    
+
     dc.setColor(scale_color, scale_color);
     dc.drawArc(
       center_x,
