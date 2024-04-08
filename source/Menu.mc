@@ -127,6 +127,7 @@ module Menu {
       DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
       DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
+      DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
     };
     return pattern;
   }

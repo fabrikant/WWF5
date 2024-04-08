@@ -41,7 +41,7 @@
 
     <!--SECOND TIME -->
     <string id="T1TZ" scope="foreground">Time zone ±UTC (minutes)</string>
-    
+
     <!--FIELD TYPES -->
     <string id="FIELD_TYPE_EMPTY" scope="foreground">Empty</string>
     <string id="FIELD_TYPE_CALORIES" scope="foreground">Calories</string>
@@ -60,6 +60,6 @@
     <string id="FIELD_TYPE_PRESSURE" scope="foreground">Air pressure (sensor)</string>
     <string id="FIELD_TYPE_TEMPERATURE" scope="foreground">Temperature (sensor)</string>
     <string id="FIELD_TYPE_TIME1" scope="foreground">Second time</string>
-
+    <string id="FIELD_TYPE_WEIGHT" scope="foreground">Weight</string>
 
 </strings>

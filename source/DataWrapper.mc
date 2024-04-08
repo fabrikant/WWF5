@@ -7,6 +7,7 @@ import Toybox.Activity;
 import Toybox.Application;
 import Toybox.SensorHistory;
 import Toybox.Time;
+import Toybox.UserProfile;
 
 module DataWrapper {
   enum {
@@ -27,6 +28,7 @@ module DataWrapper {
     PRESSURE,
     TEMPERATURE,
     TIME_ZONE,
+    WEIGHT,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -133,6 +135,10 @@ module DataWrapper {
       res[:value] = getSecondTime();
       res[:image] = Rez.Drawables.TimeZone;
       res[:label] = Rez.Strings.FIELD_TYPE_TIME1;
+    } else if (type == WEIGHT) {
+      res[:value] = getWeight();
+      res[:image] = Rez.Drawables.Weight;
+      res[:label] = Rez.Strings.FIELD_TYPE_WEIGHT;
     }
 
     return res;
@@ -141,6 +147,14 @@ module DataWrapper {
   ////////////////////////////////////////////////////////
   //DATA VALUES
 
+  function getWeight() {
+    var value = UserProfile.getProfile().weight;
+    if (value != null) {
+      value = weightToString(value.toFloat());
+    }
+    return value;
+  }
+  
   function getSecondTime() {
     var offset =
       Application.Properties.getValue("T1TZ") * 60 -
@@ -384,7 +398,6 @@ module DataWrapper {
 
   function weightToString(value) {
     if (System.getDeviceSettings().weightUnits == System.UNIT_STATUTE) {
-      /*foot*/
       value *= 0.00220462;
     } else {
       value /= 1000;
