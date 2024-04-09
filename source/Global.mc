@@ -8,6 +8,11 @@ module Global {
     UNIT_SPEED_FTS,
     UNIT_SPEED_BEAUF,
     UNIT_SPEED_KNOTS,
+
+	BLUETOOTH_SHOW_IF_CONNECT = 0,
+	BLUETOOTH_SHOW_IF_DISCONNECT,
+	BLUETOOTH_HIDE,
+
   }
 
   function min(a, b) {

@@ -7,6 +7,7 @@ import Toybox.Lang;
 
 class ScaleWidget extends AbstractField {
   var angle_min, angle_max, center_x, center_y;
+  var clear_poligon;
 
   function initialize(options) {
     AbstractField.initialize(options);
@@ -26,13 +27,25 @@ class ScaleWidget extends AbstractField {
       dc.getWidth() + Global.mod(getX() + dc.getWidth() - system_radius);
     center_y =
       dc.getHeight() + Global.mod(getY() + dc.getHeight() - system_radius);
+
+    var ref_points = getApp().watch_view.pattern.reference_points;
+    clear_poligon = [
+      [0, 0],
+      [0, dc.getHeight()],
+      [dc.getWidth(), dc.getHeight()],
+      [dc.getWidth() - Global.mod(ref_points[:x][2] - ref_points[:x][1]), 0],
+    ];
   }
 
   function draw(colors) {
-    AbstractField.draw(colors);
+    //AbstractField.draw(colors);
     var dc = getDc();
+    dc.setColor(colors[:background], colors[:background]);
+    dc.fillPolygon(clear_poligon);
+    dc.setAntiAlias(true);
 
     var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    compl_id = data[:compl_id];
 
     if (data[:scale_value] != null) {
       drawScale(dc, colors, data, scaleWidth());
@@ -44,14 +57,16 @@ class ScaleWidget extends AbstractField {
 
   //Рисуем поле с данными
   function drawData(dc, colors, data) {
-    var font_value = getApp().watch_view.fonts[:sun_events];
-    var temp_y = dc.getHeight() - font_value.getHeight();
+    var font_value = getApp().watch_view.fontValues;
+    var temp_y = dc.getHeight() - Graphics.getFontHeight(font_value);
     //Значение
     if (data[:value] != null) {
-      font_value.writeString(
+      drawText(
         dc,
+        colors,
         dc.getWidth() / 2,
         temp_y,
+        font_value,
         data[:value],
         Graphics.TEXT_JUSTIFY_CENTER
       );
@@ -85,7 +100,6 @@ class ScaleWidget extends AbstractField {
   function drawScale(dc, colors, data, scale_width) {
     var system_radius = System.getDeviceSettings().screenHeight / 2;
     var scale_radius = system_radius - scale_width / 2;
-    
 
     dc.setPenWidth(scale_width);
     dc.setColor(colors[:font], colors[:font]);
@@ -110,13 +124,17 @@ class ScaleWidget extends AbstractField {
       angle_max + 1
     );
 
+    var data_scale = Global.min(data[:scale_value], 100);
     var angle_value =
-      angle_min -
-      (data[:scale_value] * Global.mod(angle_min - angle_max)) / 100;
+      angle_min - (data_scale * Global.mod(angle_min - angle_max)) / 100;
 
     var scale_color = Graphics.COLOR_GREEN;
-    if (data[:scale_value] <= 20) {
+    if (data_scale <= 20) {
       scale_color = Graphics.COLOR_RED;
+    }
+
+    if (angle_min - angle_value < 1) {
+      angle_value -= 1;
     }
 
     dc.setColor(scale_color, scale_color);
@@ -130,24 +148,26 @@ class ScaleWidget extends AbstractField {
     );
 
     //Подпись
-    dc.setColor(colors[:font], colors[:background]);
-    var font_height = vectorFontHeight();
-    var font = Graphics.getVectorFont({
-      :face => vectorFontName(),
-      :size => font_height,
-    });
+    if (data[:value] != null) {
+      dc.setColor(colors[:font], colors[:background]);
+      var font_height = vectorFontHeight();
+      var font = Graphics.getVectorFont({
+        :face => vectorFontName(),
+        :size => font_height,
+      });
 
-    var str_angle = angle_min - Global.mod(angle_min - angle_max) / 2;
-    dc.drawRadialText(
-      center_x,
-      center_y,
-      font,
-      data[:value],
-      Graphics.TEXT_JUSTIFY_CENTER,
-      str_angle,
-      system_radius - scale_width - font_height,
-      Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE
-    );
+      var str_angle = angle_min - Global.mod(angle_min - angle_max) / 2;
+      dc.drawRadialText(
+        center_x,
+        center_y,
+        font,
+        data[:value],
+        Graphics.TEXT_JUSTIFY_CENTER,
+        str_angle,
+        system_radius - scale_width - font_height,
+        Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE
+      );
+    }
   }
 
   function vectorFontHeight() {

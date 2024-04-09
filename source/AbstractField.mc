@@ -6,13 +6,15 @@ import Toybox.Math;
 import Toybox.Time;
 
 class AbstractField extends WatchUi.Layer {
+  var compl_id;
+
   function initialize(options) {
     Layer.initialize(options);
   }
 
   function draw(colors) {
     var dc = getDc();
-    dc.setColor(colors[:background], colors[:background]);
+    dc.setColor(colors[:font], colors[:background]);
     dc.clear();
     dc.setAntiAlias(true);
   }
@@ -74,15 +76,20 @@ class AbstractField extends WatchUi.Layer {
     return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
   }
 
-  function labelCastToString(label){
-    if (label instanceof Lang.String){
+  function labelCastToString(label) {
+    if (label instanceof Lang.String) {
       return label;
-    }else if (label != null){
+    } else if (label != null) {
       return Application.loadResource(label);
     }
   }
 
   function createImage(resource, colors) {
+
+    if (resource instanceof Graphics.BufferedBitmapReference){
+      return resource;
+    }
+
     var _bitmap = Application.loadResource(resource);
     if (Graphics has :createBufferedBitmap) {
       var _bufferedBitmapRef = Graphics.createBufferedBitmap({
@@ -104,4 +111,52 @@ class AbstractField extends WatchUi.Layer {
     }
   }
 
+  function checkOnPress(clickEvent) {
+    var coords = clickEvent.getCoordinates();
+    if (
+      coords[0] >= getX() &&
+      coords[0] < getX() + getDc().getWidth() &&
+      coords[1] >= getY() &&
+      coords[1] < getY() + getDc().getHeight()
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function drawText(dc, colors, x, y, font, text, justification) {
+    var color = colors[:font];
+
+    var color_empty = colors[:font_empty_segments];
+    if (
+      color_empty != color &&
+      color_empty != Graphics.COLOR_TRANSPARENT &&
+      color_empty != colors[:background]
+    ) {
+      var chars = text.toCharArray();
+      var epty_text = "";
+      for (var i = 0; i < chars.size(); i++) {
+        if (
+          chars[i] == '0' ||
+          chars[i] == '1' ||
+          chars[i] == '2' ||
+          chars[i] == '3' ||
+          chars[i] == '4' ||
+          chars[i] == '5' ||
+          chars[i] == '6' ||
+          chars[i] == '7' ||
+          chars[i] == '9'
+        ) {
+          epty_text += "8";
+        } else {
+          epty_text += text.substring(i, i + 1);
+        }
+      }
+      dc.setColor(color_empty, colors[:background]);
+      dc.drawText(x, y, font, epty_text, justification);
+    }
+    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(x, y, font, text, justification);
+  }
 }

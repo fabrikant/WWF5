@@ -13,16 +13,22 @@ using Toybox.Complications;
 //		color_background
 //		color_pattern
 //		color_pattern_decorate
+//  data_scale
+//  data_small
 //	Data1
 //	Data2
 // 	Data3
+//  show_connection
+//  show_DND
 //  Wind speed unit
-//
+//  Pressure unit
+//  TimeZoneOffset
 
 module Menu {
   //Корневое меню
   function GeneralMenu() {
     var items_props = [];
+    //Подменю выбора цветов
     items_props.add({
       :item_class => :SubMenuItem,
       :rez_label => Rez.Strings.SubmenuColors,
@@ -30,6 +36,7 @@ module Menu {
       :method => :colorsSubMenu,
     });
 
+    //Выбор показа типов данных по полям
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.DataScale,
@@ -61,12 +68,44 @@ module Menu {
       :method => :dataSubMenu,
     });
 
+    //Показ статуса подключения
+    items_props.add({
+      :item_class => :Item,
+      :rez_label => Rez.Strings.show_connection,
+      :identifier => "show_connection",
+      :method => :connectionSubMenu,
+    });
+
+    //Показ статуса DND
+    items_props.add({
+      :item_class => :TogleItem,
+      :rez_label => Rez.Strings.show_DND,
+      :identifier => "show_DND",
+    });
+
+    //Единицы измерения ветра
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.WindSpeedUnit,
       :identifier => "wind_speed_unit",
       :method => :windSpeedUnitsSubmenu,
     });
+
+    //Единицы измерения давления
+    items_props.add({
+      :item_class => :Item,
+      :rez_label => Rez.Strings.PressUnit,
+      :identifier => "pressure_unit",
+      :method => :pressureUnitsSubmenu,
+    });
+
+    //Сдвиг времени для другого часового пояса
+    items_props.add({
+      :item_class => :PickerItem,
+      :rez_label => Rez.Strings.T1TZ,
+      :identifier => "T1TZ",
+    });
+
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
     return new SubMenu(options);
   }
@@ -79,6 +118,38 @@ module Menu {
       DataWrapper.DISTANCE => Rez.Strings.FIELD_TYPE_DISTANCE,
       DataWrapper.STEPS => Rez.Strings.FIELD_TYPE_STEPS,
       DataWrapper.BATTERY => Rez.Strings.FIELD_TYPE_BATTERY,
+      DataWrapper.BODY_BATTERY => Rez.Strings.FIELD_TYPE_BODY_BATTERY,
+      DataWrapper.RECOVERY_TIME => Rez.Strings.FIELD_TYPE_RECOVERY_TIME,
+      DataWrapper.FLOOR => Rez.Strings.FIELD_TYPE_FLOOR,
+      DataWrapper.O2 => Rez.Strings.FIELD_TYPE_O2,
+      DataWrapper.ELEVATION => Rez.Strings.FIELD_TYPE_ELEVATION,
+      DataWrapper.STRESS => Rez.Strings.FIELD_TYPE_STRESS,
+      DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
+      DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
+      DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
+      DataWrapper.RELATIVE_HUMIDITY => Rez.Strings.FIELD_TYPE_RELATIVE_HUMIDITY,
+      DataWrapper.PRECIPITATION_CHANCE => Rez.Strings
+        .FIELD_TYPE_PRECIPITATION_CHANCE,
+      DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
+      DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
+      DataWrapper.WEEKLY_RUN_DISTANCE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
+      ),
+      DataWrapper.WEEKLY_BIKE_DISTANCE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE
+      ),
+      DataWrapper.VO2_RUN => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_VO2MAX_RUN
+      ),
+      DataWrapper.VO2_BIKE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_VO2MAX_BIKE
+      ),
+      DataWrapper.RESPIRATION_RATE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_RESPIRATION_RATE
+      ),
+      DataWrapper.SOLAR_INPUT => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_SOLAR_INPUT
+      ),
     };
     return pattern;
   }
@@ -95,6 +166,26 @@ module Menu {
     };
   }
 
+  //Подменю выбора едениц измерения давления
+  function pressureUnitsSubmenu() {
+    return {
+      DataWrapper.UNIT_PRESSURE_MM_HG => Rez.Strings.PressUnitMmHg,
+      DataWrapper.UNIT_PRESSURE_PSI => Rez.Strings.PressUnitPsi,
+      DataWrapper.UNIT_PRESSURE_INCH_HG => Rez.Strings.PressUnitInchHg,
+      DataWrapper.UNIT_PRESSURE_BAR => Rez.Strings.PressUnitBar,
+      DataWrapper.UNIT_PRESSURE_KPA => Rez.Strings.PressUnitKPa,
+    };
+  }
+
+  //Подменю варианта показа значка подключений
+  function connectionSubMenu() {
+    return {
+      Global.BLUETOOTH_SHOW_IF_CONNECT => Rez.Strings.show_if_connect,
+      Global.BLUETOOTH_SHOW_IF_DISCONNECT => Rez.Strings.show_if_disconnect,
+      Global.BLUETOOTH_HIDE => Rez.Strings.hide,
+    };
+  }
+
   //Подменю с настройками цветов
   function colorsSubMenu() {
     var items_props = [];
@@ -102,31 +193,31 @@ module Menu {
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font,
       :identifier => "color_font",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font_empty_segments,
       :identifier => "color_font_empty_segments",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_background,
       :identifier => "color_background",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_pattern,
       :identifier => "color_pattern",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_pattern_decorate,
       :identifier => "color_pattern_decorate",
-      :method => :ColorSelectMenu,
+      :method => :createColorSelectMenu,
     });
 
     var options = {
@@ -137,13 +228,13 @@ module Menu {
   }
 
   //Подменю непосредственного выбора цвета
-  function ColorSelectMenu(paren_item_week) {
+  function createColorSelectMenu(parent_item_week) {
     var items_props = [
       {
         :item_class => :ColorSelectItem,
         :identifier => Graphics.COLOR_TRANSPARENT.toString(),
         :color => Graphics.COLOR_TRANSPARENT,
-        :paren_item_week => paren_item_week,
+        :parent_item_week => parent_item_week,
       },
     ];
 
@@ -153,10 +244,9 @@ module Menu {
         for (var k = 0; k < values.size(); k++) {
           var color = (values[i] << 16) + (values[j] << 8) + values[k];
           items_props.add({
-            :item_class => :ColorSelectItem,
             :identifier => color.toString(),
             :color => color,
-            :paren_item_week => paren_item_week,
+            :parent_item_week => parent_item_week,
           });
         }
       }
@@ -165,8 +255,9 @@ module Menu {
     var options = {
       :title => Rez.Strings.SubmenuColors,
       :items => items_props,
+      :parent_item_week => parent_item_week,
     };
-    return new SubMenu(options);
+    return new ColorSelectMenu(options);
   }
 
   function getSublabel(method_symbol, value) {
@@ -174,11 +265,125 @@ module Menu {
     var pattern = method.invoke();
     return pattern[value];
   }
+
+  function getNativeComplicationLabel(compl_type) {
+    var res = "";
+    var compl = Complications.getComplication(new Complications.Id(compl_type));
+    if (compl != null) {
+      res = compl.longLabel;
+      if (res == null) {
+        res = compl.shortLabel;
+      }
+    }
+    return res;
+  }
+}
+
+//*****************************************************************************
+//Пункт меню переключатель
+class TogleItem extends WatchUi.ToggleMenuItem {
+  function initialize(options) {
+    var label = Application.loadResource(options[:rez_label]);
+    var enabled = Application.Properties.getValue(options[:identifier]);
+    ToggleMenuItem.initialize(label, null, options[:identifier], enabled, {});
+  }
+
+  function onSelectItem() {
+    Application.Properties.setValue(getId(), isEnabled());
+  }
+}
+
+//*****************************************************************************
+//Пункт меню ввода текста
+class PickerItem extends WatchUi.MenuItem {
+  function initialize(options) {
+    var label = Application.loadResource(options[:rez_label]);
+    var sublabel = Application.Properties.getValue(options[:identifier]);
+    MenuItem.initialize(label, sublabel.toString(), options[:identifier], {});
+  }
+
+  function onSelectItem() {
+    var charSet = "0123456789-";
+    if (getId().equals("keyOW")) {
+      charSet = "0123456789abcdef";
+    }
+    var picker = new StringPicker(self.weak(), charSet);
+    WatchUi.pushView(
+      picker,
+      new StringPickerDelegate(picker),
+      WatchUi.SLIDE_IMMEDIATE
+    );
+  }
+
+  function onSetText(value) {
+    setSubLabel(value);
+    if (getId().equals("keyOW")) {
+      Application.Properties.setValue(getId(), value);
+    } else {
+      Application.Properties.setValue(getId(), value.toNumber());
+    }
+  }
+}
+
+//*****************************************************************************
+//Пункт меню выбора конкретного значения
+//при нажатии значение возвращается в родительский пункт меню
+class SelectItem extends WatchUi.MenuItem {
+  var callbackWeak;
+
+  function initialize(identifier, resLabel, callbackWeak) {
+    self.callbackWeak = callbackWeak;
+    if (resLabel instanceof Lang.String) {
+      MenuItem.initialize(resLabel, null, identifier, {});
+    } else {
+      MenuItem.initialize(
+        Application.loadResource(resLabel),
+        null,
+        identifier,
+        {}
+      );
+    }
+  }
+
+  function onSelectItem() {
+    if (callbackWeak.stillAlive()) {
+      var obj = callbackWeak.get();
+      if (obj != null) {
+        obj.onSelectSubmenuItem(getId());
+      }
+    }
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+}
+
+//*****************************************************************************
+//Пункт меню выбора конкретного цвета
+//при нажатии значение возвращается в родительский пункт меню
+class ColorSelectItem extends ColorPropertyItem {
+  var parent_item_week;
+
+  function initialize(options) {
+    color = options[:color];
+    var label = colorToString(options[:color]);
+    var icon = new IconDrawable(color);
+    self.parent_item_week = options[:parent_item_week];
+    IconMenuItem.initialize(label, null, options[:identifier], icon, {});
+  }
+
+  function onSelectItem() {
+    if (parent_item_week.stillAlive()) {
+      var obj = parent_item_week.get();
+      if (obj != null) {
+        obj.onSelectSubmenuItem(getId().toNumber());
+      }
+    }
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
 }
 
 //*****************************************************************************
 //Пункт меню (ассоциированный со свойством приложения)
-//при нажатии открывается подменю выбора конкретного значения из вручную заданного списка
+//при нажатии открывается подменю класса SelectMenu с элементами класса SelectItem
 class Item extends WatchUi.MenuItem {
   var method_symbol;
 
@@ -212,57 +417,65 @@ class Item extends WatchUi.MenuItem {
 }
 
 //*****************************************************************************
-//Подменю выбора конкретного значения
-class SelectMenu extends WatchUi.Menu2 {
+//Пункт меню (аналог класса Item). Но предназначен для указания цвета
+//ассоциирован со свойством приложения
+//при нажатии открыватеся подменю выбора цветов
+class ColorPropertyItem extends WatchUi.IconMenuItem {
+  var method_symbol, color;
+
   function initialize(options) {
-    Menu2.initialize({ :title => options[:title] });
-    var property_value = Application.Properties.getValue(options[:prop_name]);
-    var storage_value = Application.Storage.getValue(options[:prop_name]);
-    var pattern = (new Lang.Method(Menu, options[:method_symbol])).invoke();
-    var keys = pattern.keys();
-    for (var i = 0; i < keys.size(); i++) {
-      addItem(
-        new SelectItem(keys[i], pattern[keys[i]], options[:parent_item_week])
-      );
-      if (property_value == keys[i]) {
-        setFocus(i);
-      } else if (storage_value != null) {
-        if (storage_value.equals(keys[i])) {
-          setFocus(i);
-        }
-      }
-    }
+    self.method_symbol = options[:method];
+    var label = Application.loadResource(options[:rez_label]);
+    color = Application.Properties.getValue(options[:identifier]);
+    var icon = new IconDrawable(color);
+    IconMenuItem.initialize(
+      label,
+      colorToString(color),
+      options[:identifier],
+      icon,
+      {}
+    );
   }
-}
 
-//*****************************************************************************
-//Пункт меню с конкретным значением
-//при нажатии значение возвращается в родительский пункт меню
-class SelectItem extends WatchUi.MenuItem {
-  var callbackWeak;
-
-  function initialize(identifier, resLabel, callbackWeak) {
-    self.callbackWeak = callbackWeak;
-    if (resLabel instanceof Lang.String) {
-      MenuItem.initialize(resLabel, null, identifier, {});
+  function colorToString(color) {
+    var res;
+    if (color == Graphics.COLOR_TRANSPARENT) {
+      res = color.toString();
     } else {
-      MenuItem.initialize(
-        Application.loadResource(resLabel),
-        null,
-        identifier,
-        {}
-      );
+      res = "0x" + color.format("%06X");
     }
+    return res;
   }
 
   function onSelectItem() {
-    if (callbackWeak.stillAlive()) {
-      var obj = callbackWeak.get();
-      if (obj != null) {
-        obj.onSelectSubmenuItem(getId());
-      }
+    //Вариант выбора цвета через диалог с палитрой
+
+    // var picker = new ColorPicker(self.weak());
+    // WatchUi.pushView(
+    //   picker,
+    //   new ColorPickerDelegate(picker.weak()),
+    //   WatchUi.SLIDE_IMMEDIATE
+    // );
+
+    //Вариант выбора цвета через подменю с цветами
+    var method = new Lang.Method(Menu, method_symbol);
+    var submenu = method.invoke(self.weak());
+    WatchUi.pushView(
+      submenu,
+      new SimpleMenuDelegate(),
+      WatchUi.SLIDE_IMMEDIATE
+    );
+  }
+
+  function onSelectSubmenuItem(newValue) {
+    if (newValue instanceof Lang.Number) {
+      color = newValue;
+    } else {
+      color = newValue.toNumber();
     }
-    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+    Application.Properties.setValue(getId(), color);
+    setSubLabel(colorToString(color));
+    setIcon(new IconDrawable(color));
   }
 }
 
@@ -290,129 +503,8 @@ class SubMenuItem extends WatchUi.MenuItem {
 }
 
 //*****************************************************************************
-//Пункт меню (аналог класса Item). Но предназначен для указания цвета
-//ассоциирован со свойством приложения
-//при нажатии открыватеся подменю выбора цветов
-class ColorPropertyItem extends WatchUi.IconMenuItem {
-  var method_symbol, color;
-
-  function initialize(options) {
-    self.method_symbol = options[:method];
-    var label = Application.loadResource(options[:rez_label]);
-    color = Application.Properties.getValue(options[:identifier]);
-    var icon = createIcon(color);
-    IconMenuItem.initialize(
-      label,
-      colorToString(color),
-      options[:identifier],
-      icon,
-      {}
-    );
-  }
-
-  function colorToString(color) {
-    var res;
-    if (color == Graphics.COLOR_TRANSPARENT) {
-      res = color.toString();
-    } else {
-      res = "0x" + color.format("%06X");
-    }
-    return res;
-  }
-
-  function borderIcon(icon, color, color_border) {
-    var dc = icon.get().getDc();
-    dc.setColor(color, color);
-    dc.clear();
-    dc.setColor(color_border, color_border);
-    dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
-  }
-
-  function createIcon(color) {
-    var icon;
-    var w = 30;
-    var h = 30;
-    if (color == Graphics.COLOR_TRANSPARENT) {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [Graphics.COLOR_WHITE, Graphics.COLOR_BLACK],
-      });
-      var dc = icon.get().getDc();
-      dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_WHITE);
-      dc.clear();
-      dc.setPenWidth(5);
-      dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-      dc.drawLine(0, 0, dc.getWidth(), dc.getHeight());
-      dc.drawLine(0, dc.getHeight(), dc.getWidth(), 0);
-    } else if (color == Graphics.COLOR_BLACK) {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [color, Graphics.COLOR_WHITE],
-      });
-      borderIcon(icon, color, Graphics.COLOR_WHITE);
-    } else if (color == Graphics.COLOR_WHITE) {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [color, Graphics.COLOR_BLACK],
-      });
-      borderIcon(icon, color, Graphics.COLOR_BLACK);
-    } else {
-      icon = Graphics.createBufferedBitmap({
-        :width => w,
-        :height => h,
-        :palette => [color],
-      });
-    }
-    return new WatchUi.Bitmap({ :bitmap => icon });
-  }
-
-  function onSelectItem() {
-    var method = new Lang.Method(Menu, method_symbol);
-    var submenu = method.invoke(self.weak());
-    WatchUi.pushView(
-      submenu,
-      new SimpleMenuDelegate(),
-      WatchUi.SLIDE_IMMEDIATE
-    );
-  }
-
-  function onSelectSubmenuItem(newValue) {
-    color = newValue.toNumber();
-    Application.Properties.setValue(getId(), color);
-    setSubLabel(colorToString(color));
-    setIcon(createIcon(color));
-  }
-}
-
-//*****************************************************************************
-//Пункт меню с конкретным цветом
-class ColorSelectItem extends ColorPropertyItem {
-  var paren_item_week;
-
-  function initialize(options) {
-    var label = colorToString(options[:color]);
-    var icon = createIcon(options[:color]);
-    self.paren_item_week = options[:paren_item_week];
-    IconMenuItem.initialize(label, null, options[:identifier], icon, {});
-  }
-
-  function onSelectItem() {
-    if (paren_item_week.stillAlive()) {
-      var obj = paren_item_week.get();
-      if (obj != null) {
-        obj.onSelectSubmenuItem(getId().toNumber());
-      }
-    }
-    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-  }
-}
-
-//*****************************************************************************
-//Подменю общее. Может содержать пункты выбора конкретных значений и
-//пункты с подменю следющего уровня
+//Подменю общее. Может содержать пункты выбора значений/цветов, переключатели, а
+//также вложенные подменю этого же класса
 class SubMenu extends WatchUi.Menu2 {
   function initialize(options) {
     Menu2.initialize({ :title => Application.loadResource(options[:title]) });
@@ -423,16 +515,98 @@ class SubMenu extends WatchUi.Menu2 {
         addItem(new SubMenuItem(item_prop));
       } else if (item_prop[:item_class] == :ColorPropertyItem) {
         addItem(new ColorPropertyItem(item_prop));
-      } else if (item_prop[:item_class] == :ColorSelectItem) {
-        addItem(new ColorSelectItem(item_prop));
       } else if (item_prop[:item_class] == :Item) {
         addItem(new Item(item_prop));
+      } else if (item_prop[:item_class] == :TogleItem) {
+        addItem(new TogleItem(item_prop));
+      } else if (item_prop[:item_class] == :PickerItem) {
+        addItem(new PickerItem(item_prop));
       }
     }
   }
+}
 
-  function onHide() {
-    //getApp().onSettingsChanged();
+//*****************************************************************************
+//Подменю выбора конкретного значения
+class SelectMenu extends WatchUi.Menu2 {
+  function initialize(options) {
+    Menu2.initialize({ :title => options[:title] });
+    var property_value = Application.Properties.getValue(options[:prop_name]);
+    var storage_value = Application.Storage.getValue(options[:prop_name]);
+    var pattern = (new Lang.Method(Menu, options[:method_symbol])).invoke();
+    var keys = pattern.keys();
+    for (var i = 0; i < keys.size(); i++) {
+      addItem(
+        new SelectItem(keys[i], pattern[keys[i]], options[:parent_item_week])
+      );
+      if (property_value == keys[i]) {
+        setFocus(i);
+      } else if (storage_value != null) {
+        if (storage_value.equals(keys[i])) {
+          setFocus(i);
+        }
+      }
+    }
+  }
+}
+
+//*****************************************************************************
+//Подменю выбора конкретного цвета
+class ColorSelectMenu extends WatchUi.Menu2 {
+  function initialize(options) {
+    Menu2.initialize({ :title => Application.loadResource(options[:title]) });
+    var current_color = null;
+    if (options[:parent_item_week].stillAlive()) {
+      current_color = options[:parent_item_week].get().color;
+    }
+    for (var i = 0; i < options[:items].size(); i++) {
+      var item_prop = options[:items][i];
+      addItem(new ColorSelectItem(item_prop));
+      if (item_prop[:color] == current_color) {
+        setFocus(i);
+      }
+    }
+  }
+}
+
+//*****************************************************************************
+//Вспомогательный объект. Формирет Drawable с цветом для размещения цвета на
+//пункте меню
+class IconDrawable extends WatchUi.Drawable {
+  var color;
+
+  function initialize(color) {
+    self.color = color;
+    var options = {
+      :identifier => color,
+      :locX => 0,
+      :locY => 0,
+      :width => 20,
+      :height => 20,
+      :visible => true,
+    };
+    Drawable.initialize(options);
+  }
+
+  function draw(dc) {
+    if (color == Graphics.COLOR_TRANSPARENT) {
+      dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_WHITE);
+      dc.clear();
+      dc.setPenWidth(5);
+      dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+      dc.drawLine(0, 0, dc.getWidth(), dc.getHeight());
+      dc.drawLine(0, dc.getHeight(), dc.getWidth(), 0);
+    } else {
+      if (color == Graphics.COLOR_BLACK) {
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+      } else if (color == Graphics.COLOR_WHITE) {
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
+      } else {
+        dc.setColor(Graphics.COLOR_WHITE, color);
+      }
+      dc.clear();
+      dc.drawRectangle(0, 0, dc.getWidth(), dc.getHeight());
+    }
   }
 }
 

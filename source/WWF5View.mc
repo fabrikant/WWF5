@@ -4,13 +4,19 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Math;
+import Toybox.Complications;
 
 class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
-  var fonts;
+  var fontClock, fontSeconds, fontValues, fontTemp;
+  var moon_keeper;
 
   function initialize() {
     WatchFace.initialize();
+    fontClock = Application.loadResource(Rez.Fonts.clock);
+    fontSeconds = Application.loadResource(Rez.Fonts.seconds);
+    fontValues = Application.loadResource(Rez.Fonts.values);
+    fontTemp = Application.loadResource(Rez.Fonts.temperature);
     every_second_layers = [];
   }
 
@@ -36,8 +42,7 @@ class WWF5View extends WatchUi.WatchFace {
       [pattern.reference_points[:x][4], pattern.reference_points[:y][4]]
     );
     options[:identifier] = :clock;
-    options[:max_lenght] = clock_layer_max_lenght;
-    options[:other_symbols] = [":"];
+    options[:font] = fontClock;
     var clock_layer = new SimpleField(options);
     self.addLayer(clock_layer);
 
@@ -58,9 +63,10 @@ class WWF5View extends WatchUi.WatchFace {
       :width => temp_w,
       :height => temp_h,
       :identifier => :seconds,
-      :max_lenght => 2,
+      :font => fontSeconds,
     };
     var seconds_layer = new SimpleField(options);
+    seconds_layer.compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE);
     self.addLayer(seconds_layer);
     every_second_layers.add(seconds_layer);
 
@@ -73,12 +79,16 @@ class WWF5View extends WatchUi.WatchFace {
       ]
     );
     options[:identifier] = :date;
-    self.addLayer(new BottomField(options));
+    var date_field = new BottomField(options);
+    date_field.compl_id = new Complications.Id(
+      Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
+    );
+    self.addLayer(date_field);
 
     //Рассвет-Закат
     var temp_y =
       pattern.reference_points[:y][2] -
-      Math.floor(pattern.reference_points[:y][2] / 3);
+      Math.floor(pattern.reference_points[:y][2] * 0.4);
 
     var temp_x = Math.floor(
       Global.mod(temp_y - pattern.reference_points[:y][2]) / 2
@@ -91,7 +101,6 @@ class WWF5View extends WatchUi.WatchFace {
       ]
     );
     options[:identifier] = :sun_events;
-    options[:max_lenght] = 11;
     var sun_event_field = new SunEventsField(options);
     self.addLayer(sun_event_field);
 
@@ -103,7 +112,6 @@ class WWF5View extends WatchUi.WatchFace {
       pattern.reference_points[:x][1],
       :height => sun_event_field.getY(),
       :identifier => :weather,
-      :other_symbols => ["°"],
     };
     self.addLayer(new WeatherWidget(options));
 
@@ -150,22 +158,39 @@ class WWF5View extends WatchUi.WatchFace {
       :height => Application.loadResource(Rez.Drawables.HR).getHeight(),
       :identifier => "data_small",
     };
-    
-    options[:locY] = (clock_layer.getY() + clock_layer.getDc().getHeight()) - options[:height];
+
+    options[:locY] =
+      clock_layer.getY() + clock_layer.getDc().getHeight() - options[:height];
 
     var small_field = new SmallField(options);
     self.addLayer(small_field);
     //every_second_layers.add(small_field);
 
     //Статусы
-    options = {
-      :locX => seconds_layer.getX() + seconds_layer.getDc().getWidth(),
-      :locY => seconds_layer.getY(),
-      :identifier => :status,
-    };
-    options[:width] = pattern.reference_points[:x][6] - options[:locX];
+    var bitmap = Application.loadResource(Rez.Drawables.message);
+    options = pattern.calculateLayerCoordinates(
+      [
+        pattern.reference_points[:x][6] - bitmap.getWidth() - 2,
+        pattern.reference_points[:y][2],
+      ],
+      [pattern.reference_points[:x][6], pattern.reference_points[:y][4]]
+    );
     options[:height] = small_field.getY() - options[:locY];
-    self.addLayer(new StatusField(options));
+    options[:identifier] = :status;
+    var status_layer = new StatusField(options);
+    self.addLayer(status_layer);
+
+    // //Круг
+    // options = {
+    //   :locX => clock_layer.getX() + clock_layer.getDc().getWidth(),
+    //   :locY => clock_layer.getY(),
+    // };
+    // options[:width] = status_layer.getX() - options[:locX];
+    // options[:height] = options[:width];
+    // options[:identifier] = "data_small";
+    // var circle_field = new CircleField(options);
+    // self.addLayer(circle_field);
+    // every_second_layers.add(circle_field);
 
     //Подложка
     options = {
@@ -178,6 +203,10 @@ class WWF5View extends WatchUi.WatchFace {
     };
     self.addLayer(new PatternField(options));
 
+
+    // System.println("Clock height: " +clock_layer.getDc().getHeight());
+    // System.println("Seconds height: " +seconds_layer.getDc().getHeight());
+
     pattern.reference_points = null;
   }
 
@@ -188,9 +217,12 @@ class WWF5View extends WatchUi.WatchFace {
   // the state of this View and prepare it to be shown. This includes
   // loading resources into memory.
   function onShow() as Void {
-    fonts = {};
     readSettings();
     self.pattern = new Pattern(colors);
+    moon_keeper = new MoonKeeper(
+      Lang.Time.now(),
+      System.getDeviceSettings().screenWidth * 0.1
+    );
     createLayers();
   }
 

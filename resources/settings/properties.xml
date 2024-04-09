@@ -1,22 +1,22 @@
 <properties>
 
-<!--
-	<property id="keyOW" type="string"></property>
-	<property id="ThemeN" type="number">1</property>
-	<property id="DecorateHours" type="boolean">true</property>
-!-->
 	<property id="color_pattern" type="number">0x555555</property>
 	<property id="color_pattern_decorate" type="number">0xAAAAAA</property>
 	<property id="color_background" type="number">0x000000</property>
 	<property id="color_font" type="number">0xFFFFFF</property>
 	<property id="color_font_empty_segments" type="number">0x550000</property>
 	<property id="wind_speed_unit" type="number">0</property>
+	<property id="pressure_unit" type="number">0</property>
 
-	
-	<property id="data_1" type="number">1</property>
-	<property id="data_2" type="number">2</property>
-	<property id="data_3" type="number">3</property>
-	<property id="data_scale" type="number">4</property>
-	<property id="data_small" type="number">5</property>
+
+	<property id="data_scale" type="number">7</property>
+	<property id="data_small" type="number">24</property>
+	<property id="data_1" type="number">2</property>
+	<property id="data_2" type="number">3</property>
+	<property id="data_3" type="number">21</property>
+
+	<property id="show_connection" type="number">1</property>
+	<property id="show_DND" type="boolean">true</property>
+	<property id="T1TZ" type="number">180</property>
 
 </properties>

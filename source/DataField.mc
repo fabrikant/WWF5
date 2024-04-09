@@ -26,10 +26,11 @@ class DataField extends AbstractField {
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
     var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    compl_id = data[:compl_id];
 
     //Вывод значения
     if (data[:value] != null) {
-      var font_value = getApp().watch_view.fonts[:sun_events];
+      var font_value = getApp().watch_view.fontValues;
 
       var x = null;
       var just = null;
@@ -38,14 +39,22 @@ class DataField extends AbstractField {
         x = dc.getWidth() / 2;
         just = Graphics.TEXT_JUSTIFY_CENTER;
       } else {
-        x = font_value.getNormalGlifWidth();
+        x = (dc.getTextWidthInPixels("8", font_value) * 3) / 4;
         just = Graphics.TEXT_JUSTIFY_LEFT;
         if (getX() < System.getDeviceSettings().screenWidth / 2) {
           x = dc.getWidth() - x;
           just = Graphics.TEXT_JUSTIFY_RIGHT;
         }
       }
-      font_value.writeString(dc, x, 0, data[:value], just);
+      drawText(
+        dc,
+        colors,
+        x,
+        -Graphics.getFontHeight(font_value) / 5,
+        font_value,
+        data[:value],
+        just
+      );
     }
 
     //draw label, decorate fields
@@ -141,7 +150,9 @@ class DataField extends AbstractField {
       if (getX() < System.getDeviceSettings().screenWidth / 2) {
         x = dc.getWidth() - x;
       }
-      dc.drawText(
+      drawText(
+        dc,
+        options[:colors],
         x,
         dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
         font_label,
@@ -159,7 +170,9 @@ class DataField extends AbstractField {
     dc.setColor(options[:colors][:font], options[:colors][:background]);
     var label = labelCastToString(options[:label]);
 
-    dc.drawText(
+    drawText(
+      dc,
+      options[:colors],
       dc.getWidth() / 2,
       dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
       options[:font_label],
