@@ -76,108 +76,51 @@ module DataWrapper {
         null
       );
       res[:image] = Rez.Drawables.Steps;
-
-      // res[:value] = getSteps();
-      // res[:label] = Rez.Strings.FIELD_TYPE_STEPS;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_STEPS
-      // );
     } else if (type == BATTERY) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BATTERY
       );
       res[:image] = Rez.Drawables.Battery;
-
-      // res[:scale_value] = getBattery();
-      // res[:value] = getScaleValueCaption(res[:scale_value]);
-      // res[:label] = Rez.Strings.FIELD_TYPE_BATTERY;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_BATTERY
-      // );
     } else if (type == HR) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_HEART_RATE,
         null
       );
       res[:image] = Rez.Drawables.HR;
-
-      // res[:value] = getHR();
-      // res[:label] = Rez.Strings.FIELD_TYPE_HR;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_HEART_RATE
-      // );
     } else if (type == BODY_BATTERY) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BODY_BATTERY
       );
       res[:image] = Rez.Drawables.BodyBattery;
-
-      // res[:scale_value] = getBodyBattery();
-      // res[:value] = getScaleValueCaption(res[:scale_value]);
-      // res[:label] = Rez.Strings.FIELD_TYPE_BODY_BATTERY;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_BODY_BATTERY
-      // );
     } else if (type == RECOVERY_TIME) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_RECOVERY_TIME,
         :secondsToString
       );
       res[:image] = Rez.Drawables.RecoveryTime;
-
-      // res[:value] = getRecoveryTime();
-      // res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_RECOVERY_TIME
-      // );
     } else if (type == FLOOR) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_FLOORS_CLIMBED,
         null
       );
       res[:image] = Rez.Drawables.Floor;
-
-      // res[:value] = getFloor();
-      // res[:label] = Rez.Strings.FIELD_TYPE_FLOOR;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_FLOORS_CLIMBED
-      // );
     } else if (type == O2) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_PULSE_OX
       );
       res[:image] = Rez.Drawables.O2;
-
-      // res[:scale_value] = getOxygenSaturation();
-      // res[:value] = getScaleValueCaption(res[:scale_value]);
-      // res[:label] = Rez.Strings.FIELD_TYPE_O2;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_PULSE_OX
-      // );
     } else if (type == ALTITUDE) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_ALTITUDE,
         :altitudeToString
       );
       res[:image] = Rez.Drawables.Altitude;
-
-      // res[:value] = getAltitude();
-      // res[:label] = Rez.Strings.FIELD_TYPE_ELEVATION;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_ALTITUDE
-      // );
     } else if (type == STRESS) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_ALTITUDE,
         :altitudeToString
       );
       res[:image] = Rez.Drawables.Stress;
-
-      // res[:value] = getStress();
-      // res[:label] = Rez.Strings.FIELD_TYPE_STRESS;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_STRESS
-      // );
     } else if (type == MOON) {
       res = getApp().watch_view.moon_keeper.getActulalData(Time.now());
       res[:label] = Rez.Strings.FIELD_TYPE_MOON;
@@ -358,154 +301,6 @@ module DataWrapper {
       value = condition.precipitationChance;
     }
     return value;
-  }
-
-  function getStress() {
-    var value = null;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_STRESS)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        value = compl.value;
-      }
-    }
-    if (value == null) {
-      value = getLasValueSensorHistory(:getStressHistory);
-    }
-    if (value != null) {
-      value = reduceLongValue(value);
-    }
-    return value;
-  }
-
-  function getAltitude() {
-    var value = null;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_ALTITUDE)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        value = compl.value;
-      }
-    }
-    if (value == null) {
-      var info = Activity.getActivityInfo();
-      if (info != null) {
-        if (info has :altitude) {
-          if (info.altitude != null) {
-            value = info.altitude;
-          }
-        }
-      }
-    }
-    if (value != null) {
-      value = altitudeToString(value);
-    }
-    return value;
-  }
-
-  function getOxygenSaturation() {
-    var value = null;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_PULSE_OX)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        value = compl.value;
-      }
-    }
-    if (value == null) {
-      var info = Activity.getActivityInfo();
-      if (info != null) {
-        if (info has :currentOxygenSaturation) {
-          if (info.currentOxygenSaturation != null) {
-            value = info.currentOxygenSaturation;
-          }
-        }
-      }
-    }
-    if (value == null) {
-      value = getLasValueSensorHistory(:getOxygenSaturationHistory);
-    }
-    return value;
-  }
-
-  function getFloor() {
-    var value = null;
-    var info = ActivityMonitor.getInfo();
-    if (info has :floorsClimbed) {
-      value =
-        info.floorsClimbed.toString() + "|" + info.floorsDescended.toString();
-    }
-    return value;
-  }
-
-  function getRecoveryTime() {
-    var res = 0;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_RECOVERY_TIME)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        res = secondsToString(compl.value);
-      }
-    }
-
-    return res;
-  }
-
-  function getBodyBattery() {
-    var res = null;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        res = compl.value;
-      }
-    }
-    if (res == null) {
-      res = getLasValueSensorHistory(:getBodyBatteryHistory);
-    }
-    if (res instanceof Lang.Float) {
-      res = res.toNumber();
-    }
-    return res;
-  }
-
-  function getBattery() {
-    return Math.floor(System.getSystemStats().battery).toNumber();
-  }
-
-  function getHR() {
-    var value = null;
-    var compl = Complications.getComplication(
-      new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE)
-    );
-    if (compl != null) {
-      if (compl.value != null) {
-        value = compl.value;
-      }
-    }
-    if (value == null) {
-      var info = Activity.getActivityInfo();
-      if (info != null) {
-        if (info has :currentHeartRate) {
-          value = info.currentHeartRate;
-        }
-      }
-    }
-    return reduceLongValue(value);
-  }
-
-  function getSteps() {
-    var value = null;
-    var info = ActivityMonitor.getInfo();
-    if (info has :steps) {
-      value = info.steps;
-    }
-    return reduceLongValue(value);
   }
 
   function getCalories() {
