@@ -104,7 +104,6 @@ module Moon {
 
   ///////////////////////////////////////////////////////////////////////////
   function drawMoon(phase, size, color, backgroundColor) {
-    var buffImage = null;
     var imageOptions = {
       :width => size,
       :height => size,
