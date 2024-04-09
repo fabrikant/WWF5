@@ -79,7 +79,7 @@
 		</palette>
 	</bitmap>
 
-	<bitmap id="Elevation" filename="./svg-resources/mountain.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+	<bitmap id="Altitude" filename="./svg-resources/mountain.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>

@@ -28,7 +28,7 @@ module DataWrapper {
     RESPIRATION_RATE,
     WEIGHT,
     FLOOR,
-    ELEVATION,
+    ALTITUDE,
     PRESSURE,
     TEMPERATURE,
     RELATIVE_HUMIDITY,
@@ -50,12 +50,17 @@ module DataWrapper {
     var res = { :value => null, :label => null, :image => null };
 
     if (type == CALORIES) {
-      res[:value] = getCalories();
-      res[:image] = Rez.Drawables.Callory;
-      res[:label] = Rez.Strings.FIELD_TYPE_CALORIES;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_CALORIES
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_CALORIES,
+        null
       );
+      res[:image] = Rez.Drawables.Callory;
+
+      // res[:value] = getCalories();
+      // res[:label] = Rez.Strings.FIELD_TYPE_CALORIES;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_CALORIES
+      // );
     } else if (type == DISTANCE) {
       res[:value] = getDistance();
       res[:image] = Rez.Drawables.Distance;
@@ -64,71 +69,113 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
       );
     } else if (type == STEPS) {
-      res[:value] = getSteps();
-      res[:image] = Rez.Drawables.Steps;
-      res[:label] = Rez.Strings.FIELD_TYPE_STEPS;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_STEPS
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_STEPS,
+        null
       );
+      res[:image] = Rez.Drawables.Steps;
+
+      // res[:value] = getSteps();
+      // res[:label] = Rez.Strings.FIELD_TYPE_STEPS;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_STEPS
+      // );
     } else if (type == BATTERY) {
-      res[:scale_value] = getBattery();
-      res[:value] = getScaleValueCaption(res[:scale_value]);
-      res[:image] = Rez.Drawables.Battery;
-      res[:label] = Rez.Strings.FIELD_TYPE_BATTERY;
-      res[:compl_id] = new Complications.Id(
+      res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BATTERY
       );
+      res[:image] = Rez.Drawables.Battery;
+
+      // res[:scale_value] = getBattery();
+      // res[:value] = getScaleValueCaption(res[:scale_value]);
+      // res[:label] = Rez.Strings.FIELD_TYPE_BATTERY;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_BATTERY
+      // );
     } else if (type == HR) {
-      res[:value] = getHR();
-      res[:image] = Rez.Drawables.HR;
-      res[:label] = Rez.Strings.FIELD_TYPE_HR;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_HEART_RATE
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_HEART_RATE,
+        null
       );
+      res[:image] = Rez.Drawables.HR;
+
+      // res[:value] = getHR();
+      // res[:label] = Rez.Strings.FIELD_TYPE_HR;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_HEART_RATE
+      // );
     } else if (type == BODY_BATTERY) {
-      res[:scale_value] = getBodyBattery();
-      res[:value] = getScaleValueCaption(res[:scale_value]);
-      res[:image] = Rez.Drawables.BodyBattery;
-      res[:label] = Rez.Strings.FIELD_TYPE_BODY_BATTERY;
-      res[:compl_id] = new Complications.Id(
+      res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BODY_BATTERY
       );
+      res[:image] = Rez.Drawables.BodyBattery;
+
+      // res[:scale_value] = getBodyBattery();
+      // res[:value] = getScaleValueCaption(res[:scale_value]);
+      // res[:label] = Rez.Strings.FIELD_TYPE_BODY_BATTERY;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_BODY_BATTERY
+      // );
     } else if (type == RECOVERY_TIME) {
-      res[:value] = getRecoveryTime();
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_RECOVERY_TIME,
+        :secondsToString
+      );
       res[:image] = Rez.Drawables.RecoveryTime;
-      res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_RECOVERY_TIME
-      );
+
+      // res[:value] = getRecoveryTime();
+      // res[:label] = Rez.Strings.FIELD_TYPE_RECOVERY_TIME;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_RECOVERY_TIME
+      // );
     } else if (type == FLOOR) {
-      res[:value] = getFloor();
-      res[:image] = Rez.Drawables.Floor;
-      res[:label] = Rez.Strings.FIELD_TYPE_FLOOR;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_FLOORS_CLIMBED
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_FLOORS_CLIMBED,
+        null
       );
+      res[:image] = Rez.Drawables.Floor;
+
+      // res[:value] = getFloor();
+      // res[:label] = Rez.Strings.FIELD_TYPE_FLOOR;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_FLOORS_CLIMBED
+      // );
     } else if (type == O2) {
-      res[:scale_value] = getOxygenSaturation();
-      res[:value] = getScaleValueCaption(res[:scale_value]);
-      res[:image] = Rez.Drawables.O2;
-      res[:label] = Rez.Strings.FIELD_TYPE_O2;
-      res[:compl_id] = new Complications.Id(
+      res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_PULSE_OX
       );
-    } else if (type == ELEVATION) {
-      res[:value] = getElevation();
-      res[:image] = Rez.Drawables.Elevation;
-      res[:label] = Rez.Strings.FIELD_TYPE_ELEVATION;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_ALTITUDE
+      res[:image] = Rez.Drawables.O2;
+
+      // res[:scale_value] = getOxygenSaturation();
+      // res[:value] = getScaleValueCaption(res[:scale_value]);
+      // res[:label] = Rez.Strings.FIELD_TYPE_O2;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_PULSE_OX
+      // );
+    } else if (type == ALTITUDE) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_ALTITUDE,
+        :altitudeToString
       );
+      res[:image] = Rez.Drawables.Altitude;
+
+      // res[:value] = getAltitude();
+      // res[:label] = Rez.Strings.FIELD_TYPE_ELEVATION;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_ALTITUDE
+      // );
     } else if (type == STRESS) {
-      res[:value] = getStress();
-      res[:image] = Rez.Drawables.Stress;
-      res[:label] = Rez.Strings.FIELD_TYPE_STRESS;
-      res[:compl_id] = new Complications.Id(
-        Complications.COMPLICATION_TYPE_STRESS
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_ALTITUDE,
+        :altitudeToString
       );
+      res[:image] = Rez.Drawables.Stress;
+
+      // res[:value] = getStress();
+      // res[:label] = Rez.Strings.FIELD_TYPE_STRESS;
+      // res[:compl_id] = new Complications.Id(
+      //   Complications.COMPLICATION_TYPE_STRESS
+      // );
     } else if (type == MOON) {
       res = getApp().watch_view.moon_keeper.getActulalData(Time.now());
       res[:label] = Rez.Strings.FIELD_TYPE_MOON;
@@ -250,6 +297,18 @@ module DataWrapper {
     return res;
   }
 
+  function getNativeComplicationLabel(compl_type) {
+    var res = "";
+    var compl = Complications.getComplication(new Complications.Id(compl_type));
+    if (compl != null) {
+      res = compl.shortLabel;
+      if (res == null) {
+        res = compl.longLabel;
+      }
+    }
+    return res;
+  }
+
   function getWeight() {
     var value = UserProfile.getProfile().weight;
     if (value != null) {
@@ -318,7 +377,7 @@ module DataWrapper {
     return value;
   }
 
-  function getElevation() {
+  function getAltitude() {
     var value = null;
     var compl = Complications.getComplication(
       new Complications.Id(Complications.COMPLICATION_TYPE_ALTITUDE)
@@ -339,7 +398,7 @@ module DataWrapper {
       }
     }
     if (value != null) {
-      value = elevationToString(value);
+      value = altitudeToString(value);
     }
     return value;
   }
@@ -387,17 +446,10 @@ module DataWrapper {
     );
     if (compl != null) {
       if (compl.value != null) {
-        res = compl.value;
+        res = secondsToString(compl.value);
       }
     }
 
-    var h = (res / 60).toNumber();
-    var m = res % 60;
-    if (h > 99) {
-      res = Lang.format("$1$h", [h]);
-    } else {
-      res = Lang.format("$1$:$2$", [h.format("%02d"), m.format("%02d")]);
-    }
     return res;
   }
 
@@ -534,12 +586,24 @@ module DataWrapper {
     return reduceLongValue(value);
   }
 
-  function elevationToString(value) {
+  function altitudeToString(value) {
     if (System.getDeviceSettings().elevationUnits == System.UNIT_STATUTE) {
       /*foot*/
       value *= 3.281;
     }
     return reduceLongValue(value);
+  }
+
+  function secondsToString(value) {
+    var res = null;
+    var h = (value / 60).toNumber();
+    var m = value % 60;
+    if (h > 99) {
+      res = Lang.format("$1$h", [h]);
+    } else {
+      res = Lang.format("$1$:$2$", [h.format("%02d"), m.format("%02d")]);
+    }
+    return res;
   }
 
   function complicationDistanceToString(value) {

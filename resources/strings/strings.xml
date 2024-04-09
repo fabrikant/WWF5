@@ -44,18 +44,7 @@
 
     <!--FIELD TYPES -->
     <string id="FIELD_TYPE_EMPTY" scope="foreground">Empty</string>
-    <string id="FIELD_TYPE_CALORIES" scope="foreground">Calories</string>
     <string id="FIELD_TYPE_DISTANCE" scope="foreground">Daily distance</string>
-    <string id="FIELD_TYPE_STEPS" scope="foreground">Steps</string>
-    <string id="FIELD_TYPE_BATTERY" scope="foreground">Battery</string>
-    <string id="FIELD_TYPE_HR" scope="foreground">HR</string>
-    <string id="FIELD_TYPE_BODY_BATTERY" scope="foreground">Body battery</string>
-    <string id="FIELD_TYPE_RECOVERY_TIME" scope="foreground">Recovery time</string>
-    <string id="FIELD_TYPE_SECONDS" scope="foreground">Seconds</string>
-    <string id="FIELD_TYPE_FLOOR" scope="foreground">Floor</string>
-    <string id="FIELD_TYPE_O2" scope="foreground">O2 saturation</string>
-    <string id="FIELD_TYPE_ELEVATION" scope="foreground">Elevation</string>
-    <string id="FIELD_TYPE_STRESS" scope="foreground">Stress</string>
     <string id="FIELD_TYPE_MOON" scope="foreground">Moon phase</string>
     <string id="FIELD_TYPE_PRESSURE" scope="foreground">Air pressure (sensor)</string>
     <string id="FIELD_TYPE_TEMPERATURE" scope="foreground">Temperature (sensor)</string>

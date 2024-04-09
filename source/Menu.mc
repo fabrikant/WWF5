@@ -113,17 +113,37 @@ module Menu {
   function dataSubMenu() {
     var pattern = {
       DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
-      DataWrapper.HR => Rez.Strings.FIELD_TYPE_HR,
-      DataWrapper.CALORIES => Rez.Strings.FIELD_TYPE_CALORIES,
+      DataWrapper.HR => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_HEART_RATE
+      ),
+      DataWrapper.CALORIES => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_CALORIES
+      ),
       DataWrapper.DISTANCE => Rez.Strings.FIELD_TYPE_DISTANCE,
-      DataWrapper.STEPS => Rez.Strings.FIELD_TYPE_STEPS,
-      DataWrapper.BATTERY => Rez.Strings.FIELD_TYPE_BATTERY,
-      DataWrapper.BODY_BATTERY => Rez.Strings.FIELD_TYPE_BODY_BATTERY,
-      DataWrapper.RECOVERY_TIME => Rez.Strings.FIELD_TYPE_RECOVERY_TIME,
-      DataWrapper.FLOOR => Rez.Strings.FIELD_TYPE_FLOOR,
-      DataWrapper.O2 => Rez.Strings.FIELD_TYPE_O2,
-      DataWrapper.ELEVATION => Rez.Strings.FIELD_TYPE_ELEVATION,
-      DataWrapper.STRESS => Rez.Strings.FIELD_TYPE_STRESS,
+      DataWrapper.STEPS => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_STEPS
+      ),
+      DataWrapper.BATTERY => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_BATTERY
+      ),
+      DataWrapper.BODY_BATTERY => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_BODY_BATTERY
+      ),
+      DataWrapper.RECOVERY_TIME => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_RECOVERY_TIME
+      ),
+      DataWrapper.FLOOR => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_FLOORS_CLIMBED
+      ),
+      DataWrapper.O2 => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_PULSE_OX
+      ),
+      DataWrapper.ALTITUDE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_ALTITUDE
+      ),
+      DataWrapper.STRESS => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_STRESS
+      ),
       DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
       DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
