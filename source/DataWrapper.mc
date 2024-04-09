@@ -37,6 +37,7 @@ module DataWrapper {
     VO2_RUN,
     VO2_BIKE,
     RESPIRATION_RATE,
+    SOLAR_INPUT,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -191,6 +192,11 @@ module DataWrapper {
         null
       );
       res[:image] = Rez.Drawables.Blow;
+    } else if (type == SOLAR_INPUT) {
+      res = getNativeComplicationPercentData(
+        Complications.COMPLICATION_TYPE_SOLAR_INPUT
+      );
+      res[:image] = Rez.Drawables.SunEnergy;
     }
 
     return res;
@@ -199,10 +205,31 @@ module DataWrapper {
   ////////////////////////////////////////////////////////
   //DATA VALUES
 
+  function getNativeComplicationPercentData(compl_type) {
+    var res = {
+      :scale_value => null,
+      :value => null,
+      :label => null,
+      :compl_id => new Complications.Id(compl_type),
+    };
+    var compl = Complications.getComplication(res[:compl_id]);
+    if (compl != null) {
+      if (compl.value != null) {
+        res[:scale_value] = compl.value;
+        res[:value] = getScaleValueCaption(res[:scale_value]);
+      }
+      res[:label] = compl.shortLabel;
+      if (res[:label] == null && compl.longLabel != null) {
+        res[:label] = compl.longLabel;
+      }
+    }
+    return res;
+  }
+
   function getNativeComplicationData(compl_type, convertation_method_symbol) {
     var res = {
-      :value => "",
-      :label => "",
+      :value => null,
+      :label => null,
       :compl_id => new Complications.Id(compl_type),
     };
     var compl = Complications.getComplication(res[:compl_id]);

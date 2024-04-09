@@ -147,6 +147,9 @@ module Menu {
       DataWrapper.RESPIRATION_RATE => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_RESPIRATION_RATE
       ),
+      DataWrapper.SOLAR_INPUT => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_SOLAR_INPUT
+      ),
     };
     return pattern;
   }
