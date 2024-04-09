@@ -203,6 +203,10 @@ class WWF5View extends WatchUi.WatchFace {
     };
     self.addLayer(new PatternField(options));
 
+
+    System.println("Clock height: " +clock_layer.getDc().getHeight());
+    System.println("Seconds height: " +seconds_layer.getDc().getHeight());
+
     pattern.reference_points = null;
   }
 
