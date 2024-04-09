@@ -10,6 +10,7 @@ class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
   var fontClock, fontSeconds, fontValues, fontTemp;
   var moon_keeper;
+  var isAmoledSaveMode;
 
   function initialize() {
     WatchFace.initialize();
@@ -18,6 +19,7 @@ class WWF5View extends WatchUi.WatchFace {
     fontValues = Application.loadResource(Rez.Fonts.values);
     fontTemp = Application.loadResource(Rez.Fonts.temperature);
     every_second_layers = [];
+    isAmoledSaveMode = false;
   }
 
   function readSettings() {
@@ -66,7 +68,9 @@ class WWF5View extends WatchUi.WatchFace {
       :font => fontSeconds,
     };
     var seconds_layer = new SimpleField(options);
-    seconds_layer.compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE);
+    seconds_layer.compl_id = new Complications.Id(
+      Complications.COMPLICATION_TYPE_HEART_RATE
+    );
     self.addLayer(seconds_layer);
     every_second_layers.add(seconds_layer);
 
@@ -203,7 +207,6 @@ class WWF5View extends WatchUi.WatchFace {
     };
     self.addLayer(new PatternField(options));
 
-
     // System.println("Clock height: " +clock_layer.getDc().getHeight());
     // System.println("Seconds height: " +seconds_layer.getDc().getHeight());
 
@@ -256,8 +259,26 @@ class WWF5View extends WatchUi.WatchFace {
   function onHide() as Void {}
 
   // The user has just looked at their watch. Timers and animations may be started here.
-  function onExitSleep() as Void {}
+  function onExitSleep() as Void {
+    isAmoledSaveMode = false;
+    readSettings();
+  }
 
   // Terminate any active timers and prepare for slow updates.
-  function onEnterSleep() as Void {}
+  function onEnterSleep() as Void {
+    var settings = System.getDeviceSettings();
+    if (
+      settings has :requiresBurnInProtection &&
+      settings.requiresBurnInProtection
+    ) {
+      isAmoledSaveMode = true;
+      colors = {
+        :pattern => Graphics.COLOR_TRANSPARENT,
+        :pattern_decorate => Graphics.COLOR_TRANSPARENT,
+        :background => Graphics.COLOR_BLACK,
+        :font => Graphics.COLOR_WHITE,
+        :font_empty_segments => Graphics.COLOR_TRANSPARENT,
+      };
+    }
+  }
 }

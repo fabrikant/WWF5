@@ -16,22 +16,26 @@ class SimpleField extends AbstractField {
   function draw(colors) {
     AbstractField.draw(colors);
     var dc = getDc();
-    var value = self.method(getId()).invoke();
-    var x = dc.getWidth() / 2;
-    var y = dc.getHeight() / 2;
-    var font_h = Graphics.getFontHeight(font);
-    if (font_h * 4 > System.getDeviceSettings().screenHeight) {
-      y -= Math.round(font_h / 32);
+    if (getId() == :seconds && getApp().watch_view.isAmoledSaveMode) {
+      //do nothing
+    } else {
+      var value = self.method(getId()).invoke();
+      var x = dc.getWidth() / 2;
+      var y = dc.getHeight() / 2;
+      var font_h = Graphics.getFontHeight(font);
+      if (font_h * 4 > System.getDeviceSettings().screenHeight) {
+        y -= Math.round(font_h / 32);
+      }
+      drawText(
+        dc,
+        colors,
+        x,
+        y,
+        font,
+        value,
+        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
+      );
     }
-    drawText(
-      dc,
-      colors,
-      x,
-      y,
-      font,
-      value,
-      Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
-    );
 
     drawBorder(dc);
   }

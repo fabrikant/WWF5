@@ -2,6 +2,7 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
+import Toybox.Time;
 
 class PatternField extends WatchUi.Layer {
   var pattern;
@@ -13,8 +14,23 @@ class PatternField extends WatchUi.Layer {
 
   function draw(colors) {
     var dc = getDc();
-    dc.drawBitmap(0, 0, pattern.background_image);
+    dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+    dc.clear();
+    if (getApp().watch_view.isAmoledSaveMode) {
+      var step = 3;
+      var greg = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+      var i = greg.min % step;
+      dc.setPenWidth(step - 1);
+      while (i < dc.getHeight()) {
+        dc.drawLine(0, i, dc.getWidth(), i);
+        dc.drawLine(i, 0, i, dc.getHeight());
+        i += step;
+      }
+    } else {
+      dc.drawBitmap(0, 0, pattern.background_image);
+    }
   }
+
   function checkOnPress(clickEvent) {
     return false;
   }
