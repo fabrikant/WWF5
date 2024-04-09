@@ -121,4 +121,12 @@
 		</palette>
 	</bitmap>
 
+	<bitmap id="PrecipitationChance" filename="./svg-resources/precipitation.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+
+
 </drawables>

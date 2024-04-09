@@ -127,6 +127,7 @@ module Menu {
       DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
       DataWrapper.RELATIVE_HUMIDITY=> Rez.Strings.FIELD_TYPE_RELATIVE_HUMIDITY,
+      DataWrapper.PRECIPITATION_CHANCE=> Rez.Strings.FIELD_TYPE_PRECIPITATION_CHANCE,
       DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
       DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
     };

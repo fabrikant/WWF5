@@ -31,6 +31,7 @@ module DataWrapper {
     TIME_ZONE,
     SECONDS,
     RELATIVE_HUMIDITY,
+    PRECIPITATION_CHANCE,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -149,6 +150,14 @@ module DataWrapper {
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_CURRENT_WEATHER
       );
+    } else if (type == PRECIPITATION_CHANCE) {
+      res[:scale_value] = getPrecipitationChance();
+      res[:value] = getScaleValueCaption(res[:scale_value]);
+      res[:image] = Rez.Drawables.PrecipitationChance;
+      res[:label] = Rez.Strings.FIELD_TYPE_PRECIPITATION_CHANCE;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_CURRENT_WEATHER
+      );
     }
 
     return res;
@@ -191,8 +200,17 @@ module DataWrapper {
   function getRelativeHumidity() {
     var value = null;
     var condition = Weather.getCurrentConditions();
-    if (condition != null){
+    if (condition != null) {
       value = condition.relativeHumidity;
+    }
+    return value;
+  }
+  
+  function getPrecipitationChance() {
+    var value = null;
+    var condition = Weather.getCurrentConditions();
+    if (condition != null) {
+      value = condition.precipitationChance;
     }
     return value;
   }

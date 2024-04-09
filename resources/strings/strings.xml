@@ -62,5 +62,6 @@
     <string id="FIELD_TYPE_TIME1" scope="foreground">Second time</string>
     <string id="FIELD_TYPE_WEIGHT" scope="foreground">Weight</string>
     <string id="FIELD_TYPE_RELATIVE_HUMIDITY" scope="foreground">Relative humidity</string>
+    <string id="FIELD_TYPE_PRECIPITATION_CHANCE" scope="foreground">Chance of precipitation</string>
 
 </strings>
