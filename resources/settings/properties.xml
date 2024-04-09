@@ -1,8 +1,5 @@
 <properties>
 
-	<!--
-	<property id="keyOW" type="string"></property>
-!-->
 	<property id="color_pattern" type="number">0x555555</property>
 	<property id="color_pattern_decorate" type="number">0xAAAAAA</property>
 	<property id="color_background" type="number">0x000000</property>
@@ -12,11 +9,11 @@
 	<property id="pressure_unit" type="number">0</property>
 
 
-	<property id="data_scale" type="number">6</property>
-	<property id="data_small" type="number">5</property>
+	<property id="data_scale" type="number">7</property>
+	<property id="data_small" type="number">24</property>
 	<property id="data_1" type="number">2</property>
 	<property id="data_2" type="number">3</property>
-	<property id="data_3" type="number">15</property>
+	<property id="data_3" type="number">21</property>
 
 	<property id="show_connection" type="number">1</property>
 	<property id="show_DND" type="boolean">true</property>
