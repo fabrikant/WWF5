@@ -17,6 +17,12 @@
       <iq:product id="approachs7042mm"/>
       <iq:product id="approachs7047mm"/>
       <iq:product id="d2mach1"/>
+      <iq:product id="descentmk343mm"/>
+      <iq:product id="descentmk351mm"/>
+      <iq:product id="epix2"/>
+      <iq:product id="epix2pro42mm"/>
+      <iq:product id="epix2pro47mm"/>
+      <iq:product id="epix2pro51mm"/>
       <iq:product id="fenix7"/>
       <iq:product id="fenix7pro"/>
       <iq:product id="fenix7pronowifi"/>
@@ -25,6 +31,8 @@
       <iq:product id="fenix7x"/>
       <iq:product id="fenix7xpro"/>
       <iq:product id="fenix7xpronowifi"/>
+      <iq:product id="fr265"/>
+      <iq:product id="fr265s"/>
       <iq:product id="fr955"/>
     </iq:products>
     <!--
