@@ -17,6 +17,7 @@ class SimpleField extends AbstractField {
     AbstractField.draw(colors);
     var dc = getDc();
     var value = self.method(getId()).invoke();
+    var x = dc.getWidth() / 2;
     var y = dc.getHeight() / 2;
     var font_h = Graphics.getFontHeight(font);
     if (font_h * 4 > System.getDeviceSettings().screenHeight) {
@@ -25,11 +26,11 @@ class SimpleField extends AbstractField {
     drawText(
       dc,
       colors,
-      0,
+      x,
       y,
       font,
       value,
-      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+      Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
     );
 
     drawBorder(dc);
