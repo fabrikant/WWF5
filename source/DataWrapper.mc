@@ -32,6 +32,8 @@ module DataWrapper {
     SECONDS,
     RELATIVE_HUMIDITY,
     PRECIPITATION_CHANCE,
+    WEEKLY_RUN_DISTANCE,
+    WEEKLY_BIKE_DISTANCE,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -158,13 +160,49 @@ module DataWrapper {
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_CURRENT_WEATHER
       );
+    } else if (type == WEEKLY_RUN_DISTANCE) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE,
+        :complicationDistanceToString
+      );
+      res[:image] = Rez.Drawables.Run;
+    } else if (type == WEEKLY_BIKE_DISTANCE) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE,
+        :complicationDistanceToString
+      );
+      res[:image] = Rez.Drawables.Bike;
     }
-
+    
     return res;
   }
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+
+  function getNativeComplicationData(compl_type, convertation_method_symbol) {
+    var res = {
+      :value => "",
+      :label => "",
+      :compl_id => new Complications.Id(compl_type),
+    };
+    var compl = Complications.getComplication(res[:compl_id]);
+    if (compl != null) {
+      if (compl.value != null) {
+        if (convertation_method_symbol == null) {
+          res[:value] = reduceLongValue(compl.value);
+        } else {
+          var method = new Lang.Method(DataWrapper, convertation_method_symbol);
+          res[:value] = method.invoke(compl.value);
+        }
+      }
+      res[:label] = compl.shortLabel;
+      if (res[:label] == null && compl.longLabel != null) {
+        res[:label] = compl.longLabel;
+      }
+    }
+    return res;
+  }
 
   function getWeight() {
     var value = UserProfile.getProfile().weight;
@@ -205,7 +243,7 @@ module DataWrapper {
     }
     return value;
   }
-  
+
   function getPrecipitationChance() {
     var value = null;
     var condition = Weather.getCurrentConditions();
@@ -456,6 +494,10 @@ module DataWrapper {
       value *= 3.281;
     }
     return reduceLongValue(value);
+  }
+
+  function complicationDistanceToString(value) {
+    return distanceToString(value * 100);
   }
 
   function distanceToString(value) {

@@ -3,6 +3,7 @@ using Toybox.WatchUi;
 using Toybox.System;
 using Toybox.Graphics;
 using Toybox.Lang;
+using Toybox.Complications;
 
 //GeneralMenu
 //	Colors
@@ -126,10 +127,17 @@ module Menu {
       DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
       DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
-      DataWrapper.RELATIVE_HUMIDITY=> Rez.Strings.FIELD_TYPE_RELATIVE_HUMIDITY,
-      DataWrapper.PRECIPITATION_CHANCE=> Rez.Strings.FIELD_TYPE_PRECIPITATION_CHANCE,
+      DataWrapper.RELATIVE_HUMIDITY => Rez.Strings.FIELD_TYPE_RELATIVE_HUMIDITY,
+      DataWrapper.PRECIPITATION_CHANCE => Rez.Strings
+        .FIELD_TYPE_PRECIPITATION_CHANCE,
       DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
       DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
+      DataWrapper.WEEKLY_RUN_DISTANCE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
+      ),
+      DataWrapper.WEEKLY_BIKE_DISTANCE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE
+      ),
     };
     return pattern;
   }
@@ -244,6 +252,18 @@ module Menu {
     var method = new Lang.Method(Menu, method_symbol);
     var pattern = method.invoke();
     return pattern[value];
+  }
+
+  function getNativeComplicationLabel(compl_type) {
+    var res = "";
+    var compl = Complications.getComplication(new Complications.Id(compl_type));
+    if (compl != null) {
+      res = compl.longLabel;
+      if (res == null) {
+        res = compl.shortLabel;
+      }
+    }
+    return res;
   }
 }
 
