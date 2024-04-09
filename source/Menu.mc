@@ -138,6 +138,12 @@ module Menu {
       DataWrapper.WEEKLY_BIKE_DISTANCE => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE
       ),
+      DataWrapper.VO2_RUN => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_VO2MAX_RUN
+      ),
+      DataWrapper.VO2_BIKE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_VO2MAX_BIKE
+      ),
     };
     return pattern;
   }

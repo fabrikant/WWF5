@@ -34,6 +34,8 @@ module DataWrapper {
     PRECIPITATION_CHANCE,
     WEEKLY_RUN_DISTANCE,
     WEEKLY_BIKE_DISTANCE,
+    VO2_RUN,
+    VO2_BIKE,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -172,8 +174,18 @@ module DataWrapper {
         :complicationDistanceToString
       );
       res[:image] = Rez.Drawables.Bike;
+    } else if (type == VO2_RUN) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_VO2MAX_RUN,
+        null
+      );
+    } else if (type == VO2_BIKE) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_VO2MAX_BIKE,
+        null
+      );
     }
-    
+
     return res;
   }
 
