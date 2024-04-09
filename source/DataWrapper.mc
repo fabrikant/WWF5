@@ -8,6 +8,7 @@ import Toybox.Application;
 import Toybox.SensorHistory;
 import Toybox.Time;
 import Toybox.UserProfile;
+import Toybox.Weather;
 
 module DataWrapper {
   enum {
@@ -29,6 +30,7 @@ module DataWrapper {
     MOON,
     TIME_ZONE,
     SECONDS,
+    RELATIVE_HUMIDITY,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -139,6 +141,14 @@ module DataWrapper {
       res[:value] = getWeight();
       res[:image] = Rez.Drawables.Weight;
       res[:label] = Rez.Strings.FIELD_TYPE_WEIGHT;
+    } else if (type == RELATIVE_HUMIDITY) {
+      res[:scale_value] = getRelativeHumidity();
+      res[:value] = getScaleValueCaption(res[:scale_value]);
+      res[:image] = Rez.Drawables.RelativeHumidity;
+      res[:label] = Rez.Strings.FIELD_TYPE_RELATIVE_HUMIDITY;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_CURRENT_WEATHER
+      );
     }
 
     return res;
@@ -154,7 +164,7 @@ module DataWrapper {
     }
     return value;
   }
-  
+
   function getSecondTime() {
     var offset =
       Application.Properties.getValue("T1TZ") * 60 -
@@ -174,6 +184,15 @@ module DataWrapper {
     var value = getLasValueSensorHistory(:getPressureHistory);
     if (value != null) {
       value = convertPressure(value);
+    }
+    return value;
+  }
+
+  function getRelativeHumidity() {
+    var value = null;
+    var condition = Weather.getCurrentConditions();
+    if (condition != null){
+      value = condition.relativeHumidity;
     }
     return value;
   }

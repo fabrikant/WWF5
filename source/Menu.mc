@@ -126,6 +126,7 @@ module Menu {
       DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
       DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
+      DataWrapper.RELATIVE_HUMIDITY=> Rez.Strings.FIELD_TYPE_RELATIVE_HUMIDITY,
       DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
       DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
     };
