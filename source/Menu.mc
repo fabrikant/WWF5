@@ -116,9 +116,10 @@ module Menu {
       DataWrapper.HR => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_HEART_RATE
       ),
-      DataWrapper.CALORIES => getNativeComplicationLabel(
+      DataWrapper.CALORIES_ACTIVE => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_CALORIES
       ),
+      DataWrapper.CALORIES_TOTAL => Rez.Strings.FIELD_TYPE_CALORIES_TOTAL,
       DataWrapper.DISTANCE => Rez.Strings.FIELD_TYPE_DISTANCE,
       DataWrapper.STEPS => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_STEPS

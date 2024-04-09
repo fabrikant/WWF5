@@ -44,6 +44,7 @@
 
     <!--FIELD TYPES -->
     <string id="FIELD_TYPE_EMPTY" scope="foreground">Empty</string>
+    <string id="FIELD_TYPE_CALORIES_TOTAL" scope="foreground">Calories total</string>
     <string id="FIELD_TYPE_DISTANCE" scope="foreground">Daily distance</string>
     <string id="FIELD_TYPE_MOON" scope="foreground">Moon phase</string>
     <string id="FIELD_TYPE_PRESSURE" scope="foreground">Air pressure (sensor)</string>

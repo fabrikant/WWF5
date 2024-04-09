@@ -14,7 +14,8 @@ module DataWrapper {
   enum {
     EMPTY = 0,
     HR,
-    CALORIES,
+    CALORIES_TOTAL,
+    CALORIES_ACTIVE,
     STEPS,
     DISTANCE,
     WEEKLY_RUN_DISTANCE,
@@ -49,18 +50,19 @@ module DataWrapper {
   function getData(type) {
     var res = { :value => null, :label => null, :image => null };
 
-    if (type == CALORIES) {
+    if (type == CALORIES_ACTIVE) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_CALORIES,
         null
       );
       res[:image] = Rez.Drawables.Callory;
-
-      // res[:value] = getCalories();
-      // res[:label] = Rez.Strings.FIELD_TYPE_CALORIES;
-      // res[:compl_id] = new Complications.Id(
-      //   Complications.COMPLICATION_TYPE_CALORIES
-      // );
+    } else if (type == CALORIES_TOTAL) {
+      res[:value] = getCalories();
+      res[:label] = Rez.Strings.FIELD_TYPE_CALORIES_TOTAL;
+      res[:image] = Rez.Drawables.Callory;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_CALORIES
+      );
     } else if (type == DISTANCE) {
       res[:value] = getDistance();
       res[:image] = Rez.Drawables.Distance;
