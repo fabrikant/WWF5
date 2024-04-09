@@ -144,6 +144,9 @@ module Menu {
       DataWrapper.VO2_BIKE => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_VO2MAX_BIKE
       ),
+      DataWrapper.RESPIRATION_RATE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_RESPIRATION_RATE
+      ),
     };
     return pattern;
   }

@@ -36,6 +36,7 @@ module DataWrapper {
     WEEKLY_BIKE_DISTANCE,
     VO2_RUN,
     VO2_BIKE,
+    RESPIRATION_RATE,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -184,6 +185,12 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_VO2MAX_BIKE,
         null
       );
+    } else if (type == RESPIRATION_RATE) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_RESPIRATION_RATE,
+        null
+      );
+      res[:image] = Rez.Drawables.Blow;
     }
 
     return res;
