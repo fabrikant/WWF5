@@ -23,7 +23,7 @@ class MoonKeeper {
     self.bitmap = Moon.drawMoon(
       moon_phase[:IP1],
       bitmap_size,
-      colors[:font],
+      colors[:image],
       colors[:background]
     );
   }

@@ -91,7 +91,7 @@ class AbstractField extends WatchUi.Layer {
       :height => _bitmap.getHeight(),
     });
     var _bufferedBitmap = _bufferedBitmapRef.get();
-    _bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
+    _bufferedBitmap.setPalette([colors[:image], Graphics.COLOR_TRANSPARENT]);
     return _bufferedBitmapRef;
   }
 

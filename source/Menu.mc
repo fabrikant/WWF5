@@ -246,6 +246,12 @@ module Menu {
     var items_props = [];
     items_props.add({
       :item_class => :ColorPropertyItem,
+      :rez_label => Rez.Strings.color_font_image,
+      :identifier => "color_image",
+      :method => :createColorSelectMenu,
+    });
+    items_props.add({
+      :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font,
       :identifier => "color_font",
       :method => :createColorSelectMenu,
