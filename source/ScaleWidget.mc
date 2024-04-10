@@ -8,6 +8,7 @@ import Toybox.Lang;
 class ScaleWidget extends AbstractField {
   var angle_min, angle_max, center_x, center_y;
   var clear_poligon;
+  var small_bitmap;
 
   function initialize(options) {
     AbstractField.initialize(options);
@@ -35,6 +36,7 @@ class ScaleWidget extends AbstractField {
       [dc.getWidth(), dc.getHeight()],
       [dc.getWidth() - Global.mod(ref_points[:x][2] - ref_points[:x][1]), 0],
     ];
+    small_bitmap = null;
   }
 
   function draw(colors) {
@@ -118,17 +120,22 @@ class ScaleWidget extends AbstractField {
 
     //Значок нужно уменьшить
     if (data[:image] != null) {
-      var bitmap = createImage(data[:image], colors);
-      var bitmap_no_palette = Graphics.createBufferedBitmap({
-        :width => bitmap.getWidth(),
-        :height => bitmap.getHeight(),
-      });
-      bitmap_no_palette.get().getDc().drawBitmap(0, 0, bitmap);
+      if (small_bitmap == null) {
+        var bitmap = createImage(data[:image], colors);
+        small_bitmap = Graphics.createBufferedBitmap({
+          :width => bitmap.getWidth(),
+          :height => bitmap.getHeight(),
+        });
+        small_bitmap.get().getDc().drawBitmap(0, 0, bitmap);
+      }
+
       var reduction_factor = 0.7;
-      temp_y -= bitmap.getHeight() * reduction_factor;
+      temp_y -= small_bitmap.getHeight() * reduction_factor;
       var transform = new Graphics.AffineTransform();
       transform.scale(reduction_factor, reduction_factor);
-      dc.drawBitmap2(temp_x, temp_y, bitmap_no_palette, { :transform => transform });
+      dc.drawBitmap2(temp_x, temp_y, small_bitmap, {
+        :transform => transform,
+      });
     }
 
     //Шкала

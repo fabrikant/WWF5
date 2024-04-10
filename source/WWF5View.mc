@@ -37,6 +37,8 @@ class WWF5View extends WatchUi.WatchFace {
   }
 
   function createLayers() {
+    self.clearLayers();
+
     //Время
     var clock_layer_max_lenght = 4.25;
     var options = pattern.calculateLayerCoordinates(
