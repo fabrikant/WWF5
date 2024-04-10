@@ -7,6 +7,7 @@ using Toybox.Complications;
 
 //GeneralMenu
 //	Colors
+//		color_image
 //		color_font
 //		color_font_border
 //		color_font_empty_segments
@@ -642,8 +643,8 @@ class IconDrawable extends WatchUi.Drawable {
       :identifier => color,
       :locX => 0,
       :locY => 0,
-      :width => 20,
-      :height => 20,
+      :width => 5,
+      :height => 5,
       :visible => true,
     };
     Drawable.initialize(options);
