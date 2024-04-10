@@ -20,7 +20,7 @@ class PatternField extends WatchUi.Layer {
       var step = 3;
       var greg = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
       var i = greg.min % step;
-      dc.setPenWidth(step - 1);
+      dc.setPenWidth(1);
       while (i < dc.getHeight()) {
         dc.drawLine(0, i, dc.getWidth(), i);
         dc.drawLine(i, 0, i, dc.getHeight());

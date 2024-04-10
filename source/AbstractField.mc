@@ -80,30 +80,19 @@ class AbstractField extends WatchUi.Layer {
   }
 
   function createImage(resource, colors) {
-
-    if (resource instanceof Graphics.BufferedBitmapReference){
+    if (resource instanceof Graphics.BufferedBitmapReference) {
       return resource;
     }
 
     var _bitmap = Application.loadResource(resource);
-    if (Graphics has :createBufferedBitmap) {
-      var _bufferedBitmapRef = Graphics.createBufferedBitmap({
-        :bitmapResource => _bitmap,
-        :width => _bitmap.getWidth(),
-        :height => _bitmap.getHeight(),
-      });
-      var _bufferedBitmap = _bufferedBitmapRef.get();
-      _bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
-      return _bufferedBitmap;
-    } else {
-      var _bufferedBitmap = new Graphics.BufferedBitmap({
-        :bitmapResource => _bitmap,
-        :width => _bitmap.getWidth(),
-        :height => _bitmap.getHeight(),
-      });
-      _bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
-      return _bufferedBitmap;
-    }
+    var _bufferedBitmapRef = Graphics.createBufferedBitmap({
+      :bitmapResource => _bitmap,
+      :width => _bitmap.getWidth(),
+      :height => _bitmap.getHeight(),
+    });
+    var _bufferedBitmap = _bufferedBitmapRef.get();
+    _bufferedBitmap.setPalette([colors[:font], Graphics.COLOR_TRANSPARENT]);
+    return _bufferedBitmapRef;
   }
 
   function checkOnPress(clickEvent) {
