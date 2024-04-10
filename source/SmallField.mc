@@ -5,11 +5,9 @@ import Toybox.Complications;
 import Toybox.Lang;
 
 class SmallField extends AbstractField {
-  var bitmap;
-
+  
   function initialize(options) {
     AbstractField.initialize(options);
-    bitmap = null;
   }
 
   function draw(colors) {
@@ -31,9 +29,7 @@ class SmallField extends AbstractField {
 
     if (data[:image] != null) {
       //Картинка
-      if (bitmap == null) {
-        bitmap = createImage(data[:image], colors);
-      }
+      var  bitmap = createImage(data[:image], colors);
       bitmap_h = bitmap.getHeight();
       dc.drawBitmap(0, (dc.getHeight() - bitmap_h) / 2, bitmap);
       temp_x += bitmap.getWidth() + 4;

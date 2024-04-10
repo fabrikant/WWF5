@@ -9,7 +9,7 @@ import Toybox.Complications;
 class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
   var fontClock, fontSeconds, fontValues, fontTemp;
-  var moon_keeper;
+  var moon_keeper, weather_layer, scale_layer;
   var isAmoledSaveMode;
 
   function initialize() {
@@ -120,7 +120,8 @@ class WWF5View extends WatchUi.WatchFace {
       :height => sun_event_field.getY(),
       :identifier => :weather,
     };
-    self.addLayer(new WeatherWidget(options));
+    weather_layer = new WeatherWidget(options);
+    self.addLayer(weather_layer);
 
     //Шкала
     options = pattern.calculateLayerCoordinates(
@@ -128,7 +129,8 @@ class WWF5View extends WatchUi.WatchFace {
       [pattern.reference_points[:x][2], pattern.reference_points[:y][2]]
     );
     options[:identifier] = "data_scale";
-    self.addLayer(new ScaleWidget(options));
+    scale_layer = new ScaleWidget(options);
+    self.addLayer(scale_layer);
 
     //Поля данных
     var field_widtch = Math.floor(
@@ -265,6 +267,9 @@ class WWF5View extends WatchUi.WatchFace {
   function onExitSleep() as Void {
     isAmoledSaveMode = false;
     readSettings();
+    moon_keeper.calculate(Time.now());
+    weather_layer.arrow_bitmap = null;
+    scale_layer.small_bitmap = null;
   }
 
   // Terminate any active timers and prepare for slow updates.
@@ -281,7 +286,16 @@ class WWF5View extends WatchUi.WatchFace {
         :background => Graphics.COLOR_BLACK,
         :font => Graphics.COLOR_WHITE,
         :font_empty_segments => Graphics.COLOR_TRANSPARENT,
+        :image => Graphics.COLOR_WHITE,
       };
+      moon_keeper.bitmap = Moon.drawMoon(
+        moon_keeper.moon_phase[:IP1],
+        moon_keeper.bitmap_size,
+        colors[:image],
+        colors[:background]
+      );
+      weather_layer.arrow_bitmap = null;
+      scale_layer.small_bitmap = null;
     }
   }
 }

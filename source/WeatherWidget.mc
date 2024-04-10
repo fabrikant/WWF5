@@ -127,7 +127,7 @@ class WeatherWidget extends AbstractField {
     var dc = buf_bitmap_ref.get().getDc();
     dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_TRANSPARENT);
     dc.clear();
-    dc.setColor(colors[:font], colors[:font]);
+    dc.setColor(colors[:image], colors[:image]);
     dc.fillPolygon(coords);
 
     return buf_bitmap_ref;
