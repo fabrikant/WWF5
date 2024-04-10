@@ -23,24 +23,18 @@ class BottomField extends AbstractField {
     AbstractField.draw(colors);
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
-    var value = self.method(getId()).invoke();
-    dc.drawText(
-      dc.getWidth() / 2,
-      -2,
-      font,
-      value,
-      Graphics.TEXT_JUSTIFY_CENTER
-    );
-
-    // var radius = Math.floor((System.getDeviceSettings().screenHeight - dc.getHeight()) / 2);
-    // dc.drawRadialText(
-    //     Math.floor(dc.getWidth() / 2),
-    //     Math.floor(dc.getHeight() / 2) - radius,
-    //     font, value,
-    //     Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER,
-    //     270,
-    //     radius,
-    //     Graphics.RADIAL_TEXT_DIRECTION_COUNTER_CLOCKWISE);
+    var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    compl_id = data[:compl_id];
+    
+    if (data[:value] != null) {
+      dc.drawText(
+        dc.getWidth() / 2,
+        -2,
+        font,
+        data[:value],
+        Graphics.TEXT_JUSTIFY_CENTER
+      );
+    }
 
     drawBorder(dc);
   }

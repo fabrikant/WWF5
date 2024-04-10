@@ -82,7 +82,7 @@ class WWF5View extends WatchUi.WatchFace {
         System.getDeviceSettings().screenHeight,
       ]
     );
-    options[:identifier] = :date;
+    options[:identifier] = "data_bottom";
     var date_field = new BottomField(options);
     date_field.compl_id = new Complications.Id(
       Complications.COMPLICATION_TYPE_CALENDAR_EVENTS

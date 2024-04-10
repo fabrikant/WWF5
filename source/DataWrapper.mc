@@ -40,6 +40,11 @@ module DataWrapper {
     SECONDS,
     BATTERY,
     SOLAR_INPUT,
+    DATE_LONG,
+    DATE,
+    WEEKDAY_MONTHDAY,
+    CALENDAR_EVENTS,
+    TRAINING_STATUS,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -196,6 +201,32 @@ module DataWrapper {
         :minutesToString
       );
       res[:image] = Rez.Drawables.Exercises;
+    } else if (type == DATE_LONG) {
+      res = {
+        :value => getLongDate(),
+        :label => Rez.Strings.FIELD_TYPE_LONG_DATE,
+      };
+    } else if (type == DATE) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_DATE,
+        null
+      );
+    } else if (type == WEEKDAY_MONTHDAY) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_WEEKDAY_MONTHDAY,
+        null
+      );
+    } else if (type == CALENDAR_EVENTS) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_CALENDAR_EVENTS,
+        null
+      );
+       res[:image] = Rez.Drawables.Calendar;
+    } else if (type == TRAINING_STATUS) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_TRAINING_STATUS,
+        null
+      );
     }
 
     return res;
@@ -355,6 +386,12 @@ module DataWrapper {
     }
     return res;
   }
+
+  function getLongDate() {
+    var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
+    return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
+  }
+
   //******************************************************
   //convertation values
   function momentToString(moment) {

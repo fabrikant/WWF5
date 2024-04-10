@@ -155,5 +155,11 @@
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>
+	</bitmap>	
+
+	<bitmap id="Calendar" filename="./svg-resources/calendar.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
 	</bitmap>
 </drawables>

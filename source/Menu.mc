@@ -18,6 +18,7 @@ using Toybox.Complications;
 //	Data1
 //	Data2
 // 	Data3
+//  data_bottom
 //  show_connection
 //  show_DND
 //  Wind speed unit
@@ -67,6 +68,12 @@ module Menu {
       :identifier => "data_3",
       :method => :dataSubMenu,
     });
+    items_props.add({
+      :item_class => :Item,
+      :rez_label => Rez.Strings.BottomField,
+      :identifier => "data_bottom",
+      :method => :dataSubMenuBottom,
+    });
 
     //Показ статуса подключения
     items_props.add({
@@ -108,6 +115,26 @@ module Menu {
 
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
     return new SubMenu(options);
+  }
+
+  function dataSubMenuBottom() {
+    var pattern = {
+      DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
+      DataWrapper.DATE_LONG => Rez.Strings.FIELD_TYPE_LONG_DATE,
+      DataWrapper.DATE => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_DATE
+      ),
+      DataWrapper.WEEKDAY_MONTHDAY => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_WEEKDAY_MONTHDAY
+      ),
+      DataWrapper.CALENDAR_EVENTS => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
+      ),
+      DataWrapper.TRAINING_STATUS => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_TRAINING_STATUS
+      ),
+    };
+    return pattern;
   }
 
   function dataSubMenu() {
@@ -170,8 +197,12 @@ module Menu {
       ),
       DataWrapper.SOLAR_INPUT => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_SOLAR_INPUT
-      ),DataWrapper.INTENSITY_MINUTES => getNativeComplicationLabel(
+      ),
+      DataWrapper.INTENSITY_MINUTES => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_INTENSITY_MINUTES
+      ),
+      DataWrapper.CALENDAR_EVENTS => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
       ),
     };
     return pattern;
