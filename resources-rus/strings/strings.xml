@@ -1,0 +1,60 @@
+<strings>
+    <string id="AppName">WWF5</string>
+    <!-- Menu -->
+    <string id="MenuHeader" scope="foreground">Настройки</string>
+    <string id="SubmenuColors" scope="foreground">Цвета</string>
+
+    <string id="color_pattern" scope="foreground">Шаблон</string>
+    <string id="color_pattern_decorate" scope="foreground">Акцент шаблона</string>
+    <string id="color_background" scope="foreground">Фон</string>
+    <string id="color_font" scope="foreground">Шрифт</string>
+    <string id="color_font_empty_segments" scope="foreground">Шрифт пуст. сегменты</string>
+
+    <string id="WindSpeedUnit">Ед. изм. ветра</string>
+    <string id="SpeedUnitMSec" scope="foreground">м/с</string>
+    <string id="SpeedUnitKmH" scope="foreground">км/ч</string>
+    <string id="SpeedUnitMileH" scope="foreground">мл/ч</string>
+    <string id="SpeedUnitFtSec" scope="foreground">фт/с</string>
+    <string id="SpeedUnitBeauf" scope="foreground">бофорт</string>
+    <string id="SpeedUnitKnots" scope="foreground">узл.</string>
+
+    <!--PRESSURE UNITS -->
+    <string id="PressUnit" scope="foreground">Ед. изм. давления</string>
+    <string id="PressUnitMmHg" scope="foreground">мм рт. ст.</string>
+    <string id="PressUnitPsi" scope="foreground">фунт/дюйм</string>
+    <string id="PressUnitInchHg" scope="foreground">дюймы рт. ст.</string>
+    <string id="PressUnitBar" scope="foreground">милибар</string>
+    <string id="PressUnitKPa" scope="foreground">кПА</string>
+
+    <string id="DataScale" scope="foreground">Поле шкалы</string>
+    <string id="SmallField" scope="foreground">Маленькое поле</string>
+    <string id="Data1" scope="foreground">Данные 1</string>
+    <string id="Data2" scope="foreground">Данные 2</string>
+    <string id="Data3" scope="foreground">Данные 3</string>
+    <string id="BottomField" scope="foreground">Нижнее поле</string>
+
+    <string id="show_connection">Значек bluetooth</string>
+    <string id="show_if_connect">Если подключен</string>
+    <string id="show_if_disconnect">Если отключен</string>
+    <string id="hide">Спрятать</string>
+
+    <string id="show_DND">Показывать DND</string>
+
+    <!--SECOND TIME -->
+    <string id="T1TZ" scope="foreground">Др. час. пояс ±UTC (minutes)</string>
+
+    <!--FIELD TYPES -->
+    <string id="FIELD_TYPE_EMPTY" scope="foreground">Пусто</string>
+    <string id="FIELD_TYPE_CALORIES_TOTAL" scope="foreground">Калории общие</string>
+    <string id="FIELD_TYPE_DISTANCE" scope="foreground">Расстояние за день</string>
+    <string id="FIELD_TYPE_MOON" scope="foreground">Фаза луны</string>
+    <string id="FIELD_TYPE_PRESSURE" scope="foreground">Атм. давление (сенсор)</string>
+    <string id="FIELD_TYPE_TEMPERATURE" scope="foreground">Температура (сенсор)</string>
+    <string id="FIELD_TYPE_TIME1" scope="foreground">Др. час. пояс</string>
+    <string id="FIELD_TYPE_WEIGHT" scope="foreground">Вес</string>
+    <string id="FIELD_TYPE_RELATIVE_HUMIDITY" scope="foreground">Отн. влажн. возд.</string>
+    <string id="FIELD_TYPE_PRECIPITATION_CHANCE" scope="foreground">Вероятн. осадков</string>
+    <string id="FIELD_TYPE_LONG_DATE" scope="foreground">День нед., число месяц</string>
+    <string id="FIELD_TYPE_CITY" scope="foreground">Город</string>
+
+</strings>
