@@ -170,6 +170,8 @@ module Menu {
       ),
       DataWrapper.SOLAR_INPUT => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_SOLAR_INPUT
+      ),DataWrapper.INTENSITY_MINUTES => getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_INTENSITY_MINUTES
       ),
     };
     return pattern;

@@ -20,6 +20,7 @@ module DataWrapper {
     DISTANCE,
     WEEKLY_RUN_DISTANCE,
     WEEKLY_BIKE_DISTANCE,
+    INTENSITY_MINUTES,
     BODY_BATTERY,
     RECOVERY_TIME,
     STRESS,
@@ -95,7 +96,7 @@ module DataWrapper {
     } else if (type == RECOVERY_TIME) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_RECOVERY_TIME,
-        :secondsToString
+        :minutesToString
       );
       res[:image] = Rez.Drawables.RecoveryTime;
     } else if (type == FLOOR) {
@@ -117,8 +118,8 @@ module DataWrapper {
       res[:image] = Rez.Drawables.Altitude;
     } else if (type == STRESS) {
       res = getNativeComplicationData(
-        Complications.COMPLICATION_TYPE_ALTITUDE,
-        :altitudeToString
+        Complications.COMPLICATION_TYPE_STRESS,
+        null
       );
       res[:image] = Rez.Drawables.Stress;
     } else if (type == MOON) {
@@ -189,6 +190,12 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_SOLAR_INPUT
       );
       res[:image] = Rez.Drawables.SunEnergy;
+    } else if (type == INTENSITY_MINUTES) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_INTENSITY_MINUTES,
+        :minutesToString
+      );
+      res[:image] = Rez.Drawables.Exercises;
     }
 
     return res;
@@ -391,7 +398,7 @@ module DataWrapper {
     return reduceLongValue(value);
   }
 
-  function secondsToString(value) {
+  function minutesToString(value) {
     var res = null;
     var h = (value / 60).toNumber();
     var m = value % 60;
