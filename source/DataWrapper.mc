@@ -135,6 +135,9 @@ module DataWrapper {
       res[:value] = getPressure();
       res[:image] = Rez.Drawables.Pressure;
       res[:label] = Rez.Strings.FIELD_TYPE_PRESSURE;
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE
+      );
     } else if (type == TEMPERATURE) {
       res[:value] = getTemperature();
       res[:image] = Rez.Drawables.Temperature;
