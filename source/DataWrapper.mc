@@ -45,6 +45,7 @@ module DataWrapper {
     WEEKDAY_MONTHDAY,
     CALENDAR_EVENTS,
     TRAINING_STATUS,
+    CITY,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -227,6 +228,10 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_TRAINING_STATUS,
         null
       );
+    }else if (type == CITY){
+      res[:value] = getWeatherCity();
+      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
+      res[:label] = Rez.Strings.FIELD_TYPE_CITY;
     }
 
     return res;
@@ -234,6 +239,15 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+
+  function getWeatherCity(){
+    var res = null;
+    var weather = Weather.getCurrentConditions();
+    if (weather != null) {
+      res = weather.observationLocationName;
+    }
+    return res;
+  }
 
   function getNativeComplicationPercentData(compl_type) {
     var res = {
@@ -275,18 +289,6 @@ module DataWrapper {
       res[:label] = compl.shortLabel;
       if (res[:label] == null && compl.longLabel != null) {
         res[:label] = compl.longLabel;
-      }
-    }
-    return res;
-  }
-
-  function getNativeComplicationLabel(compl_type) {
-    var res = "";
-    var compl = Complications.getComplication(new Complications.Id(compl_type));
-    if (compl != null) {
-      res = compl.shortLabel;
-      if (res == null) {
-        res = compl.longLabel;
       }
     }
     return res;

@@ -133,6 +133,7 @@ module Menu {
       DataWrapper.TRAINING_STATUS => getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_TRAINING_STATUS
       ),
+      DataWrapper.CITY => Rez.Strings.FIELD_TYPE_CITY,
     };
     return pattern;
   }
