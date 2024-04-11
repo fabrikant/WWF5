@@ -16,6 +16,7 @@
     <string id="color_font" scope="foreground">Font</string>
     <string id="color_font_empty_segments" scope="foreground">Font empty segments</string>
     <string id="color_font_image" scope="foreground">Images</string>
+    <string id="color_scale" scope="foreground">Scale</string>
 
     <string id="WindSpeedUnit">Wind speed unit</string>
     <string id="SpeedUnitMSec" scope="foreground">m/s</string>

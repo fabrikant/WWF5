@@ -169,7 +169,7 @@ class ScaleWidget extends AbstractField {
     var angle_value =
       angle_min - (data_scale * Global.mod(angle_min - angle_max)) / 100;
 
-    var scale_color = Graphics.COLOR_GREEN;
+    var scale_color = colors[:scale];
     if (data_scale <= 20) {
       scale_color = Graphics.COLOR_RED;
     }

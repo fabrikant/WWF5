@@ -25,6 +25,7 @@ module Global {
       "color_font",
       "color_font_empty_segments",
       "color_image",
+      "color_scale",
       "wind_speed_unit",
       "pressure_unit",
       "data_scale",

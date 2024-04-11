@@ -374,6 +374,12 @@ module Menu {
       :identifier => "color_pattern_decorate",
       :method_symbol => :createColorSelectMenu,
     });
+    items_props.add({
+      :item_class => :ColorPropertyItem,
+      :rez_label => Rez.Strings.color_scale,
+      :identifier => "color_scale",
+      :method_symbol => :createColorSelectMenu,
+    });
 
     var options = {
       :title => Rez.Strings.SubmenuColors,

@@ -34,6 +34,7 @@ class WWF5View extends WatchUi.WatchFace {
         "color_font_empty_segments"
       ),
       :image => Application.Properties.getValue("color_image"),
+      :scale => Application.Properties.getValue("color_scale"),
     };
   }
 
