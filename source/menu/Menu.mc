@@ -15,6 +15,13 @@ import Toybox.Time;
 //		color_background
 //		color_pattern
 //		color_pattern_decorate
+//  Presets
+//    Save new preset
+//    Preset1
+//      Apply
+//      Remove
+//    ....
+//    PresetN
 //  data_scale
 //  data_small
 //	Data1
