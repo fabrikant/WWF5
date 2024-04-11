@@ -67,20 +67,11 @@ class PickerItem extends WatchUi.MenuItem {
   }
 
   function onSelectItem() {
-    if (WatchUi has :TextPicker) {
-      WatchUi.pushView(
-        new WatchUi.TextPicker(getSubLabel()),
-        new TextDelegate(self.weak()),
-        WatchUi.SLIDE_IMMEDIATE
-      );
-    } else {
-      var picker = new StringPicker(self.weak(), char_set);
-      WatchUi.pushView(
-        picker,
-        new StringPickerDelegate(picker),
-        WatchUi.SLIDE_IMMEDIATE
-      );
-    }
+    WatchUi.pushView(
+      new WatchUi.TextPicker(getSubLabel()),
+      new TextDelegate(self.weak()),
+      WatchUi.SLIDE_IMMEDIATE
+    );
   }
 
   function onSetText(value) {

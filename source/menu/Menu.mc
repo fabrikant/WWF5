@@ -8,13 +8,13 @@ import Toybox.Time;
 
 //GeneralMenu
 //	Colors
-//		color_image
+//		c_image
 //		color_font
 //		color_font_border
-//		color_font_empty_segments
-//		color_background
-//		color_pattern
-//		color_pattern_decorate
+//		c_es
+//		c_bgnd
+//		c_patt
+//		c_patt_d
 //  Presets
 //    Save new preset
 //    Preset1
@@ -126,7 +126,6 @@ module Menu {
       :item_class => :PickerItem,
       :rez_label => Rez.Strings.T1TZ,
       :identifier => "T1TZ",
-      :char_set => "-0123456789",
     });
 
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
@@ -318,7 +317,6 @@ module Menu {
       :rez_label => Rez.Strings.RenamePreset,
       :sublabel => title,
       :identifier => :renamePreset,
-      :char_set => "abcdefghijklmnopqrstuvwxyz0123456789-",
       :method_symbol => :renamePreset,
       :method_options => options,
     });
@@ -341,7 +339,7 @@ module Menu {
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font_image,
-      :identifier => "color_image",
+      :identifier => "c_image",
       :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
@@ -352,32 +350,32 @@ module Menu {
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
-      :rez_label => Rez.Strings.color_font_empty_segments,
-      :identifier => "color_font_empty_segments",
+      :rez_label => Rez.Strings.c_es,
+      :identifier => "c_es",
       :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
-      :rez_label => Rez.Strings.color_background,
-      :identifier => "color_background",
+      :rez_label => Rez.Strings.c_bgnd,
+      :identifier => "c_bgnd",
       :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
-      :rez_label => Rez.Strings.color_pattern,
-      :identifier => "color_pattern",
+      :rez_label => Rez.Strings.c_patt,
+      :identifier => "c_patt",
       :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
-      :rez_label => Rez.Strings.color_pattern_decorate,
-      :identifier => "color_pattern_decorate",
+      :rez_label => Rez.Strings.c_patt_d,
+      :identifier => "c_patt_d",
       :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
-      :rez_label => Rez.Strings.color_scale,
-      :identifier => "color_scale",
+      :rez_label => Rez.Strings.c_scale,
+      :identifier => "c_scale",
       :method_symbol => :createColorSelectMenu,
     });
 

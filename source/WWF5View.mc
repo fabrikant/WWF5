@@ -24,17 +24,17 @@ class WWF5View extends WatchUi.WatchFace {
 
   function readSettings() {
     colors = {
-      :pattern => Application.Properties.getValue("color_pattern"),
+      :pattern => Application.Properties.getValue("c_patt"),
       :pattern_decorate => Application.Properties.getValue(
-        "color_pattern_decorate"
+        "c_patt_d"
       ),
-      :background => Application.Properties.getValue("color_background"),
+      :background => Application.Properties.getValue("c_bgnd"),
       :font => Application.Properties.getValue("color_font"),
       :font_empty_segments => Application.Properties.getValue(
-        "color_font_empty_segments"
+        "c_es"
       ),
-      :image => Application.Properties.getValue("color_image"),
-      :scale => Application.Properties.getValue("color_scale"),
+      :image => Application.Properties.getValue("c_image"),
+      :scale => Application.Properties.getValue("c_scale"),
     };
   }
 

@@ -19,13 +19,13 @@ module Global {
 
   function getPropertiesKeys() {
     return [
-      "color_pattern",
-      "color_pattern_decorate",
-      "color_background",
+      "c_patt",
+      "c_patt_d",
+      "c_bgnd",
       "color_font",
-      "color_font_empty_segments",
-      "color_image",
-      "color_scale",
+      "c_es",
+      "c_image",
+      "c_scale",
       "wind_speed_unit",
       "pressure_unit",
       "data_scale",

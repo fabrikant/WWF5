@@ -10,13 +10,13 @@
     <string id="RemovePreset" scope="foreground">Удалить</string>
     <string id="RenamePreset" scope="foreground">Переименовать</string>
     
-    <string id="color_pattern" scope="foreground">Шаблон</string>
-    <string id="color_pattern_decorate" scope="foreground">Акцент шаблона</string>
-    <string id="color_background" scope="foreground">Фон</string>
+    <string id="c_patt" scope="foreground">Шаблон</string>
+    <string id="c_patt_d" scope="foreground">Акцент шаблона</string>
+    <string id="c_bgnd" scope="foreground">Фон</string>
     <string id="color_font" scope="foreground">Шрифт</string>
-    <string id="color_font_empty_segments" scope="foreground">Шрифт пуст. сегменты</string>
+    <string id="c_es" scope="foreground">Шрифт пуст. сегменты</string>
     <string id="color_font_image" scope="foreground">Картинки</string>
-    <string id="color_scale" scope="foreground">Шкала</string>
+    <string id="c_scale" scope="foreground">Шкала</string>
 
     <string id="WindSpeedUnit">Ед. изм. ветра</string>
     <string id="SpeedUnitMSec" scope="foreground">м/с</string>

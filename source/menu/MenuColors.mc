@@ -54,15 +54,6 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   }
 
   function onSelectItem() {
-    //Вариант выбора цвета через диалог с палитрой
-
-    // var picker = new ColorPicker(self.weak());
-    // WatchUi.pushView(
-    //   picker,
-    //   new ColorPickerDelegate(picker.weak()),
-    //   WatchUi.SLIDE_IMMEDIATE
-    // );
-
     //Вариант выбора цвета через подменю с цветами
     var method = new Lang.Method(Menu, method_symbol);
     var submenu = method.invoke(self.weak());

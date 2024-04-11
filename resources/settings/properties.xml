@@ -1,20 +1,20 @@
 <properties>
 	<!--
-	<property id="color_pattern" type="number">0x555555</property>
-	<property id="color_pattern_decorate" type="number">0xAAAAAA</property>
-	<property id="color_background" type="number">0x000000</property>
+	<property id="c_patt" type="number">0x555555</property>
+	<property id="c_patt_d" type="number">0xAAAAAA</property>
+	<property id="c_bgnd" type="number">0x000000</property>
 	<property id="color_font" type="number">0xFFFFFF</property>
-	<property id="color_font_empty_segments" type="number">0x550000</property>
-	<property id="color_image" type="number">0xFFFFAA</property>
-	<property id="color_scale" type="number">0x00AA00</property>
+	<property id="c_es" type="number">0x550000</property>
+	<property id="c_image" type="number">0xFFFFAA</property>
+	<property id="c_scale" type="number">0x00AA00</property>
 -->
-	<property id="color_pattern" type="number">0x005500</property>
-	<property id="color_pattern_decorate" type="number">0x000000</property>
-	<property id="color_background" type="number">0x00FF55</property>
+	<property id="c_patt" type="number">0x005500</property>
+	<property id="c_patt_d" type="number">0x000000</property>
+	<property id="c_bgnd" type="number">0x00FF55</property>
 	<property id="color_font" type="number">0x000000</property>
-	<property id="color_font_empty_segments" type="number">0x55AAAA</property>
-	<property id="color_image" type="number">0x000000</property>
-	<property id="color_scale" type="number">0x000055</property>
+	<property id="c_es" type="number">0x55AAAA</property>
+	<property id="c_image" type="number">0x000000</property>
+	<property id="c_scale" type="number">0x000055</property>
 
 	<property id="wind_speed_unit" type="number">0</property>
 	<property id="pressure_unit" type="number">0</property>
