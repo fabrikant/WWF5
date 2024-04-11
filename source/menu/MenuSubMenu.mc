@@ -42,7 +42,7 @@ class SubMenuItem extends WatchUi.MenuItem {
   var method_symbol;
 
   function initialize(options) {
-    self.method_symbol = options[:method];
+    self.method_symbol = options[:method_symbol];
     var label = Application.loadResource(options[:rez_label]);
     MenuItem.initialize(label, "", options[:identifier], {});
   }

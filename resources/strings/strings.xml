@@ -8,6 +8,7 @@
     <string id="SavePreset" scope="foreground">Save new preset</string>
     <string id="ApplyPreset" scope="foreground">Apply</string>
     <string id="RemovePreset" scope="foreground">Remove</string>
+    <string id="RenamePreset" scope="foreground">Rename</string>
 
     <string id="color_pattern" scope="foreground">Pattern</string>
     <string id="color_pattern_decorate" scope="foreground">Pattern accent</string>

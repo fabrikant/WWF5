@@ -35,7 +35,6 @@ import Toybox.Time;
 //  TimeZoneOffset
 
 module Menu {
-  
   //Корневое меню
   function GeneralMenu() {
     var items_props = [];
@@ -44,51 +43,51 @@ module Menu {
       :item_class => :SubMenuItem,
       :rez_label => Rez.Strings.SubmenuColors,
       :identifier => :ColorsSubMenu,
-      :method => :colorsSubMenu,
+      :method_symbol => :colorsSubMenu,
     });
     //Подменю пресетов
     items_props.add({
       :item_class => :SubMenuItem,
       :rez_label => Rez.Strings.SubmenuPresets,
       :identifier => :PresetsSubMenu,
-      :method => :presetsSubMenu,
+      :method_symbol => :presetsSubMenu,
     });
     //Выбор показа типов данных по полям
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.DataScale,
       :identifier => "data_scale",
-      :method => :dataSubMenu,
+      :method_symbol => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.SmallField,
       :identifier => "data_small",
-      :method => :dataSubMenu,
+      :method_symbol => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.Data1,
       :identifier => "data_1",
-      :method => :dataSubMenu,
+      :method_symbol => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.Data2,
       :identifier => "data_2",
-      :method => :dataSubMenu,
+      :method_symbol => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.Data3,
       :identifier => "data_3",
-      :method => :dataSubMenu,
+      :method_symbol => :dataSubMenu,
     });
     items_props.add({
       :item_class => :Item,
       :rez_label => Rez.Strings.BottomField,
       :identifier => "data_bottom",
-      :method => :dataSubMenuBottom,
+      :method_symbol => :dataSubMenuBottom,
     });
 
     //Показ статуса подключения
@@ -96,7 +95,7 @@ module Menu {
       :item_class => :Item,
       :rez_label => Rez.Strings.show_connection,
       :identifier => "show_connection",
-      :method => :connectionSubMenu,
+      :method_symbol => :connectionSubMenu,
     });
 
     //Показ статуса DND
@@ -111,7 +110,7 @@ module Menu {
       :item_class => :Item,
       :rez_label => Rez.Strings.WindSpeedUnit,
       :identifier => "wind_speed_unit",
-      :method => :windSpeedUnitsSubmenu,
+      :method_symbol => :windSpeedUnitsSubmenu,
     });
 
     //Единицы измерения давления
@@ -119,7 +118,7 @@ module Menu {
       :item_class => :Item,
       :rez_label => Rez.Strings.PressUnit,
       :identifier => "pressure_unit",
-      :method => :pressureUnitsSubmenu,
+      :method_symbol => :pressureUnitsSubmenu,
     });
 
     //Сдвиг времени для другого часового пояса
@@ -127,6 +126,7 @@ module Menu {
       :item_class => :PickerItem,
       :rez_label => Rez.Strings.T1TZ,
       :identifier => "T1TZ",
+      :char_set => "-0123456789",
     });
 
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
@@ -264,7 +264,7 @@ module Menu {
       :item_class => :CommandItem,
       :rez_label => Rez.Strings.SavePreset,
       :identifier => :savePreset,
-      :method => :savePreset,
+      :method_symbol => :savePreset,
     });
 
     var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
@@ -273,9 +273,9 @@ module Menu {
       for (var i = 0; i < keys.size(); i++) {
         items_props.add({
           :item_class => :CommandItem,
-          :rez_label => presetIdToString(keys[i]),
+          :rez_label => presetIdToString(keys[i], presets),
           :identifier => keys[i],
-          :method => :onSelectPreset,
+          :method_symbol => :onSelectPreset,
           :method_options => { :id => keys[i] },
         });
       }
@@ -296,19 +296,30 @@ module Menu {
       :item_class => :CommandItem,
       :rez_label => Rez.Strings.ApplyPreset,
       :identifier => :applyPreset,
-      :method => :applyPreset,
+      :method_symbol => :applyPreset,
       :method_options => options,
     });
     items_props.add({
       :item_class => :CommandItem,
       :rez_label => Rez.Strings.RemovePreset,
       :identifier => :removePreset,
-      :method => :removePreset,
+      :method_symbol => :removePreset,
+      :method_options => options,
+    });
+    items_props.add({
+      :item_class => :PickerItem,
+      :rez_label => Rez.Strings.RenamePreset,
+      :identifier => :renamePreset,
+      :char_set => "abcdefghijklmnopqrstuvwxyz0123456789-",
+      :method_symbol => :renamePreset,
       :method_options => options,
     });
 
     var sub_menu_options = {
-      :title => presetIdToString(options[:id]),
+      :title => presetIdToString(
+        options[:id],
+        Application.Storage.getValue(Global.PRESETS_STORAGE_KEY)
+      ),
       :items => items_props,
     };
 
@@ -326,37 +337,37 @@ module Menu {
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font_image,
       :identifier => "color_image",
-      :method => :createColorSelectMenu,
+      :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font,
       :identifier => "color_font",
-      :method => :createColorSelectMenu,
+      :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_font_empty_segments,
       :identifier => "color_font_empty_segments",
-      :method => :createColorSelectMenu,
+      :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_background,
       :identifier => "color_background",
-      :method => :createColorSelectMenu,
+      :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_pattern,
       :identifier => "color_pattern",
-      :method => :createColorSelectMenu,
+      :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
       :rez_label => Rez.Strings.color_pattern_decorate,
       :identifier => "color_pattern_decorate",
-      :method => :createColorSelectMenu,
+      :method_symbol => :createColorSelectMenu,
     });
 
     var options = {
@@ -417,6 +428,14 @@ module Menu {
     return res;
   }
 
+  function renamePreset(options) {
+    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
+    presets[options[:id]][Global.PRESET_NAME_KEY] = options[:value];
+    Application.Storage.setValue(Global.PRESETS_STORAGE_KEY, presets);
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+
   function savePreset(options) {
     var prop_keys = Global.getPropertiesKeys();
     var preset = {};
@@ -467,17 +486,21 @@ module Menu {
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
   }
 
-  function presetIdToString(moment_value) {
-    var moment = new Time.Moment(moment_value);
-    var info = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
-    return Toybox.Lang.format("$1$/$2$/$3$ $4$:$5$:$6$", [
-      info.year.format("%04d"),
-      info.month.format("%02d"),
-      info.day.format("%02d"),
-      info.hour.format("%02d"),
-      info.min.format("%02d"),
-      info.sec.format("%02d"),
-    ]);
+  function presetIdToString(moment_value, presets) {
+    if (presets[moment_value][Global.PRESET_NAME_KEY] != null) {
+      return presets[moment_value][Global.PRESET_NAME_KEY];
+    } else {
+      var moment = new Time.Moment(moment_value);
+      var info = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
+      return Toybox.Lang.format("$1$/$2$/$3$ $4$:$5$:$6$", [
+        info.year.format("%04d"),
+        info.month.format("%02d"),
+        info.day.format("%02d"),
+        info.hour.format("%02d"),
+        info.min.format("%02d"),
+        info.sec.format("%02d"),
+      ]);
+    }
   }
 }
 

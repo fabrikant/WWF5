@@ -43,18 +43,27 @@ class TogleItem extends WatchUi.ToggleMenuItem {
 //*****************************************************************************
 //Пункт меню ввода текста
 class PickerItem extends WatchUi.MenuItem {
+  var char_set;
+  var method_symbol;
+  var method_options;
+
   function initialize(options) {
+    self.char_set = options[:char_set];
+    self.method_symbol = options[:method_symbol];
+    self.method_options = options[:method_options];
     var label = Application.loadResource(options[:rez_label]);
-    var sublabel = Application.Properties.getValue(options[:identifier]);
-    MenuItem.initialize(label, sublabel.toString(), options[:identifier], {});
+    var sublabel = "";
+    if (!(options[:identifier] instanceof Lang.Symbol)) {
+      sublabel = Application.Properties.getValue(options[:identifier]);
+      if (sublabel != null) {
+        sublabel = sublabel.toString();
+      }
+    }
+    MenuItem.initialize(label, sublabel, options[:identifier], {});
   }
 
   function onSelectItem() {
-    var charSet = "0123456789-";
-    if (getId().equals("keyOW")) {
-      charSet = "0123456789abcdef";
-    }
-    var picker = new StringPicker(self.weak(), charSet);
+    var picker = new StringPicker(self.weak(), char_set);
     WatchUi.pushView(
       picker,
       new StringPickerDelegate(picker),
@@ -63,11 +72,17 @@ class PickerItem extends WatchUi.MenuItem {
   }
 
   function onSetText(value) {
-    setSubLabel(value);
-    if (getId().equals("keyOW")) {
-      Application.Properties.setValue(getId(), value);
-    } else {
+    if (method_symbol == null) {
+      setSubLabel(value);
       Application.Properties.setValue(getId(), value.toNumber());
+    } else {
+      var method = new Lang.Method(Menu, method_symbol);
+      if (method_options instanceof Lang.Dictionary) {
+        method_options[:value] = value;
+      } else {
+        method_options = { :value => value };
+      }
+      method.invoke(method_options);
     }
   }
 }
@@ -79,7 +94,7 @@ class CommandItem extends WatchUi.MenuItem {
   var method_options;
 
   function initialize(options) {
-    self.method_symbol = options[:method];
+    self.method_symbol = options[:method_symbol];
     self.method_options = options[:method_options];
 
     var label = "";
@@ -104,7 +119,7 @@ class Item extends WatchUi.MenuItem {
   var method_symbol;
 
   function initialize(options) {
-    self.method_symbol = options[:method];
+    self.method_symbol = options[:method_symbol];
     var label = Application.loadResource(options[:rez_label]);
     var value = Application.Properties.getValue(options[:identifier]);
     var sublabel = Menu.getSublabel(method_symbol, value);

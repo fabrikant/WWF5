@@ -30,7 +30,7 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   var method_symbol, color;
 
   function initialize(options) {
-    self.method_symbol = options[:method];
+    self.method_symbol = options[:method_symbol];
     var label = Application.loadResource(options[:rez_label]);
     color = Application.Properties.getValue(options[:identifier]);
     var icon = new IconDrawable(color);

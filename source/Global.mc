@@ -14,6 +14,7 @@ module Global {
     BLUETOOTH_HIDE,
 
     PRESETS_STORAGE_KEY = 0,
+    PRESET_NAME_KEY
   }
 
   function getPropertiesKeys() {
