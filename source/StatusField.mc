@@ -4,6 +4,9 @@ import Toybox.System;
 class StatusField extends AbstractField {
   function initialize(options) {
     AbstractField.initialize(options);
+    compl_id = new Complications.Id(
+      Complications.COMPLICATION_TYPE_NOTIFICATION_COUNT
+    );
   }
 
   function draw(colors) {
