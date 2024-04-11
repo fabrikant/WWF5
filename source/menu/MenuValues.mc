@@ -1,0 +1,164 @@
+import Toybox.Application;
+import Toybox.WatchUi;
+import Toybox.Lang;
+
+//*****************************************************************************
+//Подменю выбора конкретного значения
+class SelectMenu extends WatchUi.Menu2 {
+  function initialize(options) {
+    Menu2.initialize({ :title => options[:title] });
+    var property_value = Application.Properties.getValue(options[:prop_name]);
+    var storage_value = Application.Storage.getValue(options[:prop_name]);
+    var pattern = (new Lang.Method(Menu, options[:method_symbol])).invoke();
+    var keys = pattern.keys();
+    for (var i = 0; i < keys.size(); i++) {
+      addItem(
+        new SelectItem(keys[i], pattern[keys[i]], options[:parent_item_week])
+      );
+      if (property_value == keys[i]) {
+        setFocus(i);
+      } else if (storage_value != null) {
+        if (storage_value.equals(keys[i])) {
+          setFocus(i);
+        }
+      }
+    }
+  }
+}
+
+//*****************************************************************************
+//Пункт меню переключатель
+class TogleItem extends WatchUi.ToggleMenuItem {
+  function initialize(options) {
+    var label = Application.loadResource(options[:rez_label]);
+    var enabled = Application.Properties.getValue(options[:identifier]);
+    ToggleMenuItem.initialize(label, null, options[:identifier], enabled, {});
+  }
+
+  function onSelectItem() {
+    Application.Properties.setValue(getId(), isEnabled());
+  }
+}
+
+//*****************************************************************************
+//Пункт меню ввода текста
+class PickerItem extends WatchUi.MenuItem {
+  function initialize(options) {
+    var label = Application.loadResource(options[:rez_label]);
+    var sublabel = Application.Properties.getValue(options[:identifier]);
+    MenuItem.initialize(label, sublabel.toString(), options[:identifier], {});
+  }
+
+  function onSelectItem() {
+    var charSet = "0123456789-";
+    if (getId().equals("keyOW")) {
+      charSet = "0123456789abcdef";
+    }
+    var picker = new StringPicker(self.weak(), charSet);
+    WatchUi.pushView(
+      picker,
+      new StringPickerDelegate(picker),
+      WatchUi.SLIDE_IMMEDIATE
+    );
+  }
+
+  function onSetText(value) {
+    setSubLabel(value);
+    if (getId().equals("keyOW")) {
+      Application.Properties.setValue(getId(), value);
+    } else {
+      Application.Properties.setValue(getId(), value.toNumber());
+    }
+  }
+}
+
+//*****************************************************************************
+//Пункт меню команда
+class CommandItem extends WatchUi.MenuItem {
+  var method_symbol;
+  var method_options;
+
+  function initialize(options) {
+    self.method_symbol = options[:method];
+    self.method_options = options[:method_options];
+
+    var label = "";
+    if (options[:rez_label] instanceof Toybox.Lang.String) {
+      label = options[:rez_label];
+    } else {
+      label = Application.loadResource(options[:rez_label]);
+    }
+    MenuItem.initialize(label, "", options[:identifier], {});
+  }
+
+  function onSelectItem() {
+    var method = new Lang.Method(Menu, method_symbol);
+    method.invoke(self.method_options);
+  }
+}
+
+//*****************************************************************************
+//Пункт меню (ассоциированный со свойством приложения)
+//при нажатии открывается подменю класса SelectMenu с элементами класса SelectItem
+class Item extends WatchUi.MenuItem {
+  var method_symbol;
+
+  function initialize(options) {
+    self.method_symbol = options[:method];
+    var label = Application.loadResource(options[:rez_label]);
+    var value = Application.Properties.getValue(options[:identifier]);
+    var sublabel = Menu.getSublabel(method_symbol, value);
+    MenuItem.initialize(label, sublabel, options[:identifier], {});
+  }
+
+  function onSelectItem() {
+    var options = {
+      :title => getLabel(),
+      :method_symbol => method_symbol,
+      :prop_name => getId(),
+      :parent_item_week => self.weak(),
+    };
+    var submenu = new SelectMenu(options);
+    WatchUi.pushView(
+      submenu,
+      new SimpleMenuDelegate(),
+      WatchUi.SLIDE_IMMEDIATE
+    );
+  }
+
+  function onSelectSubmenuItem(newValue) {
+    Application.Properties.setValue(getId(), newValue);
+    setSubLabel(Menu.getSublabel(method_symbol, newValue));
+  }
+}
+
+//*****************************************************************************
+//Пункт меню выбора конкретного значения
+//при нажатии значение возвращается в родительский пункт меню
+class SelectItem extends WatchUi.MenuItem {
+  var callbackWeak;
+
+  function initialize(identifier, resLabel, callbackWeak) {
+    self.callbackWeak = callbackWeak;
+    if (resLabel instanceof Lang.String) {
+      MenuItem.initialize(resLabel, null, identifier, {});
+    } else {
+      MenuItem.initialize(
+        Application.loadResource(resLabel),
+        null,
+        identifier,
+        {}
+      );
+    }
+  }
+
+  function onSelectItem() {
+    if (callbackWeak.stillAlive()) {
+      var obj = callbackWeak.get();
+      if (obj != null) {
+        obj.onSelectSubmenuItem(getId());
+      }
+    }
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+}

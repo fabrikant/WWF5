@@ -1,9 +1,9 @@
-using Toybox.Application;
-using Toybox.WatchUi;
-using Toybox.System;
-using Toybox.Graphics;
-using Toybox.Lang;
-using Toybox.Math;
+import Toybox.Application;
+import Toybox.WatchUi;
+import Toybox.System;
+import Toybox.Graphics;
+import Toybox.Lang;
+import Toybox.Math;
 
 class ColorPicker extends WatchUi.View {
   var parent_weak;
