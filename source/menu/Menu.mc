@@ -292,9 +292,15 @@ module Menu {
   //Выводит подменю с пунктами применить или удалить
   function onSelectPreset(options) {
     var items_props = [];
+
+    var title = presetIdToString(
+      options[:id],
+      Application.Storage.getValue(Global.PRESETS_STORAGE_KEY)
+    );
     items_props.add({
       :item_class => :CommandItem,
       :rez_label => Rez.Strings.ApplyPreset,
+      :sublabel => title,
       :identifier => :applyPreset,
       :method_symbol => :applyPreset,
       :method_options => options,
@@ -302,6 +308,7 @@ module Menu {
     items_props.add({
       :item_class => :CommandItem,
       :rez_label => Rez.Strings.RemovePreset,
+      :sublabel => title,
       :identifier => :removePreset,
       :method_symbol => :removePreset,
       :method_options => options,
@@ -309,6 +316,7 @@ module Menu {
     items_props.add({
       :item_class => :PickerItem,
       :rez_label => Rez.Strings.RenamePreset,
+      :sublabel => title,
       :identifier => :renamePreset,
       :char_set => "abcdefghijklmnopqrstuvwxyz0123456789-",
       :method_symbol => :renamePreset,
@@ -316,10 +324,7 @@ module Menu {
     });
 
     var sub_menu_options = {
-      :title => presetIdToString(
-        options[:id],
-        Application.Storage.getValue(Global.PRESETS_STORAGE_KEY)
-      ),
+      :title => title,
       :items => items_props,
     };
 

@@ -53,22 +53,34 @@ class PickerItem extends WatchUi.MenuItem {
     self.method_options = options[:method_options];
     var label = Application.loadResource(options[:rez_label]);
     var sublabel = "";
-    if (!(options[:identifier] instanceof Lang.Symbol)) {
-      sublabel = Application.Properties.getValue(options[:identifier]);
-      if (sublabel != null) {
-        sublabel = sublabel.toString();
+    if (options[:sublabel] instanceof Lang.String) {
+      sublabel = options[:sublabel];
+    } else {
+      if (!(options[:identifier] instanceof Lang.Symbol)) {
+        sublabel = Application.Properties.getValue(options[:identifier]);
+        if (sublabel != null) {
+          sublabel = sublabel.toString();
+        }
       }
     }
     MenuItem.initialize(label, sublabel, options[:identifier], {});
   }
 
   function onSelectItem() {
-    var picker = new StringPicker(self.weak(), char_set);
-    WatchUi.pushView(
-      picker,
-      new StringPickerDelegate(picker),
-      WatchUi.SLIDE_IMMEDIATE
-    );
+    if (WatchUi has :TextPicker) {
+      WatchUi.pushView(
+        new WatchUi.TextPicker(getSubLabel()),
+        new TextDelegate(self.weak()),
+        WatchUi.SLIDE_IMMEDIATE
+      );
+    } else {
+      var picker = new StringPicker(self.weak(), char_set);
+      WatchUi.pushView(
+        picker,
+        new StringPickerDelegate(picker),
+        WatchUi.SLIDE_IMMEDIATE
+      );
+    }
   }
 
   function onSetText(value) {
@@ -103,7 +115,11 @@ class CommandItem extends WatchUi.MenuItem {
     } else {
       label = Application.loadResource(options[:rez_label]);
     }
-    MenuItem.initialize(label, "", options[:identifier], {});
+    var sublabel = "";
+    if (options[:sublabel] instanceof Toybox.Lang.String) {
+      sublabel = options[:sublabel];
+    }
+    MenuItem.initialize(label, sublabel, options[:identifier], {});
   }
 
   function onSelectItem() {
