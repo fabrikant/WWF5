@@ -8,7 +8,7 @@
     <string id="SavePreset" scope="foreground">Сохранить новый пресет</string>
     <string id="ApplyPreset" scope="foreground">Применить</string>
     <string id="RemovePreset" scope="foreground">Удалить</string>
-    <string id="RenamePreset" scope="foreground">Rename</string>
+    <string id="RenamePreset" scope="foreground">Переименовать</string>
     
     <string id="color_pattern" scope="foreground">Шаблон</string>
     <string id="color_pattern_decorate" scope="foreground">Акцент шаблона</string>
