@@ -3,13 +3,18 @@
     <!-- Menu -->
     <string id="MenuHeader" scope="foreground">Настройки</string>
     <string id="SubmenuColors" scope="foreground">Цвета</string>
+    <!--Presets -->
+    <string id="SubmenuPresets" scope="foreground">Пресеты</string>
+    <string id="SavePreset" scope="foreground">Сохранить новый пресет</string>
+    <string id="ApplyPreset" scope="foreground">Применить</string>
+    <string id="RemovePreset" scope="foreground">Удалить</string>
 
     <string id="color_pattern" scope="foreground">Шаблон</string>
     <string id="color_pattern_decorate" scope="foreground">Акцент шаблона</string>
     <string id="color_background" scope="foreground">Фон</string>
     <string id="color_font" scope="foreground">Шрифт</string>
     <string id="color_font_empty_segments" scope="foreground">Шрифт пуст. сегменты</string>
-     <string id="color_font_image" scope="foreground">Картинки</string>
+    <string id="color_font_image" scope="foreground">Картинки</string>
 
     <string id="WindSpeedUnit">Ед. изм. ветра</string>
     <string id="SpeedUnitMSec" scope="foreground">м/с</string>

@@ -4,6 +4,7 @@ using Toybox.System;
 using Toybox.Graphics;
 using Toybox.Lang;
 using Toybox.Complications;
+using Toybox.Time;
 
 //GeneralMenu
 //	Colors
@@ -37,7 +38,13 @@ module Menu {
       :identifier => :ColorsSubMenu,
       :method => :colorsSubMenu,
     });
-
+    //Подменю пресетов
+    items_props.add({
+      :item_class => :SubMenuItem,
+      :rez_label => Rez.Strings.SubmenuPresets,
+      :identifier => :PresetsSubMenu,
+      :method => :presetsSubMenu,
+    });
     //Выбор показа типов данных по полям
     items_props.add({
       :item_class => :Item,
@@ -242,6 +249,68 @@ module Menu {
     };
   }
 
+  //подменю пресетов
+  function presetsSubMenu() {
+    var items_props = [];
+    items_props.add({
+      :item_class => :CommandItem,
+      :rez_label => Rez.Strings.SavePreset,
+      :identifier => :savePreset,
+      :method => :savePreset,
+    });
+
+    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
+    if (presets != null) {
+      var keys = presets.keys();
+      for (var i = 0; i < keys.size(); i++) {
+        items_props.add({
+          :item_class => :CommandItem,
+          :rez_label => presetIdToString(keys[i]),
+          :identifier => keys[i],
+          :method => :onSelectPreset,
+          :method_options => { :id => keys[i] },
+        });
+      }
+    }
+
+    var options = {
+      :title => Rez.Strings.SubmenuPresets,
+      :items => items_props,
+    };
+    return new SubMenu(options);
+  }
+
+  //Подменю при выборе сохраненного пресета.
+  //Выводит подменю с пунктами применить или удалить
+  function onSelectPreset(options) {
+    var items_props = [];
+    items_props.add({
+      :item_class => :CommandItem,
+      :rez_label => Rez.Strings.ApplyPreset,
+      :identifier => :applyPreset,
+      :method => :applyPreset,
+      :method_options => options,
+    });
+    items_props.add({
+      :item_class => :CommandItem,
+      :rez_label => Rez.Strings.RemovePreset,
+      :identifier => :removePreset,
+      :method => :removePreset,
+      :method_options => options,
+    });
+
+    var sub_menu_options = {
+      :title => presetIdToString(options[:id]),
+      :items => items_props,
+    };
+
+    WatchUi.pushView(
+      new SubMenu(sub_menu_options),
+      new SimpleMenuDelegate(),
+      WatchUi.SLIDE_IMMEDIATE
+    );
+  }
+
   //Подменю с настройками цветов
   function colorsSubMenu() {
     var items_props = [];
@@ -338,6 +407,69 @@ module Menu {
       }
     }
     return res;
+  }
+
+  function savePreset(options) {
+    var prop_keys = Global.getPropertiesKeys();
+    var preset = {};
+    for (var i = 0; i < prop_keys.size(); i++) {
+      preset[prop_keys[i]] = Application.Properties.getValue(prop_keys[i]);
+    }
+
+    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
+    if (presets == null) {
+      presets = {};
+    }
+    presets[Time.now().value()] = preset;
+
+    Application.Storage.setValue(Global.PRESETS_STORAGE_KEY, presets);
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+
+  function applyPreset(options) {
+    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
+    if (presets == null) {
+      return;
+    }
+    var id = options[:id];
+    if (presets.hasKey(id)) {
+      var prop_keys = Global.getPropertiesKeys();
+      for (var i = 0; i < prop_keys.size(); i++) {
+        Application.Properties.setValue(
+          prop_keys[i],
+          presets[id][prop_keys[i]]
+        );
+      }
+    }
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+
+  function removePreset(options) {
+    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
+    if (presets == null) {
+      return;
+    }
+    var id = options[:id];
+    if (presets.hasKey(id)) {
+      presets.remove(id);
+    }
+    Application.Storage.setValue(Global.PRESETS_STORAGE_KEY, presets);
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+
+  function presetIdToString(moment_value) {
+    var moment = new Time.Moment(moment_value);
+    var info = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
+    return Toybox.Lang.format("$1$/$2$/$3$ $4$:$5$:$6$", [
+      info.year.format("%04d"),
+      info.month.format("%02d"),
+      info.day.format("%02d"),
+      info.hour.format("%02d"),
+      info.min.format("%02d"),
+      info.sec.format("%02d"),
+    ]);
   }
 }
 
@@ -440,6 +572,35 @@ class ColorSelectItem extends ColorPropertyItem {
       }
     }
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+  }
+}
+
+//*****************************************************************************
+//Пункт меню команда
+class CommandItem extends WatchUi.MenuItem {
+  var method_symbol;
+  var method_options;
+
+  function initialize(options) {
+    self.method_symbol = options[:method];
+    self.method_options = options[:method_options];
+    System.println("initialize: ");
+    System.println("options[:method] " + options[:method]);
+    System.println("options[:method_options] " + options[:method_options]);
+
+    var label = "";
+    if (options[:rez_label] instanceof Toybox.Lang.String) {
+      label = options[:rez_label];
+    } else {
+      label = Application.loadResource(options[:rez_label]);
+    }
+    MenuItem.initialize(label, "", options[:identifier], {});
+  }
+
+  function onSelectItem() {
+    System.println("onSelectItem: " + self.method_options);
+    var method = new Lang.Method(Menu, method_symbol);
+    method.invoke(self.method_options);
   }
 }
 
@@ -569,7 +730,13 @@ class SubMenuItem extends WatchUi.MenuItem {
 //также вложенные подменю этого же класса
 class SubMenu extends WatchUi.Menu2 {
   function initialize(options) {
-    Menu2.initialize({ :title => Application.loadResource(options[:title]) });
+    var title = "";
+    if (options[:title] instanceof Toybox.Lang.String) {
+      title = options[:title];
+    } else {
+      title = Application.loadResource(options[:title]);
+    }
+    Menu2.initialize({ :title => title });
 
     for (var i = 0; i < options[:items].size(); i++) {
       var item_prop = options[:items][i];
@@ -583,6 +750,8 @@ class SubMenu extends WatchUi.Menu2 {
         addItem(new TogleItem(item_prop));
       } else if (item_prop[:item_class] == :PickerItem) {
         addItem(new PickerItem(item_prop));
+      } else if (item_prop[:item_class] == :CommandItem) {
+        addItem(new CommandItem(item_prop));
       }
     }
   }

@@ -3,6 +3,11 @@
     <!-- Menu -->
     <string id="MenuHeader" scope="foreground">Settings</string>
     <string id="SubmenuColors" scope="foreground">Colors</string>
+    <!--Presets -->
+    <string id="SubmenuPresets" scope="foreground">Presets</string>
+    <string id="SavePreset" scope="foreground">Save new preset</string>
+    <string id="ApplyPreset" scope="foreground">Apply</string>
+    <string id="RemovePreset" scope="foreground">Remove</string>
 
     <string id="color_pattern" scope="foreground">Pattern</string>
     <string id="color_pattern_decorate" scope="foreground">Pattern accent</string>
