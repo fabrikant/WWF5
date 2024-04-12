@@ -2,7 +2,7 @@
 
   <jsonData id="presets">
   [ 
-    {"dark":
+    {"dark (default)":
       {
         "c_image":"FFFFAA",
         "c_font":"FFFFFF",
@@ -19,10 +19,22 @@
         "c_image":"000000",
         "c_font":"000000",
         "c_es":"55AAAA",
-        "c_bgnd":"00FFAA",
+        "c_bgnd":"AAFFAA",
         "c_patt":"005500",
         "c_patt_d":"000000",
         "c_scale":"000055"  
+      }
+    }
+  ,
+   { "high contrast":
+      {
+        "c_image":"000000",
+        "c_font":"000000",
+        "c_es":"FFFFFF",
+        "c_bgnd":"FFFFFF",
+        "c_patt":"000000",
+        "c_patt_d":"FFFFFF",
+        "c_scale":"00FF00"  
       }
     }
   ]
