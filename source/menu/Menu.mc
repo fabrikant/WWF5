@@ -7,6 +7,13 @@ import Toybox.Complications;
 import Toybox.Time;
 
 //GeneralMenu
+//  Presets
+//    Save new preset
+//    Preset1
+//      Apply
+//      Remove
+//    ....
+//    PresetN
 //	Colors
 //		c_image
 //		color_font
@@ -15,13 +22,6 @@ import Toybox.Time;
 //		c_bgnd
 //		c_patt
 //		c_patt_d
-//  Presets
-//    Save new preset
-//    Preset1
-//      Apply
-//      Remove
-//    ....
-//    PresetN
 //  data_scale
 //  data_small
 //	Data1
@@ -38,19 +38,19 @@ module Menu {
   //Корневое меню
   function GeneralMenu() {
     var items_props = [];
-    //Подменю выбора цветов
-    items_props.add({
-      :item_class => :SubMenuItem,
-      :rez_label => Rez.Strings.SubmenuColors,
-      :identifier => :ColorsSubMenu,
-      :method_symbol => :colorsSubMenu,
-    });
     //Подменю пресетов
     items_props.add({
       :item_class => :SubMenuItem,
       :rez_label => Rez.Strings.SubmenuPresets,
       :identifier => :PresetsSubMenu,
       :method_symbol => :presetsSubMenu,
+    });
+    //Подменю выбора цветов
+    items_props.add({
+      :item_class => :SubMenuItem,
+      :rez_label => Rez.Strings.SubmenuColors,
+      :identifier => :ColorsSubMenu,
+      :method_symbol => :colorsSubMenu,
     });
     //Выбор показа типов данных по полям
     items_props.add({
@@ -471,10 +471,12 @@ module Menu {
     if (presets.hasKey(id)) {
       var prop_keys = Global.getPropertiesKeys();
       for (var i = 0; i < prop_keys.size(); i++) {
-        Application.Properties.setValue(
-          prop_keys[i],
-          presets[id][prop_keys[i]]
-        );
+        if (presets[id].hasKey(prop_keys[i])) {
+          Application.Properties.setValue(
+            prop_keys[i],
+            presets[id][prop_keys[i]]
+          );
+        }
       }
     }
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
