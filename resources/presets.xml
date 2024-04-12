@@ -1,0 +1,32 @@
+<resources>
+
+  <jsonData id="presets">
+  [ 
+    {"dark":
+      {
+        "c_image":"FFFFAA",
+        "c_font":"FFFFFF",
+        "c_es":"550000",
+        "c_bgnd":"000000",
+        "c_patt":"555555",
+        "c_patt_d":"AAAAAA",
+        "c_scale":"00AA00"
+      }
+    }
+  ,
+   { "old school":
+      {
+        "c_image":"000000",
+        "c_font":"000000",
+        "c_es":"55AAAA",
+        "c_bgnd":"00FFAA",
+        "c_patt":"005500",
+        "c_patt_d":"000000",
+        "c_scale":"000055"  
+      }
+    }
+  ]
+  </jsonData>
+</resources>
+
+

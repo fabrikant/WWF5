@@ -29,7 +29,7 @@ class WWF5View extends WatchUi.WatchFace {
         "c_patt_d"
       ),
       :background => Application.Properties.getValue("c_bgnd"),
-      :font => Application.Properties.getValue("color_font"),
+      :font => Application.Properties.getValue("c_font"),
       :font_empty_segments => Application.Properties.getValue(
         "c_es"
       ),

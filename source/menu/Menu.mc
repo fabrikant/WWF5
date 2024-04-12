@@ -16,7 +16,7 @@ import Toybox.Time;
 //    PresetN
 //	Colors
 //		c_image
-//		color_font
+//		c_font
 //		color_font_border
 //		c_es
 //		c_bgnd
@@ -37,6 +37,9 @@ import Toybox.Time;
 module Menu {
   //Корневое меню
   function GeneralMenu() {
+
+    Presets.generatePresetsStorage();
+
     var items_props = [];
     //Подменю пресетов
     items_props.add({
@@ -266,13 +269,13 @@ module Menu {
       :method_symbol => :savePreset,
     });
 
-    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
+    var presets = Application.Storage.getValue(Presets.STORAGE_KEY);
     if (presets != null) {
       var keys = presets.keys();
       for (var i = 0; i < keys.size(); i++) {
         items_props.add({
           :item_class => :CommandItem,
-          :rez_label => presetIdToString(keys[i], presets),
+          :rez_label => Presets.presetIdToString(keys[i], presets),
           :identifier => keys[i],
           :method_symbol => :onSelectPreset,
           :method_options => { :id => keys[i] },
@@ -292,9 +295,9 @@ module Menu {
   function onSelectPreset(options) {
     var items_props = [];
 
-    var title = presetIdToString(
+    var title = Presets.presetIdToString(
       options[:id],
-      Application.Storage.getValue(Global.PRESETS_STORAGE_KEY)
+      Application.Storage.getValue(Presets.STORAGE_KEY)
     );
     items_props.add({
       :item_class => :CommandItem,
@@ -344,8 +347,8 @@ module Menu {
     });
     items_props.add({
       :item_class => :ColorPropertyItem,
-      :rez_label => Rez.Strings.color_font,
-      :identifier => "color_font",
+      :rez_label => Rez.Strings.c_font,
+      :identifier => "c_font",
       :method_symbol => :createColorSelectMenu,
     });
     items_props.add({
@@ -438,81 +441,28 @@ module Menu {
   }
 
   function renamePreset(options) {
-    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
-    presets[options[:id]][Global.PRESET_NAME_KEY] = options[:value];
-    Application.Storage.setValue(Global.PRESETS_STORAGE_KEY, presets);
+    Presets.renamePreset(options);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
   }
 
   function savePreset(options) {
-    var prop_keys = Global.getPropertiesKeys();
-    var preset = {};
-    for (var i = 0; i < prop_keys.size(); i++) {
-      preset[prop_keys[i]] = Application.Properties.getValue(prop_keys[i]);
-    }
-
-    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
-    if (presets == null) {
-      presets = {};
-    }
-    presets[Time.now().value()] = preset;
-
-    Application.Storage.setValue(Global.PRESETS_STORAGE_KEY, presets);
+    Presets.savePreset(options);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
   }
 
   function applyPreset(options) {
-    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
-    if (presets == null) {
-      return;
-    }
-    var id = options[:id];
-    if (presets.hasKey(id)) {
-      var prop_keys = Global.getPropertiesKeys();
-      for (var i = 0; i < prop_keys.size(); i++) {
-        if (presets[id].hasKey(prop_keys[i])) {
-          Application.Properties.setValue(
-            prop_keys[i],
-            presets[id][prop_keys[i]]
-          );
-        }
-      }
-    }
+    Presets.applyPreset(options);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
   }
 
   function removePreset(options) {
-    var presets = Application.Storage.getValue(Global.PRESETS_STORAGE_KEY);
-    if (presets == null) {
-      return;
-    }
-    var id = options[:id];
-    if (presets.hasKey(id)) {
-      presets.remove(id);
-    }
-    Application.Storage.setValue(Global.PRESETS_STORAGE_KEY, presets);
+    Presets.removePreset(options);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
   }
 
-  function presetIdToString(moment_value, presets) {
-    if (presets[moment_value][Global.PRESET_NAME_KEY] != null) {
-      return presets[moment_value][Global.PRESET_NAME_KEY];
-    } else {
-      var moment = new Time.Moment(moment_value);
-      var info = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
-      return Toybox.Lang.format("$1$/$2$/$3$ $4$:$5$:$6$", [
-        info.year.format("%04d"),
-        info.month.format("%02d"),
-        info.day.format("%02d"),
-        info.hour.format("%02d"),
-        info.min.format("%02d"),
-        info.sec.format("%02d"),
-      ]);
-    }
-  }
 }
 
 //*****************************************************************************

@@ -13,7 +13,7 @@
     <string id="c_patt" scope="foreground">Pattern</string>
     <string id="c_patt_d" scope="foreground">Pattern accent</string>
     <string id="c_bgnd" scope="foreground">Background</string>
-    <string id="color_font" scope="foreground">Font</string>
+    <string id="c_font" scope="foreground">Font</string>
     <string id="c_es" scope="foreground">Font empty segments</string>
     <string id="color_font_image" scope="foreground">Images</string>
     <string id="c_scale" scope="foreground">Scale</string>

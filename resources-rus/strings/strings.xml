@@ -13,7 +13,7 @@
     <string id="c_patt" scope="foreground">Шаблон</string>
     <string id="c_patt_d" scope="foreground">Акцент шаблона</string>
     <string id="c_bgnd" scope="foreground">Фон</string>
-    <string id="color_font" scope="foreground">Шрифт</string>
+    <string id="c_font" scope="foreground">Шрифт</string>
     <string id="c_es" scope="foreground">Шрифт пуст. сегменты</string>
     <string id="color_font_image" scope="foreground">Картинки</string>
     <string id="c_scale" scope="foreground">Шкала</string>

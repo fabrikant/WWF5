@@ -12,9 +12,6 @@ module Global {
     BLUETOOTH_SHOW_IF_CONNECT = 0,
     BLUETOOTH_SHOW_IF_DISCONNECT,
     BLUETOOTH_HIDE,
-
-    PRESETS_STORAGE_KEY = 0,
-    PRESET_NAME_KEY
   }
 
   function getPropertiesKeys() {
@@ -22,7 +19,7 @@ module Global {
       "c_patt",
       "c_patt_d",
       "c_bgnd",
-      "color_font",
+      "c_font",
       "c_es",
       "c_image",
       "c_scale",
