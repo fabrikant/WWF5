@@ -25,17 +25,20 @@ class WWF5View extends WatchUi.WatchFace {
   function readSettings() {
     colors = {
       :pattern => Application.Properties.getValue("c_patt"),
-      :pattern_decorate => Application.Properties.getValue(
-        "c_patt_d"
-      ),
+      :pattern_decorate => Application.Properties.getValue("c_patt_d"),
       :background => Application.Properties.getValue("c_bgnd"),
       :font => Application.Properties.getValue("c_font"),
-      :font_empty_segments => Application.Properties.getValue(
-        "c_es"
-      ),
+      :font_empty_segments => Application.Properties.getValue("c_es"),
       :image => Application.Properties.getValue("c_image"),
       :scale => Application.Properties.getValue("c_scale"),
     };
+  }
+
+  function createMoonKeeper() {
+    moon_keeper = new MoonKeeper(
+      Lang.Time.now(),
+      System.getDeviceSettings().screenWidth * 0.1
+    );
   }
 
   function createLayers() {
@@ -228,10 +231,7 @@ class WWF5View extends WatchUi.WatchFace {
   function onShow() as Void {
     readSettings();
     self.pattern = new Pattern(colors);
-    moon_keeper = new MoonKeeper(
-      Lang.Time.now(),
-      System.getDeviceSettings().screenWidth * 0.1
-    );
+    createMoonKeeper();
     createLayers();
   }
 
@@ -268,7 +268,11 @@ class WWF5View extends WatchUi.WatchFace {
   function onExitSleep() as Void {
     isAmoledSaveMode = false;
     readSettings();
-    moon_keeper.calculate(Time.now());
+    if (moon_keeper instanceof MoonKeeper) {
+      moon_keeper.calculate(Time.now());
+    } else {
+      createMoonKeeper();
+    }
     weather_layer.arrow_bitmap = null;
     scale_layer.small_bitmap = null;
   }
@@ -288,13 +292,18 @@ class WWF5View extends WatchUi.WatchFace {
         :font => Graphics.COLOR_WHITE,
         :font_empty_segments => Graphics.COLOR_TRANSPARENT,
         :image => Graphics.COLOR_WHITE,
+        :scale => Graphics.COLOR_WHITE,
       };
-      moon_keeper.bitmap = Moon.drawMoon(
-        moon_keeper.moon_phase[:IP1],
-        moon_keeper.bitmap_size,
-        colors[:image],
-        colors[:background]
-      );
+      if (moon_keeper instanceof MoonKeeper) {
+        moon_keeper.bitmap = Moon.drawMoon(
+          moon_keeper.moon_phase[:IP1],
+          moon_keeper.bitmap_size,
+          colors[:image],
+          colors[:background]
+        );
+      } else {
+        createMoonKeeper();
+      }
       weather_layer.arrow_bitmap = null;
       scale_layer.small_bitmap = null;
     }

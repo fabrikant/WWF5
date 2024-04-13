@@ -225,15 +225,17 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_CALENDAR_EVENTS,
         null
       );
-       res[:image] = Rez.Drawables.Calendar;
+      res[:image] = Rez.Drawables.Calendar;
     } else if (type == TRAINING_STATUS) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_TRAINING_STATUS,
         null
       );
-    }else if (type == CITY){
+    } else if (type == CITY) {
       res[:value] = getWeatherCity();
-      res[:compl_id] = new Complications.Id(Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_CURRENT_WEATHER
+      );
       res[:label] = Rez.Strings.FIELD_TYPE_CITY;
     }
 
@@ -243,7 +245,7 @@ module DataWrapper {
   ////////////////////////////////////////////////////////
   //DATA VALUES
 
-  function getWeatherCity(){
+  function getWeatherCity() {
     var res = null;
     var weather = Weather.getCurrentConditions();
     if (weather != null) {
@@ -279,6 +281,9 @@ module DataWrapper {
       :label => null,
       :compl_id => new Complications.Id(compl_type),
     };
+    if (res[:compl_id] == null) {
+      return res;
+    }
     var compl = Complications.getComplication(res[:compl_id]);
     if (compl != null) {
       if (compl.value != null) {
@@ -514,6 +519,9 @@ module DataWrapper {
 
   function converValueWindSpeed(wind_speed) {
     var value = wind_speed; //meters/sec
+    if (value == null){
+      return "";
+    }
     var unit_str = "";
     var unit = Application.Properties.getValue("wind_speed_unit");
     if (unit == Global.UNIT_SPEED_MS) {
@@ -539,7 +547,11 @@ module DataWrapper {
       value = wind_speed * 1.94384;
       unit_str = Application.loadResource(Rez.Strings.SpeedUnitKnots);
     }
-    return value.format("%d") + " " + unit_str;
+    var res = "";
+    try {
+      res = value.format("%d") + " " + unit_str;
+    } catch (ex) {}
+    return res;
   }
 
   function getBeaufort(wind_speed) {

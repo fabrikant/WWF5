@@ -37,7 +37,6 @@ import Toybox.Time;
 module Menu {
   //Корневое меню
   function GeneralMenu() {
-
     Presets.generatePresetsStorage();
 
     var items_props = [];
@@ -139,58 +138,38 @@ module Menu {
     var pattern = {
       DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
       DataWrapper.DATE_LONG => Rez.Strings.FIELD_TYPE_LONG_DATE,
-      DataWrapper.DATE => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_DATE
-      ),
-      DataWrapper.WEEKDAY_MONTHDAY => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_WEEKDAY_MONTHDAY
-      ),
-      DataWrapper.CALENDAR_EVENTS => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
-      ),
-      DataWrapper.TRAINING_STATUS => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_TRAINING_STATUS
-      ),
       DataWrapper.CITY => Rez.Strings.FIELD_TYPE_CITY,
     };
+
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.DATE,
+      Complications.COMPLICATION_TYPE_DATE
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.WEEKDAY_MONTHDAY,
+      Complications.COMPLICATION_TYPE_WEEKDAY_MONTHDAY
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.CALENDAR_EVENTS,
+      Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.TRAINING_STATUS,
+      Complications.COMPLICATION_TYPE_TRAINING_STATUS
+    );
+
     return pattern;
   }
 
   function dataSubMenu() {
     var pattern = {
       DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
-      DataWrapper.HR => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_HEART_RATE
-      ),
-      DataWrapper.CALORIES_ACTIVE => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_CALORIES
-      ),
       DataWrapper.CALORIES_TOTAL => Rez.Strings.FIELD_TYPE_CALORIES_TOTAL,
       DataWrapper.DISTANCE => Rez.Strings.FIELD_TYPE_DISTANCE,
-      DataWrapper.STEPS => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_STEPS
-      ),
-      DataWrapper.BATTERY => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_BATTERY
-      ),
-      DataWrapper.BODY_BATTERY => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_BODY_BATTERY
-      ),
-      DataWrapper.RECOVERY_TIME => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_RECOVERY_TIME
-      ),
-      DataWrapper.FLOOR => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_FLOORS_CLIMBED
-      ),
-      DataWrapper.O2 => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_PULSE_OX
-      ),
-      DataWrapper.ALTITUDE => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_ALTITUDE
-      ),
-      DataWrapper.STRESS => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_STRESS
-      ),
       DataWrapper.MOON => Rez.Strings.FIELD_TYPE_MOON,
       DataWrapper.TEMPERATURE => Rez.Strings.FIELD_TYPE_TEMPERATURE,
       DataWrapper.PRESSURE => Rez.Strings.FIELD_TYPE_PRESSURE,
@@ -199,31 +178,98 @@ module Menu {
         .FIELD_TYPE_PRECIPITATION_CHANCE,
       DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
       DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
-      DataWrapper.WEEKLY_RUN_DISTANCE => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
-      ),
-      DataWrapper.WEEKLY_BIKE_DISTANCE => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE
-      ),
-      DataWrapper.VO2_RUN => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_VO2MAX_RUN
-      ),
-      DataWrapper.VO2_BIKE => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_VO2MAX_BIKE
-      ),
-      DataWrapper.RESPIRATION_RATE => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_RESPIRATION_RATE
-      ),
-      DataWrapper.SOLAR_INPUT => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_SOLAR_INPUT
-      ),
-      DataWrapper.INTENSITY_MINUTES => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_INTENSITY_MINUTES
-      ),
-      DataWrapper.CALENDAR_EVENTS => getNativeComplicationLabel(
-        Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
-      ),
     };
+
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.HR,
+      Complications.COMPLICATION_TYPE_HEART_RATE
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.CALORIES_ACTIVE,
+      Complications.COMPLICATION_TYPE_CALORIES
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.STEPS,
+      Complications.COMPLICATION_TYPE_STEPS
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.BATTERY,
+      Complications.COMPLICATION_TYPE_BATTERY
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.BODY_BATTERY,
+      Complications.COMPLICATION_TYPE_BODY_BATTERY
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.RECOVERY_TIME,
+      Complications.COMPLICATION_TYPE_RECOVERY_TIME
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.FLOOR,
+      Complications.COMPLICATION_TYPE_FLOORS_CLIMBED
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.O2,
+      Complications.COMPLICATION_TYPE_PULSE_OX
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.ALTITUDE,
+      Complications.COMPLICATION_TYPE_ALTITUDE
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.STRESS,
+      Complications.COMPLICATION_TYPE_STRESS
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.WEEKLY_RUN_DISTANCE,
+      Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.WEEKLY_BIKE_DISTANCE,
+      Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.VO2_RUN,
+      Complications.COMPLICATION_TYPE_VO2MAX_RUN
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.VO2_BIKE,
+      Complications.COMPLICATION_TYPE_VO2MAX_BIKE
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.RESPIRATION_RATE,
+      Complications.COMPLICATION_TYPE_RESPIRATION_RATE
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.SOLAR_INPUT,
+      Complications.COMPLICATION_TYPE_SOLAR_INPUT
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.INTENSITY_MINUTES,
+      Complications.COMPLICATION_TYPE_INTENSITY_MINUTES
+    );
+    addNewDataTypeToMenuSettings(
+      pattern,
+      DataWrapper.CALENDAR_EVENTS,
+      Complications.COMPLICATION_TYPE_CALENDAR_EVENTS
+    );
     return pattern;
   }
 
@@ -400,17 +446,35 @@ module Menu {
       },
     ];
 
-    var values = [0x00, 0x55, 0xaa, 0xff];
-    for (var i = 0; i < values.size(); i++) {
-      for (var j = 0; j < values.size(); j++) {
-        for (var k = 0; k < values.size(); k++) {
-          var color = (values[i] << 16) + (values[j] << 8) + values[k];
-          items_props.add({
-            :identifier => color.toString(),
-            :color => color,
-            :parent_item_week => parent_item_week,
-          });
+    //Если памяти достаточно, то добавляем 64 цвета
+    //иначе только системные цвета
+    if (System.getSystemStats().freeMemory > 45000) {
+      var values = [0x00, 0x55, 0xaa, 0xff];
+      for (var i = 0; i < values.size(); i++) {
+        for (var j = 0; j < values.size(); j++) {
+          for (var k = 0; k < values.size(); k++) {
+            var color = (values[i] << 16) + (values[j] << 8) + values[k];
+            items_props.add({
+              :identifier => color.toString(),
+              :color => color,
+              :parent_item_week => parent_item_week,
+            });
+          }
         }
+      }
+    } else {
+      //системные цвета
+      var sys_colors = [
+        0xffffff, 0xaaaaaa, 0x555555, 0x000000, 0xff0000, 0xaa0000, 0xff5500,
+        0xffaa00, 0x00ff00, 0x00aa00, 0x00aaff, 0x0000ff, 0xaa00ff, 0xff00ff,
+      ];
+      for (var i = 0; i < sys_colors.size(); i++) {
+        var color = sys_colors[i];
+        items_props.add({
+          :identifier => color.toString(),
+          :color => color,
+          :parent_item_week => parent_item_week,
+        });
       }
     }
 
@@ -422,19 +486,30 @@ module Menu {
     return new ColorSelectMenu(options);
   }
 
+
   function getSublabel(method_symbol, value) {
     var method = new Lang.Method(Menu, method_symbol);
     var pattern = method.invoke();
     return pattern[value];
   }
 
+  function addNewDataTypeToMenuSettings(dict, data_type, compl_type) {
+    var compl_label = getNativeComplicationLabel(compl_type);
+    if (compl_label instanceof Lang.String) {
+      dict[data_type] = compl_label;
+    }
+  }
+
   function getNativeComplicationLabel(compl_type) {
-    var res = "";
-    var compl = Complications.getComplication(new Complications.Id(compl_type));
-    if (compl != null) {
-      res = compl.longLabel;
-      if (res == null) {
-        res = compl.shortLabel;
+    var res = null;
+    var compl_id = new Complications.Id(compl_type);
+    if (compl_id instanceof Complications.Id) {
+      var compl = Complications.getComplication(compl_id);
+      if (compl != null) {
+        res = compl.longLabel;
+        if (res == null) {
+          res = compl.shortLabel;
+        }
       }
     }
     return res;
@@ -462,7 +537,6 @@ module Menu {
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
   }
-
 }
 
 //*****************************************************************************
