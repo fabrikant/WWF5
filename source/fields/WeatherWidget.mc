@@ -12,7 +12,9 @@ class WeatherWidget extends AbstractField {
   function initialize(options) {
     AbstractField.initialize(options);
     arrow_bitmap = null;
-    compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
+    compl_id = new Complications.Id(
+      Complications.COMPLICATION_TYPE_CURRENT_WEATHER
+    );
   }
 
   function draw(colors) {
@@ -89,23 +91,25 @@ class WeatherWidget extends AbstractField {
 
     //Ветер направление
     var wind_angle = weather.windBearing;
-    if (arrow_bitmap == null) {
-      var bitmap_size = Math.floor(bitmap.getHeight() * 0.65);
-      arrow_bitmap = getWindArrowBitmap(bitmap_size, colors);
+    if (wind_angle != null) {
+      if (arrow_bitmap == null) {
+        var bitmap_size = Math.floor(bitmap.getHeight() * 0.65);
+        arrow_bitmap = getWindArrowBitmap(bitmap_size, colors);
+      }
+
+      var transform = new Graphics.AffineTransform();
+      transform.rotate((2 * Math.PI * (wind_angle + 180)) / 360f);
+      transform.translate(
+        (-arrow_bitmap.getWidth() / 2).toNumber(),
+        (-arrow_bitmap.getHeight() / 2).toNumber()
+      );
+      temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
+      dc.drawBitmap2(temp_x, temp_y, arrow_bitmap, {
+        :transform => transform,
+        :filterMode => Graphics.FILTER_MODE_BILINEAR,
+      });
     }
-
-    var transform = new Graphics.AffineTransform();
-    transform.rotate((2 * Math.PI * (wind_angle + 180)) / 360f);
-    transform.translate(
-      (-arrow_bitmap.getWidth() / 2).toNumber(),
-      (-arrow_bitmap.getHeight() / 2).toNumber()
-    );
-    temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
-    dc.drawBitmap2(temp_x, temp_y, arrow_bitmap, {
-      :transform => transform,
-      :filterMode => Graphics.FILTER_MODE_BILINEAR,
-    });
-
+    
     drawBorder(dc);
   }
 

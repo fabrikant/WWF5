@@ -27,7 +27,11 @@ class PatternField extends WatchUi.Layer {
         i += step;
       }
     } else {
-      dc.drawBitmap(0, 0, pattern.background_image);
+      if (pattern instanceof Pattern) {
+        if (pattern.background_image != null) {
+          dc.drawBitmap(0, 0, pattern.background_image);
+        }
+      }
     }
   }
 

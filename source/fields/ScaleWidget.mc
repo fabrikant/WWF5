@@ -129,13 +129,15 @@ class ScaleWidget extends AbstractField {
         small_bitmap.get().getDc().drawBitmap(0, 0, bitmap);
       }
 
-      var reduction_factor = 0.7;
-      temp_y -= small_bitmap.getHeight() * reduction_factor;
-      var transform = new Graphics.AffineTransform();
-      transform.scale(reduction_factor, reduction_factor);
-      dc.drawBitmap2(temp_x, temp_y, small_bitmap, {
-        :transform => transform,
-      });
+      if (small_bitmap != null) {
+        var reduction_factor = 0.7;
+        temp_y -= small_bitmap.getHeight() * reduction_factor;
+        var transform = new Graphics.AffineTransform();
+        transform.scale(reduction_factor, reduction_factor);
+        dc.drawBitmap2(temp_x, temp_y, small_bitmap, {
+          :transform => transform,
+        });
+      }
     }
 
     //Шкала

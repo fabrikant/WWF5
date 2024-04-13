@@ -486,7 +486,6 @@ module Menu {
     return new ColorSelectMenu(options);
   }
 
-
   function getSublabel(method_symbol, value) {
     var method = new Lang.Method(Menu, method_symbol);
     var pattern = method.invoke();
@@ -504,7 +503,10 @@ module Menu {
     var res = null;
     var compl_id = new Complications.Id(compl_type);
     if (compl_id instanceof Complications.Id) {
-      var compl = Complications.getComplication(compl_id);
+      var compl = null;
+      try {
+        compl = Complications.getComplication(compl_id);
+      } catch (ex) {}
       if (compl != null) {
         res = compl.longLabel;
         if (res == null) {

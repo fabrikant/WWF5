@@ -193,18 +193,6 @@ class WWF5View extends WatchUi.WatchFace {
     var status_layer = new StatusField(options);
     self.addLayer(status_layer);
 
-    // //Круг
-    // options = {
-    //   :locX => clock_layer.getX() + clock_layer.getDc().getWidth(),
-    //   :locY => clock_layer.getY(),
-    // };
-    // options[:width] = status_layer.getX() - options[:locX];
-    // options[:height] = options[:width];
-    // options[:identifier] = "data_small";
-    // var circle_field = new CircleField(options);
-    // self.addLayer(circle_field);
-    // every_second_layers.add(circle_field);
-
     //Подложка
     options = {
       :locX => 0,
@@ -215,9 +203,6 @@ class WWF5View extends WatchUi.WatchFace {
       :pattern => self.pattern,
     };
     self.addLayer(new PatternField(options));
-
-    // System.println("Clock height: " +clock_layer.getDc().getHeight());
-    // System.println("Seconds height: " +seconds_layer.getDc().getHeight());
 
     pattern.reference_points = null;
   }
@@ -273,8 +258,12 @@ class WWF5View extends WatchUi.WatchFace {
     } else {
       createMoonKeeper();
     }
-    weather_layer.arrow_bitmap = null;
-    scale_layer.small_bitmap = null;
+    if (weather_layer instanceof WeatherWidget) {
+      weather_layer.arrow_bitmap = null;
+    }
+    if (scale_layer instanceof ScaleWidget) {
+      scale_layer.small_bitmap = null;
+    }
   }
 
   // Terminate any active timers and prepare for slow updates.
@@ -304,8 +293,12 @@ class WWF5View extends WatchUi.WatchFace {
       } else {
         createMoonKeeper();
       }
-      weather_layer.arrow_bitmap = null;
-      scale_layer.small_bitmap = null;
+      if (weather_layer instanceof WeatherWidget) {
+        weather_layer.arrow_bitmap = null;
+      }
+      if (scale_layer instanceof ScaleWidget) {
+        scale_layer.small_bitmap = null;
+      }
     }
   }
 }

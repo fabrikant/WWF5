@@ -261,7 +261,10 @@ module DataWrapper {
       :label => null,
       :compl_id => new Complications.Id(compl_type),
     };
-    var compl = Complications.getComplication(res[:compl_id]);
+    var compl = null;
+    try {
+      compl = Complications.getComplication(res[:compl_id]);
+    } catch (ex) {}
     if (compl != null) {
       if (compl.value != null) {
         res[:scale_value] = compl.value;
@@ -284,7 +287,10 @@ module DataWrapper {
     if (res[:compl_id] == null) {
       return res;
     }
-    var compl = Complications.getComplication(res[:compl_id]);
+    var compl = null;
+    try {
+      compl = Complications.getComplication(res[:compl_id]);
+    } catch (ex) {}
     if (compl != null) {
       if (compl.value != null) {
         if (convertation_method_symbol == null) {
@@ -519,7 +525,7 @@ module DataWrapper {
 
   function converValueWindSpeed(wind_speed) {
     var value = wind_speed; //meters/sec
-    if (value == null){
+    if (value == null) {
       return "";
     }
     var unit_str = "";

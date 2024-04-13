@@ -49,7 +49,12 @@ class SunEventsField extends AbstractField {
 
   function getSunEventTime(compl_id) {
     var res = "";
-    var compl = Complications.getComplication(new Complications.Id(compl_id));
+    var compl = null;
+    try {
+      compl = Complications.getComplication(new Complications.Id(compl_id));
+    } catch (ex) {
+      return res;
+    }
     if (compl.value != null) {
       var moment = Time.today().add(new Time.Duration(compl.value));
       res = hours_minutes(Time.Gregorian.info(moment, Time.FORMAT_SHORT));
