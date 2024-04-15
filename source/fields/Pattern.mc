@@ -28,7 +28,7 @@ class PatternField extends WatchUi.Layer {
       }
     } else {
       if (pattern instanceof Pattern) {
-        if (pattern.background_image != null) {
+        if (pattern.background_image instanceof Graphics.BufferedBitmapReference) {
           dc.drawBitmap(0, 0, pattern.background_image);
         }
       }

@@ -97,19 +97,20 @@ class WeatherWidget extends AbstractField {
         arrow_bitmap = getWindArrowBitmap(bitmap_size, colors);
       }
 
-      var transform = new Graphics.AffineTransform();
-      transform.rotate((2 * Math.PI * (wind_angle + 180)) / 360f);
-      transform.translate(
-        (-arrow_bitmap.getWidth() / 2).toNumber(),
-        (-arrow_bitmap.getHeight() / 2).toNumber()
-      );
-      temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
-      dc.drawBitmap2(temp_x, temp_y, arrow_bitmap, {
-        :transform => transform,
-        :filterMode => Graphics.FILTER_MODE_BILINEAR,
-      });
+      if (arrow_bitmap instanceof Graphics.BufferedBitmapReference) {
+        var transform = new Graphics.AffineTransform();
+        transform.rotate((2 * Math.PI * (wind_angle + 180)) / 360f);
+        transform.translate(
+          (-arrow_bitmap.getWidth() / 2).toNumber(),
+          (-arrow_bitmap.getHeight() / 2).toNumber()
+        );
+        temp_y = dc.getHeight() - arrow_bitmap.getHeight() / 2;
+        dc.drawBitmap2(temp_x, temp_y, arrow_bitmap, {
+          :transform => transform,
+          :filterMode => Graphics.FILTER_MODE_BILINEAR,
+        });
+      }
     }
-    
     drawBorder(dc);
   }
 

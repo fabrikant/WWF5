@@ -189,28 +189,6 @@ class ScaleWidget extends AbstractField {
       angle_min,
       angle_value
     );
-
-    // Подпись полукруглым текстом
-    // if (data[:value] != null) {
-    //   dc.setColor(colors[:font], colors[:background]);
-    //   var font_height = vectorFontHeight();
-    //   var font = Graphics.getVectorFont({
-    //     :face => vectorFontName(),
-    //     :size => font_height,
-    //   });
-
-    //   var str_angle = angle_min - Global.mod(angle_min - angle_max) / 2;
-    //   dc.drawRadialText(
-    //     center_x,
-    //     center_y,
-    //     font,
-    //     data[:value],
-    //     Graphics.TEXT_JUSTIFY_CENTER,
-    //     str_angle,
-    //     system_radius - scale_width - font_height,
-    //     Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE
-    //   );
-    // }
   }
 
   function vectorFontHeight() {
