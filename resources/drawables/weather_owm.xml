@@ -1,0 +1,624 @@
+<drawables>
+
+	<bitmap id="NA" filename="./svg-resources/999-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<!-- Cloud -->
+	<bitmap id="Code800d" filename="./svg-resources/100-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code800n" filename="./svg-resources/150-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code801d" filename="./svg-resources/102-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code801n" filename="./svg-resources/152-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code802d" filename="./svg-resources/103-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code802n" filename="./svg-resources/153-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code803d" filename="./svg-resources/101-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code803n" filename="./svg-resources/151-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code804d" filename="./svg-resources/104-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code804n" filename="./svg-resources/104-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+
+	<!-- Thunderstorm -->
+	<bitmap id="Code200d" filename="./svg-resources/304-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code200n" filename="./svg-resources/304-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code201d" filename="./svg-resources/302-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code201n" filename="./svg-resources/302-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code202d" filename="./svg-resources/303-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code202n" filename="./svg-resources/303-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code210d" filename="./svg-resources/1043.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code210n" filename="./svg-resources/1043.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code211d" filename="./svg-resources/2015.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code211n" filename="./svg-resources/2015.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code212d" filename="./svg-resources/1014.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code212n" filename="./svg-resources/1014.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code221d" filename="./svg-resources/1014.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code221n" filename="./svg-resources/1014.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code230d" filename="./svg-resources/304-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code230n" filename="./svg-resources/304-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code231d" filename="./svg-resources/2024.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code231n" filename="./svg-resources/2024.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code232d" filename="./svg-resources/2024.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code232n" filename="./svg-resources/2024.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+
+	<!-- Drizzle -->
+	<bitmap id="Code300d" filename="./svg-resources/309-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code300n" filename="./svg-resources/309-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code301d" filename="./svg-resources/312-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code301n" filename="./svg-resources/312-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code302d" filename="./svg-resources/1035.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code302n" filename="./svg-resources/1035.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code310d" filename="./svg-resources/314-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code310n" filename="./svg-resources/314-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code311d" filename="./svg-resources/315-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code311n" filename="./svg-resources/315-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code312d" filename="./svg-resources/316-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code312n" filename="./svg-resources/316-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code313d" filename="./svg-resources/317-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code313n" filename="./svg-resources/317-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code314d" filename="./svg-resources/318-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code314n" filename="./svg-resources/318-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code321d" filename="./svg-resources/308-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code321n" filename="./svg-resources/308-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+
+	<!-- Rain -->
+	<bitmap id="Code500d" filename="./svg-resources/300-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code500n" filename="./svg-resources/350-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code501d" filename="./svg-resources/300-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code501n" filename="./svg-resources/350-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code502d" filename="./svg-resources/301-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code502n" filename="./svg-resources/351-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code503d" filename="./svg-resources/301-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code503n" filename="./svg-resources/351-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code504d" filename="./svg-resources/301-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code504n" filename="./svg-resources/351-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code511d" filename="./svg-resources/1015.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code511n" filename="./svg-resources/1015.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code520d" filename="./svg-resources/305.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code520n" filename="./svg-resources/305.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code521d" filename="./svg-resources/306.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code521n" filename="./svg-resources/306.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code522d" filename="./svg-resources/307.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code522n" filename="./svg-resources/307.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code531d" filename="./svg-resources/301-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code531n" filename="./svg-resources/351-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+
+	<!-- Snow -->
+	<bitmap id="Code600d" filename="./svg-resources/407-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code600n" filename="./svg-resources/457-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code601d" filename="./svg-resources/400-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code601n" filename="./svg-resources/400-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code602d" filename="./svg-resources/401-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code602n" filename="./svg-resources/401-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code611d" filename="./svg-resources/408-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code611n" filename="./svg-resources/408-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code612d" filename="./svg-resources/409-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code612n" filename="./svg-resources/409-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code613d" filename="./svg-resources/410-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code613n" filename="./svg-resources/410-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code615d" filename="./svg-resources/406-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code615n" filename="./svg-resources/456-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code616d" filename="./svg-resources/404-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code616n" filename="./svg-resources/404-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code620d" filename="./svg-resources/1033.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code620n" filename="./svg-resources/1033.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code621d" filename="./svg-resources/1004.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code621n" filename="./svg-resources/1004.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code622d" filename="./svg-resources/499-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code622n" filename="./svg-resources/499-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<!-- Atmosphere -->
+	<bitmap id="Code701d" filename="./svg-resources/501-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code701n" filename="./svg-resources/501-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code711d" filename="./svg-resources/smoke.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code711n" filename="./svg-resources/smoke.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code721d" filename="./svg-resources/502-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code721n" filename="./svg-resources/502-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code731d" filename="./svg-resources/2010.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code731n" filename="./svg-resources/2010.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code741d" filename="./svg-resources/1017.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code741n" filename="./svg-resources/1017.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code751d" filename="./svg-resources/1051.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code751n" filename="./svg-resources/1051.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code761d" filename="./svg-resources/504-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code761n" filename="./svg-resources/504-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code762d" filename="./svg-resources/504-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code762n" filename="./svg-resources/504-fill.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code771d" filename="./svg-resources/1602.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code771n" filename="./svg-resources/1602.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Code781d" filename="./svg-resources/1002.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+	<bitmap id="Code781n" filename="./svg-resources/1002.svg" scaleX="14%" scaleY="14%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+</drawables>

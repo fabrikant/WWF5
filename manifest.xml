@@ -5,7 +5,7 @@
         Use "Monkey C: Edit Application" from the Visual Studio Code command palette
         to update the application attributes.
     -->
-  <iq:application id="0cbba457-5d97-403c-957a-29ca4cfc87ae" type="watchface" name="@Strings.AppName" entry="WWF5App" launcherIcon="@Drawables.LauncherIcon" minApiLevel="4.2.0">
+  <iq:application id="f2fc926b-5300-4b19-817f-da103c03ce28" type="watchface" name="@Strings.AppName" entry="WWF5App" launcherIcon="@Drawables.LauncherIcon" minApiLevel="4.2.0">
     <!--
             Use the following from the Visual Studio Code comand palette to edit
             the build targets:
@@ -45,6 +45,8 @@
             palette to update permissions.
         -->
     <iq:permissions>
+      <iq:uses-permission id="Background"/>
+      <iq:uses-permission id="Communications"/>
       <iq:uses-permission id="ComplicationSubscriber"/>
       <iq:uses-permission id="Positioning"/>
       <iq:uses-permission id="SensorHistory"/>

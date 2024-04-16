@@ -1,5 +1,6 @@
 import Toybox.Complications;
 
+(:background)
 module Global {
   enum {
     UNIT_SPEED_MS = 0,
@@ -12,6 +13,20 @@ module Global {
     BLUETOOTH_SHOW_IF_CONNECT = 0,
     BLUETOOTH_SHOW_IF_DISCONNECT,
     BLUETOOTH_HIDE,
+
+    PRESETS_KEY = 0,
+    PRESETS_NAME_KEY,
+    LOCATION_KEY,
+    CURRENT_WEATHER_KEY,
+    STORAGE_KEY_RESPONCE_CODE,
+    STORAGE_KEY_UPDATE_MOMENT,
+    STORAGE_KEY_TEMP,
+    STORAGE_KEY_ICON,
+    STORAGE_KEY_WEATHER_ID,
+    STORAGE_KEY_WIND_SPEED,
+    STORAGE_KEY_WIND_DEG,
+    STORAGE_KEY_WEATHER_MAIN,
+    STORAGE_KEY_WEATHER_CITY,
   }
 
   function getPropertiesKeys() {

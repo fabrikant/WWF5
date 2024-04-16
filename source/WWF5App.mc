@@ -2,6 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
+(:background)
 class WWF5App extends Application.AppBase {
   var watch_view;
 
@@ -23,6 +24,43 @@ class WWF5App extends Application.AppBase {
 
   function getSettingsView() {
     return [Menu.GeneralMenu(), new SimpleMenuDelegate()];
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // Background
+  function onBackgroundData(data) {
+    if (data != null) {
+      Application.Storage.setValue(Global.CURRENT_WEATHER_KEY, data);
+    }
+    registerEvents();
+  }
+
+  function registerEvents() {
+    var kewOw = Application.Properties.getValue("owm_key");
+    if (kewOw.equals("")) {
+      return;
+    }
+    var registeredTime = Background.getTemporalEventRegisteredTime();
+    if (registeredTime != null) {
+      return;
+    }
+    var lastTime = Background.getLastTemporalEventTime();
+    var duration = new Time.Duration(600);
+    var now = Time.now();
+    if (lastTime == null) {
+      Background.registerForTemporalEvent(now);
+    } else {
+      if (now.greaterThan(lastTime.add(duration))) {
+        Background.registerForTemporalEvent(now);
+      } else {
+        var nextTime = lastTime.add(duration);
+        Background.registerForTemporalEvent(nextTime);
+      }
+    }
+  }
+
+  function getServiceDelegate() {
+    return [new BackgroundService()];
   }
 }
 

@@ -130,6 +130,12 @@ module Menu {
       :identifier => "T1TZ",
     });
 
+    items_props.add({
+      :item_class => :PickerItem,
+      :rez_label => Rez.Strings.owm_key,
+      :identifier => "owm_key",
+    });
+
     var options = { :title => Rez.Strings.MenuHeader, :items => items_props };
     return new SubMenu(options);
   }
@@ -315,7 +321,7 @@ module Menu {
       :method_symbol => :savePreset,
     });
 
-    var presets = Application.Storage.getValue(Presets.STORAGE_KEY);
+    var presets = Application.Storage.getValue(Global.PRESETS_KEY);
     if (presets != null) {
       var keys = presets.keys();
       for (var i = 0; i < keys.size(); i++) {
@@ -343,7 +349,7 @@ module Menu {
 
     var title = Presets.presetIdToString(
       options[:id],
-      Application.Storage.getValue(Presets.STORAGE_KEY)
+      Application.Storage.getValue(Global.PRESETS_KEY)
     );
     items_props.add({
       :item_class => :CommandItem,

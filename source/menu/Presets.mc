@@ -3,13 +3,9 @@ import Toybox.Time;
 import Toybox.System;
 
 module Presets {
-  enum {
-    STORAGE_KEY = 0,
-    NAME_KEY,
-  }
 
   function generatePresetsStorage() {
-    if (Application.Storage.getValue(STORAGE_KEY) != null) {
+    if (Application.Storage.getValue(Global.PRESETS_KEY) != null) {
       return;
     }
 
@@ -24,7 +20,7 @@ module Presets {
 
     var keys = target_presets.keys();
     if (keys.size() > 0) {
-      Application.Storage.setValue(STORAGE_KEY, target_presets);
+      Application.Storage.setValue(Global.PRESETS_KEY, target_presets);
     }
   }
 
@@ -32,7 +28,7 @@ module Presets {
     var keys = res_dict.keys();
     var name = keys[0];
     var values_dict = res_dict[name];
-    var result = { NAME_KEY => name };
+    var result = { Global.PRESETS_NAME_KEY => name };
     keys = values_dict.keys();
     for (var i = 0; i < keys.size(); i++) {
       result[keys[i]] = values_dict[keys[i]].toLongWithBase(16);
@@ -41,9 +37,9 @@ module Presets {
   }
 
   function renamePreset(options) {
-    var presets = Application.Storage.getValue(STORAGE_KEY);
-    presets[options[:id]][NAME_KEY] = options[:value];
-    Application.Storage.setValue(STORAGE_KEY, presets);
+    var presets = Application.Storage.getValue(Global.PRESETS_KEY);
+    presets[options[:id]][Global.PRESETS_NAME_KEY] = options[:value];
+    Application.Storage.setValue(Global.PRESETS_KEY, presets);
   }
 
   function savePreset(options) {
@@ -53,17 +49,17 @@ module Presets {
       preset[prop_keys[i]] = Application.Properties.getValue(prop_keys[i]);
     }
 
-    var presets = Application.Storage.getValue(STORAGE_KEY);
+    var presets = Application.Storage.getValue(Global.PRESETS_KEY);
     if (presets == null) {
       presets = {};
     }
     presets[Time.now().value()] = preset;
 
-    Application.Storage.setValue(STORAGE_KEY, presets);
+    Application.Storage.setValue(Global.PRESETS_KEY, presets);
   }
 
   function applyPreset(options) {
-    var presets = Application.Storage.getValue(STORAGE_KEY);
+    var presets = Application.Storage.getValue(Global.PRESETS_KEY);
     if (presets == null) {
       return;
     }
@@ -82,7 +78,7 @@ module Presets {
   }
 
   function removePreset(options) {
-    var presets = Application.Storage.getValue(STORAGE_KEY);
+    var presets = Application.Storage.getValue(Global.PRESETS_KEY);
     if (presets == null) {
       return;
     }
@@ -90,12 +86,12 @@ module Presets {
     if (presets.hasKey(id)) {
       presets.remove(id);
     }
-    Application.Storage.setValue(STORAGE_KEY, presets);
+    Application.Storage.setValue(Global.PRESETS_KEY, presets);
   }
 
   function presetIdToString(moment_value, presets) {
-    if (presets[moment_value][NAME_KEY] != null) {
-      return presets[moment_value][NAME_KEY];
+    if (presets[moment_value][Global.PRESETS_NAME_KEY] != null) {
+      return presets[moment_value][Global.PRESETS_NAME_KEY];
     } else {
       var moment = new Time.Moment(moment_value);
       var info = Time.Gregorian.info(moment, Time.FORMAT_SHORT);

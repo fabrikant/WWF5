@@ -41,6 +41,31 @@ class WWF5View extends WatchUi.WatchFace {
     );
   }
 
+  function captureLocation() {
+    var location = Activity.getActivityInfo().currentLocation;
+    if (location != null) {
+      location = location.toDegrees();
+      Application.Storage.setValue(Global.LOCATION_KEY, [
+        location[0].toFloat(),
+        location[1].toFloat(),
+      ]);
+      getApp().registerEvents();
+    } else {
+      var weather = Toybox.Weather.getCurrentConditions();
+      if (weather != null) {
+        location = weather.observationLocationPosition;
+        if (location != null) {
+          location = location.toDegrees();
+          Application.Storage.setValue(Global.LOCATION_KEY, [
+            location[0].toFloat(),
+            location[1].toFloat(),
+          ]);
+          getApp().registerEvents();
+        }
+      }
+    }
+  }
+
   function createLayers() {
     self.clearLayers();
 
@@ -214,6 +239,7 @@ class WWF5View extends WatchUi.WatchFace {
   // the state of this View and prepare it to be shown. This includes
   // loading resources into memory.
   function onShow() as Void {
+    captureLocation();
     readSettings();
     self.pattern = new Pattern(colors);
     createMoonKeeper();
