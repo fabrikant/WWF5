@@ -10,18 +10,21 @@ module WeatherWrapper {
 
 class WeatherCurrentCondition {
   var condition, observationTime, temperature, windBearing, windSpeed, icon_rez;
+  var data_source;
 
   function initialize() {
     updateValues();
   }
 
   function updateValues() {
+    data_source = null;
     var weather_data = Application.Storage.getValue(Global.CURRENT_WEATHER_KEY);
     if (weather_data != null) {
       var update_moment = weather_data[Global.STORAGE_KEY_UPDATE_MOMENT];
       var now = Time.now();
       if (Time.now().value() - update_moment < 10800) {
         System.println("weather owm");
+        data_source = :owm;
         condition = weather_data[Global.STORAGE_KEY_WEATHER_ID];
         observationTime = new Time.Moment(
           weather_data[Global.STORAGE_KEY_UPDATE_MOMENT]
@@ -29,17 +32,29 @@ class WeatherCurrentCondition {
         temperature = weather_data[Global.STORAGE_KEY_TEMP];
         windBearing = weather_data[Global.STORAGE_KEY_WIND_DEG];
         windSpeed = weather_data[Global.STORAGE_KEY_WIND_SPEED];
-        icon_rez = findOWMResByCode(condition, weather_data[Global.STORAGE_KEY_ICON]);
+        icon_rez = findOWMResByCode(
+          condition,
+          weather_data[Global.STORAGE_KEY_ICON]
+        );
       } else {
-        System.println("weather garmin");
-        var weather = Weather.getCurrentConditions();
-        condition = weather.condition;
-        observationTime = weather.observationTime;
-        temperature = weather.temperature;
-        windBearing = weather.windBearing;
-        windSpeed = weather.windSpeed;
-        icon_rez = getGarminConditionRez(weather);
+        updateGarmin();
       }
+    } else {
+      updateGarmin();
+    }
+  }
+
+  function updateGarmin() {
+    System.println("weather garmin");
+    var weather = Weather.getCurrentConditions();
+    if (weather != null) {
+      data_source = :garmin;
+      condition = weather.condition;
+      observationTime = weather.observationTime;
+      temperature = weather.temperature;
+      windBearing = weather.windBearing;
+      windSpeed = weather.windSpeed;
+      icon_rez = getGarminConditionRez(weather);
     }
   }
 

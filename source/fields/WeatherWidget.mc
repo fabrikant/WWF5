@@ -20,7 +20,7 @@ class WeatherWidget extends AbstractField {
   function draw(colors) {
     AbstractField.draw(colors);
     var weather = WeatherWrapper.getCurrentConditions();
-    if (weather == null) {
+    if (weather.data_source == null) {
       drawBorder(getDc());
       return;
     }
