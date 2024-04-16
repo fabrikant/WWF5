@@ -54,14 +54,22 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   }
 
   function onSelectItem() {
-    //Вариант выбора цвета через подменю с цветами
-    var method = new Lang.Method(Menu, method_symbol);
-    var submenu = method.invoke(self.weak());
+    //Вариант выбора из палитры
+    var picker = new ColorPicker(self.weak());
     WatchUi.pushView(
-      submenu,
-      new SimpleMenuDelegate(),
+      picker,
+      new ColorPickerDelegate(picker.weak()),
       WatchUi.SLIDE_IMMEDIATE
     );
+
+    // //Вариант выбора цвета через подменю с цветами
+    // var method = new Lang.Method(Menu, method_symbol);
+    // var submenu = method.invoke(self.weak());
+    // WatchUi.pushView(
+    //   submenu,
+    //   new SimpleMenuDelegate(),
+    //   WatchUi.SLIDE_IMMEDIATE
+    // );
   }
 
   function onSelectSubmenuItem(newValue) {
