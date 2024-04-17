@@ -59,28 +59,24 @@ class ColorPicker extends WatchUi.View {
       box[:x2] - box[:x1],
       box[:y2] - box[:y1]
     );
-    // dc.setPenWidth(1);
-    // dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-    // dc.drawRectangle(
-    //   box[:x1] + zero_point[0],
-    //   box[:y1] + zero_point[1],
-    //   box[:x2] - box[:x1],
-    //   box[:y2] - box[:y1]
-    // );
   }
 
   function farameColor() {
-    if (
-      1.0 -
-        (0.299 * ((color & 0xff0000) >> 16) +
-          0.587 * ((color & 0x00ff00) >> 8) +
-          0.114 * (color & 0x0000ff)) /
-          255.0 <
-      0.5
-    ) {
-      return Graphics.COLOR_BLACK;
+    if (color == Graphics.COLOR_TRANSPARENT) {
+      return Graphics.COLOR_GREEN;
     } else {
-      return Graphics.COLOR_WHITE;
+      if (
+        1.0 -
+          (0.299 * ((color & 0xff0000) >> 16) +
+            0.587 * ((color & 0x00ff00) >> 8) +
+            0.114 * (color & 0x0000ff)) /
+            255.0 <
+        0.5
+      ) {
+        return Graphics.COLOR_BLACK;
+      } else {
+        return Graphics.COLOR_WHITE;
+      }
     }
   }
 

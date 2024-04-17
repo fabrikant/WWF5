@@ -441,57 +441,6 @@ module Menu {
     return new SubMenu(options);
   }
 
-  //Подменю непосредственного выбора цвета
-  function createColorSelectMenu(parent_item_week) {
-    var items_props = [
-      {
-        :item_class => :ColorSelectItem,
-        :identifier => Graphics.COLOR_TRANSPARENT.toString(),
-        :color => Graphics.COLOR_TRANSPARENT,
-        :parent_item_week => parent_item_week,
-      },
-    ];
-
-    //Если памяти достаточно, то добавляем 64 цвета
-    //иначе только системные цвета
-    if (System.getSystemStats().freeMemory > 45000) {
-      var values = [0x00, 0x55, 0xaa, 0xff];
-      for (var i = 0; i < values.size(); i++) {
-        for (var j = 0; j < values.size(); j++) {
-          for (var k = 0; k < values.size(); k++) {
-            var color = (values[i] << 16) + (values[j] << 8) + values[k];
-            items_props.add({
-              :identifier => color.toString(),
-              :color => color,
-              :parent_item_week => parent_item_week,
-            });
-          }
-        }
-      }
-    } else {
-      //системные цвета
-      var sys_colors = [
-        0xffffff, 0xaaaaaa, 0x555555, 0x000000, 0xff0000, 0xaa0000, 0xff5500,
-        0xffaa00, 0x00ff00, 0x00aa00, 0x00aaff, 0x0000ff, 0xaa00ff, 0xff00ff,
-      ];
-      for (var i = 0; i < sys_colors.size(); i++) {
-        var color = sys_colors[i];
-        items_props.add({
-          :identifier => color.toString(),
-          :color => color,
-          :parent_item_week => parent_item_week,
-        });
-      }
-    }
-
-    var options = {
-      :title => Rez.Strings.SubmenuColors,
-      :items => items_props,
-      :parent_item_week => parent_item_week,
-    };
-    return new ColorSelectMenu(options);
-  }
-
   function getSublabel(method_symbol, value) {
     var method = new Lang.Method(Menu, method_symbol);
     var pattern = method.invoke();

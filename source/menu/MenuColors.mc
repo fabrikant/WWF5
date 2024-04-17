@@ -4,25 +4,6 @@ import Toybox.Graphics;
 import Toybox.Lang;
 
 //*****************************************************************************
-//Подменю выбора конкретного цвета
-class ColorSelectMenu extends WatchUi.Menu2 {
-  function initialize(options) {
-    Menu2.initialize({ :title => Application.loadResource(options[:title]) });
-    var current_color = null;
-    if (options[:parent_item_week].stillAlive()) {
-      current_color = options[:parent_item_week].get().color;
-    }
-    for (var i = 0; i < options[:items].size(); i++) {
-      var item_prop = options[:items][i];
-      addItem(new ColorSelectItem(item_prop));
-      if (item_prop[:color] == current_color) {
-        setFocus(i);
-      }
-    }
-  }
-}
-
-//*****************************************************************************
 //Пункт меню (аналог класса Item). Но предназначен для указания цвета
 //ассоциирован со свойством приложения
 //при нажатии открыватеся подменю выбора цветов
@@ -81,31 +62,6 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
     Application.Properties.setValue(getId(), color);
     setSubLabel(colorToString(color));
     setIcon(new IconDrawable(color));
-  }
-}
-
-//*****************************************************************************
-//Пункт меню выбора конкретного цвета
-//при нажатии значение возвращается в родительский пункт меню
-class ColorSelectItem extends ColorPropertyItem {
-  var parent_item_week;
-
-  function initialize(options) {
-    color = options[:color];
-    var label = colorToString(options[:color]);
-    var icon = new IconDrawable(color);
-    self.parent_item_week = options[:parent_item_week];
-    IconMenuItem.initialize(label, null, options[:identifier], icon, {});
-  }
-
-  function onSelectItem() {
-    if (parent_item_week.stillAlive()) {
-      var obj = parent_item_week.get();
-      if (obj != null) {
-        obj.onSelectSubmenuItem(getId().toNumber());
-      }
-    }
-    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
   }
 }
 
