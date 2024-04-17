@@ -1,15 +1,10 @@
 import Toybox.Application;
 import Toybox.System;
-
-module WeatherWrapper {
-  function getCurrentConditions() {
-    var condition = new WeatherCurrentCondition();
-    return condition;
-  }
-}
+import Toybox.Time;
 
 class WeatherCurrentCondition {
-  var condition, observationTime, temperature, windBearing, windSpeed, icon_rez;
+  var observationTime;
+  var condition, temperature, windBearing, windSpeed, icon_rez;
   var data_source;
 
   function initialize() {
@@ -17,13 +12,20 @@ class WeatherCurrentCondition {
   }
 
   function updateValues() {
+   
+    var now = Time.now();
+    if (observationTime != null) {
+      var subst = now.subtract(observationTime).value();
+      if (subst < 300) {
+        return;
+      }
+    }
+
     data_source = null;
     var weather_data = Application.Storage.getValue(Global.CURRENT_WEATHER_KEY);
     if (weather_data != null) {
       var update_moment = weather_data[Global.STORAGE_KEY_UPDATE_MOMENT];
-      var now = Time.now();
-      if (Time.now().value() - update_moment < 10800) {
-        System.println("weather owm");
+      if (now.value() - update_moment < 10800) {
         data_source = :owm;
         condition = weather_data[Global.STORAGE_KEY_WEATHER_ID];
         observationTime = new Time.Moment(
@@ -32,7 +34,7 @@ class WeatherCurrentCondition {
         temperature = weather_data[Global.STORAGE_KEY_TEMP];
         windBearing = weather_data[Global.STORAGE_KEY_WIND_DEG];
         windSpeed = weather_data[Global.STORAGE_KEY_WIND_SPEED];
-        icon_rez = findOWMResByCode(
+        icon_rez = WeatherWrapper.findOWMResByCode(
           condition,
           weather_data[Global.STORAGE_KEY_ICON]
         );
@@ -45,7 +47,6 @@ class WeatherCurrentCondition {
   }
 
   function updateGarmin() {
-    System.println("weather garmin");
     var weather = Weather.getCurrentConditions();
     if (weather != null) {
       data_source = :garmin;
@@ -54,13 +55,20 @@ class WeatherCurrentCondition {
       temperature = weather.temperature;
       windBearing = weather.windBearing;
       windSpeed = weather.windSpeed;
-      icon_rez = getGarminConditionRez(weather);
+      icon_rez = WeatherWrapper.getGarminConditionRez(weather);
     }
+  }
+}
+
+module WeatherWrapper {
+  function getCurrentConditions() {
+    var condition = new WeatherCurrentCondition();
+    return condition;
   }
 
   /////////////////////////////////////////////////////////////////////////////
   //OWM
-  private function findOWMResByCode(id, icon) {
+  function findOWMResByCode(id, icon) {
     var codes;
     if (id < 300) {
       codes = codes200();
@@ -79,10 +87,14 @@ class WeatherCurrentCondition {
     var len = icon.length();
     var key = id.toString() + icon.substring(len - 1, len);
 
-    return codes[key];
+    var res = Rez.Drawables.NA;
+    if (codes[key] != null) {
+      res = codes[key];
+    }
+    return res;
   }
 
-  private function codes200() {
+  function codes200() {
     //Thunderstorm
     return {
       "200d" => Rez.Drawables.Code200d,
@@ -108,7 +120,7 @@ class WeatherCurrentCondition {
     };
   }
 
-  private function codes300() {
+  function codes300() {
     //Drizzle
     return {
       "300d" => Rez.Drawables.Code300d,
@@ -132,7 +144,7 @@ class WeatherCurrentCondition {
     };
   }
 
-  private function codes500() {
+  function codes500() {
     //Rain
     return {
       "500d" => Rez.Drawables.Code500d,
@@ -158,7 +170,7 @@ class WeatherCurrentCondition {
     };
   }
 
-  private function codes600() {
+  function codes600() {
     //Snow
     return {
       "600d" => Rez.Drawables.Code600d,
@@ -186,7 +198,7 @@ class WeatherCurrentCondition {
     };
   }
 
-  private function codes700() {
+  function codes700() {
     //Atmosphere
     return {
       "701d" => Rez.Drawables.Code701d,
@@ -212,7 +224,7 @@ class WeatherCurrentCondition {
     };
   }
 
-  private function codes800() {
+  function codes800() {
     //Cloud
     return {
       "800d" => Rez.Drawables.Code800d,
@@ -230,7 +242,7 @@ class WeatherCurrentCondition {
 
   /////////////////////////////////////////////////////////////////////////////
   //GARMIN
-  private function getGarminConditionRez(weather) {
+  function getGarminConditionRez(weather) {
     var condition = weather.condition;
     var isDay = true;
     var moment_now = Time.now();
@@ -363,6 +375,8 @@ class WeatherCurrentCondition {
         return Rez.Drawables.CONDITION_THIN_CLOUDS;
       } else if (condition == Weather.CONDITION_UNKNOWN) {
         return Rez.Drawables.CONDITION_UNKNOWN;
+      } else {
+        return Rez.Drawables.NA;
       }
     } else {
       if (condition == Weather.CONDITION_CLEAR) {
@@ -473,6 +487,8 @@ class WeatherCurrentCondition {
         return Rez.Drawables.CONDITION_THIN_CLOUDS_NIGHT;
       } else if (condition == Weather.CONDITION_UNKNOWN) {
         return Rez.Drawables.CONDITION_UNKNOWN_NIGHT;
+      } else {
+        return Rez.Drawables.NA;
       }
     }
   }

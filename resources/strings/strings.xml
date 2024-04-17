@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">WWF5</string>
+    <string id="AppName" translatable="false">WWF5</string>
     <!-- Menu -->
     <string id="MenuHeader" scope="foreground">Settings</string>
     <string id="SubmenuColors" scope="foreground">Colors</string>
@@ -65,5 +65,5 @@
     <string id="FIELD_TYPE_LONG_DATE" scope="foreground">Day of week, day month</string>
     <string id="FIELD_TYPE_CITY" scope="foreground">City</string>
 
-    <string id="owm_key" scope="foreground">owm API key</string>
+    <string id="owm_key" scope="foreground" translatable="false">owm API key</string>
 </strings>

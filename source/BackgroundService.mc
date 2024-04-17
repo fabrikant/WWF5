@@ -1,64 +1,3 @@
-//{
-//   "lat":55,
-//   "lon":75,
-//   "timezone":"Asia/Omsk",
-//   "timezone_offset":21600,
-//   "current":{
-//      "dt":1616471820,
-//      "sunrise":1616460895,
-//      "sunset":1616505492,
-//      "temp":-8.47,
-//      "feels_like":-12.96,
-//      "pressure":1017,
-//      "humidity":96,
-//      "dew_point":-8.93,
-//      "uvi":1.32,
-//      "clouds":98,
-//      "visibility":5543,
-//      "wind_speed":2.16,
-//      "wind_deg":206,
-//      "wind_gust":2.9,
-//      "weather":[
-//         {
-//            "id":804,
-//            "main":"Clouds",
-//            "description":"пасмурно",
-//            "icon":"04d"
-//         }
-//      ]
-//   },
-//   "alerts":[
-//      {
-//         "sender_name":"",
-//         "event":"Гололедно - изморозевое отложение",
-//         "start":1616461200,
-//         "end":1616562000,
-//         "description":"местами гололедные-изморозевые явления"
-//      },
-//      {
-//         "sender_name":"",
-//         "event":"Freezing rain, icing",
-//         "start":1616461200,
-//         "end":1616562000,
-//         "description":""
-//      },
-//      {
-//         "sender_name":"",
-//         "event":"Fog",
-//         "start":1616472000,
-//         "end":1616554800,
-//         "description":""
-//      },
-//      {
-//         "sender_name":"",
-//         "event":"Туман",
-//         "start":1616425200,
-//         "end":1616554800,
-//         "description":"местами"
-//      }
-//   ]
-//}
-
 using Toybox.Background;
 using Toybox.Communications;
 using Toybox.System;
@@ -80,10 +19,6 @@ class BackgroundService extends System.ServiceDelegate {
     }
     var appid = Application.Properties.getValue("owm_key");
 
-    //////////////////////////////////////////////////////////
-    //DEBUG
-    //System.println("onTemporalEvent: "+Time.now().value());
-    //////////////////////////////////////////////////////////
     Communications.makeWebRequest(
       url,
       {
@@ -100,13 +35,6 @@ class BackgroundService extends System.ServiceDelegate {
 
   function responseCallback(responseCode, data) {
     var backgroundData;
-    //////////////////////////////////////////////////////////
-    //DEBUG
-    //		System.println("responseCallback: "+Time.now().value());
-    //		System.println("responseCode: "+responseCode);
-    //		System.println("data: "+data);
-    //////////////////////////////////////////////////////////
-
     if (responseCode == 200) {
       backgroundData = {
         Global.STORAGE_KEY_RESPONCE_CODE => responseCode,

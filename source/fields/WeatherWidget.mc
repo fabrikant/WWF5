@@ -5,9 +5,11 @@ import Toybox.Application;
 import Toybox.Math;
 import Toybox.Time;
 import Toybox.Complications;
+import Toybox.Lang;
 
 class WeatherWidget extends AbstractField {
   var arrow_bitmap;
+  var weather_condition;
 
   function initialize(options) {
     AbstractField.initialize(options);
@@ -15,27 +17,32 @@ class WeatherWidget extends AbstractField {
     compl_id = new Complications.Id(
       Complications.COMPLICATION_TYPE_CURRENT_WEATHER
     );
+    weather_condition = WeatherWrapper.getCurrentConditions();
   }
 
   function draw(colors) {
     AbstractField.draw(colors);
-    var weather = WeatherWrapper.getCurrentConditions();
-    if (weather.data_source == null) {
+    weather_condition.updateValues();
+    if (weather_condition.data_source == null) {
       drawBorder(getDc());
       return;
     }
     var dc = getDc();
 
+    ///////////////////////////////////////////////////////////////////////////
     //Иконка погоды
-    var bitmap = createImage(weather.icon_rez, colors);
+    var bitmap = createImage(weather_condition.icon_rez, colors);
     var temp_x = dc.getWidth() * 0.08;
     dc.drawBitmap(temp_x, (dc.getHeight() - bitmap.getHeight()) / 2, bitmap);
 
+    ///////////////////////////////////////////////////////////////////////////
     //Температура
     var fontTemp = getApp().watch_view.fontTemp;
     temp_x += bitmap.getWidth();
     var max_temp_width = dc.getTextWidthInPixels("0", fontTemp) * 3;
-    var temperature = DataWrapper.convertTemperature(weather.temperature);
+    var temperature = DataWrapper.convertTemperature(
+      weather_condition.temperature
+    );
     var temperature_y = Math.floor(dc.getHeight() / 2);
     drawText(
       dc,
@@ -60,12 +67,15 @@ class WeatherWidget extends AbstractField {
 
     temp_x += max_temp_width * 1.25;
 
+    ///////////////////////////////////////////////////////////////////////////
     //Ветер
     var font_wind = Graphics.getVectorFont({
       :face => vectorFontName(),
       :size => 0.75 * Graphics.getFontHeight(getApp().watch_view.fontValues),
     });
-    var wind_speed = DataWrapper.converValueWindSpeed(weather.windSpeed);
+    var wind_speed = DataWrapper.converValueWindSpeed(
+      weather_condition.windSpeed
+    );
     var system_radius = System.getDeviceSettings().screenHeight / 2;
     var radius = Math.floor(
       (System.getDeviceSettings().screenHeight -
@@ -90,7 +100,7 @@ class WeatherWidget extends AbstractField {
     );
 
     //Ветер направление
-    var wind_angle = weather.windBearing;
+    var wind_angle = weather_condition.windBearing;
     if (wind_angle != null) {
       if (arrow_bitmap == null) {
         var bitmap_size = Math.floor(bitmap.getHeight() * 0.65);
@@ -111,7 +121,31 @@ class WeatherWidget extends AbstractField {
         });
       }
     }
+
+    drawWeatherDataSource(dc);
     drawBorder(dc);
+  }
+
+  private function drawWeatherDataSource(dc) {
+    //return;
+    var font = Graphics.getVectorFont({
+      :face => vectorFontName(),
+      :size => 0.6 * Graphics.getFontHeight(getApp().watch_view.fontValues),
+    });
+    var weather_source = "owm";
+    if (weather_condition.data_source == :garmin) {
+      weather_source = "gar";
+    }
+    dc.drawText(
+      dc.getWidth() * 0.1,
+      dc.getHeight() - Graphics.getFontAscent(font),
+      font,
+      Lang.format("$1$ $2$", [
+        weather_source,
+        DataWrapper.momentToString(weather_condition.observationTime),
+      ]),
+      Graphics.TEXT_JUSTIFY_LEFT
+    );
   }
 
   private function getWindArrowBitmap(size, colors) {

@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">WWF5</string>
+    
     <!-- Menu -->
     <string id="MenuHeader" scope="foreground">Настройки</string>
     <string id="SubmenuColors" scope="foreground">Цвета</string>
