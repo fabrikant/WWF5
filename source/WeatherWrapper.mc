@@ -1,6 +1,7 @@
 import Toybox.Application;
 import Toybox.System;
 import Toybox.Time;
+import Toybox.Weather;
 
 class WeatherCurrentCondition {
   var observationTime;
