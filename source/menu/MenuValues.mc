@@ -77,7 +77,18 @@ class PickerItem extends WatchUi.MenuItem {
   function onSetText(value) {
     if (method_symbol == null) {
       setSubLabel(value);
-      Application.Properties.setValue(getId(), value.toNumber());
+      var old_value = Application.Properties.getValue(getId());
+      if (old_value instanceof Lang.String) {
+        Application.Properties.setValue(getId(), value);
+      } else if (old_value instanceof Lang.Number) {
+        Application.Properties.setValue(getId(), value.toNumber());
+      } else if (old_value instanceof Lang.Lang) {
+        Application.Properties.setValue(getId(), value.toLong());
+      } else if (old_value instanceof Lang.Float) {
+        Application.Properties.setValue(getId(), value.toFloat());
+      } else if (old_value instanceof Lang.Double) {
+        Application.Properties.setValue(getId(), value.toDouble());
+      }
     } else {
       var method = new Lang.Method(Menu, method_symbol);
       if (method_options instanceof Lang.Dictionary) {

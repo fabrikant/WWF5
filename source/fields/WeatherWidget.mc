@@ -122,19 +122,20 @@ class WeatherWidget extends AbstractField {
       }
     }
 
-    drawWeatherDataSource(dc);
+    drawWeatherDataSource(dc, colors);
     drawBorder(dc);
   }
 
-  private function drawWeatherDataSource(dc) {
+  private function drawWeatherDataSource(dc, colors) {
     //return;
+    dc.setColor(colors[:font], colors[:background]);
     var font = Graphics.getVectorFont({
       :face => vectorFontName(),
-      :size => 0.6 * Graphics.getFontHeight(getApp().watch_view.fontValues),
+      :size => 0.5 * Graphics.getFontHeight(getApp().watch_view.fontValues),
     });
-    var weather_source = "owm";
+    var weather_source = "OWM";
     if (weather_condition.data_source == :garmin) {
-      weather_source = "gar";
+      weather_source = "GAR";
     }
     dc.drawText(
       dc.getWidth() * 0.1,
