@@ -1,0 +1,7 @@
+<settings>
+
+	<setting propertyKey="@Properties.owm_key" title="@Strings.owm_key">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+ 
+</settings>
