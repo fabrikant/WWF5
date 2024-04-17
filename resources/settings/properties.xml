@@ -22,6 +22,7 @@
 	<property id="show_DND" type="boolean">true</property>
 	<property id="T1TZ" type="number">180</property>
 
+	<property id="show_w_source" type="boolean">false</property>
 	<property id="owm_key" type="string"></property>
 
 </properties>

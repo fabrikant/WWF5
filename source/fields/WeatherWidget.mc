@@ -122,7 +122,9 @@ class WeatherWidget extends AbstractField {
       }
     }
 
-    drawWeatherDataSource(dc, colors);
+    if (Application.Properties.getValue("show_w_source")) {
+      drawWeatherDataSource(dc, colors);
+    }
     drawBorder(dc);
   }
 

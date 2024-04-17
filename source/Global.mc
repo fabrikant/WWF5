@@ -49,6 +49,7 @@ module Global {
       "show_connection",
       "show_DND",
       "T1TZ",
+      "show_w_source",
     ];
   }
 

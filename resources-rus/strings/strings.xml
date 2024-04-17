@@ -65,4 +65,6 @@
     <string id="FIELD_TYPE_LONG_DATE" scope="foreground">День нед., число месяц</string>
     <string id="FIELD_TYPE_CITY" scope="foreground">Город</string>
 
+    <string id="show_w_source" scope="foreground">Показать источник данных о погоде</string>
+
 </strings>

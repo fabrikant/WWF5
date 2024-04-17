@@ -130,6 +130,14 @@ module Menu {
       :identifier => "T1TZ",
     });
 
+    //Показать Источник данных о погоде
+    items_props.add({
+      :item_class => :TogleItem,
+      :rez_label => Rez.Strings.show_w_source,
+      :identifier => "show_w_source",
+    });
+
+    //Ключ  API openweathermap.org
     items_props.add({
       :item_class => :PickerItem,
       :rez_label => Rez.Strings.owm_key,
