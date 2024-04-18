@@ -152,6 +152,7 @@ module Menu {
 
     var pattern = dataSubMenu();
     pattern[DataWrapper.DATE_LONG] = Rez.Strings.FIELD_TYPE_LONG_DATE;
+    pattern[DataWrapper.CITY] = Rez.Strings. Rez.Strings.FIELD_TYPE_CITY;
 
     addNewDataTypeToMenuSettings(
       pattern,
