@@ -194,6 +194,7 @@ module Menu {
       DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
       DataWrapper.FEELS_LIKE_TEMPERATURE => Rez.Strings
         .FIELD_TYPE_FEELS_LIKE_TEMPERATURE,
+      DataWrapper.DATE_TO_DATA_FIELD => Rez.Strings.FIELD_TYPE_LONG_DATE,
     };
 
     addNewDataTypeToMenuSettings(

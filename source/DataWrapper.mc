@@ -47,6 +47,7 @@ module DataWrapper {
     TRAINING_STATUS,
     CITY,
     FEELS_LIKE_TEMPERATURE,
+    DATE_TO_DATA_FIELD,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -225,6 +226,8 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_WEEKDAY_MONTHDAY,
         null
       );
+    } else if (type == DATE_TO_DATA_FIELD) {
+      res = dateToDataField();
     } else if (type == CALENDAR_EVENTS) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_CALENDAR_EVENTS,
@@ -454,6 +457,19 @@ module DataWrapper {
     if (value != null) {
       res = value.toString() + "%";
     }
+    return res;
+  }
+
+  function dateToDataField() {
+    var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
+    var now_short = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+    
+    var res = {
+      :scale_value => null,
+      :value => Lang.format("$1$/$2$", [now.day.format("%02d"), now_short.month.format("%02d")]),
+      :label => now.day_of_week,
+      :compl_id => new Complications.Id(Complications.COMPLICATION_TYPE_DATE),
+    };
     return res;
   }
 
