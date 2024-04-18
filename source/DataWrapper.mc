@@ -80,7 +80,7 @@ module DataWrapper {
     } else if (type == STEPS) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_STEPS,
-        null
+        :stepsToStrings
       );
       res[:image] = Rez.Drawables.Steps;
     } else if (type == BATTERY) {
@@ -410,6 +410,22 @@ module DataWrapper {
 
   //******************************************************
   //convertation values
+
+  function stepsToStrings(steps) {
+    var value = null;
+    if (steps != null) {
+      value = steps;
+      if (value > 99999) {
+        value = (value / 1000).format("%d") + "k";
+      } else if (value > 9999) {
+        value = (value.toFloat() / 1000).format("%.1f") + "k";
+      } else {
+        value = value.toString();
+      }
+    }
+    return value;
+  }
+
   function momentToString(moment) {
     var greg = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
     var hours = greg.hour;
