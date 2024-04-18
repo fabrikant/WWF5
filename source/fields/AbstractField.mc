@@ -179,9 +179,14 @@ class AbstractField extends WatchUi.Layer {
 
       //Пишем пустые сегменты
       if (epty_text.length() > 0) {
-        System.println(epty_text);
         dc.setColor(color_empty, colors[:background]);
-        dc.drawText(x + x_offset, y + y_offset, font, epty_text, Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(
+          x + x_offset,
+          y + y_offset,
+          font,
+          epty_text,
+          Graphics.TEXT_JUSTIFY_LEFT
+        );
       }
 
       //Пишем текст
@@ -196,9 +201,8 @@ class AbstractField extends WatchUi.Layer {
 
       //Превращаем % в °
       //закрашиваем часть символа
-      dc.setColor(colors[:background], Graphics.COLOR_TRANSPARENT);
-
-      var k = 0.55;
+       dc.setColor(colors[:background], Graphics.COLOR_TRANSPARENT);
+      var k = 0.5;
       for (var i = 0; i < x_positions.size(); i++) {
         var poligon = [
           [x + x_offset + x_positions[i], y + y_offset + text_w_h[1] * k],

@@ -149,11 +149,9 @@ module Menu {
   }
 
   function dataSubMenuBottom() {
-    var pattern = {
-      DataWrapper.EMPTY => Rez.Strings.FIELD_TYPE_EMPTY,
-      DataWrapper.DATE_LONG => Rez.Strings.FIELD_TYPE_LONG_DATE,
-      DataWrapper.CITY => Rez.Strings.FIELD_TYPE_CITY,
-    };
+
+    var pattern = dataSubMenu();
+    pattern[DataWrapper.DATE_LONG] = Rez.Strings.FIELD_TYPE_LONG_DATE;
 
     addNewDataTypeToMenuSettings(
       pattern,
@@ -194,7 +192,7 @@ module Menu {
       DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
       DataWrapper.FEELS_LIKE_TEMPERATURE => Rez.Strings
         .FIELD_TYPE_FEELS_LIKE_TEMPERATURE,
-      DataWrapper.DATE_TO_DATA_FIELD => Rez.Strings.FIELD_TYPE_LONG_DATE,
+      DataWrapper.DATE_TO_DATA_FIELD => Rez.Strings.FIELD_TYPE_DATE_TO_DATA_FIELD,
     };
 
     addNewDataTypeToMenuSettings(

@@ -64,6 +64,7 @@
     <string id="FIELD_TYPE_RELATIVE_HUMIDITY" scope="foreground">Отн. влажн. возд.</string>
     <string id="FIELD_TYPE_PRECIPITATION_CHANCE" scope="foreground">Вероятн. осадков</string>
     <string id="FIELD_TYPE_LONG_DATE" scope="foreground">День нед., число месяц</string>
+    <string id="FIELD_TYPE_DATE_TO_DATA_FIELD" scope="foreground">День нед., число/месяц</string>
     <string id="FIELD_TYPE_CITY" scope="foreground">Город</string>
 
     <string id="show_w_source" scope="foreground">Показать источник данных о погоде</string>
