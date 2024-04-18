@@ -110,16 +110,17 @@ class AbstractField extends WatchUi.Layer {
   }
 
   function drawText(dc, colors, x, y, font, text, justification) {
+    //В шрифте нет символа °. Поэтому куча извращений, чтобы превратить % в °
+    var degrees_positions = [];
     var color = colors[:font];
-
     var color_empty = colors[:font_empty_segments];
+    var epty_text = "";
     if (
       color_empty != color &&
       color_empty != Graphics.COLOR_TRANSPARENT &&
       color_empty != colors[:background]
     ) {
       var chars = text.toCharArray();
-      var epty_text = "";
       for (var i = 0; i < chars.size(); i++) {
         if (
           chars[i] == '0' ||
@@ -133,14 +134,85 @@ class AbstractField extends WatchUi.Layer {
           chars[i] == '9'
         ) {
           epty_text += "8";
+        } else if (chars[i] == '°') {
+          epty_text += "%";
+          degrees_positions.add(i);
         } else {
           epty_text += text.substring(i, i + 1);
         }
       }
-      dc.setColor(color_empty, colors[:background]);
-      dc.drawText(x, y, font, epty_text, justification);
     }
-    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(x, y, font, text, justification);
+    if (degrees_positions.size() == 0) {
+      if (epty_text.length() > 0) {
+        dc.setColor(color_empty, colors[:background]);
+        dc.drawText(x, y, font, epty_text, justification);
+      }
+
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(x, y, font, text, justification);
+    } else {
+      //Опеределяем точки начала символов % отностиельно остальной строки
+      var x_positions = [];
+      for (var i = 0; i < degrees_positions.size(); i++) {
+        var pos = degrees_positions[i];
+        var left_str = text.substring(null, pos);
+        text = left_str + "%" + text.substring(pos + 1, null);
+        x_positions.add(dc.getTextWidthInPixels(left_str, font));
+      }
+
+      //Стандартным выравниванием пользоваться не получится, так
+      //как нельзя будет определить размер сдвига
+      var symb_w = dc.getTextWidthInPixels("%", font);
+      var x_offset = 0;
+      var y_offset = 0;
+      var text_w_h = dc.getTextDimensions(text, font);
+      if ((justification & 4) == Graphics.TEXT_JUSTIFY_VCENTER) {
+        y_offset = -text_w_h[1] / 2;
+        justification -= Graphics.TEXT_JUSTIFY_VCENTER;
+      }
+      if (justification == Graphics.TEXT_JUSTIFY_RIGHT) {
+        x_offset = -text_w_h[0];
+      } else if (justification == Graphics.TEXT_JUSTIFY_CENTER) {
+        x_offset = -text_w_h[0] / 2;
+      }
+      x_offset += (degrees_positions.size() * symb_w) / 2;
+
+      //Пишем пустые сегменты
+      if (epty_text.length() > 0) {
+        System.println(epty_text);
+        dc.setColor(color_empty, colors[:background]);
+        dc.drawText(x + x_offset, y + y_offset, font, epty_text, Graphics.TEXT_JUSTIFY_LEFT);
+      }
+
+      //Пишем текст
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(
+        x + x_offset,
+        y + y_offset,
+        font,
+        text,
+        Graphics.TEXT_JUSTIFY_LEFT
+      );
+
+      //Превращаем % в °
+      //закрашиваем часть символа
+      dc.setColor(colors[:background], Graphics.COLOR_TRANSPARENT);
+
+      var k = 0.55;
+      for (var i = 0; i < x_positions.size(); i++) {
+        var poligon = [
+          [x + x_offset + x_positions[i], y + y_offset + text_w_h[1] * k],
+          [
+            x + x_offset + x_positions[i] + symb_w * k,
+            y + y_offset + text_w_h[1] * k,
+          ],
+          [x + x_offset + x_positions[i] + symb_w * k, y + y_offset],
+          [x + x_offset + x_positions[i] + symb_w, y + y_offset],
+          [x + x_offset + x_positions[i] + symb_w, y + y_offset + text_w_h[1]],
+          [x + x_offset + x_positions[i], y + y_offset + text_w_h[1]],
+        ];
+        dc.fillPolygon(poligon);
+      }
+    }
   }
 }

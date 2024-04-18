@@ -53,17 +53,18 @@ class WeatherWidget extends AbstractField {
       Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
     );
 
-    //"°" symbol
-    var temperature_font_height = Graphics.getFontHeight(fontTemp);
-    var radius_symbol = temperature_font_height / 12;
-    var x_symbol =
-      temp_x +
-      max_temp_width / 2 +
-      dc.getTextWidthInPixels(temperature, fontTemp) / 2;
-    var temp_y = temperature_y - temperature_font_height / 4;
-    dc.setPenWidth(2);
-    dc.drawCircle(x_symbol + 2 * radius_symbol, temp_y, radius_symbol);
+    // //"°" symbol
+    // var temperature_font_height = Graphics.getFontHeight(fontTemp);
+    // var radius_symbol = temperature_font_height / 12;
+    // var x_symbol =
+    //   temp_x +
+    //   max_temp_width / 2 +
+    //   dc.getTextWidthInPixels(temperature, fontTemp) / 2;
+    // var temp_y = temperature_y - temperature_font_height / 4;
+    // dc.setPenWidth(2);
+    // dc.drawCircle(x_symbol + 2 * radius_symbol, temp_y, radius_symbol);
 
+    var temp_y = 0;
     temp_x += max_temp_width * 1.25;
 
     ///////////////////////////////////////////////////////////////////////////
