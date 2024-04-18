@@ -44,7 +44,8 @@ class BackgroundService extends System.ServiceDelegate {
         Global.STORAGE_KEY_WEATHER_ID => data["weather"][0]["id"],
         Global.STORAGE_KEY_WIND_SPEED => data["wind"]["speed"],
         Global.STORAGE_KEY_WIND_DEG => data["wind"]["deg"],
-        Global.STORAGE_KEY_WEATHER_MAIN => data["weather"][0]["main"],
+        Global.STORAGE_KEY_HUMIDITY => data["main"]["humidity"],
+        Global.STORAGE_KEY_TEMP_FEELS_LIKE => data["main"]["feels_like"],
         Global.STORAGE_KEY_WEATHER_CITY => data["name"],
       };
       Background.exit(backgroundData);

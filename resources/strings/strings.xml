@@ -58,6 +58,7 @@
     <string id="FIELD_TYPE_MOON" scope="foreground">Moon phase</string>
     <string id="FIELD_TYPE_PRESSURE" scope="foreground">Air pressure (sensor)</string>
     <string id="FIELD_TYPE_TEMPERATURE" scope="foreground">Temperature (sensor)</string>
+    <string id="FIELD_TYPE_FEELS_LIKE_TEMPERATURE" scope="foreground">Feels like temperature</string>
     <string id="FIELD_TYPE_TIME1" scope="foreground">Second time</string>
     <string id="FIELD_TYPE_WEIGHT" scope="foreground">Weight</string>
     <string id="FIELD_TYPE_RELATIVE_HUMIDITY" scope="foreground">Relative humidity</string>

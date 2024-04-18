@@ -46,6 +46,7 @@ module DataWrapper {
     CALENDAR_EVENTS,
     TRAINING_STATUS,
     CITY,
+    FEELS_LIKE_TEMPERATURE,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
@@ -241,6 +242,10 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_CURRENT_WEATHER
       );
       res[:label] = Rez.Strings.FIELD_TYPE_CITY;
+    } else if (type == FEELS_LIKE_TEMPERATURE) {
+      res[:value] = getFeelsLikeTemperature();
+      res[:image] = Rez.Drawables.Temperature;
+      res[:label] = Rez.Strings.FIELD_TYPE_TEMPERATURE;
     }
 
     return res;
@@ -249,9 +254,21 @@ module DataWrapper {
   ////////////////////////////////////////////////////////
   //DATA VALUES
 
+  function getFeelsLikeTemperature() {
+    var res = null;
+    var weather = getApp().watch_view.weather_condition;
+    if (weather != null) {
+      res = weather.feelsLikeTemperature;
+      if (res != null) {
+        res = convertTemperature(res);
+      }
+    }
+    return res;
+  }
+
   function getWeatherCity() {
     var res = null;
-    var weather = Weather.getCurrentConditions();
+    var weather = getApp().watch_view.weather_condition;
     if (weather != null) {
       res = weather.observationLocationName;
     }
@@ -378,7 +395,7 @@ module DataWrapper {
 
   function getRelativeHumidity() {
     var value = null;
-    var condition = Weather.getCurrentConditions();
+    var condition = getApp().watch_view.weather_condition;
     if (condition != null) {
       value = condition.relativeHumidity;
     }

@@ -6,6 +6,7 @@ import Toybox.Weather;
 class WeatherCurrentCondition {
   var observationTime;
   var condition, temperature, windBearing, windSpeed, icon_rez;
+  var observationLocationName, feelsLikeTemperature, relativeHumidity;
   var data_source;
 
   function initialize() {
@@ -13,7 +14,6 @@ class WeatherCurrentCondition {
   }
 
   function updateValues() {
-   
     var now = Time.now();
     if (observationTime != null) {
       var subst = now.subtract(observationTime).value();
@@ -26,7 +26,7 @@ class WeatherCurrentCondition {
     var weather_data = Application.Storage.getValue(Global.CURRENT_WEATHER_KEY);
     if (weather_data != null) {
       var update_moment = weather_data[Global.STORAGE_KEY_UPDATE_MOMENT];
-      if (now.value() - update_moment < 10800) {
+      if (now.value() - update_moment < 3600) {
         data_source = :owm;
         condition = weather_data[Global.STORAGE_KEY_WEATHER_ID];
         observationTime = new Time.Moment(
@@ -39,15 +39,18 @@ class WeatherCurrentCondition {
           condition,
           weather_data[Global.STORAGE_KEY_ICON]
         );
+        observationLocationName = weather_data[Global.STORAGE_KEY_WEATHER_CITY];
+        feelsLikeTemperature = weather_data[Global.STORAGE_KEY_TEMP_FEELS_LIKE];
+        relativeHumidity = weather_data[Global.STORAGE_KEY_HUMIDITY];
       } else {
-        updateGarmin();
+        updateGarminValues();
       }
     } else {
-      updateGarmin();
+      updateGarminValues();
     }
   }
 
-  function updateGarmin() {
+  function updateGarminValues() {
     var weather = Weather.getCurrentConditions();
     if (weather != null) {
       data_source = :garmin;
@@ -57,6 +60,9 @@ class WeatherCurrentCondition {
       windBearing = weather.windBearing;
       windSpeed = weather.windSpeed;
       icon_rez = WeatherWrapper.getGarminConditionRez(weather);
+      observationLocationName = weather.observationLocationName;
+      feelsLikeTemperature = weather.feelsLikeTemperature;
+      relativeHumidity = weather.relativeHumidity;
     }
   }
 }

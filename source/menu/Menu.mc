@@ -192,6 +192,8 @@ module Menu {
         .FIELD_TYPE_PRECIPITATION_CHANCE,
       DataWrapper.TIME_ZONE => Rez.Strings.FIELD_TYPE_TIME1,
       DataWrapper.WEIGHT => Rez.Strings.FIELD_TYPE_WEIGHT,
+      DataWrapper.FEELS_LIKE_TEMPERATURE => Rez.Strings
+        .FIELD_TYPE_FEELS_LIKE_TEMPERATURE,
     };
 
     addNewDataTypeToMenuSettings(

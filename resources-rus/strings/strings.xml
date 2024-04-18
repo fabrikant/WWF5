@@ -58,6 +58,7 @@
     <string id="FIELD_TYPE_MOON" scope="foreground">Фаза луны</string>
     <string id="FIELD_TYPE_PRESSURE" scope="foreground">Атм. давление (сенсор)</string>
     <string id="FIELD_TYPE_TEMPERATURE" scope="foreground">Температура (сенсор)</string>
+    <string id="FIELD_TYPE_FEELS_LIKE_TEMPERATURE" scope="foreground">Ощущается температура</string>
     <string id="FIELD_TYPE_TIME1" scope="foreground">Др. час. пояс</string>
     <string id="FIELD_TYPE_WEIGHT" scope="foreground">Вес</string>
     <string id="FIELD_TYPE_RELATIVE_HUMIDITY" scope="foreground">Отн. влажн. возд.</string>

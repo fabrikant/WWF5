@@ -9,7 +9,6 @@ import Toybox.Lang;
 
 class WeatherWidget extends AbstractField {
   var arrow_bitmap;
-  var weather_condition;
 
   function initialize(options) {
     AbstractField.initialize(options);
@@ -17,11 +16,11 @@ class WeatherWidget extends AbstractField {
     compl_id = new Complications.Id(
       Complications.COMPLICATION_TYPE_CURRENT_WEATHER
     );
-    weather_condition = WeatherWrapper.getCurrentConditions();
   }
 
   function draw(colors) {
     AbstractField.draw(colors);
+    var weather_condition = getApp().watch_view.weather_condition;
     weather_condition.updateValues();
     if (weather_condition.data_source == null) {
       drawBorder(getDc());
@@ -123,12 +122,12 @@ class WeatherWidget extends AbstractField {
     }
 
     if (Application.Properties.getValue("show_w_source")) {
-      drawWeatherDataSource(dc, colors);
+      drawWeatherDataSource(dc, colors, weather_condition);
     }
     drawBorder(dc);
   }
 
-  private function drawWeatherDataSource(dc, colors) {
+  private function drawWeatherDataSource(dc, colors, weather_condition) {
     //return;
     dc.setColor(colors[:font], colors[:background]);
     var font = Graphics.getVectorFont({

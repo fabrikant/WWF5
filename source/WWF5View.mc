@@ -10,6 +10,7 @@ class WWF5View extends WatchUi.WatchFace {
   var pattern, colors, every_second_layers;
   var fontClock, fontSeconds, fontValues, fontTemp;
   var moon_keeper, weather_layer, scale_layer;
+  var weather_condition;
   var isAmoledSaveMode;
 
   function initialize() {
@@ -20,6 +21,7 @@ class WWF5View extends WatchUi.WatchFace {
     fontTemp = Application.loadResource(Rez.Fonts.temperature);
     every_second_layers = [];
     isAmoledSaveMode = false;
+    weather_condition = WeatherWrapper.getCurrentConditions();
   }
 
   function readSettings() {
