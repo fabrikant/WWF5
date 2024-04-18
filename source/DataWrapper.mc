@@ -78,11 +78,15 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
       );
     } else if (type == STEPS) {
-      res = getNativeComplicationData(
-        Complications.COMPLICATION_TYPE_STEPS,
-        :stepsToStrings
-      );
+      res[:value] = getSteps();
       res[:image] = Rez.Drawables.Steps;
+      res[:label] = Rez.Strings.FIELD_TYPE_DISTANCE;
+      res[:label] = getNativeComplicationLabel(
+        Complications.COMPLICATION_TYPE_STEPS
+      );
+      res[:compl_id] = new Complications.Id(
+        Complications.COMPLICATION_TYPE_STEPS
+      );
     } else if (type == BATTERY) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BATTERY
@@ -316,6 +320,39 @@ module DataWrapper {
     return value;
   }
 
+  function getSteps() {
+    var value = null;
+    var info = ActivityMonitor.getInfo();
+    if (info has :steps) {
+      value = info.steps;
+      if (value > 99999) {
+        value = (value / 1000).format("%d") + "k";
+      } else if (value > 9999) {
+        value = (value.toFloat() / 1000).format("%.1f") + "k";
+      } else {
+        value = value.toString();
+      }
+    }
+    return value;
+  }
+  function getNativeComplicationLabel(compl_type) {
+    var res = null;
+    var compl_id = new Complications.Id(compl_type);
+    if (compl_id instanceof Complications.Id) {
+      var compl = null;
+      try {
+        compl = Complications.getComplication(compl_id);
+      } catch (ex) {}
+      if (compl != null) {
+        res = compl.shortLabel;
+        if (res == null) {
+          res = compl.longLabel;
+        }
+      }
+    }
+    return res;
+  }
+
   function getSecondTime() {
     var offset =
       Application.Properties.getValue("T1TZ") * 60 -
@@ -410,21 +447,6 @@ module DataWrapper {
 
   //******************************************************
   //convertation values
-
-  function stepsToStrings(steps) {
-    var value = null;
-    if (steps != null) {
-      value = steps;
-      if (value > 99999) {
-        value = (value / 1000).format("%d") + "k";
-      } else if (value > 9999) {
-        value = (value.toFloat() / 1000).format("%.1f") + "k";
-      } else {
-        value = value.toString();
-      }
-    }
-    return value;
-  }
 
   function momentToString(moment) {
     var greg = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
