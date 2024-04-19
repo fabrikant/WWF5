@@ -61,7 +61,7 @@
 		</palette>
 
 	</bitmap>
-	<bitmap id="RecoveryTime" filename="./svg-resources/relax.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
+	<bitmap id="RecoveryTime" filename="./svg-resources/recovery.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>
