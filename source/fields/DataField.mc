@@ -150,12 +150,11 @@ class DataField extends AbstractField {
       if (getX() < System.getDeviceSettings().screenWidth / 2) {
         x = dc.getWidth() - x;
       }
-      drawText(
-        dc,
-        options[:colors],
+      var txt_font = getLabelFont(dc, label);
+      dc.drawText(
         x,
-        dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
-        font_label,
+        dc.getHeight() - Graphics.getFontHeight(txt_font),
+        txt_font,
         label,
         Graphics.TEXT_JUSTIFY_CENTER
       );
@@ -170,15 +169,25 @@ class DataField extends AbstractField {
     dc.setColor(options[:colors][:font], options[:colors][:background]);
     var label = labelCastToString(options[:label]);
 
-    drawText(
-      dc,
-      options[:colors],
+    var txt_font = getLabelFont(dc, label);
+    dc.drawText(
       dc.getWidth() / 2,
-      dc.getHeight() - Graphics.getFontHeight(options[:font_label]),
-      options[:font_label],
+      dc.getHeight() - Graphics.getFontHeight(txt_font),
+      txt_font,
       label,
       Graphics.TEXT_JUSTIFY_CENTER
     );
+  }
+
+  function getLabelFont(dc, label) {
+    var txt_font = font_label;
+    if (label.length() < 4) {
+      txt_font = Graphics.getVectorFont({
+        :face => vectorFontName(),
+        :size => (dc.getHeight() * 0.5).toNumber(),
+      });
+    }
+    return txt_font;
   }
 
   function decorateField2(options) {
