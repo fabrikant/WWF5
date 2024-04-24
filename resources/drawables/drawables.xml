@@ -49,19 +49,7 @@
 		</palette>
 	</bitmap>
 
-	<bitmap id="Battery_1" filename="./svg-resources/battery_1.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
-		<palette disableTransparency="false">
-			<color>555555</color>
-		</palette>
-	</bitmap>
-
 	<bitmap id="Battery_2" filename="./svg-resources/battery_2.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
-		<palette disableTransparency="false">
-			<color>555555</color>
-		</palette>
-	</bitmap>
-
-	<bitmap id="Battery_3" filename="./svg-resources/battery_3.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>
@@ -73,19 +61,7 @@
 		</palette>
 	</bitmap>
 
-	<bitmap id="Battery_5" filename="./svg-resources/battery_5.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
-		<palette disableTransparency="false">
-			<color>555555</color>
-		</palette>
-	</bitmap>
-
 	<bitmap id="Battery_6" filename="./svg-resources/battery_6.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
-		<palette disableTransparency="false">
-			<color>555555</color>
-		</palette>
-	</bitmap>
-
-	<bitmap id="Battery_7" filename="./svg-resources/battery_7.svg" scaleX="10%" scaleY="10%" scaleRelativeTo="screen">
 		<palette disableTransparency="false">
 			<color>555555</color>
 		</palette>

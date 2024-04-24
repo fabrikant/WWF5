@@ -261,22 +261,14 @@ module DataWrapper {
     var res = Rez.Drawables.Battery_0;
     var value = data_dict[:scale_value];
     if (value != null) {
-      if (value > 89) {
+      if (value > 79) {
         res = Rez.Drawables.Battery_8;
-      } else if (value > 78) {
-        res = Rez.Drawables.Battery_7;
-      } else if (value > 67) {
+      } else if (value > 59) {
         res = Rez.Drawables.Battery_6;
-      } else if (value > 56) {
-        res = Rez.Drawables.Battery_5;
-      } else if (value > 45) {
+      } else if (value > 39) {
         res = Rez.Drawables.Battery_4;
-      } else if (value > 34) {
-        res = Rez.Drawables.Battery_3;
-      } else if (value > 23) {
+      } else if (value > 19) {
         res = Rez.Drawables.Battery_2;
-      } else if (value > 12) {
-        res = Rez.Drawables.Battery_1;
       } else {
         res = Rez.Drawables.Battery_0;
       }
