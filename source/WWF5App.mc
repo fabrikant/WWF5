@@ -1,6 +1,7 @@
 import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
+import Toybox.Complications;
 
 (:background)
 class WWF5App extends Application.AppBase {
@@ -38,7 +39,26 @@ class WWF5App extends Application.AppBase {
   function registerEvents() {
     var kewOw = Application.Properties.getValue("owm_key");
     if (kewOw.equals("")) {
-      return;
+      //try to get owm api key from RoseOfWind
+      var iter = Complications.getComplications();
+      var compl = iter.next();
+      while (compl != null) {
+        if (compl.shortLabel != null) {
+          if (compl.shortLabel.equals("owm_key")) {
+            if (compl.value != null) {
+              if (!compl.value.equals("")) {
+                kewOw = compl.value;
+                Application.Properties.setValue("owm_key", kewOw);
+                break;
+              }
+            }
+          }
+        }
+        compl = iter.next();
+      }
+      if (kewOw.equals("")) {
+        return;
+      }
     }
     var registeredTime = Background.getTemporalEventRegisteredTime();
     if (registeredTime != null) {
