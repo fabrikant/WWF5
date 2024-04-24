@@ -43,7 +43,7 @@ class WWF5Delegate extends WatchUi.WatchFaceDelegate {
           }
 
           try {
-            Complications.exitTo(layers[i].compl_id);
+            Complications.exitTo(compl_id);
             return true;
           } catch (ex) {
             return false;

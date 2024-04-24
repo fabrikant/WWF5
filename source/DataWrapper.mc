@@ -93,7 +93,7 @@ module DataWrapper {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BATTERY
       );
-      res[:image] = Rez.Drawables.Battery;
+      res[:image] = getBatteryImageRez(res);
     } else if (type == HR) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_HEART_RATE,
@@ -256,6 +256,33 @@ module DataWrapper {
 
   ////////////////////////////////////////////////////////
   //DATA VALUES
+
+  function getBatteryImageRez(data_dict) {
+    var res = Rez.Drawables.Battery_0;
+    var value = data_dict[:scale_value];
+    if (value != null) {
+      if (value > 89) {
+        res = Rez.Drawables.Battery_8;
+      } else if (value > 78) {
+        res = Rez.Drawables.Battery_7;
+      } else if (value > 67) {
+        res = Rez.Drawables.Battery_6;
+      } else if (value > 56) {
+        res = Rez.Drawables.Battery_5;
+      } else if (value > 45) {
+        res = Rez.Drawables.Battery_4;
+      } else if (value > 34) {
+        res = Rez.Drawables.Battery_3;
+      } else if (value > 23) {
+        res = Rez.Drawables.Battery_2;
+      } else if (value > 12) {
+        res = Rez.Drawables.Battery_1;
+      } else {
+        res = Rez.Drawables.Battery_0;
+      }
+    }
+    return res;
+  }
 
   function getFeelsLikeTemperature() {
     var res = null;
@@ -463,10 +490,13 @@ module DataWrapper {
   function dateToDataField() {
     var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
     var now_short = Time.Gregorian.info(Time.now(), Time.FORMAT_SHORT);
-    
+
     var res = {
       :scale_value => null,
-      :value => Lang.format("$1$/$2$", [now.day.format("%02d"), now_short.month.format("%02d")]),
+      :value => Lang.format("$1$/$2$", [
+        now.day.format("%02d"),
+        now_short.month.format("%02d"),
+      ]),
       :label => now.day_of_week,
       :compl_id => new Complications.Id(Complications.COMPLICATION_TYPE_DATE),
     };
