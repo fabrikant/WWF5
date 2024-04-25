@@ -45,18 +45,21 @@ class WWF5View extends WatchUi.WatchFace {
 
   function captureLocation() {
     var location = Activity.getActivityInfo().currentLocation;
+    var loc_degrees = [0f, 0f];
     if (location != null) {
-      Application.Storage.setValue(Global.LOCATION_KEY, location.toDegrees());
+      loc_degrees = location.toDegrees();
+    }
+    if (loc_degrees[0] != 0f || loc_degrees[1] != 0f) {
+      Application.Storage.setValue(Global.LOCATION_KEY, loc_degrees);
       getApp().registerEvents();
     } else {
-      //Берем координаты из погоды, только если других совсем нет
-      //Потому что часто выдает неправильные координты
-      // var old_loc = Application.Storage.getValue(Global.LOCATION_KEY);
-      // if (old_loc == null) {
       var weather = Toybox.Weather.getCurrentConditions();
       if (weather != null) {
         location = weather.observationLocationPosition;
         if (location != null) {
+          loc_degrees = location.toDegrees();
+        }
+        if (loc_degrees[0] != 0f || loc_degrees[1] != 0f) {
           Application.Storage.setValue(
             Global.LOCATION_KEY,
             location.toDegrees()
@@ -64,7 +67,6 @@ class WWF5View extends WatchUi.WatchFace {
           getApp().registerEvents();
         }
       }
-      // }
     }
   }
 
