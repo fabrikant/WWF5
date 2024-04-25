@@ -45,13 +45,13 @@ class BottomField extends AbstractField {
         }
 
         if (small_bitmap != null) {
-          var reduction_factor = 0.7;
+          var reduction_factor = 0.80;
           bitmap_w = small_bitmap.getWidth() * reduction_factor;
           temp_x = (dc.getWidth() - bitmap_w - text_w - offset) / 2;
 
           var transform = new Graphics.AffineTransform();
           transform.scale(reduction_factor, reduction_factor);
-          dc.drawBitmap2(temp_x, 0, small_bitmap, {
+          dc.drawBitmap2(temp_x, -2, small_bitmap, {
             :transform => transform,
           });
         }

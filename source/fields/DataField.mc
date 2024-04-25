@@ -40,6 +40,12 @@ class DataField extends AbstractField {
         just = Graphics.TEXT_JUSTIFY_CENTER;
       } else {
         x = (dc.getTextWidthInPixels("8", font_value) * 3) / 4;
+        if (data[:value] instanceof Lang.String) {
+          if (data[:value].length() > 4) {
+            x /= 5;
+          }
+        }
+
         just = Graphics.TEXT_JUSTIFY_LEFT;
         if (getX() < System.getDeviceSettings().screenWidth / 2) {
           x = dc.getWidth() - x;
