@@ -14,6 +14,13 @@ class WeatherCurrentCondition {
   }
 
   function updateValues() {
+
+    var owm_key = Application.Properties.getValue("owm_key");
+    if (owm_key.equals("")){
+      updateGarminValues();
+      return;
+    }
+
     var now = Time.now();
     if (observationTime != null) {
       var subst = now.subtract(observationTime).value();
@@ -275,111 +282,111 @@ module WeatherWrapper {
 
     if (isDay) {
       if (condition == Weather.CONDITION_CLEAR) {
-        return Rez.Drawables.CONDITION_CLEAR;
+        return Rez.Drawables.Code800d;
       } else if (condition == Weather.CONDITION_PARTLY_CLOUDY) {
-        return Rez.Drawables.CONDITION_PARTLY_CLOUDY;
+        return Rez.Drawables.Code802d;
       } else if (condition == Weather.CONDITION_MOSTLY_CLOUDY) {
-        return Rez.Drawables.CONDITION_MOSTLY_CLOUDY;
+        return Rez.Drawables.Code804d;
       } else if (condition == Weather.CONDITION_RAIN) {
-        return Rez.Drawables.CONDITION_RAIN;
+        return Rez.Drawables.Code520d;
       } else if (condition == Weather.CONDITION_SNOW) {
-        return Rez.Drawables.CONDITION_SNOW;
+        return Rez.Drawables.Code620d;
       } else if (condition == Weather.CONDITION_WINDY) {
         return Rez.Drawables.CONDITION_WINDY;
       } else if (condition == Weather.CONDITION_THUNDERSTORMS) {
-        return Rez.Drawables.CONDITION_THUNDERSTORMS;
+        return Rez.Drawables.Code211d;
       } else if (condition == Weather.CONDITION_WINTRY_MIX) {
         return Rez.Drawables.CONDITION_WINTRY_MIX;
       } else if (condition == Weather.CONDITION_FOG) {
-        return Rez.Drawables.CONDITION_FOG;
+        return Rez.Drawables.Code741d;
       } else if (condition == Weather.CONDITION_HAZY) {
-        return Rez.Drawables.CONDITION_HAZY;
+        return Rez.Drawables.Code721d;
       } else if (condition == Weather.CONDITION_HAIL) {
-        return Rez.Drawables.CONDITION_HAIL;
+        return Rez.Drawables.Code511d;
       } else if (condition == Weather.CONDITION_SCATTERED_SHOWERS) {
-        return Rez.Drawables.CONDITION_SCATTERED_SHOWERS;
+        return Rez.Drawables.Code531d;
       } else if (condition == Weather.CONDITION_SCATTERED_THUNDERSTORMS) {
-        return Rez.Drawables.CONDITION_SCATTERED_THUNDERSTORMS;
+        return Rez.Drawables.Code221d;
       } else if (condition == Weather.CONDITION_UNKNOWN_PRECIPITATION) {
         return Rez.Drawables.CONDITION_UNKNOWN_PRECIPITATION;
       } else if (condition == Weather.CONDITION_LIGHT_RAIN) {
-        return Rez.Drawables.CONDITION_LIGHT_RAIN;
+        return Rez.Drawables.Code500d;
       } else if (condition == Weather.CONDITION_HEAVY_RAIN) {
-        return Rez.Drawables.CONDITION_HEAVY_RAIN;
+        return Rez.Drawables.Code502d;
       } else if (condition == Weather.CONDITION_LIGHT_SNOW) {
-        return Rez.Drawables.CONDITION_LIGHT_SNOW;
+        return Rez.Drawables.Code600d;
       } else if (condition == Weather.CONDITION_HEAVY_SNOW) {
-        return Rez.Drawables.CONDITION_HEAVY_SNOW;
+        return Rez.Drawables.Code602d;
       } else if (condition == Weather.CONDITION_LIGHT_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_LIGHT_RAIN_SNOW;
+        return Rez.Drawables.Code615d;
       } else if (condition == Weather.CONDITION_HEAVY_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_HEAVY_RAIN_SNOW;
+        return Rez.Drawables.Code616d;
       } else if (condition == Weather.CONDITION_CLOUDY) {
-        return Rez.Drawables.CONDITION_CLOUDY;
+        return Rez.Drawables.Code803d;
       } else if (condition == Weather.CONDITION_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_RAIN_SNOW;
+        return Rez.Drawables.Code616d;
       } else if (condition == Weather.CONDITION_PARTLY_CLEAR) {
-        return Rez.Drawables.CONDITION_PARTLY_CLEAR;
+        return Rez.Drawables.Code802d;
       } else if (condition == Weather.CONDITION_MOSTLY_CLEAR) {
-        return Rez.Drawables.CONDITION_MOSTLY_CLEAR;
+        return Rez.Drawables.Code801d;
       } else if (condition == Weather.CONDITION_LIGHT_SHOWERS) {
-        return Rez.Drawables.CONDITION_LIGHT_SHOWERS;
+        return Rez.Drawables.Code520d;
       } else if (condition == Weather.CONDITION_SHOWERS) {
-        return Rez.Drawables.CONDITION_SHOWERS;
+        return Rez.Drawables.Code521d;
       } else if (condition == Weather.CONDITION_HEAVY_SHOWERS) {
-        return Rez.Drawables.CONDITION_HEAVY_SHOWERS;
+        return Rez.Drawables.Code522d;
       } else if (condition == Weather.CONDITION_CHANCE_OF_SHOWERS) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_SHOWERS;
+        return Rez.Drawables.Code500d;
       } else if (condition == Weather.CONDITION_CHANCE_OF_THUNDERSTORMS) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_THUNDERSTORMS;
+        return Rez.Drawables.Code200d;
       } else if (condition == Weather.CONDITION_MIST) {
-        return Rez.Drawables.CONDITION_MIST;
+        return Rez.Drawables.Code701d;
       } else if (condition == Weather.CONDITION_DUST) {
-        return Rez.Drawables.CONDITION_DUST;
+        return Rez.Drawables.Code731d;
       } else if (condition == Weather.CONDITION_DRIZZLE) {
-        return Rez.Drawables.CONDITION_DRIZZLE;
+        return Rez.Drawables.Code301d;
       } else if (condition == Weather.CONDITION_TORNADO) {
-        return Rez.Drawables.CONDITION_TORNADO;
+        return Rez.Drawables.Code781d;
       } else if (condition == Weather.CONDITION_SMOKE) {
-        return Rez.Drawables.CONDITION_SMOKE;
+        return Rez.Drawables.Code711d;
       } else if (condition == Weather.CONDITION_ICE) {
         return Rez.Drawables.CONDITION_ICE;
       } else if (condition == Weather.CONDITION_SAND) {
-        return Rez.Drawables.CONDITION_SAND;
+        return Rez.Drawables.Code751d;
       } else if (condition == Weather.CONDITION_SQUALL) {
         return Rez.Drawables.CONDITION_SQUALL;
       } else if (condition == Weather.CONDITION_SANDSTORM) {
-        return Rez.Drawables.CONDITION_SANDSTORM;
+        return Rez.Drawables.Code751d;
       } else if (condition == Weather.CONDITION_VOLCANIC_ASH) {
-        return Rez.Drawables.CONDITION_VOLCANIC_ASH;
+        return Rez.Drawables.Code762d;
       } else if (condition == Weather.CONDITION_HAZE) {
-        return Rez.Drawables.CONDITION_HAZE;
+        return Rez.Drawables.Code721d;
       } else if (condition == Weather.CONDITION_FAIR) {
-        return Rez.Drawables.CONDITION_FAIR;
+        return Rez.Drawables.Code800d;
       } else if (condition == Weather.CONDITION_HURRICANE) {
-        return Rez.Drawables.CONDITION_HURRICANE;
+        return Rez.Drawables.Code771d;
       } else if (condition == Weather.CONDITION_TROPICAL_STORM) {
         return Rez.Drawables.CONDITION_TROPICAL_STORM;
       } else if (condition == Weather.CONDITION_CHANCE_OF_SNOW) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_SNOW;
+        return Rez.Drawables.Code600d;
       } else if (condition == Weather.CONDITION_CHANCE_OF_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_RAIN_SNOW;
+        return Rez.Drawables.Code615d;
       } else if (condition == Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN) {
-        return Rez.Drawables.CONDITION_CLOUDY_CHANCE_OF_RAIN;
+        return Rez.Drawables.Code500d;
       } else if (condition == Weather.CONDITION_CLOUDY_CHANCE_OF_SNOW) {
-        return Rez.Drawables.CONDITION_CLOUDY_CHANCE_OF_SNOW;
+        return Rez.Drawables.Code600d;
       } else if (condition == Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW;
+        return Rez.Drawables.Code616d;
       } else if (condition == Weather.CONDITION_FLURRIES) {
         return Rez.Drawables.CONDITION_FLURRIES;
       } else if (condition == Weather.CONDITION_FREEZING_RAIN) {
         return Rez.Drawables.CONDITION_FREEZING_RAIN;
       } else if (condition == Weather.CONDITION_SLEET) {
-        return Rez.Drawables.CONDITION_SLEET;
+        return Rez.Drawables.Code613d;
       } else if (condition == Weather.CONDITION_ICE_SNOW) {
-        return Rez.Drawables.CONDITION_ICE_SNOW;
+        return Rez.Drawables.Code611d;
       } else if (condition == Weather.CONDITION_THIN_CLOUDS) {
-        return Rez.Drawables.CONDITION_THIN_CLOUDS;
+        return Rez.Drawables.Code801d;
       } else if (condition == Weather.CONDITION_UNKNOWN) {
         return Rez.Drawables.CONDITION_UNKNOWN;
       } else {
@@ -387,113 +394,113 @@ module WeatherWrapper {
       }
     } else {
       if (condition == Weather.CONDITION_CLEAR) {
-        return Rez.Drawables.CONDITION_CLEAR_NIGHT;
+        return Rez.Drawables.Code800n;
       } else if (condition == Weather.CONDITION_PARTLY_CLOUDY) {
-        return Rez.Drawables.CONDITION_PARTLY_CLOUDY_NIGHT;
+        return Rez.Drawables.Code802n;
       } else if (condition == Weather.CONDITION_MOSTLY_CLOUDY) {
-        return Rez.Drawables.CONDITION_MOSTLY_CLOUDY_NIGHT;
+        return Rez.Drawables.Code804n;
       } else if (condition == Weather.CONDITION_RAIN) {
-        return Rez.Drawables.CONDITION_RAIN_NIGHT;
+        return Rez.Drawables.Code520n;
       } else if (condition == Weather.CONDITION_SNOW) {
-        return Rez.Drawables.CONDITION_SNOW_NIGHT;
+        return Rez.Drawables.Code620n;
       } else if (condition == Weather.CONDITION_WINDY) {
-        return Rez.Drawables.CONDITION_WINDY_NIGHT;
+        return Rez.Drawables.CONDITION_WINDY;
       } else if (condition == Weather.CONDITION_THUNDERSTORMS) {
-        return Rez.Drawables.CONDITION_THUNDERSTORMS_NIGHT;
+        return Rez.Drawables.Code211n;
       } else if (condition == Weather.CONDITION_WINTRY_MIX) {
-        return Rez.Drawables.CONDITION_WINTRY_MIX_NIGHT;
+        return Rez.Drawables.CONDITION_WINTRY_MIX;
       } else if (condition == Weather.CONDITION_FOG) {
-        return Rez.Drawables.CONDITION_FOG_NIGHT;
+        return Rez.Drawables.Code741n;
       } else if (condition == Weather.CONDITION_HAZY) {
-        return Rez.Drawables.CONDITION_HAZY_NIGHT;
+        return Rez.Drawables.Code721n;
       } else if (condition == Weather.CONDITION_HAIL) {
-        return Rez.Drawables.CONDITION_HAIL_NIGHT;
+        return Rez.Drawables.Code511n;
       } else if (condition == Weather.CONDITION_SCATTERED_SHOWERS) {
-        return Rez.Drawables.CONDITION_SCATTERED_SHOWERS_NIGHT;
+        return Rez.Drawables.Code531n;
       } else if (condition == Weather.CONDITION_SCATTERED_THUNDERSTORMS) {
-        return Rez.Drawables.CONDITION_SCATTERED_THUNDERSTORMS_NIGHT;
+        return Rez.Drawables.Code221n;
       } else if (condition == Weather.CONDITION_UNKNOWN_PRECIPITATION) {
-        return Rez.Drawables.CONDITION_UNKNOWN_PRECIPITATION_NIGHT;
+        return Rez.Drawables.CONDITION_UNKNOWN_PRECIPITATION;
       } else if (condition == Weather.CONDITION_LIGHT_RAIN) {
-        return Rez.Drawables.CONDITION_LIGHT_RAIN_NIGHT;
+        return Rez.Drawables.Code500n;
       } else if (condition == Weather.CONDITION_HEAVY_RAIN) {
-        return Rez.Drawables.CONDITION_HEAVY_RAIN_NIGHT;
+        return Rez.Drawables.Code502n;
       } else if (condition == Weather.CONDITION_LIGHT_SNOW) {
-        return Rez.Drawables.CONDITION_LIGHT_SNOW_NIGHT;
+        return Rez.Drawables.Code600n;
       } else if (condition == Weather.CONDITION_HEAVY_SNOW) {
-        return Rez.Drawables.CONDITION_HEAVY_SNOW_NIGHT;
+        return Rez.Drawables.Code602n;
       } else if (condition == Weather.CONDITION_LIGHT_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_LIGHT_RAIN_SNOW_NIGHT;
+        return Rez.Drawables.Code615n;
       } else if (condition == Weather.CONDITION_HEAVY_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_HEAVY_RAIN_SNOW_NIGHT;
+        return Rez.Drawables.Code616n;
       } else if (condition == Weather.CONDITION_CLOUDY) {
-        return Rez.Drawables.CONDITION_CLOUDY_NIGHT;
+        return Rez.Drawables.Code803n;
       } else if (condition == Weather.CONDITION_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_RAIN_SNOW_NIGHT;
+        return Rez.Drawables.Code616n;
       } else if (condition == Weather.CONDITION_PARTLY_CLEAR) {
-        return Rez.Drawables.CONDITION_PARTLY_CLEAR_NIGHT;
+        return Rez.Drawables.Code802n;
       } else if (condition == Weather.CONDITION_MOSTLY_CLEAR) {
-        return Rez.Drawables.CONDITION_MOSTLY_CLEAR_NIGHT;
+        return Rez.Drawables.Code801n;
       } else if (condition == Weather.CONDITION_LIGHT_SHOWERS) {
-        return Rez.Drawables.CONDITION_LIGHT_SHOWERS_NIGHT;
+        return Rez.Drawables.Code520n;
       } else if (condition == Weather.CONDITION_SHOWERS) {
-        return Rez.Drawables.CONDITION_SHOWERS_NIGHT;
+        return Rez.Drawables.Code521n;
       } else if (condition == Weather.CONDITION_HEAVY_SHOWERS) {
-        return Rez.Drawables.CONDITION_HEAVY_SHOWERS_NIGHT;
+        return Rez.Drawables.Code522n;
       } else if (condition == Weather.CONDITION_CHANCE_OF_SHOWERS) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_SHOWERS_NIGHT;
+        return Rez.Drawables.Code500n;
       } else if (condition == Weather.CONDITION_CHANCE_OF_THUNDERSTORMS) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_THUNDERSTORMS_NIGHT;
+        return Rez.Drawables.Code200n;
       } else if (condition == Weather.CONDITION_MIST) {
-        return Rez.Drawables.CONDITION_MIST_NIGHT;
+        return Rez.Drawables.Code701n;
       } else if (condition == Weather.CONDITION_DUST) {
-        return Rez.Drawables.CONDITION_DUST_NIGHT;
+        return Rez.Drawables.Code731n;
       } else if (condition == Weather.CONDITION_DRIZZLE) {
-        return Rez.Drawables.CONDITION_DRIZZLE_NIGHT;
+        return Rez.Drawables.Code301n;
       } else if (condition == Weather.CONDITION_TORNADO) {
-        return Rez.Drawables.CONDITION_TORNADO_NIGHT;
+        return Rez.Drawables.Code781n;
       } else if (condition == Weather.CONDITION_SMOKE) {
-        return Rez.Drawables.CONDITION_SMOKE_NIGHT;
+        return Rez.Drawables.Code711n;
       } else if (condition == Weather.CONDITION_ICE) {
-        return Rez.Drawables.CONDITION_ICE_NIGHT;
+        return Rez.Drawables.CONDITION_ICE;
       } else if (condition == Weather.CONDITION_SAND) {
-        return Rez.Drawables.CONDITION_SAND_NIGHT;
+        return Rez.Drawables.Code751n;
       } else if (condition == Weather.CONDITION_SQUALL) {
-        return Rez.Drawables.CONDITION_SQUALL_NIGHT;
+        return Rez.Drawables.CONDITION_SQUALL;
       } else if (condition == Weather.CONDITION_SANDSTORM) {
-        return Rez.Drawables.CONDITION_SANDSTORM_NIGHT;
+        return Rez.Drawables.Code751n;
       } else if (condition == Weather.CONDITION_VOLCANIC_ASH) {
-        return Rez.Drawables.CONDITION_VOLCANIC_ASH_NIGHT;
+        return Rez.Drawables.Code762n;
       } else if (condition == Weather.CONDITION_HAZE) {
-        return Rez.Drawables.CONDITION_HAZE_NIGHT;
+        return Rez.Drawables.Code721n;
       } else if (condition == Weather.CONDITION_FAIR) {
-        return Rez.Drawables.CONDITION_FAIR_NIGHT;
+        return Rez.Drawables.Code800n;
       } else if (condition == Weather.CONDITION_HURRICANE) {
-        return Rez.Drawables.CONDITION_HURRICANE_NIGHT;
+        return Rez.Drawables.Code771n;
       } else if (condition == Weather.CONDITION_TROPICAL_STORM) {
-        return Rez.Drawables.CONDITION_TROPICAL_STORM_NIGHT;
+        return Rez.Drawables.CONDITION_TROPICAL_STORM;
       } else if (condition == Weather.CONDITION_CHANCE_OF_SNOW) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_SNOW_NIGHT;
+        return Rez.Drawables.Code600n;
       } else if (condition == Weather.CONDITION_CHANCE_OF_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_CHANCE_OF_RAIN_SNOW_NIGHT;
+        return Rez.Drawables.Code615n;
       } else if (condition == Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN) {
-        return Rez.Drawables.CONDITION_CLOUDY_CHANCE_OF_RAIN_NIGHT;
+        return Rez.Drawables.Code500n;
       } else if (condition == Weather.CONDITION_CLOUDY_CHANCE_OF_SNOW) {
-        return Rez.Drawables.CONDITION_CLOUDY_CHANCE_OF_SNOW_NIGHT;
+        return Rez.Drawables.Code600n;
       } else if (condition == Weather.CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW) {
-        return Rez.Drawables.CONDITION_CLOUDY_CHANCE_OF_RAIN_SNOW_NIGHT;
+        return Rez.Drawables.Code616n;
       } else if (condition == Weather.CONDITION_FLURRIES) {
-        return Rez.Drawables.CONDITION_FLURRIES_NIGHT;
+        return Rez.Drawables.CONDITION_FLURRIES;
       } else if (condition == Weather.CONDITION_FREEZING_RAIN) {
-        return Rez.Drawables.CONDITION_FREEZING_RAIN_NIGHT;
+        return Rez.Drawables.CONDITION_FREEZING_RAIN;
       } else if (condition == Weather.CONDITION_SLEET) {
-        return Rez.Drawables.CONDITION_SLEET_NIGHT;
+        return Rez.Drawables.Code613n;
       } else if (condition == Weather.CONDITION_ICE_SNOW) {
-        return Rez.Drawables.CONDITION_ICE_SNOW_NIGHT;
+        return Rez.Drawables.Code611n;
       } else if (condition == Weather.CONDITION_THIN_CLOUDS) {
-        return Rez.Drawables.CONDITION_THIN_CLOUDS_NIGHT;
+        return Rez.Drawables.Code801n;
       } else if (condition == Weather.CONDITION_UNKNOWN) {
-        return Rez.Drawables.CONDITION_UNKNOWN_NIGHT;
+        return Rez.Drawables.CONDITION_UNKNOWN;
       } else {
         return Rez.Drawables.NA;
       }
