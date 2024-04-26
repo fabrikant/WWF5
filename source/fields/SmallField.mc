@@ -5,7 +5,7 @@ import Toybox.Complications;
 import Toybox.Lang;
 
 class SmallField extends AbstractField {
-  var isPartiallyUpdateableField, bitmap_w, max_part_update_value_w;
+  var isPartiallyUpdateableField, bitmap_w, max_part_update_value_w, old_value;
   var font;
   const bitmap_offset = 4;
 
@@ -14,6 +14,7 @@ class SmallField extends AbstractField {
     isPartiallyUpdateableField = false;
     bitmap_w = 0;
     max_part_update_value_w = null;
+    old_value = null;
     font = getApp().watch_view.fontValues;
   }
 
@@ -66,13 +67,23 @@ class SmallField extends AbstractField {
 
   function drawPartial(global_dc, colors) {
     if (isPartiallyUpdateableField) {
-      if (System.getClockTime().sec % 3 == 0){
+      // if (System.getClockTime().sec % 3 == 0){
+      //   return;
+      // }
+
+      var data = DataWrapper.getData(DataWrapper.HR, false);
+      if (data[:value] == null) {
         return;
       }
+      if (data[:value].equals(old_value)) {
+        return;
+      }
+      old_value = data[:value];
+
       var dc = getDc();
       var x_offset = bitmap_w + bitmap_offset;
 
-      if (max_part_update_value_w == null){
+      if (max_part_update_value_w == null) {
         max_part_update_value_w = dc.getTextWidthInPixels("000", font);
       }
       global_dc.setClip(
@@ -81,16 +92,10 @@ class SmallField extends AbstractField {
         max_part_update_value_w,
         dc.getHeight()
       );
-      
-      dc.setColor(colors[:background], colors[:background]);
-      dc.fillRectangle(
-        x_offset,
-        0,
-        max_part_update_value_w,
-        dc.getHeight()
-      );
 
-      var data = DataWrapper.getData(DataWrapper.HR, false);
+      dc.setColor(colors[:background], colors[:background]);
+      dc.fillRectangle(x_offset, 0, max_part_update_value_w, dc.getHeight());
+
       if (data[:value] != null) {
         drawText(
           dc,
