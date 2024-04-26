@@ -15,7 +15,7 @@ class BottomField extends AbstractField {
   function initializeFont(options) {
     font = Graphics.getVectorFont({
       :face => vectorFontName(),
-      :size => Math.floor(options[:height] * 1.2),
+      :size => Math.floor(options[:height] * 1.3),
     });
   }
 
@@ -24,7 +24,13 @@ class BottomField extends AbstractField {
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
     var data_type = Application.Properties.getValue(getId());
-    var data = DataWrapper.getData(data_type, true);
+    var data = null;
+    if (data_type == DataWrapper.BATTERY) {
+      data = DataWrapper.getData(data_type, false);
+    } else {
+      data = DataWrapper.getData(data_type, true);
+    }
+
     compl_id = data[:compl_id];
 
     if (data[:value] != null) {
@@ -38,18 +44,25 @@ class BottomField extends AbstractField {
           var bitmap = createImage(data[:image], colors);
           bitmap_w = bitmap.getWidth();
           temp_x = (dc.getWidth() - bitmap_w - text_w - offset) / 2;
-          dc.drawBitmap(temp_x, 0, bitmap);
+          var temp_y = (dc.getHeight() - bitmap.getHeight()) / 2;
+          dc.drawBitmap(temp_x, temp_y, bitmap);
         }
 
         temp_x += bitmap_w + offset;
-        dc.drawText(temp_x, -2, font, data[:value], Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(
+          temp_x,
+          dc.getHeight() * 0.4,
+          font,
+          data[:value],
+          Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+        );
       } else {
         dc.drawText(
           dc.getWidth() / 2,
-          -2,
+          dc.getHeight() * 0.4,
           font,
           data[:value],
-          Graphics.TEXT_JUSTIFY_CENTER
+          Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
       }
     }
