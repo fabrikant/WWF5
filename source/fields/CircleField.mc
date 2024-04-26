@@ -19,7 +19,7 @@ class CircleField extends AbstractField {
       data = seconds();
       compl_id = null;
     } else {
-      data = DataWrapper.getData(data_type);
+      data = DataWrapper.getData(data_type, false);
       compl_id = data[:compl_id];
     }
 

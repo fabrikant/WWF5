@@ -8,8 +8,7 @@ import Toybox.Lang;
 class ScaleWidget extends AbstractField {
   var angle_min, angle_max, center_x, center_y;
   var clear_poligon;
-  var small_bitmap;
-
+ 
   function initialize(options) {
     AbstractField.initialize(options);
     var system_radius = System.getDeviceSettings().screenHeight / 2;
@@ -36,7 +35,6 @@ class ScaleWidget extends AbstractField {
       [dc.getWidth(), dc.getHeight()],
       [dc.getWidth() - Global.mod(ref_points[:x][2] - ref_points[:x][1]), 0],
     ];
-    small_bitmap = null;
   }
 
   function draw(colors) {
@@ -46,7 +44,11 @@ class ScaleWidget extends AbstractField {
     dc.fillPolygon(clear_poligon);
     dc.setAntiAlias(true);
 
-    var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    var data_type = Application.Properties.getValue(getId());
+    var data = DataWrapper.getData(data_type, true);
+    if (data[:scale_value] == null){
+      data = DataWrapper.getData(data_type, false);
+    }
     compl_id = data[:compl_id];
 
     if (data[:scale_value] != null) {
@@ -90,7 +92,7 @@ class ScaleWidget extends AbstractField {
       temp_y -= Graphics.getFontHeight(font_label);
       var label = labelCastToString(data[:label]);
       dc.drawText(
-        dc.getWidth() * 0.75,
+        dc.getWidth() * 0.9,
         temp_y,
         font_label,
         label.substring(0, 4),
@@ -120,24 +122,11 @@ class ScaleWidget extends AbstractField {
 
     //Значок нужно уменьшить
     if (data[:image] != null) {
-      if (small_bitmap == null) {
-        var bitmap = createImage(data[:image], colors);
-        small_bitmap = Graphics.createBufferedBitmap({
-          :width => bitmap.getWidth(),
-          :height => bitmap.getHeight(),
-        });
-        small_bitmap.get().getDc().drawBitmap(0, 0, bitmap);
-      }
-
-      if (small_bitmap != null) {
-        var reduction_factor = 0.7;
-        temp_y -= small_bitmap.getHeight() * reduction_factor;
-        var transform = new Graphics.AffineTransform();
-        transform.scale(reduction_factor, reduction_factor);
-        dc.drawBitmap2(temp_x, temp_y, small_bitmap, {
-          :transform => transform,
-        });
-      }
+      
+      var bitmap = createImage(data[:image], colors);
+      temp_x = scale_width + dc.getWidth() * 0.49;
+      temp_y -= bitmap.getHeight();
+      dc.drawBitmap(temp_x, temp_y, bitmap);
     }
 
     //Шкала

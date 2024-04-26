@@ -26,7 +26,7 @@ class SmallField extends AbstractField {
       isPartiallyUpdateableField = true;
     }
 
-    var data = DataWrapper.getData(data_type);
+    var data = DataWrapper.getData(data_type, false);
 
     compl_id = data[:compl_id];
 
@@ -90,7 +90,7 @@ class SmallField extends AbstractField {
         dc.getHeight()
       );
 
-      var data = DataWrapper.getData(DataWrapper.HR);
+      var data = DataWrapper.getData(DataWrapper.HR, false);
       if (data[:value] != null) {
         drawText(
           dc,

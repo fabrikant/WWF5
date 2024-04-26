@@ -8,17 +8,18 @@ class MoonKeeper {
   var calculate_moment;
   var moon_phase;
   var bitmap, bitmap_size;
+  var bitmap_small, bitmap_small_size;
 
-  function initialize(moment, bitmap_size) {
-    
+  function initialize(moment, bitmap_size, bitmap_small_size) {
     self.bitmap_size = bitmap_size;
+    self.bitmap_small_size = bitmap_small_size;
     calculate(moment);
   }
 
   function calculate(moment) {
-		var colors = getApp().watch_view.colors;
+    var colors = getApp().watch_view.colors;
 
-		self.calculate_moment = moment;
+    self.calculate_moment = moment;
     self.moon_phase = Moon.moonPhase(moment);
     self.bitmap = Moon.drawMoon(
       moon_phase[:IP1],
@@ -26,13 +27,26 @@ class MoonKeeper {
       colors[:image],
       colors[:background]
     );
+    self.bitmap_small = Moon.drawMoon(
+      moon_phase[:IP1],
+      bitmap_small_size,
+      colors[:image],
+      colors[:background]
+    );
   }
 
-  function getActulalData(moment) {
-		if ( moment.subtract(calculate_moment).value() >= Time.Gregorian.SECONDS_PER_HOUR * 6 ){
-			calculate(moment);
-		}
-    return { :value => moon_phase[:AG1], :image => bitmap };
+  function getActulalData(moment, small_picture) {
+    if (
+      moment.subtract(calculate_moment).value() >=
+      Time.Gregorian.SECONDS_PER_HOUR * 6
+    ) {
+      calculate(moment);
+    }
+    if (small_picture) {
+      return { :value => moon_phase[:AG1], :image => bitmap_small };
+    } else {
+      return { :value => moon_phase[:AG1], :image => bitmap };
+    }
   }
 }
 

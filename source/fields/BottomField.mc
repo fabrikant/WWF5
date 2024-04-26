@@ -6,10 +6,8 @@ import Toybox.Math;
 
 class BottomField extends AbstractField {
   var font;
-  var small_bitmap;
 
   function initialize(options) {
-    small_bitmap = null;
     initializeFont(options);
     AbstractField.initialize(options);
   }
@@ -25,7 +23,8 @@ class BottomField extends AbstractField {
     AbstractField.draw(colors);
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
-    var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    var data_type = Application.Properties.getValue(getId());
+    var data = DataWrapper.getData(data_type, true);
     compl_id = data[:compl_id];
 
     if (data[:value] != null) {
@@ -35,26 +34,13 @@ class BottomField extends AbstractField {
         var text_w = dc.getTextWidthInPixels(data[:value], font);
         var temp_x = (dc.getWidth() - text_w - offset) / 2;
 
-        if (small_bitmap == null) {
+        if (data[:image] != null) {
           var bitmap = createImage(data[:image], colors);
-          small_bitmap = Graphics.createBufferedBitmap({
-            :width => bitmap.getWidth(),
-            :height => bitmap.getHeight(),
-          });
-          small_bitmap.get().getDc().drawBitmap(0, 0, bitmap);
-        }
-
-        if (small_bitmap != null) {
-          var reduction_factor = 0.80;
-          bitmap_w = small_bitmap.getWidth() * reduction_factor;
+          bitmap_w = bitmap.getWidth();
           temp_x = (dc.getWidth() - bitmap_w - text_w - offset) / 2;
-
-          var transform = new Graphics.AffineTransform();
-          transform.scale(reduction_factor, reduction_factor);
-          dc.drawBitmap2(temp_x, -2, small_bitmap, {
-            :transform => transform,
-          });
+          dc.drawBitmap(temp_x, 0, bitmap);
         }
+
         temp_x += bitmap_w + offset;
         dc.drawText(temp_x, -2, font, data[:value], Graphics.TEXT_JUSTIFY_LEFT);
       } else {

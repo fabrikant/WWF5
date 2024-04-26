@@ -56,7 +56,7 @@ module DataWrapper {
     UNIT_PRESSURE_KPA,
   }
 
-  function getData(type) {
+  function getData(type, small_picture) {
     var res = { :value => null, :label => null, :image => null };
 
     if (type == CALORIES_ACTIVE) {
@@ -64,24 +64,32 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_CALORIES,
         null
       );
-      res[:image] = Rez.Drawables.Callory;
+      res[:image] = small_picture
+        ? Rez.Drawables.CallorySmall
+        : Rez.Drawables.Callory;
     } else if (type == CALORIES_TOTAL) {
       res[:value] = getCalories();
       res[:label] = Rez.Strings.FIELD_TYPE_CALORIES_TOTAL;
-      res[:image] = Rez.Drawables.Callory;
+      res[:image] = small_picture
+        ? Rez.Drawables.CallorySmall
+        : Rez.Drawables.Callory;
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_CALORIES
       );
     } else if (type == DISTANCE) {
       res[:value] = getDistance();
-      res[:image] = Rez.Drawables.Distance;
+      res[:image] = small_picture
+        ? Rez.Drawables.DistanceSmall
+        : Rez.Drawables.Distance;
       res[:label] = Rez.Strings.FIELD_TYPE_DISTANCE;
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE
       );
     } else if (type == STEPS) {
       res[:value] = getSteps();
-      res[:image] = Rez.Drawables.Steps;
+      res[:image] = small_picture
+        ? Rez.Drawables.StepsSmall
+        : Rez.Drawables.Steps;
       res[:label] = Rez.Strings.FIELD_TYPE_DISTANCE;
       res[:label] = getNativeComplicationLabel(
         Complications.COMPLICATION_TYPE_STEPS
@@ -93,73 +101,93 @@ module DataWrapper {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BATTERY
       );
-      res[:image] = getBatteryImageRez(res);
+      res[:image] = getBatteryImageRez(res, small_picture);
     } else if (type == HR) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_HEART_RATE,
         null
       );
-      res[:image] = Rez.Drawables.HR;
+      res[:image] = small_picture ? Rez.Drawables.HRSmall : Rez.Drawables.HR;
     } else if (type == BODY_BATTERY) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BODY_BATTERY
       );
-      res[:image] = Rez.Drawables.BodyBattery;
+      res[:image] = small_picture
+        ? Rez.Drawables.BodyBatterySmall
+        : Rez.Drawables.BodyBattery;
     } else if (type == RECOVERY_TIME) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_RECOVERY_TIME,
         :minutesToString
       );
-      res[:image] = Rez.Drawables.RecoveryTime;
+      res[:image] = small_picture
+        ? Rez.Drawables.RecoveryTimeSmall
+        : Rez.Drawables.RecoveryTime;
     } else if (type == FLOOR) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_FLOORS_CLIMBED,
         null
       );
-      res[:image] = Rez.Drawables.Floor;
+      res[:image] = small_picture
+        ? Rez.Drawables.FloorSmall
+        : Rez.Drawables.Floor;
     } else if (type == O2) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_PULSE_OX
       );
-      res[:image] = Rez.Drawables.O2;
+      res[:image] = small_picture ? Rez.Drawables.O2Small : Rez.Drawables.O2;
     } else if (type == ALTITUDE) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_ALTITUDE,
         :altitudeToString
       );
-      res[:image] = Rez.Drawables.Altitude;
+      res[:image] = small_picture
+        ? Rez.Drawables.AltitudeSmall
+        : Rez.Drawables.Altitude;
     } else if (type == STRESS) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_STRESS,
         null
       );
-      res[:image] = Rez.Drawables.Stress;
+      res[:image] = small_picture
+        ? Rez.Drawables.StressSmall
+        : Rez.Drawables.Stress;
     } else if (type == MOON) {
-      res = getApp().watch_view.moon_keeper.getActulalData(Time.now());
+      res = getApp().watch_view.moon_keeper.getActulalData(Time.now(), small_picture);
       res[:label] = Rez.Strings.FIELD_TYPE_MOON;
     } else if (type == PRESSURE) {
       res[:value] = getPressure();
-      res[:image] = Rez.Drawables.Pressure;
+      res[:image] = small_picture
+        ? Rez.Drawables.PressureSmall
+        : Rez.Drawables.Pressure;
       res[:label] = Rez.Strings.FIELD_TYPE_PRESSURE;
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_SEA_LEVEL_PRESSURE
       );
     } else if (type == TEMPERATURE) {
       res[:value] = getTemperature();
-      res[:image] = Rez.Drawables.Temperature;
+      res[:image] = small_picture
+        ? Rez.Drawables.TemperatureSmall
+        : Rez.Drawables.Temperature;
       res[:label] = Rez.Strings.FIELD_TYPE_TEMPERATURE;
     } else if (type == TIME_ZONE) {
       res[:value] = getSecondTime();
-      res[:image] = Rez.Drawables.TimeZone;
+      res[:image] = small_picture
+        ? Rez.Drawables.TimeZoneSmall
+        : Rez.Drawables.TimeZone;
       res[:label] = Rez.Strings.FIELD_TYPE_TIME1;
     } else if (type == WEIGHT) {
       res[:value] = getWeight();
-      res[:image] = Rez.Drawables.Weight;
+      res[:image] = small_picture
+        ? Rez.Drawables.WeightSmall
+        : Rez.Drawables.Weight;
       res[:label] = Rez.Strings.FIELD_TYPE_WEIGHT;
     } else if (type == RELATIVE_HUMIDITY) {
       res[:scale_value] = getRelativeHumidity();
       res[:value] = getScaleValueCaption(res[:scale_value]);
-      res[:image] = Rez.Drawables.RelativeHumidity;
+      res[:image] = small_picture
+        ? Rez.Drawables.RelativeHumiditySmall
+        : Rez.Drawables.RelativeHumidity;
       res[:label] = Rez.Strings.FIELD_TYPE_RELATIVE_HUMIDITY;
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_CURRENT_WEATHER
@@ -167,7 +195,9 @@ module DataWrapper {
     } else if (type == PRECIPITATION_CHANCE) {
       res[:scale_value] = getPrecipitationChance();
       res[:value] = getScaleValueCaption(res[:scale_value]);
-      res[:image] = Rez.Drawables.PrecipitationChance;
+      res[:image] = small_picture
+        ? Rez.Drawables.PrecipitationChanceSmall
+        : Rez.Drawables.PrecipitationChance;
       res[:label] = Rez.Strings.FIELD_TYPE_PRECIPITATION_CHANCE;
       res[:compl_id] = new Complications.Id(
         Complications.COMPLICATION_TYPE_CURRENT_WEATHER
@@ -177,13 +207,15 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_WEEKLY_RUN_DISTANCE,
         :complicationDistanceToString
       );
-      res[:image] = Rez.Drawables.Run;
+      res[:image] = small_picture ? Rez.Drawables.RunSmall : Rez.Drawables.Run;
     } else if (type == WEEKLY_BIKE_DISTANCE) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_WEEKLY_BIKE_DISTANCE,
         :complicationDistanceToString
       );
-      res[:image] = Rez.Drawables.Bike;
+      res[:image] = small_picture
+        ? Rez.Drawables.BikeSmall
+        : Rez.Drawables.Bike;
     } else if (type == VO2_RUN) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_VO2MAX_RUN,
@@ -199,18 +231,24 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_RESPIRATION_RATE,
         null
       );
-      res[:image] = Rez.Drawables.Blow;
+      res[:image] = small_picture
+        ? Rez.Drawables.BlowSmall
+        : Rez.Drawables.Blow;
     } else if (type == SOLAR_INPUT) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_SOLAR_INPUT
       );
-      res[:image] = Rez.Drawables.SunEnergy;
+      res[:image] = small_picture
+        ? Rez.Drawables.SunEnergySmall
+        : Rez.Drawables.SunEnergy;
     } else if (type == INTENSITY_MINUTES) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_INTENSITY_MINUTES,
         :minutesToString
       );
-      res[:image] = Rez.Drawables.Exercises;
+      res[:image] = small_picture
+        ? Rez.Drawables.ExercisesSmall
+        : Rez.Drawables.Exercises;
     } else if (type == DATE_LONG) {
       res = {
         :value => getLongDate(),
@@ -233,7 +271,9 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_CALENDAR_EVENTS,
         null
       );
-      res[:image] = Rez.Drawables.Calendar;
+      res[:image] = small_picture
+        ? Rez.Drawables.CalendarSmall
+        : Rez.Drawables.Calendar;
     } else if (type == TRAINING_STATUS) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_TRAINING_STATUS,
@@ -247,7 +287,9 @@ module DataWrapper {
       res[:label] = Rez.Strings.FIELD_TYPE_CITY;
     } else if (type == FEELS_LIKE_TEMPERATURE) {
       res[:value] = getFeelsLikeTemperature();
-      res[:image] = Rez.Drawables.Temperature;
+      res[:image] = small_picture
+        ? Rez.Drawables.TemperatureSmall
+        : Rez.Drawables.Temperature;
       res[:label] = Rez.Strings.FIELD_TYPE_TEMPERATURE;
     }
 
@@ -257,28 +299,46 @@ module DataWrapper {
   ////////////////////////////////////////////////////////
   //DATA VALUES
 
-  function getBatteryImageRez(data_dict) {
+  function getBatteryImageRez(data_dict, small_picture) {
     var res = Rez.Drawables.Battery_0;
     var value = data_dict[:scale_value];
     if (value != null) {
       if (value <= 10) {
-        res = Rez.Drawables.Battery_0;
+        res = small_picture
+          ? Rez.Drawables.Battery_0Small
+          : Rez.Drawables.Battery_0;
       } else if (value <= 20) {
-        res = Rez.Drawables.Battery_1;
+        res = small_picture
+          ? Rez.Drawables.Battery_1Small
+          : Rez.Drawables.Battery_1;
       } else if (value <= 30) {
-        res = Rez.Drawables.Battery_2;
+        res = small_picture
+          ? Rez.Drawables.Battery_2Small
+          : Rez.Drawables.Battery_2;
       } else if (value <= 40) {
-        res = Rez.Drawables.Battery_3;
+        res = small_picture
+          ? Rez.Drawables.Battery_3Small
+          : Rez.Drawables.Battery_3;
       } else if (value <= 60) {
-        res = Rez.Drawables.Battery_4;
+        res = small_picture
+          ? Rez.Drawables.Battery_4Small
+          : Rez.Drawables.Battery_4;
       } else if (value <= 70) {
-        res = Rez.Drawables.Battery_5;
+        res = small_picture
+          ? Rez.Drawables.Battery_5Small
+          : Rez.Drawables.Battery_5;
       } else if (value <= 80) {
-        res = Rez.Drawables.Battery_6;
+        res = small_picture
+          ? Rez.Drawables.Battery_6Small
+          : Rez.Drawables.Battery_6;
       } else if (value <= 90) {
-        res = Rez.Drawables.Battery_7;
+        res = small_picture
+          ? Rez.Drawables.Battery_7Small
+          : Rez.Drawables.Battery_7;
       } else {
-        res = Rez.Drawables.Battery_8;
+        res = small_picture
+          ? Rez.Drawables.Battery_8Small
+          : Rez.Drawables.Battery_8;
       }
     }
     return res;

@@ -39,7 +39,8 @@ class WWF5View extends WatchUi.WatchFace {
   function createMoonKeeper() {
     moon_keeper = new MoonKeeper(
       Lang.Time.now(),
-      System.getDeviceSettings().screenWidth * 0.1
+      System.getDeviceSettings().screenWidth * 0.1,
+      System.getDeviceSettings().screenWidth * 0.08
     );
   }
 
@@ -285,9 +286,6 @@ class WWF5View extends WatchUi.WatchFace {
     if (weather_layer instanceof WeatherWidget) {
       weather_layer.arrow_bitmap = null;
     }
-    if (scale_layer instanceof ScaleWidget) {
-      scale_layer.small_bitmap = null;
-    }
   }
 
   // Terminate any active timers and prepare for slow updates.
@@ -319,9 +317,6 @@ class WWF5View extends WatchUi.WatchFace {
       }
       if (weather_layer instanceof WeatherWidget) {
         weather_layer.arrow_bitmap = null;
-      }
-      if (scale_layer instanceof ScaleWidget) {
-        scale_layer.small_bitmap = null;
       }
     }
   }
