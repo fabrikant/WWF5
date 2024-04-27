@@ -25,7 +25,7 @@ class DataField extends AbstractField {
     AbstractField.draw(colors);
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
-    var data = DataWrapper.getData(Application.Properties.getValue(getId()));
+    var data = DataWrapper.getData(Application.Properties.getValue(getId()), false);
     compl_id = data[:compl_id];
 
     //Вывод значения

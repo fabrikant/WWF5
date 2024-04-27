@@ -1,0 +1,188 @@
+<drawables>
+
+	<bitmap id="CallorySmall" filename="./svg-resources/1041.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="DistanceSmall" filename="./svg-resources/distance.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="StepsSmall" filename="./svg-resources/walk.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_0Small" filename="./svg-resources/battery_0.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_1Small" filename="./svg-resources/battery_1.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_2Small" filename="./svg-resources/battery_2.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_3Small" filename="./svg-resources/battery_3.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_4Small" filename="./svg-resources/battery_4.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_5Small" filename="./svg-resources/battery_5.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_6Small" filename="./svg-resources/battery_6.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_7Small" filename="./svg-resources/battery_7.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="Battery_8Small" filename="./svg-resources/battery_8.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="HRSmall" filename="./svg-resources/heart.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="BodyBatterySmall" filename="./svg-resources/body-battery.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+
+	</bitmap>
+	<bitmap id="RecoveryTimeSmall" filename="./svg-resources/recovery.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="FloorSmall" filename="./svg-resources/stairs.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="O2Small" filename="./svg-resources/o2.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="AltitudeSmall" filename="./svg-resources/mountain.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="StressSmall" filename="./svg-resources/1042.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="PressureSmall" filename="./svg-resources/barometer.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="TemperatureSmall" filename="./svg-resources/termometer.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="TimeZoneSmall" filename="./svg-resources/time-zones.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="WeightSmall" filename="./svg-resources/weight.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="RelativeHumiditySmall" filename="./svg-resources/2019.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="PrecipitationChanceSmall" filename="./svg-resources/precipitation.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="RunSmall" filename="./svg-resources/run.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="BikeSmall" filename="./svg-resources/bike.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="BlowSmall" filename="./svg-resources/blow.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="SunEnergySmall" filename="./svg-resources/sun-energy.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="ExercisesSmall" filename="./svg-resources/exercises.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+
+	<bitmap id="CalendarSmall" filename="./svg-resources/calendar.svg" scaleX="7%" scaleY="7%" scaleRelativeTo="screen">
+		<palette disableTransparency="false">
+			<color>555555</color>
+		</palette>
+	</bitmap>
+</drawables>

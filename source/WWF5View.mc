@@ -39,7 +39,8 @@ class WWF5View extends WatchUi.WatchFace {
   function createMoonKeeper() {
     moon_keeper = new MoonKeeper(
       Lang.Time.now(),
-      System.getDeviceSettings().screenWidth * 0.1
+      System.getDeviceSettings().screenWidth * 0.1,
+      System.getDeviceSettings().screenWidth * 0.08
     );
   }
 
@@ -81,7 +82,7 @@ class WWF5View extends WatchUi.WatchFace {
     );
     options[:identifier] = :clock;
     options[:font] = fontClock;
-    var clock_layer = new SimpleField(options);
+    var clock_layer = new TimeField(options);
     self.addLayer(clock_layer);
 
     //Секунды
@@ -103,7 +104,7 @@ class WWF5View extends WatchUi.WatchFace {
       :identifier => :seconds,
       :font => fontSeconds,
     };
-    var seconds_layer = new SimpleField(options);
+    var seconds_layer = new SecondsField(options);
     seconds_layer.compl_id = new Complications.Id(
       Complications.COMPLICATION_TYPE_HEART_RATE
     );
@@ -206,7 +207,7 @@ class WWF5View extends WatchUi.WatchFace {
 
     var small_field = new SmallField(options);
     self.addLayer(small_field);
-    //every_second_layers.add(small_field);
+    every_second_layers.add(small_field);
 
     //Статусы
     var bitmap = Application.loadResource(Rez.Drawables.message);
@@ -264,13 +265,7 @@ class WWF5View extends WatchUi.WatchFace {
   function onPartialUpdate(dc) {
     for (var i = 0; i < every_second_layers.size(); i++) {
       var layer = every_second_layers[i];
-      dc.setClip(
-        layer.getX(),
-        layer.getY(),
-        layer.getDc().getWidth(),
-        layer.getDc().getHeight()
-      );
-      layer.draw(colors);
+      layer.drawPartial(dc, colors);
     }
   }
 
@@ -290,9 +285,6 @@ class WWF5View extends WatchUi.WatchFace {
     }
     if (weather_layer instanceof WeatherWidget) {
       weather_layer.arrow_bitmap = null;
-    }
-    if (scale_layer instanceof ScaleWidget) {
-      scale_layer.small_bitmap = null;
     }
   }
 
@@ -325,9 +317,6 @@ class WWF5View extends WatchUi.WatchFace {
       }
       if (weather_layer instanceof WeatherWidget) {
         weather_layer.arrow_bitmap = null;
-      }
-      if (scale_layer instanceof ScaleWidget) {
-        scale_layer.small_bitmap = null;
       }
     }
   }
