@@ -83,6 +83,9 @@ class WWF5View extends WatchUi.WatchFace {
     options[:identifier] = :clock;
     options[:font] = fontClock;
     var clock_layer = new TimeField(options);
+    clock_layer.compl_id = new Complications.Id(
+      Complications.COMPLICATION_TYPE_RECOVERY_TIME
+    );
     self.addLayer(clock_layer);
 
     //Секунды
