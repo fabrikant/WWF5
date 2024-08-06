@@ -115,12 +115,13 @@ class AbstractField extends WatchUi.Layer {
     var color = colors[:font];
     var color_empty = colors[:font_empty_segments];
     var epty_text = "";
+    var chars = text.toCharArray();
     if (
-      color_empty != color &&
-      color_empty != Graphics.COLOR_TRANSPARENT &&
-      color_empty != colors[:background]
+      (color_empty != color &&
+        color_empty != Graphics.COLOR_TRANSPARENT &&
+        color_empty != colors[:background]) ||
+      chars.indexOf('°') != null
     ) {
-      var chars = text.toCharArray();
       for (var i = 0; i < chars.size(); i++) {
         if (
           chars[i] == '0' ||
@@ -201,7 +202,7 @@ class AbstractField extends WatchUi.Layer {
 
       //Превращаем % в °
       //закрашиваем часть символа
-       dc.setColor(colors[:background], Graphics.COLOR_TRANSPARENT);
+      dc.setColor(colors[:background], Graphics.COLOR_TRANSPARENT);
       var k = 0.5;
       for (var i = 0; i < x_positions.size(); i++) {
         var poligon = [

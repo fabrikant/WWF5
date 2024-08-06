@@ -10,8 +10,8 @@
     <string id="RemovePreset" scope="foreground">Удалить</string>
     <string id="RenamePreset" scope="foreground">Переименовать</string>
     
-    <string id="c_patt" scope="foreground">Шаблон</string>
-    <string id="c_patt_d" scope="foreground">Акцент шаблона</string>
+    <string id="c_patt" scope="foreground">Рамка</string>
+    <string id="c_patt_d" scope="foreground">Акцент рамки</string>
     <string id="c_bgnd" scope="foreground">Фон</string>
     <string id="c_font" scope="foreground">Шрифт</string>
     <string id="c_es" scope="foreground">Шрифт пуст. сегменты</string>
