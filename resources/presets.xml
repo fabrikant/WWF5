@@ -2,7 +2,7 @@
 
   <jsonData id="presets">
   [ 
-    {"dark (default)":
+    {"dark":
       {
         "c_image":"FFFFAA",
         "c_font":"FFFFFF",
