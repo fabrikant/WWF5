@@ -7,7 +7,6 @@ class ItemPropertyWindSpeed extends ItemPropertyAbstractList {
     var label = Rez.Strings.WindSpeedUnit;
     var value = Application.Properties.getValue(id);
     var values = getList();
-    logger.debug(values);
     var subLabel = values[value];
     ItemPropertyAbstractList.initialize(label, subLabel, id, {});
   }
