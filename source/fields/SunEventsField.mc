@@ -6,13 +6,55 @@ import Toybox.Time;
 import Toybox.Math;
 
 class SunEventsField extends AbstractField {
+  var fontComplication = null;
+
   function initialize(options) {
     AbstractField.initialize(options);
     compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_SUNRISE);
   }
 
   function draw(colors) {
+    var fieldType = Application.Properties.getValue(getId());
     AbstractField.draw(colors);
+
+    if (fieldType == DataWrapper.SUN_EVENTS) {
+      drawSunEvents(colors);
+    } else if (fieldType == DataWrapper.THIRD_PARTY_COMPLICATION) {
+      drawComplication(colors);
+    }
+  }
+
+  function drawComplication(colors) {
+    var complId = Application.Storage.getValue(getId());
+    if (complId != null) {
+      var compl = Complications.getComplication(complId);
+      if (compl instanceof Complications.Complication) {
+        if (compl.value != null) {
+          var text = compl.value;
+          if (compl.unit instanceof Lang.String) {
+            text += " " + compl.unit;
+          }
+
+          var dc = getDc();
+          dc.setColor(colors[:font], colors[:background]);
+
+          if (fontComplication == null) {
+            fontComplication = Graphics.getVectorFont({
+              :face => vectorFontName(),
+              :size => dc.getHeight(),
+            });
+          }
+
+          dc.drawText(0, 0, fontComplication, text, Graphics.TEXT_JUSTIFY_LEFT);
+          return;
+        }
+      }
+    }
+
+    drawSunEvents(colors);
+  }
+
+  function drawSunEvents(colors) {
     var dc = getDc();
 
     var sunrise = getSunEventTime(Complications.COMPLICATION_TYPE_SUNRISE);

@@ -144,7 +144,7 @@ class WWF5View extends WatchUi.WatchFace {
         pattern.reference_points[:y][2],
       ]
     );
-    options[:identifier] = :sun_events;
+    options[:identifier] = "data_sun";
     var sun_event_field = new SunEventsField(options);
     self.addLayer(sun_event_field);
 

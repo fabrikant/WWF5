@@ -8,7 +8,7 @@ class MenuMain extends WatchUi.Menu2 {
     addItem(new ItemSubMenuColors());
     addItem(new ItemPropertyDataField("data_scale", Rez.Strings.DataScale));
     addItem(new ItemPropertyDataField("data_small", Rez.Strings.SmallField));
-    addItem(new ItemPropertyDataField("data_sun", Rez.Strings.DataSun));
+    addItem(new ItemPropertyDataFieldSunEvents("data_sun", Rez.Strings.DataSun));
     addItem(new ItemPropertyDataField("data_1", Rez.Strings.Data1));
     addItem(new ItemPropertyDataField("data_2", Rez.Strings.Data2));
     addItem(new ItemPropertyDataField("data_3", Rez.Strings.Data3));
