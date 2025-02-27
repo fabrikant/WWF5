@@ -13,6 +13,7 @@ class MenuMain extends WatchUi.Menu2 {
     addItem(new ItemPropertyDataField("data_2", Rez.Strings.Data2));
     addItem(new ItemPropertyDataField("data_3", Rez.Strings.Data3));
     addItem(new ItemPropertyDataField("data_bottom", Rez.Strings.BottomField));
+    addItem(new ItemPropertyWindSpeed());
     addItem(new ItemPropertyTogle("show_DND", Rez.Strings.show_DND));
     addItem(new ItemPropertyText("T1TZ", Rez.Strings.T1TZ));
     addItem(new ItemPropertyTogle("show_w_source", Rez.Strings.show_w_source));
