@@ -199,7 +199,7 @@ class ColorPicker extends WatchUi.View {
       if (parent_weak.stillAlive()) {
         var obj = parent_weak.get();
         if (obj != null) {
-          obj.onSelectSubmenuItem(color);
+          obj.onSelectColor(color);
         }
       }
       WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);

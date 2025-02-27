@@ -11,7 +11,7 @@ class TextDelegate extends WatchUi.TextPickerDelegate {
   function onTextEntered(text, changed) {
     if (changed && parent_week.stillAlive()) {
       var obj = parent_week.get();
-      obj.onSetText(text);
+      // obj.onSetText(text);
     }
   }
 

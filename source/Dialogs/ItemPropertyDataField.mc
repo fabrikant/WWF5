@@ -13,7 +13,7 @@ class ItemPropertyDataField extends ItemPropertyAbstract {
 
   function onSelectItem() {
     WatchUi.pushView(
-      new MenuPropertySelecter(getLabel(), weak()),
+      new MenuPropertySelector(getLabel(), weak()),
       new SimpleMenuDelegate(),
       WatchUi.SLIDE_IMMEDIATE
     );

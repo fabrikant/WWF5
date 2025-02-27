@@ -3,7 +3,7 @@ import Toybox.Lang;
 import Toybox.Application;
 // import Toybox.Complications;
 
-class ItemPropertySelecter extends ItemPropertyAbstract {
+class ItemPropertySelector extends ItemPropertyAbstract {
   var ownerItemWeak = null;
 
   function initialize(id, ownerItemWeak) {

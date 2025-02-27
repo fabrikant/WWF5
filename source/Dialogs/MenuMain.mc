@@ -4,6 +4,9 @@ class MenuMain extends WatchUi.Menu2 {
   function initialize() {
     Menu2.initialize({ :title => Rez.Strings.MenuHeader });
 
+
+    addItem(new ItemSubMenuColors());
+
     addItem(new ItemPropertyDataField("data_scale", Rez.Strings.DataScale));
     addItem(new ItemPropertyDataField("data_small", Rez.Strings.SmallField));
     addItem(new ItemPropertyDataField("data_sun", Rez.Strings.DataSun));

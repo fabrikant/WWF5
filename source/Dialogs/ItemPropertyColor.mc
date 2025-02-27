@@ -4,24 +4,14 @@ import Toybox.Graphics;
 import Toybox.Lang;
 
 //*****************************************************************************
-//Пункт меню (аналог класса Item). Но предназначен для указания цвета
-//ассоциирован со свойством приложения
-//при нажатии открыватеся подменю выбора цветов
-class ColorPropertyItem extends WatchUi.IconMenuItem {
-  var method_symbol, color;
 
-  function initialize(options) {
-    self.method_symbol = options[:method_symbol];
-    var label = Application.loadResource(options[:rez_label]);
-    color = Application.Properties.getValue(options[:identifier]);
-    var icon = new IconDrawable(color);
-    IconMenuItem.initialize(
-      label,
-      colorToString(color),
-      options[:identifier],
-      icon,
-      {}
-    );
+class ItemPropertyColor extends WatchUi.IconMenuItem {
+  var color;
+
+  function initialize(id, label) {
+    color = Application.Properties.getValue(id);
+    var icon = new ItemPropertyColorDrawable(color);
+    IconMenuItem.initialize(label, colorToString(color), id, icon, {});
   }
 
   function colorToString(color) {
@@ -35,40 +25,31 @@ class ColorPropertyItem extends WatchUi.IconMenuItem {
   }
 
   function onSelectItem() {
-    //Вариант выбора из палитры
     var picker = new ColorPicker(self.weak());
     WatchUi.pushView(
       picker,
       new ColorPickerDelegate(picker.weak()),
       WatchUi.SLIDE_IMMEDIATE
     );
-
-    // //Вариант выбора цвета через подменю с цветами
-    // var method = new Lang.Method(Menu, method_symbol);
-    // var submenu = method.invoke(self.weak());
-    // WatchUi.pushView(
-    //   submenu,
-    //   new SimpleMenuDelegate(),
-    //   WatchUi.SLIDE_IMMEDIATE
-    // );
   }
 
-  function onSelectSubmenuItem(newValue) {
-    if (newValue instanceof Lang.Number) {
-      color = newValue;
+  function onSelectColor(newColor) {
+    if (newColor instanceof Lang.Number) {
+      color = newColor;
     } else {
-      color = newValue.toNumber();
+      color = newColor.toNumber();
     }
     Application.Properties.setValue(getId(), color);
     setSubLabel(colorToString(color));
-    setIcon(new IconDrawable(color));
+    var icon = getIcon();
+    icon.color = color;
   }
 }
 
 //*****************************************************************************
 //Вспомогательный объект. Формирет Drawable с цветом для размещения цвета на
 //пункте меню
-class IconDrawable extends WatchUi.Drawable {
+class ItemPropertyColorDrawable extends WatchUi.Drawable {
   var color;
 
   function initialize(color) {
