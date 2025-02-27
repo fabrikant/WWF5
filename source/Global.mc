@@ -43,6 +43,7 @@ module Global {
       "pressure_unit",
       "data_scale",
       "data_small",
+      "data_sun",
       "data_1",
       "data_2",
       "data_3",

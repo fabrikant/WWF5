@@ -7,5 +7,7 @@ class ItemSaveNewPreset extends WatchUi.MenuItem {
     MenuItem.initialize(label, null, null, {});
   }
 
-  function onSelectItem() {}
+  function onSelectItem() {
+    Presets.SavePreset();
+  }
 }
