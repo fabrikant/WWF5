@@ -24,7 +24,7 @@ class WWF5App extends Application.AppBase {
   }
 
   function getSettingsView() {
-    return [Menu.GeneralMenu(), new SimpleMenuDelegate()];
+    return [new MenuMain(), new SimpleMenuDelegate()];
   }
 
   ///////////////////////////////////////////////////////////////////////////

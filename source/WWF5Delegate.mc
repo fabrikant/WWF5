@@ -4,9 +4,9 @@ import Toybox.Complications;
 
 class WWF5Delegate extends WatchUi.WatchFaceDelegate {
   function onPowerBudgetExceeded(powerInfo) {
-    System.println("onPowerBudgetExceeded");
-    System.println("TimeAverage: " + powerInfo.executionTimeAverage);
-    System.println("TimeLimit: " + powerInfo.executionTimeLimit);
+    logger.debug("onPowerBudgetExceeded");
+    logger.debug("TimeAverage: " + powerInfo.executionTimeAverage);
+    logger.debug("TimeLimit: " + powerInfo.executionTimeLimit);
   }
 
   function onPress(clickEvent) {

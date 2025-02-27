@@ -13,6 +13,7 @@
 
 	<property id="data_scale" type="number">9</property>
 	<property id="data_small" type="number">1</property>
+	<property id="data_sun" type="number">36</property>
 	<property id="data_1" type="number">2</property>
 	<property id="data_2" type="number">35</property>
 	<property id="data_3" type="number">4</property>

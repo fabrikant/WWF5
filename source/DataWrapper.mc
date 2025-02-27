@@ -37,8 +37,7 @@ module DataWrapper {
     PRECIPITATION_CHANCE,
     MOON,
     TIME_ZONE,
-    SECONDS,
-    BATTERY,
+    BATTERY = 26,
     SOLAR_INPUT,
     DATE_LONG,
     DATE,
@@ -48,6 +47,7 @@ module DataWrapper {
     CITY,
     FEELS_LIKE_TEMPERATURE,
     DATE_TO_DATA_FIELD,
+    SUN_EVENTS,
 
     UNIT_PRESSURE_MM_HG = 0,
     UNIT_PRESSURE_PSI,
