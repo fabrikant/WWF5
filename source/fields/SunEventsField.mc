@@ -7,8 +7,13 @@ import Toybox.Math;
 
 class SunEventsField extends AbstractField {
   var fontComplication = null;
+  var complIcon = null;
+  var complIconH = null;
+  var complIconW = null;
+  var firstGetICon = null;
 
   function initialize(options) {
+    firstGetICon = true;
     AbstractField.initialize(options);
     compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_SUNRISE);
   }
@@ -29,7 +34,7 @@ class SunEventsField extends AbstractField {
     if (complId != null) {
       var compl = Complications.getComplication(complId);
       if (compl instanceof Complications.Complication) {
-        if (compl.value != null) {
+        if (compl.value != null and !compl.value.equals("")) {
           var text = compl.value;
           if (compl.unit instanceof Lang.String) {
             text += " " + compl.unit;
@@ -37,6 +42,13 @@ class SunEventsField extends AbstractField {
 
           var dc = getDc();
           dc.setColor(colors[:font], colors[:background]);
+          getComplicationIcon(compl);
+
+          var x = 5;
+          if (complIcon != null) {
+            dc.drawScaledBitmap(0, 0, complIconW, complIconH, complIcon);
+            x += complIconW;
+          }
 
           if (fontComplication == null) {
             fontComplication = Graphics.getVectorFont({
@@ -45,13 +57,45 @@ class SunEventsField extends AbstractField {
             });
           }
 
-          dc.drawText(0, 0, fontComplication, text, Graphics.TEXT_JUSTIFY_LEFT);
+          dc.drawText(
+            x,
+            dc.getHeight() / 2,
+            fontComplication,
+            text,
+            Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+          );
           return;
         }
       }
     }
 
     drawSunEvents(colors);
+  }
+
+  function getComplicationIcon(compl) {
+    if (!firstGetICon) {
+      return;
+    }
+    firstGetICon = false;
+    var dc = getDc();
+    if (!(dc has :drawScaledBitmap)) {
+      return;
+    }
+    complIcon = compl.getIcon();
+    if (complIcon == null) {
+      return;
+    }
+
+    var h = complIcon.getHeight();
+    if (h == 0) {
+      return;
+    }
+    var k = dc.getHeight().toDouble() / h;
+    logger.debug("complIcon.getHeight() " + complIcon.getHeight());
+    logger.debug("dc.getHeight() " + dc.getHeight());
+    logger.debug("k " + k);
+    complIconH = (h * k).toNumber();
+    complIconW = (complIcon.getWidth() * k).toNumber();
   }
 
   function drawSunEvents(colors) {
