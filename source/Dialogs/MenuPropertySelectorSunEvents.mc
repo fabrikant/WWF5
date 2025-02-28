@@ -15,6 +15,13 @@ class MenuPropertySelectorSunEvents extends WatchUi.Menu2 {
     while (complication != null) {
       var type = complication.getType();
       if (type != null and type == Complications.COMPLICATION_TYPE_INVALID) {
+        if (
+          complication.shortLabel.equals("owm_key") &&
+          complication.longLabel.equals("RoseOfWind")
+        ) {
+          continue;
+        }
+
         addItem(new ItemComplicationSelector(complication, ownerItemWeak));
       }
       complication = iterator.next();
