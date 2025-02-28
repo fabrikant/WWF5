@@ -41,7 +41,7 @@ class SunEventsField extends AbstractField {
           if (fontComplication == null) {
             fontComplication = Graphics.getVectorFont({
               :face => vectorFontName(),
-              :size => dc.getHeight(),
+              :size => (dc.getHeight() * 1.2).toNumber(),
             });
           }
 

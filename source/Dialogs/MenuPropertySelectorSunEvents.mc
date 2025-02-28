@@ -8,7 +8,6 @@ class MenuPropertySelectorSunEvents extends WatchUi.Menu2 {
     self.ownerItemWeak = ownerItemWeak;
     Menu2.initialize({ :title => title });
 
-    addItem(new ItemPropertySelector(DataWrapper.EMPTY, ownerItemWeak));
     addItem(new ItemPropertySelector(DataWrapper.SUN_EVENTS, ownerItemWeak));
 
     var iterator = Complications.getComplications();

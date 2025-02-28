@@ -7,7 +7,11 @@ class ItemPropertyDataFieldSunEvents extends ItemPropertyAbstract {
 
   function initialize(id, label) {
     fieldType = Application.Properties.getValue(id);
+    var subLabel = calculateSublabel(id);
+    ItemPropertyAbstract.initialize(label, subLabel, id, {});
+  }
 
+  function calculateSublabel(id) {
     var subLabel = "<<Unknown>>";
     if (fieldType == DataWrapper.THIRD_PARTY_COMPLICATION) {
       var complId = Application.Storage.getValue(id);
@@ -24,7 +28,7 @@ class ItemPropertyDataFieldSunEvents extends ItemPropertyAbstract {
     } else {
       subLabel = getCaptionFieldType(fieldType);
     }
-    ItemPropertyAbstract.initialize(label, subLabel, id, {});
+    return subLabel;
   }
 
   function onSelectItem() {
@@ -36,14 +40,14 @@ class ItemPropertyDataFieldSunEvents extends ItemPropertyAbstract {
   }
 
   function updateValue(newValue) {
-    if (newValue == DataWrapper.SUN_EVENTS or newValue == DataWrapper.EMPTY) {
+    if (newValue == DataWrapper.SUN_EVENTS) {
       fieldType = newValue;
       Application.Properties.setValue(getId(), fieldType);
-      setSubLabel(getCaptionFieldType(fieldType));
     } else {
       fieldType = DataWrapper.THIRD_PARTY_COMPLICATION;
       Application.Properties.setValue(getId(), fieldType);
       Application.Storage.setValue(getId(), newValue);
     }
+    setSubLabel(calculateSublabel(getId()));
   }
 }
