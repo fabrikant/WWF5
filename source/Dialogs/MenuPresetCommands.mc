@@ -5,6 +5,7 @@ class MenuPresetCommands extends WatchUi.Menu2 {
     Menu2.initialize({ :title => Rez.Strings.SubmenuPresets });
 
     addItem(new ItemPresetApply(ownerItemWeak, Rez.Strings.ApplyPreset));
+    addItem(new ItemPresetRename(ownerItemWeak, Rez.Strings.RenamePreset));
     addItem(new ItemPresetRemove(ownerItemWeak, Rez.Strings.RemovePreset));
   }
 }

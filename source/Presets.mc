@@ -35,6 +35,12 @@ module Presets {
     return result;
   }
 
+  function renamePreset(id, name) {
+    var presets = Application.Storage.getValue(Global.PRESETS_KEY);
+    presets[id][Global.PRESETS_NAME_KEY] = name;
+    Application.Storage.setValue(Global.PRESETS_KEY, presets);
+  }
+
   function savePreset() {
     var prop_keys = Global.getPropertiesKeys();
     var preset = {};
