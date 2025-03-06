@@ -19,6 +19,7 @@ class MenuPropertySelectorSunEvents extends WatchUi.Menu2 {
           complication.shortLabel.equals("owm_key") &&
           complication.longLabel.equals("RoseOfWind")
         ) {
+          complication = iterator.next();
           continue;
         }
 
