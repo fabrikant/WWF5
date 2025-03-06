@@ -44,9 +44,9 @@ class SunEventsField extends AbstractField {
           dc.setColor(colors[:font], colors[:background]);
           getComplicationIcon(compl);
 
-          var x = dc.getHeight() / 2;
+          var x = dc.getHeight() / 4;
           if (complIcon != null) {
-            dc.drawScaledBitmap(0, 0, complIconW, complIconH, complIcon);
+            dc.drawScaledBitmap(x, 0, complIconW, complIconH, complIcon);
             x += complIconW;
           }
 
