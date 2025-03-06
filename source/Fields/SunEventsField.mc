@@ -41,20 +41,26 @@ class SunEventsField extends AbstractField {
           }
 
           var dc = getDc();
-          dc.setColor(colors[:font], colors[:background]);
-          getComplicationIcon(compl);
-
-          var x = dc.getHeight() / 4;
-          if (complIcon != null) {
-            dc.drawScaledBitmap(x, 0, complIconW, complIconH, complIcon);
-            x += complIconW;
-          }
 
           if (fontComplication == null) {
             fontComplication = Graphics.getVectorFont({
               :face => vectorFontName(),
               :size => (dc.getHeight() * 1.2).toNumber(),
             });
+          }
+
+          var textW = dc.getTextWidthInPixels(text, fontComplication);
+
+          dc.setColor(colors[:font], colors[:background]);
+          getComplicationIcon(compl);
+
+          // Будем выводить иконку только если поместится и она и текст
+          var x = dc.getHeight() / 4;
+          if (complIcon != null) {
+            if (2 * x + complIconW + textW <= dc.getWidth()) {
+              dc.drawScaledBitmap(x, 0, complIconW, complIconH, complIcon);
+              x += x + complIconW;
+            }
           }
 
           dc.drawText(
