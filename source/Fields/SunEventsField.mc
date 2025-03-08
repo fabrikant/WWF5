@@ -32,7 +32,14 @@ class SunEventsField extends AbstractField {
   function drawComplication(colors) {
     var complId = Application.Storage.getValue(getId());
     if (complId != null) {
-      var compl = Complications.getComplication(complId);
+      var compl = null;
+      try {
+        compl = Complications.getComplication(complId);
+      } catch (e) {
+        logger.error(e);
+        drawSunEvents(colors);
+        return;
+      }
       if (compl instanceof Complications.Complication) {
         if (compl.value != null and !compl.value.equals("")) {
           var text = compl.value;

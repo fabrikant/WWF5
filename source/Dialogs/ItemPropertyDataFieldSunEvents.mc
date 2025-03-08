@@ -15,8 +15,14 @@ class ItemPropertyDataFieldSunEvents extends ItemPropertyAbstract {
     var subLabel = "<<Unknown>>";
     if (fieldType == DataWrapper.THIRD_PARTY_COMPLICATION) {
       var complId = Application.Storage.getValue(id);
+      var compl = null;
       if (complId != null) {
-        var compl = Complications.getComplication(complId);
+        try {
+          compl = Complications.getComplication(complId);
+        } catch (e) {
+          logger.error(e);
+          return subLabel;
+        }
         if (compl instanceof Complications.Complication) {
           if (compl.longLabel != null) {
             subLabel = compl.longLabel;
