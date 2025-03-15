@@ -30,9 +30,12 @@ class MenuPropertySelectorSunEvents extends WatchUi.Menu2 {
 
     if (ownerItemWeak.stillAlive()) {
       var owner = ownerItemWeak.get();
-      var index = findItemById(owner.fieldType);
-      if (index >= 0) {
-        setFocus(index);
+      if (owner.fieldType == DataWrapper.THIRD_PARTY_COMPLICATION) {
+        var ownerComplId = Application.Storage.getValue(owner.getId());
+        var index = findItemById(ownerComplId);
+        if (index >= 0) {
+          setFocus(index);
+        }
       }
     }
   }
