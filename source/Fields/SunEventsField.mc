@@ -11,11 +11,13 @@ class SunEventsField extends AbstractField {
   var complIconH = null;
   var complIconW = null;
   var firstGetICon = null;
+  var isSubscribed = null;
 
   function initialize(options) {
     firstGetICon = true;
     AbstractField.initialize(options);
     compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_SUNRISE);
+    isSubscribed = false;
   }
 
   function draw(colors) {
@@ -41,6 +43,12 @@ class SunEventsField extends AbstractField {
         return;
       }
       if (compl instanceof Complications.Complication) {
+        compl_id = complId;
+        if (!isSubscribed) {
+          isSubscribed = true;
+          Complications.subscribeToUpdates(compl_id);
+        }
+
         if (compl.value != null and !compl.value.equals("")) {
           var text = compl.value;
           if (compl.unit instanceof Lang.String) {
@@ -62,11 +70,15 @@ class SunEventsField extends AbstractField {
           getComplicationIcon(compl);
 
           // Будем выводить иконку только если поместится и она и текст
-          var x = dc.getHeight() / 4;
+          var startX = dc.getHeight() / 4;
+          var x = startX;
           if (complIcon != null) {
-            if (2 * x + complIconW + textW <= dc.getWidth()) {
+            var alldataW = 2 * startX + complIconW + textW;
+            if (alldataW <= dc.getWidth()) {
+              //Все помещается. Выведем в центре поля
+              x = (dc.getWidth() - alldataW) / 2;
               dc.drawScaledBitmap(x, 0, complIconW, complIconH, complIcon);
-              x += x + complIconW;
+              x += startX + complIconW;
             }
           }
 
@@ -104,14 +116,16 @@ class SunEventsField extends AbstractField {
       return;
     }
     var k = dc.getHeight().toDouble() / h;
-    logger.debug("complIcon.getHeight() " + complIcon.getHeight());
-    logger.debug("dc.getHeight() " + dc.getHeight());
-    logger.debug("k " + k);
     complIconH = (h * k).toNumber();
     complIconW = (complIcon.getWidth() * k).toNumber();
   }
 
   function drawSunEvents(colors) {
+    compl_id = new Complications.Id(Complications.COMPLICATION_TYPE_SUNRISE);
+
+    Complications.unsubscribeFromAllUpdates();
+    isSubscribed = false;
+
     var dc = getDc();
 
     var sunrise = getSunEventTime(Complications.COMPLICATION_TYPE_SUNRISE);

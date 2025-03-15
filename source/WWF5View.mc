@@ -252,6 +252,13 @@ class WWF5View extends WatchUi.WatchFace {
     self.pattern = new Pattern(colors);
     createMoonKeeper();
     createLayers();
+    Complications.registerComplicationChangeCallback(
+      self.method(:onComplicationChanged)
+    );
+  }
+
+  function onComplicationChanged(complId) {
+    WatchUi.requestUpdate();
   }
 
   // Update the view
