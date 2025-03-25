@@ -34,6 +34,9 @@ class WWF5View extends WatchUi.WatchFace {
       :image => Application.Properties.getValue("c_image"),
       :scale => Application.Properties.getValue("c_scale"),
     };
+    if (colors[:font_empty_segments] == Graphics.COLOR_TRANSPARENT){
+      colors[:font_empty_segments] = colors[:background];
+    }
   }
 
   function createMoonKeeper() {
@@ -311,7 +314,7 @@ class WWF5View extends WatchUi.WatchFace {
         :pattern_decorate => Graphics.COLOR_TRANSPARENT,
         :background => Graphics.COLOR_BLACK,
         :font => Graphics.COLOR_WHITE,
-        :font_empty_segments => Graphics.COLOR_TRANSPARENT,
+        :font_empty_segments => Graphics.COLOR_BLACK,
         :image => Graphics.COLOR_WHITE,
         :scale => Graphics.COLOR_WHITE,
       };
