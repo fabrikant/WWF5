@@ -76,15 +76,16 @@ class WeatherWidget extends AbstractField {
     );
 
     //фиксим баг амолед экранов. Не умеют drawRadialText на Layer
-    var settings = System.getDeviceSettings();
-    if (
-      settings has :requiresBurnInProtection &&
-      settings.requiresBurnInProtection
-    ) {
-      drawWindSpeedAmoled(dc, wind_speed, colors);
-    } else {
-      drawWindSpeedMIP(dc, wind_speed, colors);
-    }
+    // var settings = System.getDeviceSettings();
+    // if (
+    //   settings has :requiresBurnInProtection &&
+    //   settings.requiresBurnInProtection
+    // ) {
+    //   drawWindSpeedAmoled(dc, wind_speed, colors);
+    // } else {
+    //   drawWindSpeedMIP(dc, wind_speed, colors);
+    // }
+    drawWindSpeedMIP(dc, wind_speed, colors);
 
     //Ветер направление
     var wind_angle = weather_condition.windBearing;
