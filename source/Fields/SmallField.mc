@@ -66,47 +66,54 @@ class SmallField extends AbstractEverySecondField {
   }
 
   function drawPartial(global_dc, colors) {
-    if (isPartiallyUpdateableField) {
-      if (System.getClockTime().sec % 2 == 0){
-        return;
-      }
+    if (!isPartiallyUpdateableField) {
+      return;
+    }
+    if (System.getClockTime().sec % 5 != 0) {
+      return;
+    }
 
-      var data = DataWrapper.getData(DataWrapper.HR, false);
-      if (data[:value] == null) {
-        return;
-      }
-      if (data[:value].equals(old_value)) {
-        return;
-      }
-      old_value = data[:value];
+    // var data = DataWrapper.getData(DataWrapper.HR, false);
 
-      var dc = getDc();
-      var x_offset = bitmap_w + bitmap_offset;
+    var data = DataWrapper.getNativeComplicationData(
+      Complications.COMPLICATION_TYPE_HEART_RATE,
+      null
+    );
 
-      if (max_part_update_value_w == null) {
-        max_part_update_value_w = dc.getTextWidthInPixels("000", font);
-      }
-      global_dc.setClip(
-        getX() + x_offset,
-        getY(),
-        max_part_update_value_w,
-        dc.getHeight()
+    if (data[:value] == null) {
+      return;
+    }
+    if (data[:value].equals(old_value)) {
+      return;
+    }
+    old_value = data[:value];
+
+    var dc = getDc();
+    var x_offset = bitmap_w + bitmap_offset;
+
+    if (max_part_update_value_w == null) {
+      max_part_update_value_w = dc.getTextWidthInPixels("000", font);
+    }
+    global_dc.setClip(
+      getX() + x_offset,
+      getY(),
+      max_part_update_value_w,
+      dc.getHeight()
+    );
+
+    dc.setColor(colors[:background], colors[:background]);
+    dc.fillRectangle(x_offset, 0, max_part_update_value_w, dc.getHeight());
+
+    if (data[:value] != null) {
+      drawText(
+        dc,
+        colors,
+        bitmap_w + bitmap_offset,
+        dc.getHeight() / 2,
+        font,
+        data[:value],
+        Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
       );
-
-      dc.setColor(colors[:background], colors[:background]);
-      dc.fillRectangle(x_offset, 0, max_part_update_value_w, dc.getHeight());
-
-      if (data[:value] != null) {
-        drawText(
-          dc,
-          colors,
-          bitmap_w + bitmap_offset,
-          dc.getHeight() / 2,
-          font,
-          data[:value],
-          Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
-        );
-      }
     }
   }
 }

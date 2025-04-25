@@ -60,7 +60,13 @@ module DataWrapper {
   function getData(type, small_picture) {
     var res = { :value => null, :label => null, :image => null };
 
-    if (type == CALORIES_ACTIVE) {
+    if (type == HR) {
+      res = getNativeComplicationData(
+        Complications.COMPLICATION_TYPE_HEART_RATE,
+        null
+      );
+      res[:image] = small_picture ? Rez.Drawables.HRSmall : Rez.Drawables.HR;
+    } else if (type == CALORIES_ACTIVE) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_CALORIES,
         null
@@ -103,12 +109,6 @@ module DataWrapper {
         Complications.COMPLICATION_TYPE_BATTERY
       );
       res[:image] = getBatteryImageRez(res, small_picture);
-    } else if (type == HR) {
-      res = getNativeComplicationData(
-        Complications.COMPLICATION_TYPE_HEART_RATE,
-        null
-      );
-      res[:image] = small_picture ? Rez.Drawables.HRSmall : Rez.Drawables.HR;
     } else if (type == BODY_BATTERY) {
       res = getNativeComplicationPercentData(
         Complications.COMPLICATION_TYPE_BODY_BATTERY
@@ -154,7 +154,10 @@ module DataWrapper {
         ? Rez.Drawables.StressSmall
         : Rez.Drawables.Stress;
     } else if (type == MOON) {
-      res = getApp().watch_view.moon_keeper.getActulalData(Time.now(), small_picture);
+      res = getApp().watch_view.moon_keeper.getActulalData(
+        Time.now(),
+        small_picture
+      );
       res[:label] = Rez.Strings.FIELD_TYPE_MOON;
     } else if (type == PRESSURE) {
       res[:value] = getPressure();
