@@ -34,7 +34,7 @@ class WWF5View extends WatchUi.WatchFace {
       :image => Application.Properties.getValue("c_image"),
       :scale => Application.Properties.getValue("c_scale"),
     };
-    if (colors[:font_empty_segments] == Graphics.COLOR_TRANSPARENT){
+    if (colors[:font_empty_segments] == Graphics.COLOR_TRANSPARENT) {
       colors[:font_empty_segments] = colors[:background];
     }
   }
@@ -276,6 +276,11 @@ class WWF5View extends WatchUi.WatchFace {
   }
 
   function onPartialUpdate(dc) {
+    // Если это новая минута, то весь экран
+    // будет перерисован
+    if (System.getClockTime().sec == 0) {
+      return;
+    }
     for (var i = 0; i < every_second_layers.size(); i++) {
       var layer = every_second_layers[i];
       layer.drawPartial(dc, colors);
