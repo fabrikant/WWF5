@@ -67,9 +67,9 @@ class SmallField extends AbstractEverySecondField {
 
   function drawPartial(global_dc, colors) {
     if (isPartiallyUpdateableField) {
-      // if (System.getClockTime().sec % 3 == 0){
-      //   return;
-      // }
+      if (System.getClockTime().sec % 3 == 0){
+        return;
+      }
 
       var data = DataWrapper.getData(DataWrapper.HR, false);
       if (data[:value] == null) {
