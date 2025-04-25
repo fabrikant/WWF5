@@ -5,12 +5,12 @@ import Toybox.WatchUi;
 import Toybox.Math;
 import Toybox.Time;
 
-class SecondsField extends AbstractField {
+class SecondsField extends AbstractEverySecondField {
   var font;
   var symb_w;
 
   function initialize(options) {
-    AbstractField.initialize(options);
+    AbstractEverySecondField.initialize(options);
     font = options[:font];
     symb_w = null;
   }

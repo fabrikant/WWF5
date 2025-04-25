@@ -4,13 +4,13 @@ import Toybox.Math;
 import Toybox.Complications;
 import Toybox.Lang;
 
-class SmallField extends AbstractField {
+class SmallField extends AbstractEverySecondField {
   var isPartiallyUpdateableField, bitmap_w, max_part_update_value_w, old_value;
   var font;
   const bitmap_offset = 4;
 
   function initialize(options) {
-    AbstractField.initialize(options);
+    AbstractEverySecondField.initialize(options);
     isPartiallyUpdateableField = false;
     bitmap_w = 0;
     max_part_update_value_w = null;
