@@ -75,17 +75,7 @@ class WeatherWidget extends AbstractField {
       weather_condition.windSpeed
     );
 
-    //фиксим баг амолед экранов. Не умеют drawRadialText на Layer
-    // var settings = System.getDeviceSettings();
-    // if (
-    //   settings has :requiresBurnInProtection &&
-    //   settings.requiresBurnInProtection
-    // ) {
-    //   drawWindSpeedAmoled(dc, wind_speed, colors);
-    // } else {
-    //   drawWindSpeedMIP(dc, wind_speed, colors);
-    // }
-    drawWindSpeedMIP(dc, wind_speed, colors);
+    drawWindSpeed(dc, wind_speed, colors);
 
     //Ветер направление
     var wind_angle = weather_condition.windBearing;
@@ -116,59 +106,7 @@ class WeatherWidget extends AbstractField {
     drawBorder(dc);
   }
 
-  private function drawWindSpeedAmoled(dc, wind_speed, colors) {
-    var font_wind = Graphics.getVectorFont({
-      :face => vectorFontName(),
-      :size => 0.7 * Graphics.getFontHeight(getApp().watch_view.fontValues),
-    });
-
-    if (wind_speed_bitmap == null) {
-      wind_speed_bitmap = Graphics.createBufferedBitmap({
-        :width => dc.getTextWidthInPixels("120 m/sss", font_wind),
-        :height => Graphics.getFontHeight(font_wind),
-      });
-    }
-
-    var bitmap_dc = wind_speed_bitmap.get().getDc();
-    var h = bitmap_dc.getHeight();
-    var w = dc.getTextWidthInPixels("120 m/s", font_wind);
-    bitmap_dc.setColor(colors[:font], Graphics.COLOR_TRANSPARENT);
-    bitmap_dc.clear();
-    if (dc.getTextWidthInPixels(wind_speed, font_wind) > w) {
-      bitmap_dc.drawText(
-        0,
-        0,
-        font_wind,
-        wind_speed,
-        Graphics.TEXT_JUSTIFY_LEFT
-      );
-    } else {
-      bitmap_dc.drawText(
-        w / 2,
-        0,
-        font_wind,
-        wind_speed,
-        Graphics.TEXT_JUSTIFY_CENTER
-      );
-    }
-
-    var angle = 38;
-    var angle_r = Math.toRadians(angle);
-    var x_offset =
-      dc.getWidth() - (w * Math.cos(angle_r) + 1.5 * h * Math.sin(angle_r));
-    var y_offset =
-      dc.getHeight() - (w * Math.sin(angle_r) + 0.7 * h * Math.cos(angle_r));
-
-    var transform = new Graphics.AffineTransform();
-    transform.rotate((2 * Math.PI * angle) / 360f);
-
-    dc.drawBitmap2(x_offset, y_offset, wind_speed_bitmap, {
-      :transform => transform,
-      :filterMode => Graphics.FILTER_MODE_BILINEAR,
-    });
-  }
-
-  private function drawWindSpeedMIP(dc, wind_speed, colors) {
+  private function drawWindSpeed(dc, wind_speed, colors) {
     var font_wind = Graphics.getVectorFont({
       :face => vectorFontName(),
       :size => 0.75 * Graphics.getFontHeight(getApp().watch_view.fontValues),

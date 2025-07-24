@@ -8,7 +8,7 @@ import Toybox.Lang;
 class ScaleWidget extends AbstractField {
   var angle_min, angle_max, center_x, center_y;
   var clear_poligon;
- 
+
   function initialize(options) {
     AbstractField.initialize(options);
     var system_radius = System.getDeviceSettings().screenHeight / 2;
@@ -33,7 +33,7 @@ class ScaleWidget extends AbstractField {
       [0, 0],
       [0, dc.getHeight()],
       [dc.getWidth(), dc.getHeight()],
-      [dc.getWidth() - Global.mod(ref_points[:x][2] - ref_points[:x][1]), 0],
+      [ref_points[:x][1], 0],
     ];
   }
 
@@ -41,12 +41,22 @@ class ScaleWidget extends AbstractField {
     //AbstractField.draw(colors);
     var dc = getDc();
     dc.setColor(colors[:background], colors[:background]);
-    dc.fillPolygon(clear_poligon);
+    if (getApp().watch_view.isAmoledSaveMode) {
+      dc.fillPolygon([
+        [clear_poligon[0][0], clear_poligon[0][1]],
+        [clear_poligon[1][0], clear_poligon[1][1]],
+        [clear_poligon[2][0] + 2, clear_poligon[2][1]],
+        [clear_poligon[3][0] + 2, clear_poligon[3][1]],
+      ]);
+    } else {
+      dc.fillPolygon(clear_poligon);
+    }
+
     dc.setAntiAlias(true);
 
     var data_type = Application.Properties.getValue(getId());
     var data = DataWrapper.getData(data_type, true);
-    if (data[:scale_value] == null){
+    if (data[:scale_value] == null) {
       data = DataWrapper.getData(data_type, false);
     }
     compl_id = data[:compl_id];
@@ -122,7 +132,6 @@ class ScaleWidget extends AbstractField {
 
     //Значок нужно уменьшить
     if (data[:image] != null) {
-      
       var bitmap = createImage(data[:image], colors);
       temp_x = scale_width + dc.getWidth() * 0.49;
       temp_y -= bitmap.getHeight();
