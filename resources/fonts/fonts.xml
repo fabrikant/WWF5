@@ -1,6 +1,6 @@
 <fonts>
 	<font id="clock" scope="foreground" filename="lcd/75.fnt" filter="0123456789:" antialias="true"/>
 	<font id="seconds" scope="foreground" filename="lcd/38.fnt" filter="0123456789" antialias="true"/>
-	<font id="temperature" scope="foreground" filename="lcd/30.fnt" filter="-0123456789%" antialias="true"/>
+	<font id="temperature" scope="foreground" filename="lcd/30.fnt" antialias="true"/>
 	<font id="values" scope="foreground" filename="lcd/25.fnt" antialias="true"/>
 </fonts>

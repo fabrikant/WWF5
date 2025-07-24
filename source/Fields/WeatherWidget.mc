@@ -21,14 +21,23 @@ class WeatherWidget extends AbstractField {
 
   function draw(colors) {
     AbstractField.draw(colors);
-    var weather_condition = getApp().watch_view.weather_condition;
-    weather_condition.updateValues();
-    if (weather_condition.data_source == null) {
-      drawBorder(getDc());
-      return;
-    }
     var dc = getDc();
 
+    if (Application.Properties.getValue("show_weather_data")) {
+      drawData(dc, colors);
+    } else {
+      var weather_condition = getApp().watch_view.weather_condition;
+      weather_condition.updateValues();
+      if (weather_condition.data_source == null) {
+        drawData(dc, colors);
+      } else {
+        drawWeather(dc, weather_condition, colors);
+      }
+    }
+    drawBorder(dc);
+  }
+
+  function drawWeather(dc, weather_condition, colors) {
     ///////////////////////////////////////////////////////////////////////////
     //Иконка погоды
     var bitmap = createImage(weather_condition.icon_rez, colors);
@@ -180,5 +189,47 @@ class WeatherWidget extends AbstractField {
     dc.fillPolygon(coords);
 
     return buf_bitmap_ref;
+  }
+
+  private function drawData(dc, colors) {
+    dc.setColor(colors[:font], colors[:background]);
+    var data_type = Application.Properties.getValue(getId());
+    var data = DataWrapper.getData(data_type, false);
+
+    compl_id = data[:compl_id];
+
+    if (data[:value] != null) {
+      var font = getApp().watch_view.fontTemp;
+
+      var bitmap_w = 0;
+      var bitmap_h = 0;
+      var data_w = dc.getTextWidthInPixels(data[:value], font);
+      // var data_h = Graphics.getFontHeight(font);
+
+      var bitmap;
+      if (data[:image] != null) {
+        bitmap = createImage(data[:image], colors);
+        bitmap_w = bitmap.getWidth();
+        bitmap_h = bitmap.getHeight() * 0.8;
+      }
+      
+      var offset = bitmap_w * 0.1;
+      var temp_x = ((dc.getWidth() * 2) / 3 - (bitmap_w + offset + data_w)) / 2;
+
+      if (data[:image] != null) {
+        dc.drawBitmap(temp_x, (dc.getHeight() - bitmap_h) / 2, bitmap);
+        temp_x += bitmap_w + offset;
+      }
+
+      drawText(
+        dc,
+        colors,
+        temp_x,
+        dc.getHeight() * 0.5,
+        font,
+        data[:value],
+        Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+      );
+    }
   }
 }

@@ -117,7 +117,7 @@ class WWF5View extends WatchUi.WatchFace {
     self.addLayer(seconds_layer);
     every_second_layers.add(seconds_layer);
 
-    //Дата
+    //Нижнее поле данных
     options = pattern.calculateLayerCoordinates(
       [pattern.reference_points[:x][10], pattern.reference_points[:y][5]],
       [
@@ -158,7 +158,7 @@ class WWF5View extends WatchUi.WatchFace {
       :width => pattern.reference_points[:x][6] -
       pattern.reference_points[:x][1],
       :height => sun_event_field.getY(),
-      :identifier => :weather,
+      :identifier => "data_weather",
     };
     weather_layer = new WeatherWidget(options);
     self.addLayer(weather_layer);

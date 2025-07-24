@@ -50,7 +50,9 @@ class MenuPropertySelector extends WatchUi.Menu2 {
     addItem(new ItemPropertySelector(DataWrapper.TIME_ZONE, ownerItemWeak));
     addItem(new ItemPropertySelector(DataWrapper.BATTERY, ownerItemWeak));
     addItem(new ItemPropertySelector(DataWrapper.SOLAR_INPUT, ownerItemWeak));
-    addItem(new ItemPropertySelector(DataWrapper.DATE_LONG, ownerItemWeak));
+    addItem(
+      new ItemPropertySelector(DataWrapper.DATE_TO_DATA_FIELD, ownerItemWeak)
+    );
     addItem(new ItemPropertySelector(DataWrapper.DATE, ownerItemWeak));
     addItem(
       new ItemPropertySelector(DataWrapper.WEEKDAY_MONTHDAY, ownerItemWeak)
@@ -67,9 +69,6 @@ class MenuPropertySelector extends WatchUi.Menu2 {
         DataWrapper.FEELS_LIKE_TEMPERATURE,
         ownerItemWeak
       )
-    );
-    addItem(
-      new ItemPropertySelector(DataWrapper.DATE_TO_DATA_FIELD, ownerItemWeak)
     );
 
     if (ownerItemWeak.stillAlive()) {

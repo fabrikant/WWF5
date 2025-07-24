@@ -34,6 +34,7 @@
     <string id="PressUnitBar" scope="foreground">milibar</string>
     <string id="PressUnitKPa" scope="foreground">kPa</string>
 
+    <string id="DataWeater" scope="foreground">Weather widget</string>
     <string id="DataScale" scope="foreground">Scale field</string>
     <string id="SmallField" scope="foreground">Small field</string>
     <string id="Data1" scope="foreground">Data field 1</string>
@@ -63,11 +64,15 @@
     <string id="FIELD_TYPE_WEIGHT" scope="foreground">Weight</string>
     <string id="FIELD_TYPE_RELATIVE_HUMIDITY" scope="foreground">Relative humidity</string>
     <string id="FIELD_TYPE_PRECIPITATION_CHANCE" scope="foreground">Chance of precipitation</string>
-    <string id="FIELD_TYPE_LONG_DATE" scope="foreground">Day of week, day month</string>
+    
     <string id="FIELD_TYPE_DATE_TO_DATA_FIELD" scope="foreground">Day of week, day/month</string>
     <string id="FIELD_TYPE_CITY" scope="foreground">City</string>
     <string id="FIELD_TYPE_SUN_EVENTS" scope="foreground">Sun events</string>
 
     <string id="owm_key" scope="foreground" translatable="false">owm API key</string>
     <string id="show_w_source" scope="foreground">Show weather data source</string>
+
+    <string id="show_w_data" scope="foreground">Instead of weather</string>
+    <string id="show_w_data_false" scope="foreground">If not available</string>
+    <string id="show_w_data_true" scope="foreground">Always</string>
 </strings>

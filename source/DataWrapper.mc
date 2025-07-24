@@ -39,8 +39,7 @@ module DataWrapper {
     TIME_ZONE,
     BATTERY = 26,
     SOLAR_INPUT,
-    DATE_LONG,
-    DATE,
+    DATE = 29,
     WEEKDAY_MONTHDAY,
     CALENDAR_EVENTS,
     TRAINING_STATUS,
@@ -253,11 +252,6 @@ module DataWrapper {
       res[:image] = small_picture
         ? Rez.Drawables.ExercisesSmall
         : Rez.Drawables.Exercises;
-    } else if (type == DATE_LONG) {
-      res = {
-        :value => getLongDate(),
-        :label => Rez.Strings.FIELD_TYPE_LONG_DATE,
-      };
     } else if (type == DATE) {
       res = getNativeComplicationData(
         Complications.COMPLICATION_TYPE_DATE,
@@ -565,11 +559,6 @@ module DataWrapper {
       :compl_id => new Complications.Id(Complications.COMPLICATION_TYPE_DATE),
     };
     return res;
-  }
-
-  function getLongDate() {
-    var now = Time.Gregorian.info(Time.now(), Time.FORMAT_LONG);
-    return Lang.format("$1$, $2$ $3$", [now.day_of_week, now.day, now.month]);
   }
 
   //******************************************************

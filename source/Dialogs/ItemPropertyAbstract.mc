@@ -38,8 +38,6 @@ class ItemPropertyAbstract extends WatchUi.MenuItem {
       return Rez.Strings.FIELD_TYPE_FEELS_LIKE_TEMPERATURE;
     } else if (fieldType == DataWrapper.DATE_TO_DATA_FIELD) {
       return Rez.Strings.FIELD_TYPE_DATE_TO_DATA_FIELD;
-    } else if (fieldType == DataWrapper.DATE_LONG) {
-      return Rez.Strings.FIELD_TYPE_LONG_DATE;
     } else if (fieldType == DataWrapper.DATE) {
       return getNativeComplicationLabel(Complications.COMPLICATION_TYPE_DATE);
     } else if (fieldType == DataWrapper.WEEKDAY_MONTHDAY) {

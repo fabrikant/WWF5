@@ -11,6 +11,7 @@
 	<property id="wind_speed_unit" type="number">0</property>
 	<property id="pressure_unit" type="number">0</property>
 
+	<property id="data_weather" type="number">19</property>
 	<property id="data_scale" type="number">9</property>
 	<property id="data_small" type="number">1</property>
 	<property id="data_sun" type="number">36</property>
@@ -20,6 +21,7 @@
 	<property id="data_bottom" type="number">26</property>
 
 	<property id="show_connection" type="number">1</property>
+	<property id="show_weather_data" type="boolean">false</property>
 	<property id="show_DND" type="boolean">true</property>
 	<property id="T1TZ" type="number">180</property>
 
