@@ -17,7 +17,15 @@ class AbstractEverySecondField extends AbstractField {
       dc.drawText(x, y, font, empty_text, justification);
     }
 
-    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+    if (
+      color_empty == colors[:background] or
+      color_empty == Graphics.COLOR_TRANSPARENT
+    ) {
+      dc.setColor(color, colors[:background]);
+    } else {
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+    }
+
     dc.drawText(x, y, font, text, justification);
   }
 }
