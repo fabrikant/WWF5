@@ -77,22 +77,10 @@
         -->
         <iq:permissions>
             <iq:uses-permission id="Background"/>
-            <iq:uses-permission id="Background"/>
-            <iq:uses-permission id="Background"/>
-            <iq:uses-permission id="Communications"/>
-            <iq:uses-permission id="Communications"/>
             <iq:uses-permission id="Communications"/>
             <iq:uses-permission id="ComplicationSubscriber"/>
-            <iq:uses-permission id="ComplicationSubscriber"/>
-            <iq:uses-permission id="ComplicationSubscriber"/>
-            <iq:uses-permission id="Positioning"/>
-            <iq:uses-permission id="Positioning"/>
             <iq:uses-permission id="Positioning"/>
             <iq:uses-permission id="SensorHistory"/>
-            <iq:uses-permission id="SensorHistory"/>
-            <iq:uses-permission id="SensorHistory"/>
-            <iq:uses-permission id="UserProfile"/>
-            <iq:uses-permission id="UserProfile"/>
             <iq:uses-permission id="UserProfile"/>
         </iq:permissions>
         <!--
@@ -100,9 +88,6 @@
             palette to edit your compatible language list.
         -->
         <iq:languages>
-            <iq:language>rus</iq:language>
-            <iq:language>rus</iq:language>
-            <iq:language>rus</iq:language>
             <iq:language>rus</iq:language>
         </iq:languages>
         <!--
