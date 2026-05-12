@@ -12,12 +12,16 @@ class DataField extends AbstractField {
     var font_height = Math.round(
       System.getDeviceSettings().screenHeight * 0.07
     ).toNumber();
-    font_label = Graphics.getVectorFont({
-      :face => vectorFontName(),
-      :size => font_height,
-    });
-    if (getId().equals("data_1") || getId().equals("data_3")) {
-      calculateLabelCoord();
+    if (Graphics has :getVectorFont) {
+      font_label = Graphics.getVectorFont({
+        :face => vectorFontName(),
+        :size => font_height,
+      });
+      if (getId().equals("data_1") || getId().equals("data_3")) {
+        calculateLabelCoord();
+      }
+    } else {
+      font_label = Graphics.FONT_SYSTEM_SMALL;
     }
   }
 
@@ -25,7 +29,10 @@ class DataField extends AbstractField {
     AbstractField.draw(colors);
     var dc = getDc();
     dc.setColor(colors[:font], colors[:background]);
-    var data = DataWrapper.getData(Application.Properties.getValue(getId()), false);
+    var data = DataWrapper.getData(
+      Application.Properties.getValue(getId()),
+      false
+    );
     compl_id = data[:compl_id];
 
     //Вывод значения
@@ -188,10 +195,14 @@ class DataField extends AbstractField {
   function getLabelFont(dc, label) {
     var txt_font = font_label;
     if (label.length() < 4) {
-      txt_font = Graphics.getVectorFont({
-        :face => vectorFontName(),
-        :size => (dc.getHeight() * 0.5).toNumber(),
-      });
+      if (Graphics has :getVectorFont) {
+        txt_font = Graphics.getVectorFont({
+          :face => vectorFontName(),
+          :size => (dc.getHeight() * 0.5).toNumber(),
+        });
+      }
+    } else {
+      txt_font = Graphics.FONT_SYSTEM_SMALL;
     }
     return txt_font;
   }

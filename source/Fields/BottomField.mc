@@ -13,10 +13,14 @@ class BottomField extends AbstractField {
   }
 
   function initializeFont(options) {
-    font = Graphics.getVectorFont({
-      :face => vectorFontName(),
-      :size => Math.floor(options[:height] * 1.3),
-    });
+    if (Graphics has :getVectorFont) {
+      font = Graphics.getVectorFont({
+        :face => vectorFontName(),
+        :size => Math.floor(options[:height] * 1.3),
+      });
+    } else {
+      font = Graphics.FONT_SYSTEM_XTINY;
+    }
   }
 
   function draw(colors) {

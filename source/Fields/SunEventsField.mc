@@ -58,10 +58,14 @@ class SunEventsField extends AbstractField {
           var dc = getDc();
 
           if (fontComplication == null) {
-            fontComplication = Graphics.getVectorFont({
-              :face => vectorFontName(),
-              :size => (dc.getHeight() * 1.2).toNumber(),
-            });
+            if (Graphics has :getVectorFont) {
+              fontComplication = Graphics.getVectorFont({
+                :face => vectorFontName(),
+                :size => (dc.getHeight() * 1.2).toNumber(),
+              });
+            } else {
+              fontComplication = Graphics.FONT_SYSTEM_XTINY;
+            }
           }
 
           var textW = dc.getTextWidthInPixels(text, fontComplication);

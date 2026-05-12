@@ -116,10 +116,13 @@ class WeatherWidget extends AbstractField {
   }
 
   private function drawWindSpeed(dc, wind_speed, colors) {
-    var font_wind = Graphics.getVectorFont({
-      :face => vectorFontName(),
-      :size => 0.75 * Graphics.getFontHeight(getApp().watch_view.fontValues),
-    });
+    var font_wind = Graphics.FONT_SYSTEM_XTINY;
+    if (Graphics has :getVectorFont) {
+      font_wind = Graphics.getVectorFont({
+        :face => vectorFontName(),
+        :size => 0.75 * Graphics.getFontHeight(getApp().watch_view.fontValues),
+      });
+    }
     //Ветер скорость
     var system_radius = System.getDeviceSettings().screenHeight / 2;
     var radius = Math.floor(
@@ -132,25 +135,30 @@ class WeatherWidget extends AbstractField {
       (system_radius - getY() - dc.getHeight()).toFloat() / system_radius;
     var angle = Math.toDegrees(Math.asin(sin_angle)) + 10;
     dc.setColor(colors[:font], colors[:background]);
-    dc.drawRadialText(
-      system_radius - getX(),
-      dc.getHeight() + Global.mod(system_radius - (getY() + dc.getHeight())),
-      font_wind,
-      wind_speed,
-      Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER,
-      angle,
-      radius,
-      Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE
-    );
+    if (dc has :drawRadialText) {
+      dc.drawRadialText(
+        system_radius - getX(),
+        dc.getHeight() + Global.mod(system_radius - (getY() + dc.getHeight())),
+        font_wind,
+        wind_speed,
+        Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER,
+        angle,
+        radius,
+        Graphics.RADIAL_TEXT_DIRECTION_CLOCKWISE
+      );
+    }
   }
 
   private function drawWeatherDataSource(dc, colors, weather_condition) {
     //return;
     dc.setColor(colors[:font], colors[:background]);
-    var font = Graphics.getVectorFont({
-      :face => vectorFontName(),
-      :size => 0.5 * Graphics.getFontHeight(getApp().watch_view.fontValues),
-    });
+    var font = Graphics.FONT_SYSTEM_XTINY;
+    if (Graphics has :getVectorFont) {
+      font = Graphics.getVectorFont({
+        :face => vectorFontName(),
+        :size => 0.5 * Graphics.getFontHeight(getApp().watch_view.fontValues),
+      });
+    }
     var weather_source = "OWM";
     if (weather_condition.data_source == :garmin) {
       weather_source = "GAR";
@@ -212,7 +220,7 @@ class WeatherWidget extends AbstractField {
         bitmap_w = bitmap.getWidth();
         bitmap_h = bitmap.getHeight() * 0.8;
       }
-      
+
       var offset = bitmap_w * 0.1;
       var temp_x = ((dc.getWidth() * 2) / 3 - (bitmap_w + offset + data_w)) / 2;
 

@@ -95,10 +95,13 @@ class ScaleWidget extends AbstractField {
     } else if (data[:label] != null) {
       //или текстовая метка
       dc.setColor(colors[:font], colors[:background]);
-      var font_label = Graphics.getVectorFont({
-        :face => vectorFontName(),
-        :size => vectorFontHeight(),
-      });
+      var font_label = Graphics.FONT_SYSTEM_XTINY;
+      if (Graphics has :getVectorFont) {
+        font_label = Graphics.getVectorFont({
+          :face => vectorFontName(),
+          :size => vectorFontHeight(),
+        });
+      }
       temp_y -= Graphics.getFontHeight(font_label);
       var label = labelCastToString(data[:label]);
       dc.drawText(
