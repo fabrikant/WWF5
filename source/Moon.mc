@@ -3,6 +3,7 @@ import Toybox.Time.Gregorian;
 import Toybox.System;
 import Toybox.Graphics;
 import Toybox.Math;
+import Toybox.Lang;
 
 class MoonKeeper {
   var calculate_moment;
@@ -21,18 +22,26 @@ class MoonKeeper {
 
     self.calculate_moment = moment;
     self.moon_phase = Moon.moonPhase(moment);
-    self.bitmap = Moon.drawMoon(
-      moon_phase[:IP1],
-      bitmap_size,
-      colors[:image],
-      colors[:background]
-    );
-    self.bitmap_small = Moon.drawMoon(
-      moon_phase[:IP1],
-      bitmap_small_size,
-      colors[:image],
-      colors[:background]
-    );
+    try {
+      self.bitmap = Moon.drawMoon(
+        moon_phase[:IP1],
+        bitmap_size,
+        colors[:image],
+        colors[:background]
+      );
+    } catch (ex) {
+      logger.error(ex);
+    }
+    try {
+      self.bitmap_small = Moon.drawMoon(
+        moon_phase[:IP1],
+        bitmap_small_size,
+        colors[:image],
+        colors[:background]
+      );
+    } catch (ex) {
+      logger.error(ex);
+    }
   }
 
   function getActulalData(moment, small_picture) {
